@@ -1,7 +1,17 @@
 import debug from 'debug';
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
-const SESSION_KEY = 'affine:debug';
+const SESSION_KEY = 'blank:debug';
+
+function normalizeNamespace(namespace: string) {
+  if (
+    typeof BUILD_CONFIG !== 'undefined' &&
+    BUILD_CONFIG.githubUrl?.includes('666base/blank')
+  ) {
+    return namespace.replace(/^affine:/, 'blank:');
+  }
+  return namespace;
+}
 
 if (typeof window !== 'undefined') {
   const getSessionValue = (key: string) => {
@@ -43,7 +53,7 @@ export class DebugLogger {
   private readonly _debug: debug.Debugger;
 
   constructor(namespace: string) {
-    this._debug = debug(namespace);
+    this._debug = debug(normalizeNamespace(namespace));
   }
 
   set enabled(enabled: boolean) {

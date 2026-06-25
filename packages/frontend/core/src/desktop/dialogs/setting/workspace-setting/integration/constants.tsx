@@ -1,4 +1,5 @@
 import { IntegrationTypeIcon } from '@affine/core/modules/integration';
+import { isBlankBuild } from '@affine/core/utils/blank-links';
 import type { I18nString } from '@affine/i18n';
 import { AiIcon, Logo1Icon, TodayIcon } from '@blocksuite/icons/rc';
 import type { ReactNode } from 'react';
@@ -74,6 +75,9 @@ export function getAllowedIntegrationList(
 ) {
   return INTEGRATION_LIST.filter(item => {
     if (!item) return false;
+    if (isBlankBuild() && (item.id === 'web-clipper' || item.id === 'byok')) {
+      return false;
+    }
     if ('byok' in item && item.byok && !showByok) return false;
     const requiredCloud = 'cloud' in item && item.cloud;
     if (requiredCloud && !isCloudWorkspace) return false;

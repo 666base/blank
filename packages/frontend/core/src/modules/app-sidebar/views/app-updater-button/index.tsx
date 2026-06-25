@@ -1,6 +1,8 @@
 import { Tooltip } from '@affine/component';
 import { useCatchEventCallback } from '@affine/core/components/hooks/use-catch-event-hook';
 import { UrlService } from '@affine/core/modules/url';
+import { getBlankGithubUrl } from '@affine/core/utils/blank-links';
+import { isBlankBranding } from '@affine/core/utils/blank-branding';
 import { Unreachable } from '@affine/env/constant';
 import { useI18n } from '@affine/i18n';
 import {
@@ -200,7 +202,9 @@ export function AppUpdaterButton({
         }
       } else {
         urlService.openPopupWindow(
-          `https://github.com/toeverything/AFFiNE/releases/tag/v${updateAvailable.version}`
+          isBlankBranding()
+            ? `${getBlankGithubUrl()}/releases/tag/v${updateAvailable.version}`
+            : `https://github.com/toeverything/AFFiNE/releases/tag/v${updateAvailable.version}`
         );
       }
     } else if (changelogUnread) {

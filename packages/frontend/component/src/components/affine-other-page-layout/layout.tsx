@@ -10,6 +10,23 @@ import { DesktopNavbar } from './desktop-navbar';
 import * as styles from './index.css';
 import { MobileNavbar } from './mobile-navbar';
 
+import { isBlankBuild } from '@affine/core/utils/blank-links';
+
+function BrandLogo() {
+  if (isBlankBuild()) {
+    return (
+      <img
+        src="/imgs/blank-app-icon.png"
+        width={24}
+        height={24}
+        alt="Blank"
+        style={{ borderRadius: 5 }}
+      />
+    );
+  }
+  return <Logo1Icon width={24} height={24} />;
+}
+
 export const AffineOtherPageLayout = ({
   children,
 }: {
@@ -35,7 +52,7 @@ export const AffineOtherPageLayout = ({
       ) : (
         <div className={styles.topNav}>
           <a href="/" rel="noreferrer" className={styles.affineLogo}>
-            <Logo1Icon width={24} height={24} />
+            <BrandLogo />
           </a>
 
           <DesktopNavbar />

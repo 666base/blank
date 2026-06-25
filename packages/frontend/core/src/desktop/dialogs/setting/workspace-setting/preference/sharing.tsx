@@ -19,8 +19,21 @@ export const SharingPanel = () => {
 };
 
 export const Sharing = () => {
-  const t = useI18n();
   const shareSetting = useService(WorkspaceShareSettingService).sharePreview;
+  if (!shareSetting) {
+    return null;
+  }
+  return <SharingInner shareSetting={shareSetting} />;
+};
+
+const SharingInner = ({
+  shareSetting,
+}: {
+  shareSetting: NonNullable<
+    ReturnType<WorkspaceShareSettingService['sharePreview']>
+  >;
+}) => {
+  const t = useI18n();
   const enableSharing = useLiveData(shareSetting.enableSharing$);
   const enableUrlPreview = useLiveData(shareSetting.enableUrlPreview$);
   const loading = useLiveData(shareSetting.isLoading$);

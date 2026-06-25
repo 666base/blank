@@ -33,6 +33,8 @@ function createEventHub() {
 const hub = createEventHub();
 
 function createStore(prefix) {
+  /** In-memory mirror so GlobalState.get/watch behave synchronously like localStorage. */
+  const cache = new Map();
   const watchers = new Map();
 
   const notify = (key, value) => {
@@ -43,8 +45,27 @@ function createStore(prefix) {
     }
   };
 
-  hub.on(`storage:${prefix}:changed`, ({ key, value }) => notify(key, value));
+  const hydration = invoke(`${CHANNEL_PREFIX}storage:${prefix}:ready`).then(
+    async () => {
+      const keys = await invoke(`${CHANNEL_PREFIX}storage:${prefix}:keys`);
+      await Promise.all(
+        keys.map(async key => {
+          const value = await invoke(
+            `${CHANNEL_PREFIX}storage:${prefix}:get`,
+            key
+          );
+          cache.set(key, value);
+        })
+      );
+    }
+  );
+
+  hub.on(`storage:${prefix}:changed`, ({ key, value }) => {
+    cache.set(key, value);
+    notify(key, value);
+  });
   hub.on(`storage:${prefix}:cleared`, () => {
+    cache.clear();
     for (const [, set] of watchers) {
       for (const cb of set) {
         cb(undefined);
@@ -53,23 +74,33 @@ function createStore(prefix) {
   });
 
   return {
-    ready: invoke(`${CHANNEL_PREFIX}storage:${prefix}:ready`),
-    keys: () => invoke(`${CHANNEL_PREFIX}storage:${prefix}:keys`),
-    get: key => invoke(`${CHANNEL_PREFIX}storage:${prefix}:get`, key),
-    set: (key, value) =>
-      invoke(`${CHANNEL_PREFIX}storage:${prefix}:set`, key, value).then(() =>
-        notify(key, value)
-      ),
-    del: key =>
-      invoke(`${CHANNEL_PREFIX}storage:${prefix}:del`, key).then(() =>
+    ready: hydration,
+    keys: () => Array.from(cache.keys()),
+    get: key => cache.get(key),
+    set: (key, value) => {
+      cache.set(key, value);
+      return invoke(`${CHANNEL_PREFIX}storage:${prefix}:set`, key, value).then(
+        () => notify(key, value)
+      );
+    },
+    del: key => {
+      cache.delete(key);
+      return invoke(`${CHANNEL_PREFIX}storage:${prefix}:del`, key).then(() =>
         notify(key, undefined)
-      ),
-    clear: () => invoke(`${CHANNEL_PREFIX}storage:${prefix}:clear`),
+      );
+    },
+    clear: () => {
+      cache.clear();
+      return invoke(`${CHANNEL_PREFIX}storage:${prefix}:clear`);
+    },
     watch: (key, cb) => {
       if (!watchers.has(key)) {
         watchers.set(key, new Set());
       }
       watchers.get(key).add(cb);
+      void hydration.then(() => {
+        cb(cache.get(key));
+      });
       return () => watchers.get(key)?.delete(cb);
     },
   };
@@ -132,10 +163,27 @@ const events = {
       return () => {};
     },
   },
+  updater: {
+    onUpdateReady() {
+      return () => {};
+    },
+    onUpdateAvailable() {
+      return () => {};
+    },
+    onDownloadProgress() {
+      return () => {};
+    },
+  },
 };
 
 const apis = {
   ui,
+  updater: {
+    currentVersion: async () => '0.28.0',
+    checkForUpdates: async () => null,
+    downloadUpdate: async () => {},
+    quitAndInstall: async () => {},
+  },
   clipboard: {
     copyAsPNG: () => invoke(`${CHANNEL_PREFIX}clipboard:copyAsPNG`),
   },

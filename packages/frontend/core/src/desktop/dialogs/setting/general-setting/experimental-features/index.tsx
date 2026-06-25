@@ -1,6 +1,8 @@
 import { Button, Checkbox, Loading, Switch, Tooltip } from '@affine/component';
 import { SettingHeader } from '@affine/component/setting-components';
 import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
+import { getBlankGithubUrl } from '@affine/core/utils/blank-links';
+import { isBlankBranding } from '@affine/core/utils/blank-branding';
 import {
   AFFINE_FLAGS,
   FeatureFlagService,
@@ -102,7 +104,9 @@ const FeedbackIcon = ({ type }: { type: Flag['feedbackType'] }) => {
 const feedbackLink: Record<NonNullable<Flag['feedbackType']>, string> = {
   discord: BUILD_CONFIG.discordUrl,
   email: 'mailto:support@toeverything.info',
-  github: 'https://github.com/toeverything/AFFiNE/issues',
+  github: isBlankBranding()
+    ? `${getBlankGithubUrl()}/issues`
+    : 'https://github.com/toeverything/AFFiNE/issues',
 };
 
 const ExperimentalFeaturesItem = ({

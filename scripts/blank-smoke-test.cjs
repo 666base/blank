@@ -71,8 +71,8 @@ async function main() {
   })());
 
   for (const rel of [
-    'releases/desktop/Blank-Setup-0.28.0.exe',
-    'releases/android/Blank.apk',
+    'releases/desktop/Blank-Setup-0.28.1.exe',
+    'releases/android/Blank-0.28.1.apk',
   ]) {
     const p = path.join(root, rel);
     const mb = fs.existsSync(p)
@@ -115,7 +115,12 @@ async function main() {
       read('electron-builder.json')?.includes('scripts/local-electron/**/*')
   );
   ok('mobile local-only mode', read('packages/frontend/core/src/utils/local-only.ts')?.includes('isMobileEdition'));
-  ok('android release apk script', read('scripts/build-android.cjs')?.includes('assembleRelease'));
+  ok(
+    'AI store ext schema-only import',
+    read('packages/frontend/core/src/blocksuite/store-extensions/ai/index.ts')?.includes(
+      'ai-chat-block/model'
+    )
+  );
 
   // Optional: dev server if running
   const devInfo = path.join(root, '.blank/electron-dev-server.json');

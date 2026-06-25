@@ -10,6 +10,7 @@ import { isBlankBuild } from '@affine/core/utils/blank-links';
 import { isLocalOnlyMode } from '@affine/core/utils/local-only';
 import { useI18n } from '@affine/i18n';
 import { track } from '@affine/track';
+import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
 import { Logo1Icon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -96,7 +97,7 @@ export const SignInButton = () => {
       }, [globalDialogService])}
     >
       <div className="avatar not-sign">
-        <Logo1Icon />
+        {isBlankBranding() ? <BlankAppLogo size={20} /> : <Logo1Icon />}
       </div>
 
       <div className="content">

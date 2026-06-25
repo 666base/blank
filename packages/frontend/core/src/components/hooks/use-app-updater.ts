@@ -76,7 +76,7 @@ export const changelogCheckedAtom = atomWithStorage<Record<string, boolean>>(
 export const checkingForUpdatesAtom = atom(false);
 
 export const currentVersionAtom = atom(async () => {
-  const currentVersion = await apis?.updater.currentVersion();
+  const currentVersion = await apis?.updater?.currentVersion?.();
   return currentVersion;
 });
 
@@ -120,7 +120,7 @@ export const useAppUpdater = () => {
     track.$.navigationPanel.bottomButtons.quitAndInstall();
     if (updateReady) {
       setAppQuitting(true);
-      apis?.updater.quitAndInstall().catch(err => {
+      apis?.updater?.quitAndInstall?.().catch(err => {
         // TODO(@Peng): add error toast here
         console.error(err);
       });
@@ -134,7 +134,7 @@ export const useAppUpdater = () => {
     }
     setCheckingForUpdates(true);
     try {
-      const updateInfo = await apis?.updater.checkForUpdates();
+      const updateInfo = await apis?.updater?.checkForUpdates?.();
       return updateInfo?.version ?? false;
     } catch (err) {
       console.error('Error checking for updates:', err);
@@ -146,7 +146,7 @@ export const useAppUpdater = () => {
 
   const downloadUpdate = useCallback(() => {
     track.$.settingsPanel.about.downloadUpdate();
-    apis?.updater.downloadUpdate().catch(err => {
+    apis?.updater?.downloadUpdate?.().catch(err => {
       console.error('Error downloading update:', err);
     });
   }, []);

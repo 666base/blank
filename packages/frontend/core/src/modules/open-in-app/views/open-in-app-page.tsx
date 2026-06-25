@@ -1,11 +1,17 @@
 import { Button } from '@affine/component/ui/button';
 import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { appIconMap, appNames } from '@affine/core/utils/channel';
+import {
+  getBlankDownloadUrl,
+  getBlankGithubUrl,
+  isBlankBuild,
+} from '@affine/core/utils/blank-links';
+import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
 import { Trans, useI18n } from '@affine/i18n';
 import { LocalWorkspaceIcon, Logo1Icon } from '@blocksuite/icons/rc';
 import { useServiceOptional } from '@toeverything/infra';
 import type { MouseEvent } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { getOpenUrlInDesktopAppLink } from '../utils';
 import * as styles from './open-in-app-page.css';
@@ -18,8 +24,9 @@ interface OpenAppProps {
   mode?: 'auth' | 'open-doc'; // default to 'auth'
 }
 const channel = BUILD_CONFIG.appBuildType;
-const url =
-  'https://affine.pro/download' + (channel !== 'stable' ? '/beta-canary' : '');
+const url = isBlankBuild()
+  ? getBlankDownloadUrl()
+  : 'https://affine.pro/download' + (channel !== 'stable' ? '/beta-canary' : '');
 
 export const OpenInAppPage = ({
   urlToOpen,
@@ -37,6 +44,40 @@ export const OpenInAppPage = ({
 
   const appIcon = appIconMap[channel];
   const appName = appNames[channel];
+
+  const navLinks = useMemo(
+    () =>
+      isBlankBuild()
+        ? [
+            {
+              href: getBlankGithubUrl(),
+              label: t['com.affine.other-page.nav.github'](),
+            },
+            {
+              href: getBlankDownloadUrl(),
+              label: t['com.affine.other-page.nav.releases'](),
+            },
+            {
+              href: `${getBlankGithubUrl()}/issues`,
+              label: t['com.affine.other-page.nav.issues'](),
+            },
+          ]
+        : [
+            {
+              href: 'https://affine.pro',
+              label: t['com.affine.other-page.nav.official-website'](),
+            },
+            {
+              href: 'https://affine.pro/blog',
+              label: t['com.affine.other-page.nav.blog'](),
+            },
+            {
+              href: 'https://affine.pro/about-us',
+              label: t['com.affine.other-page.nav.contact-us'](),
+            },
+          ],
+    [t]
+  );
 
   const goToAppearanceSetting = useCallback(
     (e: MouseEvent) => {
@@ -61,34 +102,25 @@ export const OpenInAppPage = ({
     <div className={styles.root}>
       <div className={styles.topNav}>
         <a href="/" rel="noreferrer" className={styles.affineLogo}>
-          <Logo1Icon width={24} height={24} />
+          {isBlankBranding() ? (
+            <BlankAppLogo size={24} />
+          ) : (
+            <Logo1Icon width={24} height={24} />
+          )}
         </a>
 
         <div className={styles.topNavLinks}>
-          <a
-            href="https://affine.pro"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.topNavLink}
-          >
-            Official Website
-          </a>
-          <a
-            href="https://affine.pro/blog"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.topNavLink}
-          >
-            Blog
-          </a>
-          <a
-            href="https://affine.pro/about-us"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.topNavLink}
-          >
-            Contact us
-          </a>
+          {navLinks.map(link => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.topNavLink}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
 
         <Button onClick={openDownloadLink}>

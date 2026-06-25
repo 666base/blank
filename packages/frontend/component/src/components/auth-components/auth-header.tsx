@@ -2,6 +2,7 @@ import { Logo1Icon } from '@blocksuite/icons/rc';
 import clsx from 'clsx';
 import type { FC } from 'react';
 
+import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
 import { authHeaderWrapper } from './share.css';
 
 export const AuthHeader: FC<{
@@ -12,7 +13,11 @@ export const AuthHeader: FC<{
   return (
     <div className={clsx(authHeaderWrapper, className)}>
       <p>
-        <Logo1Icon className="logo" />
+        {isBlankBranding() ? (
+          <BlankAppLogo size={24} className="logo" />
+        ) : (
+          <Logo1Icon className="logo" />
+        )}
         {title}
       </p>
       <p>{subTitle}</p>

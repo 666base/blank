@@ -29,8 +29,11 @@ function createBlankAiIgnorePlugin() {
   const allowAiPaths = [
     '/blocksuite/ai/blocks/ai-chat-block/model',
     '/blocksuite/ai/blocks/transcription-block/model',
+    '/blocksuite/ai/blocks/ai-chat-block/ai-chat-spec',
+    '/blocksuite/ai/blocks/ai-chat-block/ai-transcription-block',
     '/blocksuite/store-extensions/ai/',
     '/blocksuite/view-extensions/ai/',
+    '/modules/workspace/global-schema',
   ];
 
   return new rspack.IgnorePlugin({

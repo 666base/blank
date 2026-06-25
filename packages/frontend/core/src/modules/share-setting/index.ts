@@ -12,7 +12,7 @@ import { WorkspaceShareSettingStore } from './stores/share-setting';
 export function configureShareSettingModule(framework: Framework) {
   framework
     .scope(WorkspaceScope)
-    .service(WorkspaceShareSettingService)
+    .service(WorkspaceShareSettingService, [WorkspaceService])
     .store(WorkspaceShareSettingStore, [WorkspaceServerService, NbstoreService])
     .entity(WorkspaceShareSetting, [
       WorkspaceService,

@@ -11,21 +11,21 @@ if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
 
 if (-not (Test-Path $envFile)) {
   Copy-Item $envExample $envFile
-  Write-Host "Created $envFile — edit AFFINE_SERVER_HOST and POSTGRES_PASSWORD, then rerun."
+  Write-Host "Created $envFile - edit AFFINE_SERVER_HOST and POSTGRES_PASSWORD, then rerun."
   exit 0
 }
 
 Push-Location $selfhost
 try {
   docker compose up -d
-  $port = (Get-Content $envFile | Where-Object { $_ -match '^AFFINE_PORT=' }) -replace '^AFFINE_PORT=', ''
-  if (-not $port) { $port = '3010' }
-  Write-Host ""
+  $portLine = Get-Content $envFile | Where-Object { $_ -match '^AFFINE_PORT=' }
+  $port = if ($portLine) { ($portLine -replace '^AFFINE_PORT=', '').Trim() } else { '3010' }
+  Write-Host ''
   Write-Host "Sync server starting on port $port"
-  Write-Host "In Blank: Settings -> Sync -> enter your public HTTPS URL"
-  Write-Host "Then sign in with the same account on desktop and phone."
-  Write-Host "Build with baked URL:"
-  Write-Host "  `$env:BLANK_SYNC_SERVER_URL='https://sync.example.com'; npm run app:build"
+  Write-Host 'In Blank: Settings -> Sync -> enter your public HTTPS URL'
+  Write-Host 'Then sign in with the same account on desktop and phone.'
+  Write-Host 'Build with baked URL (PowerShell):'
+  Write-Host '  $env:BLANK_SYNC_SERVER_URL="https://sync.example.com"; npm run app:build'
 }
 finally {
   Pop-Location

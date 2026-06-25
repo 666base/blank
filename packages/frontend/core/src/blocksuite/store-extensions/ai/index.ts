@@ -1,4 +1,4 @@
-import { AIChatBlockSchemaExtension } from '@affine/core/blocksuite/ai/blocks';
+import { AIChatBlockSchemaExtension } from '@affine/core/blocksuite/ai/blocks/ai-chat-block/model';
 import { TranscriptionBlockSchemaExtension } from '@affine/core/blocksuite/ai/blocks/transcription-block/model';
 import {
   type StoreExtensionContext,

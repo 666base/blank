@@ -11,12 +11,27 @@ import { useI18n } from '@affine/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 
 export const AiSetting = () => {
-  const t = useI18n();
   const shareSetting = useService(WorkspaceShareSettingService).sharePreview;
   const serverService = useService(ServerService);
   const serverEnableAi = useLiveData(
     serverService.server.features$.map(f => f?.copilot)
   );
+
+  if (!shareSetting || !serverEnableAi) {
+    return null;
+  }
+
+  return <AiSettingInner shareSetting={shareSetting} />;
+};
+
+const AiSettingInner = ({
+  shareSetting,
+}: {
+  shareSetting: NonNullable<
+    ReturnType<WorkspaceShareSettingService['sharePreview']>
+  >;
+}) => {
+  const t = useI18n();
   const workspaceEnableAi = useLiveData(shareSetting.enableAi$);
   const loading = useLiveData(shareSetting.isLoading$);
   const permissionService = useService(WorkspacePermissionService);
@@ -29,7 +44,7 @@ export const AiSetting = () => {
     [shareSetting]
   );
 
-  if (!isOwner || !serverEnableAi) {
+  if (!isOwner) {
     return null;
   }
 

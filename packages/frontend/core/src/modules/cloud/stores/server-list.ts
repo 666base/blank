@@ -1,5 +1,5 @@
 import { Store } from '@toeverything/infra';
-import { map } from 'rxjs';
+import { map, startWith } from 'rxjs';
 
 import type { GlobalStateService } from '../../storage';
 import { isLocalOnlyMode } from '../../../utils/local-only';
@@ -15,6 +15,9 @@ export class ServerListStore extends Store {
     return this.globalStateService.globalState
       .watch<ServerMetadata[]>('serverList')
       .pipe(
+        startWith(
+          this.globalStateService.globalState.get<ServerMetadata[]>('serverList')
+        ),
         map(servers => {
           const customServers = isLocalOnlyMode() ? [] : (servers ?? []);
           return [...BUILD_IN_SERVERS, ...customServers];
@@ -64,6 +67,7 @@ export class ServerListStore extends Store {
     return this.globalStateService.globalState
       .watch<ServerConfig>(`serverConfig:${serverId}`)
       .pipe(
+        startWith(this.getServerConfig(serverId)),
         map(config => {
           if (!config) {
             return BUILD_IN_SERVERS.find(server => server.id === serverId)

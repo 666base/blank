@@ -22,9 +22,16 @@ protocol.registerSchemesAsPrivileged([
 
 app.setName('Blank');
 
+function shouldUsePackagedWeb() {
+  return app.isPackaged || process.env.BLANK_USE_PACKAGED_PROTOCOL === '1';
+}
+
 function getWebRoot() {
-  if (app.isPackaged) {
-    return path.join(process.resourcesPath, 'web');
+  if (shouldUsePackagedWeb()) {
+    if (app.isPackaged) {
+      return path.join(process.resourcesPath, 'web');
+    }
+    return path.join(__dirname, 'web');
   }
   return path.join(__dirname, 'web');
 }
@@ -33,8 +40,9 @@ function getStartUrl() {
   if (process.env.AFFINE_DESKTOP_URL) {
     return process.env.AFFINE_DESKTOP_URL;
   }
-  if (app.isPackaged) {
-    return `${APP_SCHEME}://app/index.html`;
+  if (shouldUsePackagedWeb()) {
+    // Use trailing slash so React Router sees pathname "/" not "/index.html".
+    return `${APP_SCHEME}://app/`;
   }
   return 'http://127.0.0.1:8080';
 }
@@ -200,7 +208,7 @@ function createWindow() {
 app.whenReady().then(() => {
   blankApi = registerBlankDesktopApi(() => mainWindow);
 
-  if (app.isPackaged) {
+  if (shouldUsePackagedWeb()) {
     registerPackagedProtocol();
   }
 

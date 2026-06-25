@@ -27,6 +27,8 @@ import { useI18n } from '@affine/i18n';
 import { DisposableGroup } from '@blocksuite/affine/global/disposable';
 import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
 import { type DocMode, DocModes } from '@blocksuite/affine/model';
+import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
+import { getBlankGithubUrl } from '@affine/core/utils/blank-links';
 import { Logo1Icon } from '@blocksuite/icons/rc';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -403,7 +405,7 @@ const SharePageFooter = () => {
   }
   return (
     <a
-      href="https://affine.pro"
+      href={isBlankBranding() ? getBlankGithubUrl() : 'https://affine.pro'}
       target="_blank"
       className={styles.link}
       rel="noreferrer"
@@ -411,7 +413,11 @@ const SharePageFooter = () => {
       <span className={styles.linkText}>
         {t['com.affine.share-page.footer.built-with']()}
       </span>
-      <Logo1Icon fontSize={20} />
+      {isBlankBranding() ? (
+        <BlankAppLogo size={20} />
+      ) : (
+        <Logo1Icon fontSize={20} />
+      )}
     </a>
   );
 };

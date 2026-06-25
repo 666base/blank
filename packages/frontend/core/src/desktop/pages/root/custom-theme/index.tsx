@@ -51,13 +51,13 @@ export const CustomThemeModifier = () => {
 
   // Apply font size CSS variable when settings change
   useEffect(() => {
-    if (settings.fontSize) {
+    if (settings?.fontSize) {
       document.documentElement.style.setProperty(
         '--affine-font-base',
         `${settings.fontSize}px`
       );
     }
-  }, [settings.fontSize]);
+  }, [settings?.fontSize]);
 
   return null;
 };

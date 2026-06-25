@@ -1,8 +1,9 @@
 import { Unreachable } from '@affine/env/constant';
 import { LiveData, ObjectPool, Service } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, startWith, switchMap } from 'rxjs';
 
+import { isLocalOnlyMode } from '../../../utils/local-only';
 import { Server } from '../entities/server';
 import { ServerStarted } from '../events/server-started';
 import type { ServerConfigStore } from '../stores/server-config';
@@ -19,6 +20,7 @@ export class ServersService extends Service {
 
   servers$ = LiveData.from<Server[]>(
     this.serverListStore.watchServerList().pipe(
+      startWith(this.serverListStore.getServerList()),
       switchMap(metadatas => {
         const refs = metadatas.map(metadata => {
           const exists = this.serverPool.get(metadata.id);
@@ -28,7 +30,9 @@ export class ServersService extends Service {
           const server = this.framework.createEntity(Server, {
             serverMetadata: metadata,
           });
-          server.revalidateConfig();
+          if (!(isLocalOnlyMode() && metadata.id === 'app')) {
+            server.revalidateConfig();
+          }
           server.scope.eventBus.emit(ServerStarted, server);
           const ref = this.serverPool.put(metadata.id, server);
           return ref;

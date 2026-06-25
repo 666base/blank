@@ -10,6 +10,7 @@ import {
 } from '@toeverything/infra';
 import { exhaustMap, map, tap } from 'rxjs';
 
+import { isLocalOnlyMode } from '../../../utils/local-only';
 import { ServerScope } from '../scopes/server';
 import { AuthService } from '../services/auth';
 import { FetchService } from '../services/fetch';
@@ -71,6 +72,9 @@ export class Server extends Entity<{
 
   readonly revalidateConfig = effect(
     exhaustMap(() => {
+      if (isLocalOnlyMode() && this.serverMetadata.id === 'app') {
+        return fromPromise(async () => this.config$.value);
+      }
       return fromPromise(signal =>
         this.serverConfigStore.fetchServerConfig(this.baseUrl, signal)
       ).pipe(
