@@ -61,7 +61,7 @@ export const getPublicPath = (BUILD_CONFIG: BUILD_CONFIG_TYPE) => {
   }
 };
 
-const DESCRIPTION = `There can be more than Notion and Miro. Blank is a next-gen knowledge base that brings planning, sorting and creating all together.`;
+const DESCRIPTION = `Blank — local notes and documents.`;
 
 const gitShortHash = once(() => {
   return 'abcdef123';

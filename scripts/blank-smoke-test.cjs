@@ -1,0 +1,146 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const http = require('node:http');
+
+const root = path.resolve(__dirname, '..');
+const checks = [];
+
+function ok(name, pass, detail = '', optional = false) {
+  checks.push({ name, pass, detail, optional });
+}
+
+function read(rel) {
+  const p = path.join(root, rel);
+  return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
+}
+
+function distSizeMb(rel) {
+  const p = path.join(root, rel);
+  if (!fs.existsSync(p)) return null;
+  let total = 0;
+  const walk = dir => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else total += fs.statSync(full).size;
+    }
+  };
+  walk(p);
+  return Math.round((total / 1024 / 1024) * 10) / 10;
+}
+
+function fetchUrl(url, timeoutMs = 8000) {
+  return new Promise(resolve => {
+    const req = http.get(url, res => {
+      let data = '';
+      res.on('data', c => {
+        data += c;
+        if (data.length > 50000) res.destroy();
+      });
+      res.on('end', () =>
+        resolve({ ok: res.statusCode >= 200 && res.statusCode < 500, data, status: res.statusCode })
+      );
+    });
+    req.on('error', err => resolve({ ok: false, error: err.message }));
+    req.setTimeout(timeoutMs, () => {
+      req.destroy();
+      resolve({ ok: false, error: 'timeout' });
+    });
+  });
+}
+
+async function main() {
+  const webHtml = read('packages/frontend/apps/web/dist/index.html');
+  ok('web dist exists', !!webHtml);
+  ok('web PUBLIC_PATH=/', webHtml?.includes('name="env:publicPath"') && webHtml.includes('content="/"'));
+  ok('web no affineassets CDN', webHtml && !/affineassets\.com/i.test(webHtml));
+  ok('web local /js scripts', webHtml && webHtml.includes('src="/js/'));
+  ok('web no onboarding folder', !fs.existsSync(path.join(root, 'packages/frontend/apps/web/dist/onboarding')));
+  ok('web dist size 80-160MB', (() => {
+    const mb = distSizeMb('packages/frontend/apps/web/dist');
+    return mb !== null && mb >= 80 && mb <= 160 ? mb + ' MB' : false;
+  })());
+
+  const mobHtml = read('packages/frontend/apps/mobile/dist/index.html');
+  ok('mobile dist exists', !!mobHtml);
+  ok('mobile PUBLIC_PATH=/', mobHtml?.includes('content="/"'));
+  ok('mobile no CDN', mobHtml && !/affineassets\.com/i.test(mobHtml));
+  ok('mobile dist size 80-160MB', (() => {
+    const mb = distSizeMb('packages/frontend/apps/mobile/dist');
+    return mb !== null && mb >= 80 && mb <= 160 ? mb + ' MB' : false;
+  })());
+
+  for (const rel of [
+    'releases/desktop/Blank-Portable-0.27.0.exe',
+    'releases/desktop/Blank-Setup-0.27.0.exe',
+    'releases/android/Blank-debug.apk',
+  ]) {
+    const p = path.join(root, rel);
+    const mb = fs.existsSync(p)
+      ? Math.round((fs.statSync(p).size / 1024 / 1024) * 10) / 10 + ' MB'
+      : 'missing';
+    ok('artifact ' + path.basename(rel), fs.existsSync(p), mb);
+  }
+
+  ok('isAiDisabled in local-only', read('packages/frontend/core/src/utils/local-only.ts')?.includes('isAiDisabled'));
+  ok('desktop PUBLIC_PATH in build script', read('scripts/build-desktop.cjs')?.includes("PUBLIC_PATH: '/'"));
+  ok('android PUBLIC_PATH in build script', read('scripts/build-android.cjs')?.includes("PUBLIC_PATH: '/'"));
+
+  const i18n = read('packages/frontend/i18n/src/resources/index.ts');
+  ok('i18n en+bg', i18n?.includes("'en'") && i18n?.includes("'bg'"));
+
+  ok('Blank manifest name', read('packages/frontend/core/public/manifest.json')?.includes('"name": "Blank"'));
+  ok('Blank favicon-192', fs.existsSync(path.join(root, 'packages/frontend/core/public/favicon-192.png')));
+  ok('Blank electron icon', fs.existsSync(path.join(root, 'scripts/local-electron/build/icon.ico')));
+  ok('channel appIconMap blank', read('packages/frontend/core/src/utils/channel.ts')?.includes('/imgs/blank-app-icon.png'));
+
+  // Optional: dev server if running
+  const devInfo = path.join(root, '.blank/electron-dev-server.json');
+  let devUrl = 'http://127.0.0.1:8080/';
+  if (fs.existsSync(devInfo)) {
+    try {
+      devUrl = JSON.parse(fs.readFileSync(devInfo, 'utf8')).url || devUrl;
+    } catch {
+      // ignore
+    }
+  }
+  const dev = await fetchUrl(devUrl);
+  ok(
+    'dev server on :8080',
+    dev.ok && dev.data?.includes('id="app"'),
+    dev.ok ? devUrl : dev.error || `HTTP ${dev.status}`,
+    true
+  );
+
+  const required = checks.filter(c => !c.optional);
+  const optional = checks.filter(c => c.optional);
+  const requiredFailed = required.filter(c => !c.pass);
+  const optionalFailed = optional.filter(c => !c.pass);
+
+  console.log(
+    `\nBLANK SMOKE: ${required.length - requiredFailed.length}/${required.length} required passed` +
+      (optional.length
+        ? `, ${optional.length - optionalFailed.length}/${optional.length} optional`
+        : '') +
+      '\n'
+  );
+  for (const c of checks) {
+    let tag;
+    if (c.pass) tag = 'PASS';
+    else if (c.optional) tag = 'SKIP';
+    else tag = 'FAIL';
+    const detail = c.detail ? ` — ${c.detail}` : '';
+    console.log(`${tag}  ${c.name}${detail}`);
+  }
+  if (optionalFailed.length) {
+    console.log(
+      '\nNote: SKIP = dev server not running. Start with: npm run electron:dev'
+    );
+  }
+  process.exit(requiredFailed.length ? 1 : 0);
+}
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

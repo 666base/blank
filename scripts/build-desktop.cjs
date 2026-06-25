@@ -94,14 +94,29 @@ function copyArtifacts(sourceDir, targetDir) {
     }
     const from = path.join(sourceDir, entry);
     const to = path.join(targetDir, entry);
-    fs.copyFileSync(from, to);
-    copied.push(to);
+    try {
+      if (fs.existsSync(to)) {
+        fs.unlinkSync(to);
+      }
+      fs.copyFileSync(from, to);
+      copied.push(to);
+    } catch (error) {
+      console.error(
+        `Failed to copy ${entry} to releases/desktop.\n` +
+          `Close Blank if it is running, then retry.\n` +
+          `Detail: ${error?.message || error}`
+      );
+      process.exit(1);
+    }
   }
 
   return copied;
 }
 
-console.log('Step 1/4: Building desktop web bundle (@affine/web)...');
+console.log('Step 1/5: Generating Blank icons...');
+run('node', ['scripts/generate-blank-icons.cjs']);
+
+console.log('Step 2/5: Building desktop web bundle (@affine/web)...');
 if (
   process.env.BLANK_SKIP_WEB_BUNDLE === '1' &&
   fs.existsSync(path.join(webDist, 'index.html'))
@@ -118,9 +133,10 @@ const stagingDir = path.join(
   `blank-desktop-build-${process.pid}`
 );
 cleanDir(stagingDir);
-cleanDir(desktopReleaseDir);
+// Do not rm releases/desktop — Windows locks open EXEs (EPERM). Overwrite in copy step.
+fs.mkdirSync(desktopReleaseDir, { recursive: true });
 
-console.log('Step 2/4: Packaging Windows desktop app with electron-builder...');
+console.log('Step 3/5: Packaging Windows desktop app with electron-builder...');
 console.log(`  Staging output: ${stagingDir}`);
 
 run(
@@ -135,10 +151,10 @@ run(
   { shell: true }
 );
 
-console.log('Step 3/4: Copying installers into releases/desktop...');
+console.log('Step 4/5: Copying installers into releases/desktop...');
 const artifacts = copyArtifacts(stagingDir, desktopReleaseDir);
 
-console.log('Step 4/4: Cleaning temporary build folder...');
+console.log('Step 5/5: Cleaning temporary build folder...');
 cleanDir(stagingDir);
 
 console.log('\nDesktop build finished.');

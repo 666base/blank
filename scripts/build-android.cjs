@@ -179,7 +179,10 @@ function ensureExists(targetPath, label) {
 
 requireAndroidToolchain();
 
-console.log('Step 1/4: Building mobile web bundle (@affine/mobile)...');
+console.log('Step 1/5: Generating Blank icons...');
+run('node', ['scripts/generate-blank-icons.cjs']);
+
+console.log('Step 2/5: Building mobile web bundle (@affine/mobile)...');
 if (
   process.env.BLANK_SKIP_MOBILE_BUNDLE === '1' &&
   fs.existsSync(path.join(mobileDist, 'index.html'))
@@ -192,18 +195,18 @@ ensureExists(path.join(mobileDist, 'index.html'), 'mobile index.html');
 assertMobileBundleUsesLocalAssets();
 
 if (!fs.existsSync(androidDir)) {
-  console.log('Step 2/4: Creating Android project (first run)...');
+  console.log('Step 3/5: Creating Android project (first run)...');
   run('npx', ['cap', 'add', 'android'], { cwd: mobileRoot, shell: true });
 } else {
-  console.log('Step 2/4: Android project already exists.');
+  console.log('Step 3/5: Android project already exists.');
 }
 
-console.log('Step 3/4: Syncing web assets to Android...');
+console.log('Step 4/5: Syncing web assets to Android...');
 run('npx', ['cap', 'sync', 'android'], { cwd: mobileRoot, shell: true });
 
 ensureExists(gradlew, 'Gradle wrapper');
 
-console.log('Step 4/4: Building debug APK...');
+console.log('Step 5/5: Building debug APK...');
 run(gradlew, ['assembleDebug', '--no-daemon'], {
   cwd: androidDir,
   shell: isWindows,

@@ -1,6 +1,6 @@
 # @affine/mobile
 
-Mobile web build for AFFiNE (bottom tabs, touch-first UI).
+Mobile web build for Blank (bottom tabs, touch-first UI).
 
 ```bash
 yarn mobile:dev
