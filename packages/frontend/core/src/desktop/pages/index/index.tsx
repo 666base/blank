@@ -6,6 +6,7 @@ import {
   createFirstAppData,
 } from '@affine/core/utils/first-app-data';
 import { isLocalOnlyMode } from '@affine/core/utils/local-only';
+import { isBlankSyncEnabled } from '@affine/core/utils/sync-config';
 import { DEFAULT_WORKSPACE_NAME } from '@affine/env/constant';
 import { ServerFeature } from '@affine/graphql';
 import {
@@ -57,11 +58,19 @@ export const Component = ({
   );
   const enableLocalWorkspace =
     useLiveData(
-      defaultServerService.server.config$.selector(
-        c =>
+      defaultServerService.server.config$.selector(c => {
+        if (isLocalOnlyMode()) {
+          return true;
+        }
+        if (isBlankSyncEnabled()) {
+          return c.features.includes(ServerFeature.LocalWorkspace);
+        }
+        return (
           c.features.includes(ServerFeature.LocalWorkspace) ||
-          BUILD_CONFIG.isNative
-      )
+          BUILD_CONFIG.isNative ||
+          BUILD_CONFIG.isMobileEdition
+        );
+      })
     ) ?? true;
 
   const workspacesService = useService(WorkspacesService);
@@ -100,6 +109,16 @@ export const Component = ({
 
     if (!isLocalOnlyMode() && !enableLocalWorkspace && !loggedIn) {
       localStorage.removeItem('last_workspace_id');
+      jumpToSignIn();
+      return;
+    }
+
+    if (
+      isBlankSyncEnabled() &&
+      !loggedIn &&
+      list.length === 0 &&
+      !enableLocalWorkspace
+    ) {
       jumpToSignIn();
       return;
     }
@@ -151,6 +170,14 @@ export const Component = ({
 
   useEffect(() => {
     if (listIsLoading || list.length > 0 || !enableLocalWorkspace) {
+      if (
+        isBlankSyncEnabled() &&
+        !loggedIn &&
+        list.length === 0 &&
+        !listIsLoading
+      ) {
+        jumpToSignIn();
+      }
       return;
     }
     if (ensureLocalWorkspaceRef.current) {
@@ -198,9 +225,11 @@ export const Component = ({
   }, [
     jumpToPage,
     openPage,
+    jumpToSignIn,
     workspacesService,
     listIsLoading,
     list,
+    loggedIn,
     enableLocalWorkspace,
     defaultIndexRoute,
   ]);

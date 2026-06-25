@@ -112,6 +112,8 @@ import { DocScope, DocService, DocsService } from '../doc';
 import { DocCreatedByUpdatedBySyncStore } from './stores/doc-created-by-updated-by-sync';
 import { AccessTokenService } from './services/access-token';
 import { AccessTokenStore } from './stores/access-token';
+import { GlobalDialogService } from '../dialogs';
+import { isAiDisabled } from '@affine/core/utils/local-only';
 
 export function configureCloudModule(framework: Framework) {
   configureDefaultAuthProvider(framework);
@@ -138,8 +140,21 @@ export function configureCloudModule(framework: Framework) {
         f.getOptional(ValidatorProvider)
       );
     })
-    .service(AuthService, [AuthStore, NbstoreService])
-    .store(AuthStore, [GlobalState, ServerService])
+    .service(AuthService, [
+      FetchService,
+      AuthStore,
+      UrlService,
+      GlobalDialogService,
+      NbstoreService,
+    ])
+    .store(AuthStore, [
+      FetchService,
+      GraphQLService,
+      GlobalState,
+      ServerService,
+      AuthProvider,
+      NbstoreService,
+    ])
     .entity(AuthSession, [AuthStore])
     .service(SubscriptionService, [SubscriptionStore])
     .store(SubscriptionStore, [GraphQLService, GlobalCache])
@@ -147,14 +162,20 @@ export function configureCloudModule(framework: Framework) {
     .entity(SubscriptionPrices, [ServerService, SubscriptionStore])
     .service(UserQuotaService)
     .store(UserQuotaStore, [NbstoreService])
-    .entity(UserQuota, [AuthService, UserQuotaStore])
-    .service(UserCopilotQuotaService)
-    .store(UserCopilotQuotaStore, [GraphQLService])
-    .entity(UserCopilotQuota, [
-      AuthService,
-      UserCopilotQuotaStore,
-      ServerService,
-    ])
+    .entity(UserQuota, [AuthService, UserQuotaStore]);
+
+  if (!isAiDisabled()) {
+    framework
+      .service(UserCopilotQuotaService)
+      .store(UserCopilotQuotaStore, [GraphQLService])
+      .entity(UserCopilotQuota, [
+        AuthService,
+        UserCopilotQuotaStore,
+        ServerService,
+      ]);
+  }
+
+  framework
     .service(UserFeatureService)
     .entity(UserFeature, [AuthService])
     .service(InvoicesService)

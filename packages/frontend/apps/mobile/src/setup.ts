@@ -1,5 +1,11 @@
 globalThis.__AFFINE_FORCE_MOBILE__ = true;
 
+import { Capacitor } from '@capacitor/core';
+
+if (Capacitor.isNativePlatform()) {
+  globalThis.__CAPACITOR_NATIVE__ = true;
+}
+
 import '@affine/core/bootstrap/browser';
 import '@affine/core/bootstrap/cleanup';
 import '@affine/component/theme';

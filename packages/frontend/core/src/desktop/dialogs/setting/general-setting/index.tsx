@@ -4,6 +4,7 @@ import { MeetingSettingsService } from '@affine/core/modules/media/services/meet
 import { useI18n } from '@affine/i18n';
 import {
   AppearanceIcon,
+  CloudWorkspaceIcon,
   ExperimentIcon,
   FolderIcon,
   InformationIcon,
@@ -24,6 +25,7 @@ import { ExperimentalFeatures } from './experimental-features';
 import { MeetingsSettings } from './meetings';
 import { NotificationSettings } from './notifications';
 import { Shortcuts } from './shortcuts';
+import { BlankSyncSettings } from './sync';
 
 export type GeneralSettingList = SettingSidebarItem[];
 
@@ -92,6 +94,13 @@ export const useGeneralSettingList = (): GeneralSettingList => {
       });
     }
 
+    settings.push({
+      key: 'sync',
+      title: t['com.blank.sync.title'](),
+      icon: <CloudWorkspaceIcon />,
+      testId: 'sync-panel-trigger',
+    });
+
     settings.push(
       {
         key: 'experimental-features',
@@ -132,6 +141,8 @@ export const GeneralSetting = ({ activeTab }: GeneralSettingProps) => {
       return <ExperimentalFeatures />;
     case 'backup':
       return <BackupSettingPanel />;
+    case 'sync':
+      return <BlankSyncSettings />;
     default:
       return null;
   }

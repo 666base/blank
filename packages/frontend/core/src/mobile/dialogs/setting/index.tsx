@@ -7,6 +7,7 @@ import { useI18n } from '@affine/i18n';
 import { AboutGroup } from './about';
 import { AppearanceGroup } from './appearance';
 import { ExperimentalFeatureSetting } from './experimental';
+import { SyncGroup } from './sync';
 import * as styles from './style.css';
 import { SwipeDialog } from './swipe-dialog';
 
@@ -14,6 +15,7 @@ const MobileSetting = () => {
   return (
     <div className={styles.root}>
       <AppearanceGroup />
+      <SyncGroup />
       <AboutGroup />
       <ExperimentalFeatureSetting />
     </div>

@@ -1,10 +1,14 @@
+import { UserFriendlyError } from '@affine/error';
 import type { OAuthProviderType } from '@affine/graphql';
+import { track } from '@affine/track';
 import { OnEvent, Service } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import { distinctUntilChanged, map, skip, type Subscription } from 'rxjs';
 
+import type { GlobalDialogService } from '../../dialogs';
 import { ApplicationFocused } from '../../lifecycle';
 import type { NbstoreService } from '../../storage';
+import type { UrlService } from '../../url';
 import { isLocalOnlyMode } from '../../../utils/local-only';
 import { AuthSession } from '../entities/session';
 import { AccountChanged } from '../events/account-changed';
@@ -12,6 +16,7 @@ import { AccountLoggedIn } from '../events/account-logged-in';
 import { AccountLoggedOut } from '../events/account-logged-out';
 import { ServerStarted } from '../events/server-started';
 import type { AuthStore } from '../stores/auth';
+import type { FetchService } from './fetch';
 
 @OnEvent(ApplicationFocused, e => e.onApplicationFocused)
 @OnEvent(ServerStarted, e => e.onServerStarted)
@@ -20,7 +25,10 @@ export class AuthService extends Service {
   private profileSubscription?: Subscription;
 
   constructor(
+    private readonly fetchService: FetchService,
     private readonly store: AuthStore,
+    private readonly urlService: UrlService,
+    private readonly dialogService: GlobalDialogService,
     private readonly nbstoreService: NbstoreService
   ) {
     super();
@@ -31,8 +39,8 @@ export class AuthService extends Service {
           id: a?.id,
           account: a,
         })),
-        distinctUntilChanged((a, b) => a.id === b.id), // only emit when the value changes
-        skip(1) // skip the initial value
+        distinctUntilChanged((a, b) => a.id === b.id),
+        skip(1)
       )
       .subscribe(({ account }) => {
         if (account === null) {
@@ -93,35 +101,131 @@ export class AuthService extends Service {
     email: string,
     verifyToken?: string,
     challenge?: string,
-    redirectUrl?: string // url to redirect to after signed-in
+    redirectUrl?: string
   ) {
-    this.setClientNonce();
-    return;
+    track.$.$.auth.signIn({ method: 'magic-link' });
+    const magicLinkClientNonce = BUILD_CONFIG.isNative
+      ? this.setClientNonce()
+      : undefined;
+    try {
+      const scheme = this.urlService.getClientScheme();
+      const magicLinkUrlParams = new URLSearchParams();
+      if (redirectUrl) {
+        magicLinkUrlParams.set('redirect_uri', redirectUrl);
+      }
+      if (scheme) {
+        magicLinkUrlParams.set('client', scheme);
+      }
+      await this.fetchService.fetch('/api/auth/sign-in', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          callbackUrl: `/magic-link?${magicLinkUrlParams.toString()}`,
+          client_nonce: magicLinkClientNonce,
+        }),
+        headers: {
+          'content-type': 'application/json',
+          ...(verifyToken ? this.captchaHeaders(verifyToken, challenge) : {}),
+        },
+      });
+    } catch (e) {
+      track.$.$.auth.signInFail({
+        method: 'magic-link',
+        reason: UserFriendlyError.fromAny(e).name,
+      });
+      throw e;
+    }
   }
 
   async signInMagicLink(email: string, token: string, byLink = true) {
-    return;
+    const method = byLink ? 'magic-link' : 'otp';
+    try {
+      await this.store.signInMagicLink(email, token);
+
+      this.session.revalidate();
+      track.$.$.auth.signedIn({ method });
+    } catch (e) {
+      track.$.$.auth.signInFail({
+        method,
+        reason: UserFriendlyError.fromAny(e).name,
+      });
+      throw e;
+    }
   }
 
   async oauthPreflight(
     provider: OAuthProviderType,
     client: string,
-    /** @deprecated*/ redirectUrl?: string
+    redirectUrl?: string
   ): Promise<Record<string, string>> {
-    this.setClientNonce();
-    return {};
+    const clientNonce = this.setClientNonce();
+    try {
+      const res = await this.fetchService.fetch('/api/oauth/preflight', {
+        method: 'POST',
+        body: JSON.stringify({
+          provider,
+          client,
+          redirect_uri: redirectUrl,
+          client_nonce: clientNonce,
+        }),
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
+
+      return await res.json();
+    } catch (e) {
+      track.$.$.auth.signInFail({
+        method: 'oauth',
+        provider,
+        reason: UserFriendlyError.fromAny(e).name,
+      });
+      throw e;
+    }
   }
 
   async signInOauth(code: string, state: string, provider: string) {
-    return { redirectUri: '' };
+    try {
+      const { redirectUri } = await this.store.signInOauth(
+        code,
+        state,
+        provider
+      );
+
+      this.session.revalidate();
+
+      track.$.$.auth.signedIn({ method: 'oauth', provider });
+      return { redirectUri };
+    } catch (e) {
+      track.$.$.auth.signInFail({
+        method: 'oauth',
+        provider,
+        reason: UserFriendlyError.fromAny(e).name,
+      });
+      throw e;
+    }
   }
 
   async createOpenAppSignInCode() {
-    return '';
+    const res = await this.fetchService.fetch(
+      '/api/auth/open-app/sign-in-code',
+      {
+        method: 'POST',
+      }
+    );
+    const body = (await res.json()) as { code?: string };
+
+    if (!body.code) {
+      throw new Error('Missing open-app sign-in code');
+    }
+
+    return body.code;
   }
 
   async signInOpenAppSignInCode(code: string) {
-    return;
+    await this.store.signInOpenAppSignInCode(code);
+
+    this.session.revalidate();
   }
 
   async signInPassword(credential: {
@@ -130,22 +234,39 @@ export class AuthService extends Service {
     verifyToken?: string;
     challenge?: string;
   }) {
-    return;
+    track.$.$.auth.signIn({ method: 'password' });
+    try {
+      const user = await this.store.signInPassword(credential);
+      if (user) {
+        this.store.setCachedSignInUser(user);
+      }
+      this.session.revalidate();
+      track.$.$.auth.signedIn({ method: 'password' });
+    } catch (e) {
+      track.$.$.auth.signInFail({
+        method: 'password',
+        reason: UserFriendlyError.fromAny(e).name,
+      });
+      throw e;
+    }
   }
 
   async signOut() {
+    await this.store.signOut();
     this.store.setCachedAuthSession(null);
     this.session.revalidate();
   }
 
   async deleteAccount() {
+    const res = await this.store.deleteAccount();
     this.store.setCachedAuthSession(null);
     this.session.revalidate();
-    return null;
+    this.dialogService.open('deleted-account', {});
+    return res;
   }
 
   checkUserByEmail(email: string) {
-    return Promise.resolve(null);
+    return this.store.checkUserByEmail(email);
   }
 
   captchaHeaders(token: string, challenge?: string) {

@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { app, BrowserWindow, Menu, net, protocol, shell } = require('electron');
+const { registerBlankDesktopApi } = require('./blank-desktop-api-main.cjs');
 
 const isDev = !app.isPackaged && process.env.NODE_ENV !== 'production';
 const preloadPath = path.join(__dirname, 'preload.cjs');
@@ -111,6 +112,9 @@ function isInternalUrl(targetUrl, appUrl) {
   }
 }
 
+let mainWindow = null;
+let blankApi = null;
+
 function createWindow() {
   const startUrl = getStartUrl();
   const win = new BrowserWindow({
@@ -187,10 +191,15 @@ function createWindow() {
     }
   });
 
+  blankApi?.attachWindow(win);
+  mainWindow = win;
+
   return win;
 }
 
 app.whenReady().then(() => {
+  blankApi = registerBlankDesktopApi(() => mainWindow);
+
   if (app.isPackaged) {
     registerPackagedProtocol();
   }

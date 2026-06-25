@@ -1,3 +1,4 @@
+import { getBlankGithubUrl } from '@affine/core/utils/blank-links';
 import { useI18n } from '@affine/i18n';
 
 import { SettingGroup } from '../group';
@@ -21,22 +22,22 @@ export const OthersGroup = () => {
       />
       <RowLayout
         label={t['com.affine.mobile.setting.others.github']()}
-        href="https://github.com/toeverything/AFFiNE"
+        href={getBlankGithubUrl()}
       />
 
       <RowLayout
         label={t['com.affine.mobile.setting.others.website']()}
-        href="https://affine.pro/"
+        href={getBlankGithubUrl()}
       />
 
       <RowLayout
         label={t['com.affine.mobile.setting.others.privacy']()}
-        href="https://affine.pro/privacy"
+        href={`${getBlankGithubUrl()}#privacy`}
       />
 
       <RowLayout
         label={t['com.affine.mobile.setting.others.terms']()}
-        href="https://affine.pro/terms"
+        href={`${getBlankGithubUrl()}#terms`}
       />
       <DeleteAccount />
     </SettingGroup>

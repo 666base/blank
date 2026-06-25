@@ -36,6 +36,8 @@ declare interface BUILD_CONFIG_TYPE {
 
   CAPTCHA_SITE_KEY: string;
   SENTRY_DSN: string;
+  /** When set, Blank connects to this AFFiNE sync server (desktop + mobile). */
+  blankSyncServerUrl: string;
 }
 
 declare var BUILD_CONFIG: BUILD_CONFIG_TYPE;

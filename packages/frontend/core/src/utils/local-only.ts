@@ -1,10 +1,18 @@
+import { isBlankSyncEnabled } from './sync-config';
+
 declare global {
   // eslint-disable-next-line no-var
   var __ELECTRON_SHELL__: boolean | undefined;
+  // eslint-disable-next-line no-var
+  var __CAPACITOR_NATIVE__: boolean | undefined;
 }
 
 export function isElectronShell() {
   return globalThis.__ELECTRON_SHELL__ === true;
+}
+
+export function isCapacitorNative() {
+  return globalThis.__CAPACITOR_NATIVE__ === true;
 }
 
 export function isDesktopApp() {
@@ -18,11 +26,20 @@ export function isLocalOnlyMode() {
     return false;
   }
 
+  if (explicitSetting === 'true') {
+    return true;
+  }
+
+  if (isBlankSyncEnabled()) {
+    return false;
+  }
+
   return (
-    explicitSetting === 'true' ||
     (BUILD_CONFIG.debug && !environment.isSelfHosted) ||
     (BUILD_CONFIG.isElectron && !environment.isSelfHosted) ||
-    isElectronShell()
+    isElectronShell() ||
+    isCapacitorNative() ||
+    BUILD_CONFIG.isMobileEdition
   );
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@affine/monorepo",
-  "version": "0.27.0",
+  "version": "0.28.0",
   "description": "Blank local notes app",
   "private": true,
   "author": "local",
@@ -32,7 +32,9 @@
     "desktop:build": "node scripts/build-desktop.cjs",
     "android:setup": "powershell -ExecutionPolicy Bypass -File scripts/setup-android-sdk.ps1",
     "android:build": "node scripts/build-android.cjs",
+    "sync:server": "powershell -ExecutionPolicy Bypass -File scripts/setup-sync-server.ps1",
     "test:blank": "node scripts/blank-smoke-test.cjs",
+    "test:electron-shell": "node scripts/verify-electron-shell.cjs",
     "icons:blank": "node scripts/generate-blank-icons.cjs",
     "app:build": "node scripts/build-desktop.cjs && node scripts/build-android.cjs",
     "build": "yarn blank build",

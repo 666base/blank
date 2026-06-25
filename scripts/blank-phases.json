@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "product": "Blank",
+  "strategy": {
+    "sync": "docker-selfhost-first",
+    "supabase": "deferred-phase-5",
+    "ai": "removed-from-bundle",
+    "branding": "blank-user-visible"
+  },
+  "phases": [
+    {
+      "id": "0-foundation",
+      "status": "done",
+      "goal": "Local Blank desktop + Android, no CDN, signed APK",
+      "verify": ["npm run test:blank", "npm run test:electron-shell"]
+    },
+    {
+      "id": "1-sync-auth",
+      "status": "done",
+      "goal": "Restore cloud auth + sync URL + Docker stack",
+      "tasks": [
+        "Restore AuthStore/AuthService/AuthProvider (not stubs)",
+        "Settings > Sync URL (desktop + mobile)",
+        "scripts/selfhost/docker-compose.yml + npm run sync:server",
+        "BLANK_SYNC_SERVER_URL at build time"
+      ],
+      "verify": [
+        "Sign in against self-hosted server",
+        "Cloud workspace syncs between two clients"
+      ]
+    },
+    {
+      "id": "2-branding",
+      "status": "in_progress",
+      "goal": "No user-visible AFFiNE / affine.pro",
+      "tasks": [
+        "Hardcoded strings and URLs in components",
+        "en/bg i18n values",
+        "cloud/constant.ts server labels for Blank sync",
+        "Hide plans/billing when local-only"
+      ],
+      "verify": ["grep affine.pro in packages/frontend/core user paths"]
+    },
+    {
+      "id": "3-ai-removal",
+      "status": "in_progress",
+      "goal": "Zero AI in runtime and minimal AI code in bundle",
+      "tasks": [
+        "isAiDisabled() gates modules",
+        "Detach toolbar from blocksuite/ai",
+        "Skip UserCopilotQuota registration",
+        "Rspack aliases for blocksuite/ai (optional)",
+        "Prune com.affine.ai.* i18n keys"
+      ],
+      "verify": ["dist has no copilot client chunk", "no AI menu in editor"]
+    },
+    {
+      "id": "4-production",
+      "status": "pending",
+      "goal": "Release v0.28+ with sync docs",
+      "tasks": [
+        "VPS + HTTPS + docker compose",
+        "GitHub release EXE + APK with BLANK_SYNC_SERVER_URL",
+        "Smoke test on real phone + desktop"
+      ]
+    },
+    {
+      "id": "5-blank-native-backend",
+      "status": "deferred",
+      "goal": "Optional Supabase/custom sync — no AFFiNE server dependency",
+      "note": "6+ months; new nbstore remote impl + auth + migrations"
+    }
+  ],
+  "rollback": {
+    "local_only": "Clear blank:sync-server-url and reload — local workspaces remain",
+    "auth_break": "Revert packages/frontend/core/src/modules/cloud/stores/auth.ts from git",
+    "build_break": "Unset BLANK_SKIP_WEB_BUNDLE and rebuild"
+  }
+}

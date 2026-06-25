@@ -2,6 +2,7 @@ import { AffineContext } from '@affine/core/components/context';
 import { AppContainer } from '@affine/core/desktop/components/app-container';
 import { router } from '@affine/core/desktop/router';
 import { configureCommonModules } from '@affine/core/modules';
+import { configureElectronShellModules } from '@affine/core/desktop/configure-electron-shell';
 import { I18nProvider } from '@affine/core/modules/i18n';
 import { LifecycleService } from '@affine/core/modules/lifecycle';
 import {
@@ -12,7 +13,7 @@ import { PopupWindowProvider } from '@affine/core/modules/url';
 import { configureBrowserWorkbenchModule } from '@affine/core/modules/workbench';
 import { configureBrowserWorkspaceFlavours } from '@affine/core/modules/workspace-engine';
 import createEmotionCache from '@affine/core/utils/create-emotion-cache';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
+import { isElectronShell, isLocalOnlyMode } from '@affine/core/utils/local-only';
 import { getWorkerUrl } from '@affine/env/worker';
 import { StoreManagerClient } from '@affine/nbstore/worker/client';
 import { setTelemetryTransport } from '@affine/track';
@@ -28,13 +29,10 @@ let storeManagerClient: StoreManagerClient;
 
 const workerUrl = getWorkerUrl('nbstore');
 
-const isElectronShell =
-  typeof navigator !== 'undefined' && /Electron/i.test(navigator.userAgent);
-
 if (
   window.SharedWorker &&
   localStorage.getItem('disableSharedWorker') !== 'true' &&
-  !isElectronShell
+  !isElectronShell()
 ) {
   const worker = new SharedWorker(workerUrl, {
     name: 'affine-shared-worker',
@@ -64,8 +62,12 @@ const future = {
 
 const framework = new Framework();
 configureCommonModules(framework);
-configureBrowserWorkbenchModule(framework);
-configureLocalStorageStateStorageImpls(framework);
+if (isElectronShell()) {
+  configureElectronShellModules(framework);
+} else {
+  configureBrowserWorkbenchModule(framework);
+  configureLocalStorageStateStorageImpls(framework);
+}
 configureBrowserWorkspaceFlavours(framework);
 framework.impl(NbstoreProvider, {
   realtime: storeManagerClient.realtime,

@@ -1,4 +1,3 @@
-// Import is already correct, no changes needed
 import {
   AddPageButton,
   AppDownloadButton,
@@ -15,6 +14,7 @@ import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { FeatureFlagService } from '@affine/core/modules/feature-flag';
 import { CMDKQuickSearchService } from '@affine/core/modules/quicksearch/services/cmdk';
 import type { Workspace } from '@affine/core/modules/workspace';
+import { getBlankChangelogUrl } from '@affine/core/utils/blank-links';
 import { isDesktopApp, isAiDisabled, isLocalOnlyMode } from '@affine/core/utils/local-only';
 import { useI18n } from '@affine/i18n';
 import { track } from '@affine/track';
@@ -249,7 +249,7 @@ export const RootAppSidebar = memo((): ReactElement => {
           <TemplateDocEntrance />
           {!isLocalOnlyMode() ? (
             <ExternalMenuLinkItem
-              href="https://affine.pro/blog?tag=Release+Note"
+              href={getBlankChangelogUrl()}
               icon={<JournalIcon />}
               label={t['com.affine.app-sidebar.learn-more']()}
             />

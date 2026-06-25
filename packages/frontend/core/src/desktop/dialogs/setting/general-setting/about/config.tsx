@@ -1,3 +1,4 @@
+import { getBlankGithubUrl } from '../../../../utils/blank-links';
 import {
   DiscordIcon,
   GithubIcon,
@@ -10,12 +11,12 @@ export const relatedLinks = [
   {
     icon: <GithubIcon />,
     title: 'GitHub',
-    link: 'https://github.com/toeverything/AFFiNE',
+    link: getBlankGithubUrl(),
   },
   {
     icon: <TwitterIcon />,
     title: 'X',
-    link: 'https://twitter.com/AffineOfficial',
+    link: getBlankGithubUrl(),
   },
   {
     icon: <DiscordIcon />,
@@ -25,11 +26,11 @@ export const relatedLinks = [
   {
     icon: <YouTubeIcon />,
     title: 'YouTube',
-    link: 'https://www.youtube.com/@affinepro',
+    link: getBlankGithubUrl(),
   },
   {
     icon: <RedditIcon />,
     title: 'Reddit',
-    link: 'https://www.reddit.com/r/Affine/',
+    link: getBlankGithubUrl(),
   },
 ];

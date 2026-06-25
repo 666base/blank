@@ -12,6 +12,8 @@ import {
   getAFFiNEWorkspaceSchema,
   type WorkspacesService,
 } from '../modules/workspace';
+import { isLocalOnlyMode } from './local-only';
+import { isBlankSyncEnabled } from './sync-config';
 
 export async function buildShowcaseWorkspace(
   workspacesService: WorkspacesService,
@@ -21,13 +23,14 @@ export async function buildShowcaseWorkspace(
   const meta = await workspacesService.create(flavour, async docCollection => {
     docCollection.meta.initialize();
     docCollection.doc.getMap('meta').set('name', workspaceName);
-    const blob = await (await fetch(onboardingUrl)).blob();
-
-    await ZipTransformer.importDocs(
-      docCollection,
-      getAFFiNEWorkspaceSchema(),
-      blob
-    );
+    if (!isLocalOnlyMode()) {
+      const blob = await (await fetch(onboardingUrl)).blob();
+      await ZipTransformer.importDocs(
+        docCollection,
+        getAFFiNEWorkspaceSchema(),
+        blob
+      );
+    }
   });
 
   const { workspace, dispose } = workspacesService.open({ metadata: meta });
@@ -35,6 +38,12 @@ export async function buildShowcaseWorkspace(
   await workspace.engine.doc.waitForDocReady(workspace.id);
 
   const docsService = workspace.scope.get(DocsService);
+
+  if (isLocalOnlyMode()) {
+    const doc = docsService.createDoc({ title: workspaceName });
+    dispose();
+    return { meta, defaultDocId: doc.id };
+  }
 
   // should jump to "Getting Started"
   const defaultDoc = docsService.list.docs$.value.find(p =>
@@ -72,6 +81,9 @@ export async function createFirstAppData(workspacesService: WorkspacesService) {
     return;
   }
   localStorage.setItem('is-first-open', 'false');
+  if (isBlankSyncEnabled()) {
+    return;
+  }
   const { meta, defaultDocId } = await buildShowcaseWorkspace(
     workspacesService,
     'local',

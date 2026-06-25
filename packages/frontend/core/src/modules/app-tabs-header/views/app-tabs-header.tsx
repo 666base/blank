@@ -10,6 +10,7 @@ import {
 import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
 import { useCatchEventCallback } from '@affine/core/components/hooks/use-catch-event-hook';
 import type { AffineDNDData } from '@affine/core/types/dnd';
+import { isDesktopApp } from '@affine/core/utils/local-only';
 import { useI18n } from '@affine/i18n';
 import { track } from '@affine/track';
 import { CloseIcon, PlusIcon, RightSidebarIcon } from '@blocksuite/icons/rc';
@@ -385,8 +386,8 @@ export const AppTabsHeader = ({
   const sidebarOpen = useLiveData(appSidebarService.open$);
   const sidebarResizing = useLiveData(appSidebarService.resizing$);
 
-  const isMacosDesktop = BUILD_CONFIG.isElectron && environment.isMacOs;
-  const isWindowsDesktop = BUILD_CONFIG.isElectron && environment.isWindows;
+  const isMacosDesktop = isDesktopApp() && environment.isMacOs;
+  const isWindowsDesktop = isDesktopApp() && environment.isWindows;
   const fullScreen = useIsFullScreen();
 
   const desktopApi = useService(DesktopApiService);

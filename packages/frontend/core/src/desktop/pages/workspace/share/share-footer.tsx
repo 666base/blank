@@ -1,3 +1,4 @@
+import { getBlankDownloadUrl } from '@affine/core/utils/blank-links';
 import { useI18n } from '@affine/i18n';
 import { ArrowRightBigIcon } from '@blocksuite/icons/rc';
 
@@ -13,7 +14,7 @@ export const ShareFooter = () => {
         </div>
         <a
           className={styles.getStartLink}
-          href="https://affine.pro/"
+          href={getBlankDownloadUrl()}
           target="_blank"
           rel="noreferrer"
         >

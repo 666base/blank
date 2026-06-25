@@ -125,12 +125,44 @@ function requireAndroidToolchain() {
   console.log(`Using ANDROID_HOME=${androidHome}`);
 }
 
+function assertNoAiInBundle(distDir, label) {
+  if (!fs.existsSync(distDir)) return;
+  const suspicious = [
+    'edgeless-copilot',
+    'AIChatContent',
+    'copilot-client',
+    'registerAIAppEffects',
+  ];
+  const walk = dir => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (/\.js$/i.test(entry.name)) {
+        const text = fs.readFileSync(full, 'utf8');
+        for (const needle of suspicious) {
+          if (text.includes(needle)) {
+            console.error(
+              `${label}: AI artifact "${needle}" found in ${path.relative(root, full)}`
+            );
+            process.exit(1);
+          }
+        }
+      }
+    }
+  };
+  walk(distDir);
+  console.log(`  Verified ${label} bundle has no obvious AI modules.`);
+}
+
 function bundleMobile() {
   const bundleEnv = {
     ...process.env,
-    // Capacitor APK serves assets from file:// — must be local paths, not CDN.
     PUBLIC_PATH: '/',
+    BLANK_NO_AI: '1',
   };
+  if (bundleEnv.BLANK_SYNC_SERVER_URL) {
+    console.log(`Sync server URL baked in: ${bundleEnv.BLANK_SYNC_SERVER_URL}`);
+  }
 
   if (process.env.npm_execpath) {
     run(process.execPath, [
@@ -193,6 +225,7 @@ if (
 }
 ensureExists(path.join(mobileDist, 'index.html'), 'mobile index.html');
 assertMobileBundleUsesLocalAssets();
+assertNoAiInBundle(path.join(mobileDist, 'js'), 'mobile');
 
 if (!fs.existsSync(androidDir)) {
   console.log('Step 3/5: Creating Android project (first run)...');
@@ -204,30 +237,47 @@ if (!fs.existsSync(androidDir)) {
 console.log('Step 4/5: Syncing web assets to Android...');
 run('npx', ['cap', 'sync', 'android'], { cwd: mobileRoot, shell: true });
 
+run('node', ['scripts/android/ensure-keystore.cjs']);
+run('node', ['scripts/patch-android-signing.cjs']);
+
 ensureExists(gradlew, 'Gradle wrapper');
 
-console.log('Step 5/5: Building debug APK...');
-run(gradlew, ['assembleDebug', '--no-daemon'], {
+const packageVersion = JSON.parse(
+  fs.readFileSync(path.join(root, 'package.json'), 'utf8')
+).version;
+
+console.log('Step 5/5: Building release APK (signed for sideload)...');
+run(gradlew, ['assembleRelease', '--no-daemon'], {
   cwd: androidDir,
   shell: isWindows,
 });
 
 const apkPath = path.join(
   androidDir,
-  'app/build/outputs/apk/debug/app-debug.apk'
+  'app/build/outputs/apk/release/app-release.apk'
 );
 ensureExists(apkPath, 'APK');
 
 const releasesDir = path.join(root, 'releases/android');
 fs.mkdirSync(releasesDir, { recursive: true });
-const releaseApk = path.join(releasesDir, 'Blank-debug.apk');
+const releaseApk = path.join(releasesDir, `Blank-${packageVersion}.apk`);
+const releaseApkLatest = path.join(releasesDir, 'Blank.apk');
 fs.copyFileSync(apkPath, releaseApk);
+fs.copyFileSync(apkPath, releaseApkLatest);
+
+// Remove legacy debug artifact name if present
+const legacyDebug = path.join(releasesDir, 'Blank-debug.apk');
+if (fs.existsSync(legacyDebug)) {
+  try {
+    fs.unlinkSync(legacyDebug);
+  } catch {
+    // ignore
+  }
+}
 
 console.log('\nAndroid build finished.');
 console.log(`APK: ${releaseApk}`);
+console.log(`Also: ${releaseApkLatest}`);
 console.log(
-  '\nCopy this file to your phone and install it (enable "Install unknown apps" if asked).'
-);
-console.log(
-  'For a signed Play Store release, configure signing and run assembleRelease.'
+  '\nInstall from GitHub: signed release APK (not debug). Play Protect may still ask once — choose Install anyway.'
 );

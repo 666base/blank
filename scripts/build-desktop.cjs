@@ -21,12 +21,44 @@ function run(command, args, options = {}) {
   }
 }
 
+function assertNoAiInBundle(distDir, label) {
+  if (!fs.existsSync(distDir)) return;
+  const suspicious = [
+    'edgeless-copilot',
+    'AIChatContent',
+    'copilot-client',
+    'registerAIAppEffects',
+  ];
+  const walk = dir => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (/\.js$/i.test(entry.name)) {
+        const text = fs.readFileSync(full, 'utf8');
+        for (const needle of suspicious) {
+          if (text.includes(needle)) {
+            console.error(
+              `${label}: AI artifact "${needle}" found in ${path.relative(root, full)}`
+            );
+            process.exit(1);
+          }
+        }
+      }
+    }
+  };
+  walk(distDir);
+  console.log(`  Verified ${label} bundle has no obvious AI modules.`);
+}
+
 function bundleWeb() {
   const bundleEnv = {
     ...process.env,
-    // Packaged Electron loads from blank:// — assets must be relative, not CDN.
     PUBLIC_PATH: '/',
+    BLANK_NO_AI: '1',
   };
+  if (bundleEnv.BLANK_SYNC_SERVER_URL) {
+    console.log(`Sync server URL baked in: ${bundleEnv.BLANK_SYNC_SERVER_URL}`);
+  }
 
   if (process.env.npm_execpath) {
     run(process.execPath, [
@@ -113,6 +145,69 @@ function copyArtifacts(sourceDir, targetDir) {
   return copied;
 }
 
+function assertElectronPackageIncludesShell(stagingDir) {
+  const candidates = [
+    path.join(stagingDir, 'win-unpacked/resources/app.asar'),
+    path.join(stagingDir, 'resources/app.asar'),
+  ];
+  const asarPath = candidates.find(p => fs.existsSync(p));
+  if (!asarPath) {
+    console.error('Could not find app.asar in electron-builder output to verify shell files.');
+    process.exit(1);
+  }
+
+  const result = spawnSync(
+    'npx',
+    ['--yes', '@electron/asar', 'list', asarPath],
+    { encoding: 'utf8', shell: true }
+  );
+  if (result.status !== 0) {
+    console.error('Failed to read app.asar for verification.');
+    process.exit(result.status || 1);
+  }
+
+  const listing = result.stdout || '';
+  const required = [
+    'scripts/local-electron/main.cjs',
+    'scripts/local-electron/preload.cjs',
+    'scripts/local-electron/blank-desktop-api-main.cjs',
+    'scripts/local-electron/kv-store.cjs',
+  ];
+  const missing = required.filter(
+    file => !listing.includes(file) && !listing.includes(file.replace(/\//g, '\\'))
+  );
+  if (missing.length) {
+    console.error('Electron package is missing required shell files:');
+    for (const file of missing) {
+      console.error(`  ${file}`);
+    }
+    process.exit(1);
+  }
+  console.log('  Verified electron shell modules inside app.asar');
+}
+
+function cleanStaleDesktopReleaseArtifacts() {
+  const staleRoots = [
+    path.join(root, 'releases/desktop-build'),
+    path.join(desktopReleaseDir, 'win-unpacked'),
+    path.join(desktopReleaseDir, 'win-unpacked.tmp'),
+  ];
+  for (const dir of staleRoots) {
+    cleanDir(dir);
+  }
+  const stalePortable = path.join(desktopReleaseDir, 'Blank-Portable-0.27.0.exe');
+  if (fs.existsSync(stalePortable)) {
+    try {
+      fs.unlinkSync(stalePortable);
+      console.log('  removed stale Blank-Portable (portable builds disabled)');
+    } catch (error) {
+      console.warn(
+        `Could not remove stale portable EXE (close Blank if running): ${error?.message || error}`
+      );
+    }
+  }
+}
+
 console.log('Step 1/5: Generating Blank icons...');
 run('node', ['scripts/generate-blank-icons.cjs']);
 
@@ -127,6 +222,7 @@ if (
 }
 ensureExists(path.join(webDist, 'index.html'), 'web index.html');
 assertDesktopBundleUsesLocalAssets();
+assertNoAiInBundle(path.join(webDist, 'js'), 'desktop web');
 
 const stagingDir = path.join(
   os.tmpdir(),
@@ -151,8 +247,11 @@ run(
   { shell: true }
 );
 
-console.log('Step 4/5: Copying installers into releases/desktop...');
+assertElectronPackageIncludesShell(stagingDir);
+
+console.log('Step 4/5: Copying installer into releases/desktop...');
 const artifacts = copyArtifacts(stagingDir, desktopReleaseDir);
+cleanStaleDesktopReleaseArtifacts();
 
 console.log('Step 5/5: Cleaning temporary build folder...');
 cleanDir(stagingDir);
@@ -163,9 +262,7 @@ if (artifacts.length) {
     console.log(`  ${path.relative(root, file)}`);
   }
 } else {
-  console.log('  Check releases/desktop/ for Blank-Setup and Blank-Portable EXE files.');
+  console.log('  Check releases/desktop/ for Blank-Setup-*.exe.');
 }
 
-console.log(
-  '\nInstall on PC: run Blank-Setup-*.exe, or use Blank-Portable-*.exe without install.'
-);
+console.log('\nInstall on PC: run Blank-Setup-*.exe (normal Windows installer).');

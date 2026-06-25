@@ -19,6 +19,7 @@ import { useLiveData, useService, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
 
 import { AuthService, ServerService } from '../../../../modules/cloud';
+import { isAiDisabled } from '../../../../utils/local-only';
 import type { SettingState } from '../types';
 import { AIUsagePanel } from './ai-usage-panel';
 import { DeleteAccount } from './delete-account';
@@ -245,7 +246,7 @@ export const AccountSetting = ({
           </Button>
         </SettingRow>
         <StoragePanel onChangeSettingState={onChangeSettingState} />
-        {serverFeatures?.copilot && (
+        {serverFeatures?.copilot && !isAiDisabled() && (
           <AIUsagePanel onChangeSettingState={onChangeSettingState} />
         )}
         <IntegrationsPanel onChangeSettingState={onChangeSettingState} />

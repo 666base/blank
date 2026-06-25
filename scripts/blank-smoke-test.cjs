@@ -71,9 +71,8 @@ async function main() {
   })());
 
   for (const rel of [
-    'releases/desktop/Blank-Portable-0.27.0.exe',
-    'releases/desktop/Blank-Setup-0.27.0.exe',
-    'releases/android/Blank-debug.apk',
+    'releases/desktop/Blank-Setup-0.28.0.exe',
+    'releases/android/Blank.apk',
   ]) {
     const p = path.join(root, rel);
     const mb = fs.existsSync(p)
@@ -83,6 +82,23 @@ async function main() {
   }
 
   ok('isAiDisabled in local-only', read('packages/frontend/core/src/utils/local-only.ts')?.includes('isAiDisabled'));
+  ok('blank sync config', read('packages/frontend/core/src/utils/sync-config.ts')?.includes('getBlankSyncServerUrl'));
+  ok('sync server docker compose', fs.existsSync(path.join(root, 'scripts/selfhost/docker-compose.yml')));
+  ok('blank phases roadmap', fs.existsSync(path.join(root, 'scripts/blank-phases.json')));
+  ok(
+    'auth not stubbed',
+    read('packages/frontend/core/src/modules/cloud/stores/auth.ts')?.includes(
+      "fetch('/api/auth/session'"
+    )
+  );
+  ok(
+    'blank links helper',
+    read('packages/frontend/core/src/utils/blank-links.ts')?.includes('666base/blank')
+  );
+  ok(
+    'build config github url',
+    read('tools/utils/src/build-config.ts')?.includes('666base/blank')
+  );
   ok('desktop PUBLIC_PATH in build script', read('scripts/build-desktop.cjs')?.includes("PUBLIC_PATH: '/'"));
   ok('android PUBLIC_PATH in build script', read('scripts/build-android.cjs')?.includes("PUBLIC_PATH: '/'"));
 
@@ -93,6 +109,13 @@ async function main() {
   ok('Blank favicon-192', fs.existsSync(path.join(root, 'packages/frontend/core/public/favicon-192.png')));
   ok('Blank electron icon', fs.existsSync(path.join(root, 'scripts/local-electron/build/icon.ico')));
   ok('channel appIconMap blank', read('packages/frontend/core/src/utils/channel.ts')?.includes('/imgs/blank-app-icon.png'));
+  ok(
+    'electron-builder packs shell api',
+    read('electron-builder.json')?.includes('blank-desktop-api-main.cjs') ||
+      read('electron-builder.json')?.includes('scripts/local-electron/**/*')
+  );
+  ok('mobile local-only mode', read('packages/frontend/core/src/utils/local-only.ts')?.includes('isMobileEdition'));
+  ok('android release apk script', read('scripts/build-android.cjs')?.includes('assembleRelease'));
 
   // Optional: dev server if running
   const devInfo = path.join(root, '.blank/electron-dev-server.json');

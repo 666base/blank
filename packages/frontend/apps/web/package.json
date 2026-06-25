@@ -1,6 +1,6 @@
 {
   "name": "@affine/web",
-  "version": "0.27.0",
+  "version": "0.28.0",
   "description": "Blank Desktop Web application",
   "private": true,
   "browser": "src/index.tsx",

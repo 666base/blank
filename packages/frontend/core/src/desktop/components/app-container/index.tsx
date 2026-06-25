@@ -82,7 +82,7 @@ const DesktopLayout = ({
         ) : (
           isInWorkspace && <RootAppSidebar />
         )}
-        <MainContainer>{children}</MainContainer>
+        <MainContainer fallback={fallback}>{children}</MainContainer>
       </div>
     </div>
   );
@@ -99,7 +99,7 @@ const BrowserLayout = ({
     <div className={styles.browserAppViewContainer}>
       {!isLocalOnlyMode() ? <OpenInAppCard /> : null}
       {fallback ? <AppSidebarFallback /> : isInWorkspace && <RootAppSidebar />}
-      <MainContainer>{children}</MainContainer>
+      <MainContainer fallback={fallback}>{children}</MainContainer>
     </div>
   );
 };
@@ -111,8 +111,11 @@ const LayoutComponent =
 
 const MainContainer = forwardRef<
   HTMLDivElement,
-  PropsWithChildren<HTMLAttributes<HTMLDivElement>>
->(function MainContainer({ className, children, ...props }, ref): ReactElement {
+  PropsWithChildren<HTMLAttributes<HTMLDivElement> & { fallback?: boolean }>
+>(function MainContainer(
+  { className, children, fallback = false, ...props },
+  ref
+): ReactElement {
   const workspaceService = useServiceOptional(WorkspaceService);
   const isInWorkspace = !!workspaceService;
   const { appSettings } = useAppSettingHelper();

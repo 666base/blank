@@ -14,8 +14,7 @@ export const AnimateInTooltip = ({
   return (
     <>
       <div className={styles.tooltip}>
-        AFFiNE is a workspace with fully merged docs, <br />
-        whiteboards and databases
+        Blank is your notes workspace — docs, boards, and lists in one place.
       </div>
       <div className={styles.next}>
         {visible ? (

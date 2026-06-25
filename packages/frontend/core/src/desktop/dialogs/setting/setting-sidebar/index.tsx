@@ -6,6 +6,7 @@ import { AuthService } from '@affine/core/modules/cloud';
 import { GlobalDialogService } from '@affine/core/modules/dialogs';
 import type { SettingTab } from '@affine/core/modules/dialogs/constant';
 import { type WorkspaceMetadata } from '@affine/core/modules/workspace';
+import { isBlankBuild } from '@affine/core/utils/blank-links';
 import { isLocalOnlyMode } from '@affine/core/utils/local-only';
 import { useI18n } from '@affine/i18n';
 import { track } from '@affine/track';
@@ -41,6 +42,9 @@ export const UserInfo = ({
   const account = useLiveData(useService(AuthService).session.account$);
 
   const onClick = useCatchEventCallback(() => {
+    if (isLocalOnlyMode() || isBlankBuild()) {
+      return;
+    }
     onTabChange('plans', null);
   }, [onTabChange]);
 

@@ -67,7 +67,7 @@ export const ScrollableLayout = ({
         <div className={styles.linkGroup}>
           <a
             className={styles.link}
-            href="https://affine.pro/terms"
+            href={BUILD_CONFIG.githubUrl || 'https://github.com/666base/blank'}
             target="_blank"
             rel="noreferrer"
           >
@@ -76,7 +76,7 @@ export const ScrollableLayout = ({
           <Divider orientation="vertical" />
           <a
             className={styles.link}
-            href="https://affine.pro/privacy"
+            href={`${BUILD_CONFIG.githubUrl || 'https://github.com/666base/blank'}#privacy`}
             target="_blank"
             rel="noreferrer"
           >

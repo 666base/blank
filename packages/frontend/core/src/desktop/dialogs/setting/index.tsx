@@ -29,6 +29,7 @@ import {
 } from 'react';
 import { flushSync } from 'react-dom';
 
+import { isBlankBuild } from '@affine/core/utils/blank-links';
 import { AccountSetting } from './account-setting';
 import { GeneralSetting } from './general-setting';
 import { IssueFeedbackModal } from './issue-feedback-modal';
@@ -224,6 +225,7 @@ const SettingModalInner = ({
                   ) : null}
                 </Suspense>
               </div>
+              {!isBlankBuild() ? (
               <div className={style.footer}>
                 <ContactWithUsIcon fontSize={16} />
                 <Trans
@@ -244,10 +246,23 @@ const SettingModalInner = ({
                   }}
                 />
               </div>
+              ) : (
+              <div className={style.footer}>
+                <ContactWithUsIcon fontSize={16} />
+                <span
+                  className={style.link}
+                  onClick={handleOpenIssueFeedbackModal}
+                >
+                  Send feedback
+                </span>
+              </div>
+              )}
+              {!isBlankBuild() ? (
               <StarAFFiNEModal
                 open={openStarAFFiNEModal}
                 setOpen={setOpenStarAFFiNEModal}
               />
+              ) : null}
               <IssueFeedbackModal
                 open={openIssueFeedbackModal}
                 setOpen={setOpenIssueFeedbackModal}

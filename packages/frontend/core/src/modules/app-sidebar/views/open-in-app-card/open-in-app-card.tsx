@@ -1,8 +1,5 @@
 import { Button, Checkbox, IconButton } from '@affine/component';
-import {
-  OpenInAppService,
-  OpenLinkMode,
-} from '@affine/core/modules/open-in-app';
+import { getBlankDownloadUrl } from '@affine/core/utils/blank-links';
 import { appIconMap } from '@affine/core/utils';
 import { Trans, useI18n } from '@affine/i18n';
 import { CloseIcon } from '@blocksuite/icons/rc';
@@ -60,7 +57,7 @@ export const OpenInAppCard = () => {
           <Trans i18nKey="com.affine.open-in-app.card.subtitle">
             Don&apos;t have the app?
             <a
-              href="https://affine.pro/download"
+              href={getBlankDownloadUrl()}
               target="_blank"
               rel="noreferrer"
               className={styles.link}

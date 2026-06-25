@@ -5,9 +5,16 @@ import {
 } from '@affine/graphql';
 
 import { isLocalOnlyMode } from '../../utils/local-only';
+import { isBlankBuild } from '../../utils/blank-links';
+import { getBlankSyncServerUrl, isBlankSyncEnabled } from '../../utils/sync-config';
 import type { ServerConfig, ServerMetadata } from './types';
 
 const LOCAL_ONLY_SERVER_FEATURES = [ServerFeature.LocalWorkspace];
+
+const BLANK_SYNC_SERVER_FEATURES = [
+  ServerFeature.Indexer,
+  ServerFeature.OAuth,
+];
 
 const AFFINE_CLOUD_SERVER_FEATURES = [
   ServerFeature.Indexer,
@@ -51,6 +58,20 @@ function localBuiltinServer(baseUrl: string) {
   };
 }
 
+function blankSyncServer(baseUrl: string) {
+  return {
+    id: 'affine-cloud' as const,
+    baseUrl,
+    config: {
+      serverName: 'Blank Sync',
+      features: BLANK_SYNC_SERVER_FEATURES,
+      oauthProviders: [],
+      type: ServerDeploymentType.Selfhosted,
+      credentialsRequirement: serverCredentials,
+    },
+  };
+}
+
 function affineCloudServer(baseUrl: string) {
   return {
     id: 'affine-cloud' as const,
@@ -66,6 +87,10 @@ function affineCloudServer(baseUrl: string) {
 }
 
 function buildCloudServers(): (ServerMetadata & { config: ServerConfig })[] {
+  if (isBlankBuild()) {
+    return [];
+  }
+
   if (environment.isSelfHosted) {
     return [
       {
@@ -132,7 +157,14 @@ function buildCloudServers(): (ServerMetadata & { config: ServerConfig })[] {
 export const BUILD_IN_SERVERS: (ServerMetadata & { config: ServerConfig })[] =
   isLocalOnlyMode()
     ? [localBuiltinServer(getLocalBuiltinBaseUrl())]
-    : buildCloudServers();
+    : isBlankSyncEnabled()
+      ? [blankSyncServer(getBlankSyncServerUrl()!)]
+      : (() => {
+          const servers = buildCloudServers();
+          return servers.length
+            ? servers
+            : [localBuiltinServer(getLocalBuiltinBaseUrl())];
+        })();
 
 export type TelemetryChannel =
   | 'stable'

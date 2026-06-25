@@ -41,9 +41,9 @@ export function getBuildConfig(
         appVersion: pkg.version,
         // editorVersion: pkg.dependencies['@blocksuite/affine'],
         editorVersion: pkg.version,
-        githubUrl: '',
-        changelogUrl: '',
-        downloadUrl: '',
+        githubUrl: 'https://github.com/666base/blank',
+        changelogUrl: 'https://github.com/666base/blank/releases',
+        downloadUrl: 'https://github.com/666base/blank/releases',
         pricingUrl: '',
         discordUrl: '',
         requestLicenseUrl: '',
@@ -51,6 +51,7 @@ export function getBuildConfig(
         linkPreviewUrl: '',
         CAPTCHA_SITE_KEY: process.env.CAPTCHA_SITE_KEY ?? '',
         SENTRY_DSN: process.env.SENTRY_DSN ?? '',
+        blankSyncServerUrl: process.env.BLANK_SYNC_SERVER_URL ?? '',
       };
     },
     get beta() {

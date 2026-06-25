@@ -15,14 +15,18 @@ import { PopupWindowProvider } from '@affine/core/modules/url';
 import { configureBrowserWorkbenchModule } from '@affine/core/modules/workbench';
 import { configureBrowserWorkspaceFlavours } from '@affine/core/modules/workspace-engine';
 import createEmotionCache from '@affine/core/utils/create-emotion-cache';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
+import {
+  isCapacitorNative,
+  isElectronShell,
+  isLocalOnlyMode,
+} from '@affine/core/utils/local-only';
 import { getWorkerUrl } from '@affine/env/worker';
 import { StoreManagerClient } from '@affine/nbstore/worker/client';
 import { setTelemetryTransport } from '@affine/track';
 import { CacheProvider } from '@emotion/react';
 import { Framework, FrameworkRoot, getCurrentStore } from '@toeverything/infra';
 import { OpClient } from '@toeverything/infra/op';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
 const cache = createEmotionCache();
@@ -30,10 +34,13 @@ const cache = createEmotionCache();
 let storeManagerClient: StoreManagerClient;
 
 const workerUrl = getWorkerUrl('nbstore');
+const preferDedicatedWorker =
+  isElectronShell() || isCapacitorNative() || BUILD_CONFIG.isMobileEdition;
 
 if (
   window.SharedWorker &&
-  localStorage.getItem('disableSharedWorker') !== 'true'
+  localStorage.getItem('disableSharedWorker') !== 'true' &&
+  !preferDedicatedWorker
 ) {
   const worker = new SharedWorker(workerUrl, { name: 'affine-shared-worker' });
   storeManagerClient = new StoreManagerClient(new OpClient(worker.port));
@@ -150,6 +157,10 @@ window.addEventListener('focus', () => {
 frameworkProvider.get(LifecycleService).applicationStart();
 
 export function App() {
+  useEffect(() => {
+    document.getElementById('blank-boot-splash')?.remove();
+  }, []);
+
   return (
     <Suspense fallback={<AppFallback />}>
       <FrameworkRoot framework={frameworkProvider}>

@@ -46,9 +46,9 @@ export const ImportPage = ({
     <div className={importPageBodyStyle}>
       <div className="title">Import</div>
       <span>
-        AFFiNE will gradually support more and more file types for import.&nbsp;
+        Blank supports more import formats over time.&nbsp;
         <a
-          href="https://affine.pro/redirect/discord"
+          href={BUILD_CONFIG.githubUrl || 'https://github.com/666base/blank'}
           target="_blank"
           rel="noreferrer"
         >
@@ -72,7 +72,7 @@ export const ImportPage = ({
         title="Notion"
         right={
           <Tooltip
-            content={'Learn how to Import your Notion pages into AFFiNE.'}
+            content={'Learn how to import your Notion pages into Blank.'}
           >
             <HelpIcon width={20} height={20} />
           </Tooltip>

@@ -1,5 +1,6 @@
 import { notify } from '@affine/component';
-import { isMindmapChild, isMindMapRoot } from '@affine/core/blocksuite/ai/utils/edgeless';
+import { getBlankDownloadUrl } from '@affine/core/utils/blank-links';
+import { isMindmapChild, isMindMapRoot } from '@affine/core/blocksuite/utils/edgeless-mindmap';
 import { EditorService } from '@affine/core/modules/editor';
 import { apis } from '@affine/electron-api';
 import { I18n } from '@affine/i18n';
@@ -114,7 +115,7 @@ export function copyAsImage(std: BlockStdScope) {
           key: 'download',
           label: I18n.t('com.affine.copy.asImage.notAvailable.action'),
           onClick: () => {
-            window.open('https://affine.pro/download');
+            window.open(getBlankDownloadUrl());
           },
         },
       ],

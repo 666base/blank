@@ -1,7 +1,6 @@
 import { Divider } from '@affine/component';
 import { SettingHeader } from '@affine/component/setting-components';
 import { useI18n } from '@affine/i18n';
-import { ArrowRightBigIcon } from '@blocksuite/icons/rc';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 import { type ReactNode, useRef } from 'react';
 
@@ -12,15 +11,9 @@ export const SeeAllLink = () => {
   const t = useI18n();
 
   return (
-    <a
-      className={styles.allPlansLink}
-      href="https://affine.pro/pricing"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <span className={styles.allPlansLink}>
       {t['com.affine.payment.see-all-plans']()}
-      {<ArrowRightBigIcon width="16" height="16" />}
-    </a>
+    </span>
   );
 };
 
@@ -61,7 +54,7 @@ export interface PlanCardProps {
   scrollRef?: React.RefObject<HTMLDivElement>;
 }
 export const CloudPlanLayout = ({
-  title = 'AFFiNE Cloud',
+  title = 'Blank Cloud',
   caption,
   select,
   toggle,

@@ -21,6 +21,41 @@ import {
 
 const require = createRequire(import.meta.url);
 
+function createBlankAiIgnorePlugin() {
+  if (process.env.BLANK_NO_AI !== '1') {
+    return null;
+  }
+
+  const allowAiPaths = [
+    '/blocksuite/ai/blocks/ai-chat-block/model',
+    '/blocksuite/ai/blocks/transcription-block/model',
+    '/blocksuite/store-extensions/ai/',
+    '/blocksuite/view-extensions/ai/',
+  ];
+
+  return new rspack.IgnorePlugin({
+    checkResource(resource) {
+      const id = resource.replace(/\\/g, '/');
+      const blockedPaths = [
+        '/blocksuite/ai/',
+        '/modules/ai-button/',
+        '/workspace-indexer-embedding/',
+        '/pages/workspace/chat/',
+        '/detail-page/tabs/chat',
+        '/ai-chat-block-peek-view/',
+        '/components/affine/ai-onboarding/',
+      ];
+      if (!blockedPaths.some(p => id.includes(p))) {
+        return false;
+      }
+      if (allowAiPaths.some(p => id.includes(p))) {
+        return false;
+      }
+      return true;
+    },
+  });
+}
+
 const IN_CI = !!process.env.CI;
 const hasSentryBuildEnvs = () =>
   !!(
@@ -304,6 +339,7 @@ export function createHTMLTargetConfig(
     //#region plugins
     plugins: compact([
       !IN_CI && new rspack.ProgressPlugin(),
+      createBlankAiIgnorePlugin(),
       ...createHTMLPlugins(buildConfig, htmlConfig),
       new rspack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
