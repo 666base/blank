@@ -209,7 +209,7 @@ export const Component = ({
     return fallback ?? <AppContainer fallback />;
   }
 
-  if (isLocalOnlyMode()) {
+  if (isLocalOnlyMode() && list.length === 0) {
     return fallback ?? <AppContainer fallback />;
   }
 

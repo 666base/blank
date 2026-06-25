@@ -25,3 +25,8 @@ export function isLocalOnlyMode() {
     isElectronShell()
   );
 }
+
+/** Blank builds ship without AFFiNE Copilot / inline AI. */
+export function isAiDisabled() {
+  return true;
+}

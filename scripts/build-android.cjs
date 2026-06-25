@@ -126,6 +126,12 @@ function requireAndroidToolchain() {
 }
 
 function bundleMobile() {
+  const bundleEnv = {
+    ...process.env,
+    // Capacitor APK serves assets from file:// — must be local paths, not CDN.
+    PUBLIC_PATH: '/',
+  };
+
   if (process.env.npm_execpath) {
     run(process.execPath, [
       process.env.npm_execpath,
@@ -135,13 +141,33 @@ function bundleMobile() {
       'bundle',
       '-p',
       '@affine/mobile',
-    ]);
+    ], { env: bundleEnv });
     return;
   }
 
   run('yarn', ['blank', 'bundle', '-p', '@affine/mobile'], {
     shell: isWindows,
+    env: bundleEnv,
   });
+}
+
+function assertMobileBundleUsesLocalAssets() {
+  const indexHtml = path.join(mobileDist, 'index.html');
+  const html = fs.readFileSync(indexHtml, 'utf8');
+  if (/affineassets\.com/i.test(html)) {
+    console.error(
+      'Mobile bundle must not load JS/CSS from affineassets CDN.\n' +
+        'Rebuild with npm run android:build (uses PUBLIC_PATH=/).'
+    );
+    process.exit(1);
+  }
+  if (!/src="\/js\//.test(html) && !/src='\/js\//.test(html)) {
+    console.error(
+      'Mobile bundle index.html has no local /js/ script tags.\n' +
+        'Expected PUBLIC_PATH=/ for Capacitor packaging.'
+    );
+    process.exit(1);
+  }
 }
 
 function ensureExists(targetPath, label) {
@@ -154,8 +180,16 @@ function ensureExists(targetPath, label) {
 requireAndroidToolchain();
 
 console.log('Step 1/4: Building mobile web bundle (@affine/mobile)...');
-bundleMobile();
+if (
+  process.env.BLANK_SKIP_MOBILE_BUNDLE === '1' &&
+  fs.existsSync(path.join(mobileDist, 'index.html'))
+) {
+  console.log('  Skipping mobile bundle (BLANK_SKIP_MOBILE_BUNDLE=1, dist exists).');
+} else {
+  bundleMobile();
+}
 ensureExists(path.join(mobileDist, 'index.html'), 'mobile index.html');
+assertMobileBundleUsesLocalAssets();
 
 if (!fs.existsSync(androidDir)) {
   console.log('Step 2/4: Creating Android project (first run)...');

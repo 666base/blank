@@ -5,6 +5,7 @@ import {
   StoreExtensionProvider,
 } from '@blocksuite/affine/ext-loader';
 
+/** Schema-only: keeps existing docs readable without loading AI UI. */
 export class AIStoreExtension extends StoreExtensionProvider {
   override name = 'affine-store-extensions';
 

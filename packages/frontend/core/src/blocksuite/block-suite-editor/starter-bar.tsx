@@ -1,8 +1,4 @@
 import { MenuSeparator } from '@affine/component';
-import {
-  handleInlineAskAIAction,
-  pageAIGroups,
-} from '@affine/core/blocksuite/ai';
 import { useEnableAI } from '@affine/core/components/hooks/affine/use-enable-ai';
 import { DocsService } from '@affine/core/modules/doc';
 import { EditorService } from '@affine/core/modules/editor';
@@ -13,13 +9,8 @@ import {
 } from '@affine/core/modules/template-doc/view/template-list-menu';
 import { useI18n } from '@affine/i18n';
 import track from '@affine/track';
-import { PageRootBlockComponent } from '@blocksuite/affine/blocks/root';
 import type { Store } from '@blocksuite/affine/store';
-import {
-  AiIcon,
-  EdgelessIcon,
-  TemplateColoredIcon,
-} from '@blocksuite/icons/rc';
+import { EdgelessIcon, TemplateColoredIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import {
@@ -91,48 +82,27 @@ const StarterBarNotEmpty = ({ doc }: { doc: Store }) => {
     setTemplateMenuOpen(open);
   }, []);
 
-  const startWithAI = useCallback(() => {
-    const std = editorService.editor.editorContainer$.value?.std;
-    if (!std) return;
-
-    const rootBlockId = std.host.store.root?.id;
-    if (!rootBlockId) return;
-
-    const rootComponent = std.view.getBlock(rootBlockId);
-    if (!(rootComponent instanceof PageRootBlockComponent)) return;
-
-    const { id, created } = rootComponent.focusFirstParagraph();
-    if (created) {
-      const subscription = std.view.viewUpdated.subscribe(v => {
-        if (v.id === id) {
-          subscription.unsubscribe();
-          handleInlineAskAIAction(std.host, pageAIGroups);
-        }
-      });
-    } else {
-      handleInlineAskAIAction(std.host, pageAIGroups);
-    }
-  }, [editorService.editor]);
-
   const showTemplate = !isTemplate;
 
   if (!enableAI && !showTemplate) {
-    return null;
+    return (
+      <div className={styles.root} data-testid="starter-bar">
+        {t['com.affine.page-starter-bar.start']()}
+        <ul className={styles.badges}>
+          <Badge
+            icon={<EdgelessIcon />}
+            text={t['com.affine.page-starter-bar.edgeless']()}
+            onClick={startWithEdgeless}
+          />
+        </ul>
+      </div>
+    );
   }
 
   return (
     <div className={styles.root} data-testid="starter-bar">
       {t['com.affine.page-starter-bar.start']()}
       <ul className={styles.badges}>
-        {enableAI ? (
-          <Badge
-            data-testid="start-with-ai-badge"
-            icon={<AiIcon className={styles.aiIcon} />}
-            text={t['com.affine.page-starter-bar.ai']()}
-            onClick={startWithAI}
-          />
-        ) : null}
-
         {showTemplate ? (
           <TemplateListMenu
             onSelect={handleSelectTemplate}

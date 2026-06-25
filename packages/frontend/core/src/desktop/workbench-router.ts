@@ -1,10 +1,16 @@
 import type { RouteObject } from 'react-router-dom';
 
+import { isAiDisabled } from '@affine/core/utils/local-only';
+
 export const workbenchRoutes = [
-  {
-    path: '/chat',
-    lazy: () => import('./pages/workspace/chat/index'),
-  },
+  ...(isAiDisabled()
+    ? []
+    : [
+        {
+          path: '/chat',
+          lazy: () => import('./pages/workspace/chat/index'),
+        },
+      ]),
   {
     path: '/all',
     lazy: () => import('./pages/workspace/all-page/all-page'),

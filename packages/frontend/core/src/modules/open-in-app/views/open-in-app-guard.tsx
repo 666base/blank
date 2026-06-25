@@ -1,9 +1,13 @@
 import { useLiveData, useService } from '@toeverything/infra';
-import { Fragment, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { isElectronShell, isLocalOnlyMode } from '../../../utils/local-only';
 import { OpenInAppService } from '../services';
 import { OpenInAppPage } from './open-in-app-page';
+
+const BypassOpenInAppGuard = ({ children }: { children: React.ReactNode }) => (
+  <>{children}</>
+);
 
 /**
  * Web only guard to open the URL in desktop app for different conditions
@@ -41,6 +45,7 @@ const WebOpenInAppGuard = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const OpenInAppGuard = environment.isMobile
-  ? Fragment
-  : WebOpenInAppGuard;
+export const OpenInAppGuard =
+  environment.isMobile || isLocalOnlyMode() || isElectronShell()
+    ? BypassOpenInAppGuard
+    : WebOpenInAppGuard;

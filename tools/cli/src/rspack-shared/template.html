@@ -43,6 +43,22 @@
   </head>
 
   <body>
-    <div id="app" data-version="<%= GIT_SHORT_SHA %>"></div>
+    <div id="app" data-version="<%= GIT_SHORT_SHA %>">
+      <div
+        id="blank-boot-splash"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          margin: 0;
+          font-family: system-ui, sans-serif;
+          background: #121212;
+          color: #e8e8e8;
+        "
+      >
+        Loading Blank…
+      </div>
+    </div>
   </body>
 </html>

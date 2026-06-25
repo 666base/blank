@@ -1,5 +1,5 @@
 import { notify } from '@affine/component';
-import { isMindmapChild, isMindMapRoot } from '@affine/core/blocksuite/ai';
+import { isMindmapChild, isMindMapRoot } from '@affine/core/blocksuite/ai/utils/edgeless';
 import { EditorService } from '@affine/core/modules/editor';
 import { apis } from '@affine/electron-api';
 import { I18n } from '@affine/i18n';

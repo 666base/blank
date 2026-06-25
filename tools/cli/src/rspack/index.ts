@@ -329,6 +329,16 @@ export function createHTMLTargetConfig(
             {
               // copy the shared public assets into dist
               from: new Package('@affine/core').join('public').value,
+              globOptions: {
+                ignore: [
+                  '**/onboarding/**',
+                  '**/static/**',
+                  '**/*.mp4',
+                  '**/*.gif',
+                  'imgs/screenshot*.png',
+                  'imgs/screenshot*.webp',
+                ],
+              },
             },
           ],
         }),

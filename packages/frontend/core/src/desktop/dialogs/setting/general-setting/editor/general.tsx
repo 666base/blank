@@ -30,6 +30,7 @@ import {
 } from '@affine/core/modules/editor-setting';
 import { SpellCheckSettingService } from '@affine/core/modules/editor-setting/services/spell-check-setting';
 import { FeatureFlagService } from '@affine/core/modules/feature-flag';
+import { isAiDisabled } from '@affine/core/utils/local-only';
 import {
   type FontData,
   SystemFontFamilyService,
@@ -679,7 +680,7 @@ export const General = () => {
 
   return (
     <SettingWrapper title={t['com.affine.settings.editorSettings.general']()}>
-      <AISettings />
+      {!isAiDisabled() ? <AISettings /> : null}
       <FontFamilySettings />
       <CustomFontFamilySettings />
       <FontSizeSettings />

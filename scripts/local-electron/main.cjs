@@ -47,6 +47,10 @@ function registerPackagedProtocol() {
     if (relativePath.startsWith('/')) {
       relativePath = relativePath.slice(1);
     }
+    // blank://app/index.html — hostname is not part of the filesystem path
+    if (!relativePath && url.hostname && url.hostname !== 'localhost') {
+      relativePath = 'index.html';
+    }
     if (!relativePath || relativePath.endsWith('/')) {
       relativePath = 'index.html';
     }

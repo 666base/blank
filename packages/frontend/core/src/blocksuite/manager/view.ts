@@ -1,4 +1,4 @@
-import type { ReactToLit } from '@affine/component';
+import { isAiDisabled } from '@affine/core/utils/local-only';
 import { AIViewExtension } from '@affine/core/blocksuite/view-extensions/ai';
 import { CloudViewExtension } from '@affine/core/blocksuite/view-extensions/cloud';
 import { CodeBlockPreviewViewExtension } from '@affine/core/blocksuite/view-extensions/code-block-preview';
@@ -95,7 +95,7 @@ class ViewProvider {
       CloudViewExtension,
       PdfViewExtension,
       MobileViewExtension,
-      AIViewExtension,
+      ...(isAiDisabled() ? [] : [AIViewExtension]),
       ElectronViewExtension,
       AffineLinkPreviewExtension,
       AffineDatabaseViewExtension,
@@ -133,7 +133,7 @@ class ViewProvider {
   }
 
   private readonly _initDefaultConfig = () => {
-    this.config
+    let config = this.config
       .foundation()
       .theme()
       .editorView()
@@ -145,15 +145,20 @@ class ViewProvider {
       .cloud()
       .turboRenderer()
       .pdf()
-      .mobile()
-      .ai()
+      .mobile();
+
+    if (!isAiDisabled()) {
+      config = config.ai();
+    }
+
+    config
       .electron()
       .linkPreview()
       .codeBlockPreview()
       .iconPicker()
       .comment();
 
-    return this.config;
+    return config;
   };
 
   private readonly _configureFoundation = (framework?: FrameworkProvider) => {
@@ -261,7 +266,7 @@ class ViewProvider {
           return placeholders[model.props.type] ?? '';
         },
       });
-    } else if (enableAI) {
+    } else if (enableAI && !isAiDisabled()) {
       this._manager.configure(ParagraphViewExtension, {
         getPlaceholder: model => {
           const placeholders = {

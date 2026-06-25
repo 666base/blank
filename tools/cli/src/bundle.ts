@@ -32,6 +32,12 @@ type WorkerConfig = { name: string };
 type CreateWorkerTargetConfig = (pkg: Package, entry: string) => WorkerConfig;
 type BaseWorkerOptions = {
   includeMermaidAndTypst?: boolean;
+  includePdf?: boolean;
+};
+
+const BLANK_SLIM_WORKERS: BaseWorkerOptions = {
+  includeMermaidAndTypst: false,
+  includePdf: false,
 };
 
 function assertRspackSupportedPackage(pkg: Package) {
@@ -60,6 +66,7 @@ function getBaseWorkerConfigs(
 ) {
   const core = new Package('@affine/core');
   const includeMermaidAndTypst = options.includeMermaidAndTypst ?? true;
+  const includePdf = options.includePdf ?? true;
 
   const workerConfigs = [
     createWorkerTargetConfig(
@@ -70,15 +77,22 @@ function getBaseWorkerConfigs(
     ),
     createWorkerTargetConfig(
       pkg,
-      core.srcPath.join('modules/pdf/renderer/pdf.worker.ts').value
-    ),
-    createWorkerTargetConfig(
-      pkg,
       core.srcPath.join(
         'blocksuite/view-extensions/turbo-renderer/turbo-painter.worker.ts'
       ).value
     ),
   ];
+
+  if (includePdf) {
+    workerConfigs.splice(
+      1,
+      0,
+      createWorkerTargetConfig(
+        pkg,
+        core.srcPath.join('modules/pdf/renderer/pdf.worker.ts').value
+      )
+    );
+  }
 
   if (includeMermaidAndTypst) {
     workerConfigs.push(
@@ -104,7 +118,8 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
     case '@affine/mobile': {
       const workerConfigs = getBaseWorkerConfigs(
         pkg,
-        createRspackWorkerTargetConfig
+        createRspackWorkerTargetConfig,
+        BLANK_SLIM_WORKERS
       );
       workerConfigs.push(
         createRspackWorkerTargetConfig(
@@ -128,7 +143,7 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
       const workerConfigs = getBaseWorkerConfigs(
         pkg,
         createRspackWorkerTargetConfig,
-        { includeMermaidAndTypst: false }
+        BLANK_SLIM_WORKERS
       );
       workerConfigs.push(
         createRspackWorkerTargetConfig(
@@ -151,7 +166,7 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
       const workerConfigs = getBaseWorkerConfigs(
         pkg,
         createRspackWorkerTargetConfig,
-        { includeMermaidAndTypst: false }
+        BLANK_SLIM_WORKERS
       );
 
       return [

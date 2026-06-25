@@ -22,6 +22,12 @@ function run(command, args, options = {}) {
 }
 
 function bundleWeb() {
+  const bundleEnv = {
+    ...process.env,
+    // Packaged Electron loads from blank:// — assets must be relative, not CDN.
+    PUBLIC_PATH: '/',
+  };
+
   if (process.env.npm_execpath) {
     run(process.execPath, [
       process.env.npm_execpath,
@@ -31,11 +37,33 @@ function bundleWeb() {
       'bundle',
       '-p',
       '@affine/web',
-    ]);
+    ], { env: bundleEnv });
     return;
   }
 
-  run('yarn', ['blank', 'bundle', '-p', '@affine/web'], { shell: isWindows });
+  run('yarn', ['blank', 'bundle', '-p', '@affine/web'], {
+    shell: isWindows,
+    env: bundleEnv,
+  });
+}
+
+function assertDesktopBundleUsesLocalAssets() {
+  const indexHtml = path.join(webDist, 'index.html');
+  const html = fs.readFileSync(indexHtml, 'utf8');
+  if (/affineassets\.com/i.test(html)) {
+    console.error(
+      'Desktop bundle must not load JS/CSS from affineassets CDN.\n' +
+        'Rebuild with npm run desktop:build (uses PUBLIC_PATH=/).'
+    );
+    process.exit(1);
+  }
+  if (!/src="\/js\//.test(html) && !/src='\/js\//.test(html)) {
+    console.error(
+      'Desktop bundle index.html has no local /js/ script tags.\n' +
+        'Expected PUBLIC_PATH=/ for Electron packaging.'
+    );
+    process.exit(1);
+  }
 }
 
 function ensureExists(targetPath, label) {
@@ -83,6 +111,7 @@ if (
   bundleWeb();
 }
 ensureExists(path.join(webDist, 'index.html'), 'web index.html');
+assertDesktopBundleUsesLocalAssets();
 
 const stagingDir = path.join(
   os.tmpdir(),

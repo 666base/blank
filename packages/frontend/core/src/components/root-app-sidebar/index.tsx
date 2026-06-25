@@ -15,7 +15,7 @@ import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { FeatureFlagService } from '@affine/core/modules/feature-flag';
 import { CMDKQuickSearchService } from '@affine/core/modules/quicksearch/services/cmdk';
 import type { Workspace } from '@affine/core/modules/workspace';
-import { isDesktopApp, isLocalOnlyMode } from '@affine/core/utils/local-only';
+import { isDesktopApp, isAiDisabled, isLocalOnlyMode } from '@affine/core/utils/local-only';
 import { useI18n } from '@affine/i18n';
 import { track } from '@affine/track';
 import type { Store } from '@blocksuite/affine/store';
@@ -104,7 +104,7 @@ const AIChatButton = () => {
     workbench.location$.selector(location => location.pathname === '/chat')
   );
 
-  if (!enableAI || !serverFeatures?.copilot) {
+  if (!enableAI || !serverFeatures?.copilot || isAiDisabled()) {
     return null;
   }
 

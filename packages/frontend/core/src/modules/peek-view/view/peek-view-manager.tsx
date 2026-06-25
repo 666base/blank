@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { ActivePeekView } from '../entities/peek-view';
 import { PeekViewService } from '../services/peek-view';
-import { AIChatBlockPeekView } from './ai-chat-block-peek-view';
 import { AttachmentPreviewPeekView } from './attachment-preview';
 import { DocPeekPreview } from './doc-preview';
 import {
@@ -53,7 +52,7 @@ function renderPeekView({ info }: ActivePeekView, animating?: boolean) {
   }
 
   if (info.type === 'ai-chat-block') {
-    return <AIChatBlockPeekView model={info.model} host={info.host} />;
+    return null;
   }
 
   return null; // unreachable

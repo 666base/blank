@@ -1,4 +1,5 @@
 import { configureQuotaModule } from '@affine/core/modules/quota';
+import { isAiDisabled } from '@affine/core/utils/local-only';
 import { type Framework } from '@toeverything/infra';
 
 import {
@@ -115,12 +116,15 @@ export function configureCommonModules(framework: Framework) {
   configSearchMenuModule(framework);
   configureDndModule(framework);
   configureCommonGlobalStorageImpls(framework);
-  configureAIReasoningModule(framework);
-  configureAIPlaygroundModule(framework);
-  configureAIButtonModule(framework);
-  configureAIDraftModule(framework);
-  configureAIToolsConfigModule(framework);
-  configureAIModelModule(framework);
+  if (!isAiDisabled()) {
+    configureAIReasoningModule(framework);
+    configureAIPlaygroundModule(framework);
+    configureAIButtonModule(framework);
+    configureAIDraftModule(framework);
+    configureAIToolsConfigModule(framework);
+    configureAIModelModule(framework);
+    configureIndexerEmbeddingModule(framework);
+  }
   configureTemplateDocModule(framework);
   configureBlobManagementModule(framework);
   configureMediaModule(framework);
@@ -129,7 +133,6 @@ export function configureCommonModules(framework: Framework) {
   configureIntegrationModule(framework);
   configureWorkspacePropertyModule(framework);
   configureCollectionRulesModule(framework);
-  configureIndexerEmbeddingModule(framework);
   configureCommentModule(framework);
   configureDocSummaryModule(framework);
   configurePaywallModule(framework);

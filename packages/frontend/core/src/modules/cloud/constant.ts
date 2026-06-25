@@ -7,11 +7,7 @@ import {
 import { isLocalOnlyMode } from '../../utils/local-only';
 import type { ServerConfig, ServerMetadata } from './types';
 
-const LOCAL_ONLY_SERVER_FEATURES = [
-  ServerFeature.Copilot,
-  ServerFeature.CopilotEmbedding,
-  ServerFeature.LocalWorkspace,
-];
+const LOCAL_ONLY_SERVER_FEATURES = [ServerFeature.LocalWorkspace];
 
 const AFFINE_CLOUD_SERVER_FEATURES = [
   ServerFeature.Indexer,

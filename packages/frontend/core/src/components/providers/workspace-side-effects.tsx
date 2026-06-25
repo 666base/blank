@@ -3,35 +3,19 @@ import {
   pushGlobalLoadingEventAtom,
   resolveGlobalLoadingEventAtom,
 } from '@affine/component/global-loading';
-import {
-  AIAppEvents,
-  createAIRequestService,
-  setupAIProvider,
-} from '@affine/core/blocksuite/ai';
 import { useRegisterFindInPageCommands } from '@affine/core/components/hooks/affine/use-register-find-in-page-commands';
 import { useRegisterWorkspaceCommands } from '@affine/core/components/hooks/use-register-workspace-commands';
 import { OverCapacityNotification } from '@affine/core/components/over-capacity';
-import {
-  AuthService,
-  EventSourceService,
-  GraphQLService,
-} from '@affine/core/modules/cloud';
-import {
-  GlobalDialogService,
-  WorkspaceDialogService,
-} from '@affine/core/modules/dialogs';
 import { DocsService } from '@affine/core/modules/doc';
 import { EditorSettingService } from '@affine/core/modules/editor-setting';
 import { useRegisterNavigationCommands } from '@affine/core/modules/navigation/view/use-register-navigation-commands';
 import { QuickSearchContainer } from '@affine/core/modules/quicksearch';
-import { NbstoreService } from '@affine/core/modules/storage';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import {
   getAFFiNEWorkspaceSchema,
   WorkspaceService,
 } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import type { DocMode } from '@blocksuite/affine/model';
 import { ZipTransformer } from '@blocksuite/affine/widgets/linked-doc';
 import {
@@ -104,14 +88,7 @@ export const WorkspaceSideEffects = () => {
       })
     );
 
-    const disposable = AIAppEvents.requestInsertTemplate.subscribe(
-      ({ template, mode }) => {
-        insertTemplate({ template, mode });
-      }
-    );
-
     return () => {
-      disposable.unsubscribe();
       insertTemplate.unsubscribe();
     };
   }, [
@@ -121,48 +98,6 @@ export const WorkspaceSideEffects = () => {
     resolveGlobalLoadingEvent,
     t,
     workbench,
-  ]);
-
-  const workspaceDialogService = useService(WorkspaceDialogService);
-  const globalDialogService = useService(GlobalDialogService);
-
-  useEffect(() => {
-    const disposable = AIAppEvents.requestUpgradePlan.subscribe(() => {
-      workspaceDialogService.open('setting', {
-        activeTab: 'billing',
-      });
-      track.$.paywall.aiAction.viewPlans();
-    });
-    return () => {
-      disposable.unsubscribe();
-    };
-  }, [workspaceDialogService]);
-
-  const graphqlService = useService(GraphQLService);
-  const eventSourceService = useService(EventSourceService);
-  const authService = useService(AuthService);
-  const nbstoreService = useService(NbstoreService);
-
-  useEffect(() => {
-    const dispose = setupAIProvider(
-      createAIRequestService(
-        graphqlService.gql,
-        eventSourceService.eventSource,
-        nbstoreService.realtime
-      ),
-      globalDialogService,
-      authService
-    );
-    return () => {
-      dispose();
-    };
-  }, [
-    eventSourceService,
-    nbstoreService,
-    workspaceDialogService,
-    graphqlService,
-    globalDialogService,
-    authService,
   ]);
 
   useRegisterWorkspaceCommands();

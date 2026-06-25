@@ -8,7 +8,6 @@ import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-he
 import { PageDetailEditor } from '@affine/core/components/page-detail-editor';
 import { DetailPageWrapper } from '@affine/core/desktop/pages/workspace/detail-page/detail-page-wrapper';
 import { PageHeader } from '@affine/core/mobile/components';
-import { AIButtonService } from '@affine/core/modules/ai-button';
 import { ServerService } from '@affine/core/modules/cloud';
 import { DocService } from '@affine/core/modules/doc';
 import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
@@ -79,7 +78,6 @@ const DetailPageImpl = ({
     workspaceService,
     globalContextService,
     featureFlagService,
-    aIButtonService,
   } = useServices({
     WorkbenchService,
     ViewService,
@@ -88,7 +86,6 @@ const DetailPageImpl = ({
     WorkspaceService,
     GlobalContextService,
     FeatureFlagService,
-    AIButtonService,
   });
   const editor = editorService.editor;
   const workspace = workspaceService.workspace;
@@ -108,9 +105,6 @@ const DetailPageImpl = ({
     featureFlagService.flags.enable_mobile_keyboard_toolbar.value;
   const enableEdgelessEditing =
     featureFlagService.flags.enable_mobile_edgeless_editing.value;
-  const enableAIButton = useLiveData(
-    featureFlagService.flags.enable_mobile_ai_button.$
-  );
 
   // TODO(@eyhn): remove jotai here
   const [_, setActiveBlockSuiteEditor] = useActiveBlocksuiteEditor();
@@ -136,15 +130,6 @@ const DetailPageImpl = ({
       globalContext.docMode.set(null);
     };
   }, [doc, globalContext, mode]);
-
-  useEffect(() => {
-    if (!enableAIButton) return;
-    aIButtonService.presentAIButton(true);
-
-    return () => {
-      aIButtonService.presentAIButton(false);
-    };
-  }, [aIButtonService, enableAIButton]);
 
   useEffect(() => {
     globalContext.isTrashDoc.set(!!isInTrash);

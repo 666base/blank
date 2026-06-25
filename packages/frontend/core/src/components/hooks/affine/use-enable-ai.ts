@@ -1,5 +1,6 @@
 import { ServerService } from '@affine/core/modules/cloud';
 import { FeatureFlagService } from '@affine/core/modules/feature-flag';
+import { isAiDisabled } from '@affine/core/utils/local-only';
 import { useLiveData, useService } from '@toeverything/infra';
 
 export const useEnableAI = () => {
@@ -8,7 +9,11 @@ export const useEnableAI = () => {
 
   const serverService = useService(ServerService);
   const serverConfig = useLiveData(serverService.server.features$);
-  const aiConfig = serverConfig.copilot;
+  const aiConfig = serverConfig?.copilot;
+
+  if (isAiDisabled()) {
+    return false;
+  }
 
   return aiFeature && aiConfig;
 };

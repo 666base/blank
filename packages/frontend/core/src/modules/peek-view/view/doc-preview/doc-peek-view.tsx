@@ -1,6 +1,5 @@
 import { Scrollable } from '@affine/component';
 import { PageDetailLoading } from '@affine/component/page-detail-skeleton';
-import { AIAppEvents, type AIChatParams } from '@affine/core/blocksuite/ai';
 import type { AffineEditorContainer } from '@affine/core/blocksuite/block-suite-editor';
 import { EditorOutlineViewer } from '@affine/core/blocksuite/outline-viewer';
 import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
@@ -20,7 +19,6 @@ import {
 } from '@toeverything/infra';
 import clsx from 'clsx';
 import { lazy, Suspense, useCallback, useEffect } from 'react';
-import type { Subscription } from 'rxjs';
 
 import { WorkbenchService } from '../../../workbench/services/workbench';
 import type { DocReferenceInfo } from '../../entities/peek-view';
@@ -124,23 +122,6 @@ function DocPeekPreviewEditor({
     },
     [editor, mode, peekView, xywh]
   );
-
-  useEffect(() => {
-    const disposables: Subscription[] = [];
-    const openHandler = (params: AIChatParams | null) => {
-      if (!params) {
-        return;
-      }
-      if (doc) {
-        workbench.openDoc(doc.id);
-        peekView.close();
-        // chat panel open is already handled in <DetailPageImpl />
-      }
-    };
-    disposables.push(AIAppEvents.requestOpenWithChat.subscribe(openHandler));
-    disposables.push(AIAppEvents.requestSendWithChat.subscribe(openHandler));
-    return () => disposables.forEach(d => d.unsubscribe());
-  }, [doc, peekView, workbench, workspace.id]);
 
   const openOutlinePanel = useCallback(() => {
     workbench.openDoc(doc.id);

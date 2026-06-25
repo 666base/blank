@@ -16,7 +16,7 @@ export const AFFINE_FLAGS = {
       'com.affine.settings.workspace.experimental-features.enable-ai.description',
     hide: true,
     configurable: true,
-    defaultState: true,
+    defaultState: false,
   },
   enable_ai_network_search: {
     category: 'affine',
@@ -26,7 +26,7 @@ export const AFFINE_FLAGS = {
       'com.affine.settings.workspace.experimental-features.enable-ai-network-search.description',
     hide: true,
     configurable: false,
-    defaultState: true,
+    defaultState: false,
   },
   enable_ai_playground: {
     category: 'affine',
@@ -34,8 +34,9 @@ export const AFFINE_FLAGS = {
       'com.affine.settings.workspace.experimental-features.enable-ai-model-switch.name',
     description:
       'com.affine.settings.workspace.experimental-features.enable-ai-model-switch.description',
-    configurable: isCanaryBuild || isLocalDesktop,
-    defaultState: isCanaryBuild || isLocalDesktop,
+    hide: true,
+    configurable: false,
+    defaultState: false,
   },
   enable_edgeless_text: {
     category: 'blocksuite',
@@ -64,8 +65,9 @@ export const AFFINE_FLAGS = {
       'com.affine.settings.workspace.experimental-features.enable-ai-chat-block.name',
     description:
       'com.affine.settings.workspace.experimental-features.enable-ai-chat-block.description',
+    hide: true,
     configurable: false,
-    defaultState: true,
+    defaultState: false,
   },
   enable_ai_onboarding: {
     category: 'blocksuite',
@@ -75,7 +77,7 @@ export const AFFINE_FLAGS = {
     description:
       'com.affine.settings.workspace.experimental-features.enable-ai-onboarding.description',
     configurable: false,
-    defaultState: true,
+    defaultState: false,
   },
   enable_mind_map_import: {
     category: 'blocksuite',
@@ -187,7 +189,7 @@ export const AFFINE_FLAGS = {
     description:
       'com.affine.settings.workspace.experimental-features.enable-pdf-embed-preview.description',
     configurable: !isMobile,
-    defaultState: true,
+    defaultState: false,
   },
   enable_editor_rtl: {
     category: 'affine',
@@ -202,8 +204,9 @@ export const AFFINE_FLAGS = {
     category: 'affine',
     displayName: 'Enable AI Button',
     description: 'Enable AI Button on mobile',
-    configurable: isMobile && isIOS,
-    defaultState: isMobile && isIOS,
+    hide: true,
+    configurable: false,
+    defaultState: false,
   },
   enable_mermaid_wasm_native_renderer: {
     category: 'affine',
@@ -211,7 +214,7 @@ export const AFFINE_FLAGS = {
     description:
       'Use the new Mermaid renderer backend. Web uses WASM, desktop uses native, and mobile always uses native. The native renderer is more than 10x faster, but its styling/aesthetic quality and the types of graphics it supports are not as good as the JS version.',
     configurable: !isIOS && !isAndroid,
-    defaultState: isIOS || isAndroid,
+    defaultState: false,
   },
   enable_turbo_renderer: {
     category: 'blocksuite',
@@ -286,8 +289,9 @@ export const AFFINE_FLAGS = {
       'com.affine.settings.workspace.experimental-features.enable-ai-send-detailed-object.name',
     description:
       'com.affine.settings.workspace.experimental-features.enable-ai-send-detailed-object.description',
-    configurable: true,
-    defaultState: true,
+    hide: true,
+    configurable: false,
+    defaultState: false,
   },
   enable_battery_save_mode: {
     category: 'affine',
@@ -312,7 +316,7 @@ export const AFFINE_FLAGS = {
     description:
       'Experimental export PDFs support, it may contain the wrong style.',
     configurable: true,
-    defaultState: isLocalDesktop,
+    defaultState: false,
   },
 } satisfies { [key in string]: FlagInfo };
 

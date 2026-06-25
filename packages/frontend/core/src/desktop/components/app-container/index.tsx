@@ -1,4 +1,5 @@
 import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
+import { PageDetailLoading } from '@affine/component/page-detail-skeleton';
 import { RootAppSidebar } from '@affine/core/components/root-app-sidebar';
 import { AppSidebarService } from '@affine/core/modules/app-sidebar';
 import {
@@ -129,7 +130,7 @@ const MainContainer = forwardRef<
       data-testid="main-container"
       ref={ref}
     >
-      {children}
+      {fallback && !children ? <PageDetailLoading /> : children}
     </div>
   );
 });
