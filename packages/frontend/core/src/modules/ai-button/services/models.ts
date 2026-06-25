@@ -1,0 +1,107 @@
+import { getPromptModelsQuery } from '@affine/graphql';
+import {
+  createSignalFromObservable,
+  type Signal,
+} from '@blocksuite/affine/shared/utils';
+import { signal } from '@preact/signals-core';
+import { LiveData, Service } from '@toeverything/infra';
+
+import type { GraphQLService } from '../../cloud';
+import type { GlobalStateService } from '../../storage';
+
+const AI_MODEL_ID_KEY = 'AIModelId';
+const LOCAL_FALLBACK_MODEL_ID = 'local-default';
+
+export interface AIModel {
+  name: string;
+  id: string;
+  version: string;
+  category: string;
+  isPro: boolean;
+  isDefault: boolean;
+}
+
+export class AIModelService extends Service {
+  modelId: Signal<string | undefined>;
+
+  models: Signal<AIModel[]> = signal([]);
+
+  private readonly modelId$ = LiveData.from(
+    this.globalStateService.globalState.watch<string>(AI_MODEL_ID_KEY),
+    undefined
+  );
+
+  constructor(
+    private readonly globalStateService: GlobalStateService,
+    private readonly gqlService: GraphQLService
+  ) {
+    super();
+
+    const { signal: modelId, cleanup } = createSignalFromObservable<
+      string | undefined
+    >(this.modelId$, undefined);
+    this.modelId = modelId;
+    this.disposables.push(cleanup);
+
+    this.init().catch(err => {
+      console.error(err);
+    });
+  }
+
+  resetModel = () => {
+    this.globalStateService.globalState.set(AI_MODEL_ID_KEY, undefined);
+  };
+
+  setModel = (modelId: string) => {
+    if (modelId === LOCAL_FALLBACK_MODEL_ID) {
+      this.resetModel();
+      return;
+    }
+    this.globalStateService.globalState.set(AI_MODEL_ID_KEY, modelId);
+  };
+
+  private readonly init = async () => {
+    await this.initModels();
+  };
+
+  private readonly initModels = async (prompt?: string) => {
+    const promptName = prompt || 'Chat With AFFiNE AI';
+    const models = await this.getModelsByPrompt(promptName);
+    if (models) {
+      const { defaultModel, optionalModels, proModels } = models;
+      this.models.value = optionalModels.map(model => {
+        const [category] = model.name.split(' ');
+        const version = model.name.slice(category.length + 1);
+        return {
+          name: model.name,
+          id: model.id,
+          version,
+          category,
+          isPro: proModels.some(proModel => proModel.id === model.id),
+          isDefault: model.id === defaultModel,
+        };
+      });
+    } else {
+      this.models.value = [
+        {
+          name: 'Local AI',
+          id: LOCAL_FALLBACK_MODEL_ID,
+          version: 'Default',
+          category: 'Local',
+          isPro: false,
+          isDefault: true,
+        },
+      ];
+    }
+  };
+
+  private readonly getModelsByPrompt = async (promptName: string) => {
+    return this.gqlService
+      .gql({
+        query: getPromptModelsQuery,
+        variables: { promptName },
+      })
+      .then(res => res.currentUser?.copilot?.models)
+      .catch(() => null);
+  };
+}

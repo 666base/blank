@@ -1,0 +1,32 @@
+{
+  "name": "@affine/mobile",
+  "version": "0.27.0",
+  "description": "Blank Mobile Web application",
+  "private": true,
+  "browser": "src/index.tsx",
+  "scripts": {
+    "build": "blank bundle",
+    "dev": "blank bundle --dev"
+  },
+  "dependencies": {
+    "@affine/component": "workspace:*",
+    "@affine/core": "workspace:*",
+    "@affine/env": "workspace:*",
+    "@affine/nbstore": "workspace:*",
+    "@affine/track": "workspace:*",
+    "@blocksuite/affine": "workspace:*",
+    "@capacitor/android": "^7.6.5",
+    "@capacitor/core": "^7.6.5",
+    "@emotion/react": "^11.14.0",
+    "@toeverything/infra": "workspace:*",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-router-dom": "^6.30.4"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.6.5",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "typescript": "^5.9.3"
+  }
+}

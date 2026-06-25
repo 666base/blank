@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+  "appId": "pro.local.blank",
+  "productName": "Blank",
+  "copyright": "Copyright © 2026",
+  "directories": {
+    "output": "releases/desktop",
+    "buildResources": "scripts/local-electron/build"
+  },
+  "files": [
+    "scripts/local-electron/main.cjs",
+    "scripts/local-electron/preload.cjs"
+  ],
+  "extraResources": [
+    {
+      "from": "packages/frontend/apps/web/dist",
+      "to": "web",
+      "filter": ["**/*"]
+    }
+  ],
+  "asar": true,
+  "win": {
+    "icon": "scripts/local-electron/build/icon.ico",
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64"]
+      }
+    ]
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "artifactName": "Blank-Setup-${version}.${ext}"
+  },
+  "portable": {
+    "artifactName": "Blank-Portable-${version}.${ext}"
+  }
+}
