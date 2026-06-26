@@ -13,3 +13,36 @@ export const badge = style({
   lineHeight: '16px',
   fontWeight: 500,
 });
+
+export const iconBadge = style([
+  badge,
+  {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    minWidth: '16px',
+    padding: 0,
+    borderRadius: '50%',
+    fontSize: '10px',
+  },
+]);
+
+export const iconTrigger = style({
+  position: 'relative',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 28,
+  height: 28,
+  borderRadius: 4,
+  lineHeight: 0,
+  cursor: 'pointer',
+  selectors: {
+    '&[data-active="true"]': {
+      background: cssVarV2('layer/background/hoverOverlay'),
+    },
+    '&:hover': {
+      background: cssVarV2('layer/background/hoverOverlay'),
+    },
+  },
+});

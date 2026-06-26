@@ -20,7 +20,14 @@ export const wsSelectorAndSearch = style({
   display: 'flex',
   flexDirection: 'column',
   gap: 15,
-  padding: '4px 16px 15px 16px',
+  padding: '4px 16px 8px 16px',
+});
+
+export const headerIconActions = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 4,
+  flexShrink: 0,
 });
 
 export const float = style({

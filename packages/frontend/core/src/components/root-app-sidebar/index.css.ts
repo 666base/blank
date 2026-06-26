@@ -18,9 +18,18 @@ export const quickSearchAndNewPage = style({
   marginLeft: -8,
   marginRight: -6,
 });
-export const quickSearch = style({
-  width: 0,
-  flex: 1,
+
+export const headerIconActions = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 4,
+  padding: '0 0 4px',
+  marginLeft: -4,
+});
+
+export const headerIconActionButton = style({
+  width: 28,
+  height: 28,
 });
 
 export const workspaceWrapper = style({

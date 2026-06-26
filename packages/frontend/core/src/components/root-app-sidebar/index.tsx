@@ -1,10 +1,10 @@
+import { IconButton } from '@blank/component';
 import {
   AddPageButton,
   AppDownloadButton,
   AppSidebar,
   MenuItem,
   MenuLinkItem,
-  QuickSearchInput,
   SidebarContainer,
   SidebarScrollableContainer,
 } from '@blank/core/modules/app-sidebar/views';
@@ -24,6 +24,7 @@ import {
   AllDocsIcon,
   ImportIcon,
   JournalIcon,
+  SearchIcon,
   SettingsIcon,
 } from '@blocksuite/icons/rc';
 import { useLiveData, useService, useServices } from '@toeverything/infra';
@@ -42,7 +43,8 @@ import { WorkbenchService } from '../../modules/workbench';
 import { WorkspaceNavigator } from '../workspace-selector';
 import {
   bottomContainer,
-  quickSearch,
+  headerIconActionButton,
+  headerIconActions,
   quickSearchAndNewPage,
   workspaceAndUserWrapper,
   workspaceWrapper,
@@ -204,17 +206,24 @@ export const RootAppSidebar = memo((): ReactElement => {
           <UserInfo />
         </div>
         <div className={quickSearchAndNewPage}>
-          <QuickSearchInput
-            className={quickSearch}
+          <AddPageButton />
+        </div>
+        <div className={headerIconActions}>
+          <IconButton
+            className={headerIconActionButton}
             data-testid="slider-bar-quick-search-button"
             data-event-props="$.navigationPanel.$.quickSearch"
             onClick={onOpenQuickSearchModal}
+            icon={<SearchIcon />}
+            aria-label={t['Quick search']()}
+            size="24"
           />
-          <AddPageButton />
+          {sessionStatus === 'authenticated' ? (
+            <NotificationButton iconOnly />
+          ) : null}
         </div>
         <AllDocsButton />
         <AppSidebarJournalButton />
-        {sessionStatus === 'authenticated' && <NotificationButton />}
         <AIChatButton />
         <MenuItem
           data-testid="slider-bar-workspace-setting-button"
