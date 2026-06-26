@@ -64,6 +64,7 @@ export const WorkspaceLayout = ({
   const workspaceServer = workspace?.scope.get(WorkspaceServerService)?.server;
 
   useLayoutEffect(() => {
+    scheduleRemoveBootSplash();
     const ref = workspacesService.open({ metadata: meta });
     setWorkspace(ref.workspace);
     return () => {
@@ -73,7 +74,6 @@ export const WorkspaceLayout = ({
 
   useEffect(() => {
     if (workspace) {
-      scheduleRemoveBootSplash();
       void ensureInstantWorkspace(workspacesService, workspace);
     }
   }, [workspace, workspacesService]);

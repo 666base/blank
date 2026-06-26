@@ -21,6 +21,11 @@ export const BLANK_BOOT_SHELL_HTML = `<div id="blank-boot-shell" class="blank-bo
   </div>
 </div>`;
 
+/** Mobile: solid app background only — no desktop tabs/sidebar skeleton. */
+export const BLANK_BOOT_SHELL_MOBILE_HTML = `<div id="blank-boot-shell" class="blank-boot-shell blank-boot-shell--mobile" aria-hidden="true">
+  <main class="blank-boot-mobile-main"></main>
+</div>`;
+
 export const BLANK_BOOT_SHELL_CSS = `
 .blank-boot-shell{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;background:#121212;color:#e8e8e8;font-family:system-ui,-apple-system,sans-serif;transition:opacity .12s ease}
 .blank-boot-tabs{height:40px;flex-shrink:0;border-bottom:1px solid #2a2a2a;background:#161616;display:flex;align-items:center;padding:0 12px}
@@ -37,3 +42,20 @@ export const BLANK_BOOT_SHELL_CSS = `
 .blank-boot-cached-preview{font-size:15px;line-height:1.65;color:#a8a8a8;white-space:pre-wrap;word-break:break-word;max-width:720px}
 @keyframes blank-boot-shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
 `;
+
+export const BLANK_BOOT_SHELL_MOBILE_CSS = `
+.blank-boot-shell--mobile{background:#141414;color:#e8e8e8}
+.blank-boot-mobile-main{flex:1;min-height:0;padding:16px;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:env(safe-area-inset-bottom)}
+.blank-boot-shell--mobile .blank-boot-cached-title{font-size:22px;font-weight:600;line-height:1.35;margin-bottom:10px}
+.blank-boot-shell--mobile .blank-boot-cached-preview{font-size:16px;line-height:1.6;max-width:none}
+`;
+
+export function getBlankBootShellHtml(isMobileEdition: boolean) {
+  return isMobileEdition ? BLANK_BOOT_SHELL_MOBILE_HTML : BLANK_BOOT_SHELL_HTML;
+}
+
+export function getBlankBootShellCss(isMobileEdition: boolean) {
+  return isMobileEdition
+    ? `${BLANK_BOOT_SHELL_CSS}${BLANK_BOOT_SHELL_MOBILE_CSS}`
+    : BLANK_BOOT_SHELL_CSS;
+}

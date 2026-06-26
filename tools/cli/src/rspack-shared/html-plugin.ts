@@ -7,8 +7,8 @@ import { HtmlRspackPlugin, type HtmlRspackPluginOptions } from '@rspack/core';
 import { once } from 'lodash-es';
 
 import {
-  BLANK_BOOT_SHELL_CSS,
-  BLANK_BOOT_SHELL_HTML,
+  getBlankBootShellCss,
+  getBlankBootShellHtml,
 } from '../../../../packages/frontend/core/src/utils/blank-boot-shell.html.ts';
 import { getBlankFastBootInlineScript } from '../../../../packages/frontend/core/src/utils/blank-fast-boot.ts';
 
@@ -97,8 +97,8 @@ function getHTMLPluginOptions(BUILD_CONFIG: BUILD_CONFIG_TYPE) {
     FAST_BOOT_SCRIPT: getBlankFastBootInlineScript(
       BUILD_CONFIG.isMobileEdition ? 'home' : 'all'
     ),
-    BOOT_SHELL_CSS: BLANK_BOOT_SHELL_CSS,
-    BOOT_SHELL_HTML: BLANK_BOOT_SHELL_HTML,
+    BOOT_SHELL_CSS: getBlankBootShellCss(BUILD_CONFIG.isMobileEdition),
+    BOOT_SHELL_HTML: getBlankBootShellHtml(BUILD_CONFIG.isMobileEdition),
     PRECONNECT: cdnOrigin
       ? `<link rel="preconnect" href="${cdnOrigin}" />`
       : '',

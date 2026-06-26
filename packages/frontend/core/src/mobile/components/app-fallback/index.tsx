@@ -1,4 +1,5 @@
 import { SafeArea, Skeleton } from '@blank/component';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { cssVarV2 } from '@toeverything/theme/v2';
 
 const SectionTitleFallback = () => {
@@ -49,6 +50,9 @@ const Section = () => {
 };
 
 export const AppFallback = () => {
+  if (isBlankBuild()) {
+    return null;
+  }
   return (
     <SafeArea
       top
@@ -84,10 +88,6 @@ export const AppFallback = () => {
           animation="wave"
           style={{ height: 48, borderRadius: 10, width: '100%' }}
         />
-      </div>
-      {/* search */}
-      <div style={{ padding: '10px 16px 15px' }}>
-        <Skeleton animation="wave" style={{ height: 44, borderRadius: 10 }} />
       </div>
       {/* recent */}
       <SectionTitleFallback />
