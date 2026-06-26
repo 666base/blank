@@ -1,4 +1,7 @@
-import { isBlankBuild } from '@blank/core/utils/blank-links';
+import {
+  getBlankChangelogUrl,
+  isBlankBuild,
+} from '@blank/core/utils/blank-links';
 import { useI18n } from '@blank/i18n';
 import { useMemo } from 'react';
 
@@ -17,8 +20,7 @@ export const useNavConfig = () => {
             },
             {
               title: t['com.blank.other-page.nav.blog'](),
-              path:
-                BUILD_CONFIG.changelogUrl || `${BLANK_GITHUB}/releases`,
+              path: getBlankChangelogUrl(),
             },
             {
               title: t['com.blank.other-page.nav.contact-us'](),

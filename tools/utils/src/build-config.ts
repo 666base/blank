@@ -42,7 +42,7 @@ export function getBuildConfig(
         // editorVersion: pkg.dependencies['@blocksuite/blank'],
         editorVersion: pkg.version,
         githubUrl: 'https://github.com/666base/blank',
-        changelogUrl: 'https://github.com/666base/blank/releases',
+        changelogUrl: 'https://github.com/666base/blank-releases/releases',
         downloadUrl: 'https://github.com/666base/blank-releases/releases',
         pricingUrl: '',
         discordUrl: '',

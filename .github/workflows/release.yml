@@ -9,43 +9,6 @@ permissions:
   contents: write
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'yarn'
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install dependencies
-        run: yarn install --immutable
-
-      - name: Build Windows installer
-        run: npm run desktop:build
-        env:
-          PUBLIC_PATH: /
-          BLANK_NO_AI: '1'
-
-      - name: Generate release manifest
-        run: npm run release:manifest
-
-      - name: Upload desktop artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: desktop-release
-          path: |
-            releases/desktop/Blank-Setup-*.exe
-            releases/desktop/*.blockmap
-            releases/desktop/latest.yml
-            releases/desktop/version.json
-
   build-android:
     runs-on: windows-latest
     steps:
@@ -88,15 +51,9 @@ jobs:
             releases/android/version.json
 
   publish:
-    needs: [build-windows, build-android]
+    needs: [build-android]
     runs-on: ubuntu-latest
     steps:
-      - name: Download desktop artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: desktop-release
-          path: artifacts/desktop
-
       - name: Download Android artifacts
         uses: actions/download-artifact@v4
         with:
@@ -106,9 +63,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            artifacts/desktop/*
-            artifacts/android/*
+          files: artifacts/android/Blank-*.apk
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

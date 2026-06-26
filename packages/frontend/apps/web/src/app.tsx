@@ -13,8 +13,6 @@ import { PopupWindowProvider } from '@blank/core/modules/url';
 import { configureBrowserWorkbenchModule } from '@blank/core/modules/workbench';
 import { configureBrowserWorkspaceFlavours } from '@blank/core/modules/workspace-engine';
 import createEmotionCache from '@blank/core/utils/create-emotion-cache';
-import { scheduleRemoveBootSplash } from '@blank/core/utils/blank-fast-boot';
-import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { isElectronShell, isLocalOnlyMode } from '@blank/core/utils/local-only';
 import { getWorkerUrl } from '@blank/env/worker';
 import { StoreManagerClient } from '@blank/nbstore/worker/client';
@@ -22,11 +20,11 @@ import { setTelemetryTransport } from '@blank/track';
 import { CacheProvider } from '@emotion/react';
 import { Framework, FrameworkRoot, getCurrentStore } from '@toeverything/infra';
 import { OpClient } from '@toeverything/infra/op';
-import { Suspense, useLayoutEffect } from 'react';
+import { Suspense } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
 const cache = createEmotionCache();
-const blankFallback = isBlankBuild() ? null : <AppContainer fallback />;
+const blankFallback = <AppContainer fallback />;
 
 let storeManagerClient: StoreManagerClient;
 
@@ -109,10 +107,6 @@ window.addEventListener('focus', () => {
 frameworkProvider.get(LifecycleService).applicationStart();
 
 export function App() {
-  useLayoutEffect(() => {
-    scheduleRemoveBootSplash();
-  }, []);
-
   return (
     <Suspense fallback={blankFallback}>
       <FrameworkRoot framework={frameworkProvider}>

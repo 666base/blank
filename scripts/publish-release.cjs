@@ -27,38 +27,23 @@ function run(command, args, options = {}) {
   }
 }
 
-const desktopExe = path.join(root, 'releases/desktop', `Blank-Setup-${version}.exe`);
 const androidApk = path.join(root, 'releases/android', `Blank-${version}.apk`);
-const latestYml = path.join(root, 'releases/desktop', 'latest.yml');
-const versionJson = path.join(root, 'releases/desktop', 'version.json');
 
-ensureExists(desktopExe, 'Windows installer');
 ensureExists(androidApk, 'Android APK');
 
+// Local manifests only — GitHub release ships APK alone (mobile updater uses release API).
 run('node', ['scripts/generate-release-manifest.cjs']);
-ensureExists(versionJson, 'version.json');
 
-const assets = [desktopExe, androidApk, versionJson];
-if (fs.existsSync(latestYml)) {
-  assets.push(latestYml);
-}
-
-const blockmap = `${desktopExe}.blockmap`;
-if (fs.existsSync(blockmap)) {
-  assets.push(blockmap);
-}
+const assets = [androidApk];
 
 const notesPath = path.join(root, 'releases', `release-notes-${version}.md`);
 fs.mkdirSync(path.dirname(notesPath), { recursive: true });
 fs.writeFileSync(
   notesPath,
-  [
+    [
     '## Blank release',
     '',
-    `- Windows: \`Blank-Setup-${version}.exe\` (in-app auto-update supported)`,
     `- Android: \`Blank-${version}.apk\` (Settings → About → Check for update)`,
-    '',
-    'Desktop installs can update from inside the app (Settings → About).',
   ].join('\n'),
   'utf8'
 );

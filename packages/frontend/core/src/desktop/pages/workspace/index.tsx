@@ -21,7 +21,6 @@ import {
   isInstantBootEnabled,
   persistFastBootRoute,
 } from '@blank/core/utils/blank-fast-boot';
-import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { ensureInstantWorkspace } from '@blank/core/utils/blank-instant-workspace';
 import { useOpenedWorkspace } from '@blank/core/utils/use-opened-workspace';
 import {
@@ -238,9 +237,9 @@ export const Component = (): ReactElement => {
       isInstantBootEnabled() &&
       params.workspaceId === BLANK_INSTANT_WORKSPACE_ID
     ) {
-      return isBlankBuild() ? null : <AppContainer />;
+      return <AppContainer />;
     }
-    return isBlankBuild() ? null : <AppContainer fallback />;
+    return <AppContainer fallback />;
   }
 
   return (

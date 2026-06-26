@@ -1,8 +1,7 @@
 import { Tooltip } from '@blank/component';
 import { useCatchEventCallback } from '@blank/core/components/hooks/use-catch-event-hook';
 import { UrlService } from '@blank/core/modules/url';
-import { getBlankGithubUrl } from '@blank/core/utils/blank-links';
-import { isBlankBranding } from '@blank/core/utils/blank-branding';
+import { getBlankUpdateReleasesUrl } from '@blank/core/utils/blank-links';
 import { Unreachable } from '@blank/env/constant';
 import { useI18n } from '@blank/i18n';
 import {
@@ -208,9 +207,7 @@ export function AppUpdaterButton({
         }
       } else {
         urlService.openPopupWindow(
-          isBlankBranding()
-            ? `${getBlankGithubUrl()}/releases/tag/v${updateAvailable.version}`
-            : `https://github.com/666base/blank/releases/tag/v${updateAvailable.version}`
+          `${getBlankUpdateReleasesUrl()}/tag/v${updateAvailable.version}`
         );
       }
     } else if (changelogUnread) {

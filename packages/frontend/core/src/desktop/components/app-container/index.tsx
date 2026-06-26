@@ -2,7 +2,6 @@ import { useAppSettingHelper } from '@blank/core/components/hooks/blank/use-app-
 import { PageDetailLoading } from '@blank/component/page-detail-skeleton';
 import { RootAppSidebar } from '@blank/core/components/root-app-sidebar';
 import { scheduleRemoveBootSplash } from '@blank/core/utils/blank-fast-boot';
-import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { AppSidebarService } from '@blank/core/modules/app-sidebar';
 import {
   AppSidebarFallback,
@@ -78,13 +77,7 @@ const DesktopLayout = ({
       <div className={styles.desktopAppViewMain}>
         <AppUpdateBanner />
         <div className={styles.desktopAppViewMainRow}>
-        {fallback ? (
-          isBlankBuild() ? null : (
-            <AppSidebarFallback />
-          )
-        ) : (
-          isInWorkspace && <RootAppSidebar />
-        )}
+        {fallback ? <AppSidebarFallback /> : isInWorkspace && <RootAppSidebar />}
         <MainContainer fallback={fallback}>{children}</MainContainer>
       </div>
       </div>
@@ -137,11 +130,7 @@ const MainContainer = forwardRef<
       data-testid="main-container"
       ref={ref}
     >
-      {fallback && !children ? (
-        isBlankBuild() ? null : <PageDetailLoading />
-      ) : (
-        children
-      )}
+      {fallback && !children ? <PageDetailLoading /> : children}
     </div>
   );
 });

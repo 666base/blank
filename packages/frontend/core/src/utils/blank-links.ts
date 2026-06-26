@@ -1,7 +1,7 @@
 import { appNames } from './channel';
 
 export const BLANK_GITHUB_URL = 'https://github.com/666base/blank';
-export const BLANK_RELEASES_URL = 'https://github.com/666base/blank/releases';
+export const BLANK_RELEASES_URL = 'https://github.com/666base/blank-releases/releases';
 
 /** Public repo for EXE/APK + auto-update metadata (source repo may stay private). */
 export const BLANK_UPDATE_REPO = '666base/blank-releases';
@@ -48,5 +48,5 @@ export function getDefaultWorkspaceName() {
 }
 
 export function getBlankChangelogUrl() {
-  return BUILD_CONFIG.changelogUrl || BLANK_RELEASES_URL;
+  return BUILD_CONFIG.changelogUrl || getBlankUpdateReleasesUrl();
 }
