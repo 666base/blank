@@ -1,6 +1,6 @@
 {
   "name": "@blank/web",
-  "version": "0.28.2",
+  "version": "0.28.3",
   "description": "Blank Desktop Web application",
   "private": true,
   "browser": "src/index.tsx",

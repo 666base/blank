@@ -15,7 +15,12 @@ import {
   WorkspacesService,
 } from '@blank/core/modules/workspace';
 import { ensureBlankWorkspaceSchema } from '@blank/core/modules/workspace/global-schema';
-import { getOptimisticWorkspaceMeta, persistFastBootRoute } from '@blank/core/utils/blank-fast-boot';
+import {
+  BLANK_INSTANT_WORKSPACE_ID,
+  getOptimisticWorkspaceMeta,
+  isInstantBootEnabled,
+  persistFastBootRoute,
+} from '@blank/core/utils/blank-fast-boot';
 import { ensureInstantWorkspace } from '@blank/core/utils/blank-instant-workspace';
 import {
   FrameworkScope,
@@ -227,6 +232,12 @@ export const Component = (): ReactElement => {
     );
   }
   if (!effectiveMeta) {
+    if (
+      isInstantBootEnabled() &&
+      params.workspaceId === BLANK_INSTANT_WORKSPACE_ID
+    ) {
+      return <AppContainer />;
+    }
     return <AppContainer fallback />;
   }
 
@@ -336,6 +347,9 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
   }, [globalContextService, workspace]);
 
   if (!workspace) {
+    if (isInstantBootEnabled() && meta.id === BLANK_INSTANT_WORKSPACE_ID) {
+      return <AppContainer />;
+    }
     return <AppContainer fallback />;
   }
 

@@ -141,7 +141,7 @@ export function getBlankSupabaseClient(): SupabaseClient | null {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
-        detectSessionInUrl: false,
+        detectSessionInUrl: !BUILD_CONFIG.isElectron,
       },
     });
   }
@@ -211,6 +211,61 @@ export async function blankSignOut() {
   }
   await supabase.auth.signOut();
   setCachedSession(null);
+}
+
+export async function blankSignInWithOAuth(provider: 'google' | 'github') {
+  const supabase = getBlankSupabaseClient();
+  if (!supabase) {
+    throw new Error('Supabase is not configured');
+  }
+  const redirectTo =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}${environment.subPath || ''}/`
+      : undefined;
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo,
+      skipBrowserRedirect: BUILD_CONFIG.isElectron,
+    },
+  });
+  if (error) {
+    throw error;
+  }
+  if (BUILD_CONFIG.isElectron && data.url) {
+    window.open(data.url, '_blank', 'noopener,noreferrer');
+  }
+  return data;
+}
+
+export async function blankHandleOAuthCallback() {
+  const supabase = getBlankSupabaseClient();
+  if (!supabase || typeof window === 'undefined') {
+    return null;
+  }
+
+  const url = new URL(window.location.href);
+  const code = url.searchParams.get('code');
+  if (code) {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+      throw error;
+    }
+    setCachedSession(data.session);
+    url.searchParams.delete('code');
+    window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+    return data.session;
+  }
+
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    throw error;
+  }
+  setCachedSession(data.session);
+  if (window.location.hash.includes('access_token=')) {
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+  return data.session;
 }
 
 export async function blankGetSession(): Promise<Session | null> {

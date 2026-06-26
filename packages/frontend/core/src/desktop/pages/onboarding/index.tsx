@@ -1,3 +1,5 @@
+import { getInstantBootPath } from '@blank/core/utils/blank-fast-boot';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { DesktopApiService } from '@blank/core/modules/desktop-api';
 import { useServiceOptional } from '@toeverything/infra';
 import { useCallback } from 'react';
@@ -12,6 +14,11 @@ import { appConfigStorage } from '../../../components/hooks/use-app-config-stora
  * only for electron
  */
 export const loader = () => {
+  if (isBlankBuild()) {
+    const target = getInstantBootPath();
+    return redirect(target ?? '/');
+  }
+
   if (!BUILD_CONFIG.isElectron && !appConfigStorage.get('onBoarding')) {
     // onboarding is off, redirect to index
     return redirect('/');

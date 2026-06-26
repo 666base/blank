@@ -151,6 +151,17 @@ export function removeBootSplash() {
   window.setTimeout(() => el.remove(), 120);
 }
 
+/** Let the app receive input even while React is still on a loading fallback. */
+export function prepareBootShellForApp() {
+  const el =
+    document.getElementById('blank-boot-shell') ??
+    document.getElementById('blank-boot-splash');
+  if (!el) {
+    return;
+  }
+  el.style.pointerEvents = 'none';
+}
+
 /** Fade boot shell only after the real layout has painted underneath. */
 export function scheduleRemoveBootSplash() {
   requestAnimationFrame(() => {

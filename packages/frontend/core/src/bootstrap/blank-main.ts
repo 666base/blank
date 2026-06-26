@@ -3,11 +3,12 @@
  */
 import { revalidateBlankCloudWorkspaces } from '../modules/workspace-engine';
 import { preloadBlankWorkspaceSchema } from '../modules/workspace/global-schema';
-import { seedInstantBootStorage } from '../utils/blank-fast-boot';
+import { seedInstantBootStorage, prepareBootShellForApp } from '../utils/blank-fast-boot';
 import { isBlankBuild } from '../utils/blank-links';
 import { blankGetSession, ensureBlankSupabaseConfig } from '../utils/blank-supabase';
 
 seedInstantBootStorage();
+prepareBootShellForApp();
 preloadBlankWorkspaceSchema();
 
 if (typeof requestIdleCallback === 'function') {
@@ -31,6 +32,16 @@ if (isBlankBuild()) {
   const run = () => {
     void (async () => {
       await ensureBlankSupabaseConfig();
+      if (
+        typeof window !== 'undefined' &&
+        (window.location.hash.includes('access_token=') ||
+          window.location.search.includes('code='))
+      ) {
+        const { blankHandleOAuthCallback } = await import(
+          '../utils/blank-supabase'
+        );
+        await blankHandleOAuthCallback();
+      }
       await blankGetSession();
       revalidateBlankCloudWorkspaces();
     })();

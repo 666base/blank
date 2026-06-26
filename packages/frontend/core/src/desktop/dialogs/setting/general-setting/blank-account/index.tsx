@@ -14,7 +14,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 export const BlankAccountSettings = () => {
   const t = useI18n();
-  const { user, loading, configured, error, signIn, signOut, isSignedIn } =
+  const { user, loading, configured, error, signIn, signInWithOAuth, signOut, isSignedIn } =
     useBlankAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,6 +37,21 @@ export const BlankAccountSettings = () => {
       setSubmitting(false);
     }
   }, [email, password, signIn, t]);
+
+  const onOAuth = useCallback(
+    async (provider: 'google' | 'github') => {
+      setLocalError(null);
+      setSubmitting(true);
+      try {
+        await signInWithOAuth(provider);
+      } catch (err) {
+        setLocalError(err instanceof Error ? err.message : String(err));
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [signInWithOAuth]
+  );
 
   const onSignOut = useCallback(async () => {
     setSubmitting(true);
@@ -132,9 +147,25 @@ export const BlankAccountSettings = () => {
               </SettingRow>
             ) : null}
             <SettingRow name="" desc="">
-              <Button onClick={onSignIn} disabled={submitting}>
-                {t['com.blank.auth.signIn']()}
-              </Button>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <Button onClick={onSignIn} disabled={submitting}>
+                  {t['com.blank.auth.signIn']()}
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => onOAuth('google')}
+                  disabled={submitting}
+                >
+                  Google
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => onOAuth('github')}
+                  disabled={submitting}
+                >
+                  GitHub
+                </Button>
+              </div>
             </SettingRow>
           </>
         )}

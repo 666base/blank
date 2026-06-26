@@ -6,6 +6,7 @@ import {
   createFirstAppData,
 } from '@blank/core/utils/first-app-data';
 import { isBlankBuild } from '@blank/core/utils/blank-links';
+import { BLANK_INSTANT_WORKSPACE_ID } from '@blank/core/utils/blank-fast-boot';
 import { isLocalOnlyMode } from '@blank/core/utils/local-only';
 import { isBlankSyncEnabled } from '@blank/core/utils/sync-config';
 import { getDefaultWorkspaceName } from '@blank/core/utils/blank-links';
@@ -49,7 +50,7 @@ export const Component = ({
   fallback?: ReactNode;
 }) => {
   // navigating and creating may be slow, to avoid flickering, we show workspace fallback
-  const [navigating, setNavigating] = useState(true);
+  const [navigating, setNavigating] = useState(() => !isBlankBuild());
   const [creating, setCreating] = useState(false);
   const authService = useService(AuthService);
   const defaultServerService = useService(DefaultServerService);
@@ -100,6 +101,12 @@ export const Component = ({
   }, [defaultIndexRoute, jumpToPage, openPage, workspacesService]);
 
   useLayoutEffect(() => {
+    if (isBlankBuild()) {
+      openPage(BLANK_INSTANT_WORKSPACE_ID, defaultIndexRoute, RouteLogic.REPLACE);
+      setNavigating(false);
+      return;
+    }
+
     if (!navigating) {
       return;
     }

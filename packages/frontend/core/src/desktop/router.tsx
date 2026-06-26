@@ -9,6 +9,7 @@ import {
 import { BlankErrorComponent } from '../components/blank/blank-error-boundary/blank-error-fallback';
 import { NavigateContext } from '../components/hooks/use-navigate-helper';
 import { getInstantBootPath } from '../utils/blank-fast-boot';
+import { isBlankBuild } from '../utils/blank-links';
 import { RootWrapper } from './pages/root';
 import {
   CATCH_ALL_ROUTE_PATH,
@@ -91,6 +92,13 @@ export const topLevelRoutes = [
       },
       {
         path: '/onboarding',
+        loader: () => {
+          if (isBlankBuild()) {
+            const target = getInstantBootPath();
+            return redirect(target ?? '/');
+          }
+          return null;
+        },
         lazy: () => import('./pages/onboarding'),
       },
       {

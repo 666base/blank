@@ -4,7 +4,9 @@ import type { Session } from '@supabase/supabase-js';
 
 import {
   blankGetSession,
+  blankHandleOAuthCallback,
   blankOnAuthStateChange,
+  blankSignInWithOAuth,
   blankSignInWithPassword,
   blankSignOut,
   ensureBlankSupabaseConfig,
@@ -32,8 +34,15 @@ export function useBlankAuth() {
       }
 
       const current = await blankGetSession();
-      setSession(current);
-      if (current) {
+      if (!current && typeof window !== 'undefined') {
+        const hash = window.location.hash;
+        if (hash.includes('access_token=')) {
+          await blankHandleOAuthCallback();
+        }
+      }
+      const session = await blankGetSession();
+      setSession(session);
+      if (session) {
         revalidateBlankCloudWorkspaces();
       }
       setLoading(false);
@@ -70,6 +79,17 @@ export function useBlankAuth() {
     revalidateBlankCloudWorkspaces();
   }, []);
 
+  const signInWithOAuth = useCallback(async (provider: 'google' | 'github') => {
+    setError(null);
+    try {
+      await blankSignInWithOAuth(provider);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Sign in failed';
+      setError(message);
+      throw err;
+    }
+  }, []);
+
   return {
     session,
     user: session?.user ?? null,
@@ -77,6 +97,7 @@ export function useBlankAuth() {
     configured,
     error,
     signIn,
+    signInWithOAuth,
     signOut,
     isSignedIn: Boolean(session?.user),
   };
