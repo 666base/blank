@@ -6,16 +6,24 @@ export const workbenchRoutes = [
     lazy: () => import('./pages/workspace/home'),
   },
   {
+    path: '/home/collections',
+    lazy: () => import('./pages/workspace/home'),
+  },
+  {
+    path: '/home/tags',
+    lazy: () => import('./pages/workspace/home'),
+  },
+  {
     path: '/search',
     lazy: () => import('./pages/workspace/search'),
   },
   {
     path: '/all',
-    lazy: () => import('./pages/workspace/all'),
+    lazy: () => import('./pages/workspace/home-redirect'),
   },
   {
     path: '/collection',
-    lazy: () => import('./pages/workspace/collection/index'),
+    lazy: () => import('./pages/workspace/home-redirect'),
   },
   {
     path: '/collection/:collectionId',
@@ -23,7 +31,7 @@ export const workbenchRoutes = [
   },
   {
     path: '/tag',
-    lazy: () => import('./pages/workspace/tag/index'),
+    lazy: () => import('./pages/workspace/home-redirect'),
   },
   {
     path: '/tag/:tagId',

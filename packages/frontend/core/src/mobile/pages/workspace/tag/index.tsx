@@ -1,15 +1,16 @@
 import { useThemeColorV2 } from '@blank/component';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { useService } from '@toeverything/infra';
+import { useLayoutEffect } from 'react';
 
-import { AppTabs } from '../../../components';
-import { AllDocsHeader, TagList } from '../../../views';
-
+/** @deprecated Tags list is on Home. */
 export const Component = () => {
   useThemeColorV2('layer/background/mobile/primary');
-  return (
-    <>
-      <AllDocsHeader />
-      <AppTabs />
-      <TagList />
-    </>
-  );
+  const workbench = useService(WorkbenchService).workbench;
+
+  useLayoutEffect(() => {
+    workbench.open('/home/tags', { replaceHistory: true });
+  }, [workbench]);
+
+  return null;
 };

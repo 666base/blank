@@ -1,4 +1,4 @@
-import { AllDocsIcon, HomeIcon } from '@blocksuite/icons/rc';
+import { HomeIcon } from '@blocksuite/icons/rc';
 
 import { AppTabCreate } from './create';
 import { AppTabJournal } from './journal';
@@ -9,11 +9,6 @@ export const tabs: Tab[] = [
     key: 'home',
     to: '/home',
     Icon: HomeIcon,
-  },
-  {
-    key: 'all',
-    to: '/all',
-    Icon: AllDocsIcon,
   },
   {
     key: 'journal',

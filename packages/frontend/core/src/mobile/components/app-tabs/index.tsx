@@ -33,7 +33,10 @@ export const AppTabs = ({
 
   // always set the active tab to home when the location is changed to home
   useEffect(() => {
-    if (location.pathname === '/home') {
+    if (
+      location.pathname === '/home' ||
+      location.pathname.startsWith('/home/')
+    ) {
       globalCache.set(cacheKey, 'home');
     }
   }, [globalCache, location.pathname]);
