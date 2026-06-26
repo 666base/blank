@@ -3,6 +3,9 @@ const path = require('node:path');
 const http = require('node:http');
 
 const root = path.resolve(__dirname, '..');
+const appVersion = JSON.parse(
+  fs.readFileSync(path.join(root, 'package.json'), 'utf8')
+).version;
 const checks = [];
 
 function ok(name, pass, detail = '', optional = false) {
@@ -90,8 +93,8 @@ async function main() {
   );
 
   for (const rel of [
-    'releases/desktop/Blank-Setup-0.28.2.exe',
-    'releases/android/Blank-0.28.2.apk',
+    `releases/desktop/Blank-Setup-${appVersion}.exe`,
+    `releases/android/Blank-${appVersion}.apk`,
   ]) {
     const p = path.join(root, rel);
     const mb = fs.existsSync(p)

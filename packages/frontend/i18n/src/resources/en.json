@@ -254,7 +254,7 @@
   "com.blank.appearanceSettings.color.description": "Dark, light, gray, or paper",
   "com.blank.appearanceSettings.color.title": "Colour mode",
   "com.blank.appearanceSettings.visualTheme.title": "Visual style",
-  "com.blank.appearanceSettings.visualTheme.description": "Codex is Blank's refined dark UI. Classic uses the original AFFiNE look.",
+  "com.blank.appearanceSettings.visualTheme.description": "Codex is Blank's refined interface with warm dark tones and clear typography.",
   "com.blank.appearanceSettings.visualTheme.default": "Classic",
   "com.blank.appearanceSettings.visualTheme.codex": "Codex",
   "com.blank.appearanceSettings.customize-theme.description": "Edit all Blank theme variables here",

@@ -254,7 +254,7 @@
   "com.blank.appearanceSettings.color.description": "Тъмна, светла, сиво или paper",
   "com.blank.appearanceSettings.color.title": "Цветов режим",
   "com.blank.appearanceSettings.visualTheme.title": "Визуален стил",
-  "com.blank.appearanceSettings.visualTheme.description": "Codex е преработеният тъмен интерфейс на Blank. Класически ползва оригиналния AFFiNE вид.",
+  "com.blank.appearanceSettings.visualTheme.description": "Codex е преработеният интерфейс на Blank с топли тъмни тонове и ясна типография.",
   "com.blank.appearanceSettings.visualTheme.default": "Класически",
   "com.blank.appearanceSettings.visualTheme.codex": "Codex",
   "com.blank.appearanceSettings.customize-theme.description": "Edit all Blank theme variables here",
