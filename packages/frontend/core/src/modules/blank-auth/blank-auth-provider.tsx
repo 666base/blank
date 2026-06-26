@@ -21,7 +21,6 @@ import {
   isBlankSupabaseConfigured,
 } from '../../utils/blank-supabase';
 import { revalidateBlankCloudWorkspaces } from '../workspace-engine';
-import { BlankAuthWorkspaceSync } from './blank-auth-workspace-sync';
 
 const AUTH_INIT_TIMEOUT_MS = 8_000;
 
@@ -180,7 +179,6 @@ export const BlankAuthProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <BlankAuthContext.Provider value={value}>
-      <BlankAuthWorkspaceSync />
       {children}
     </BlankAuthContext.Provider>
   );

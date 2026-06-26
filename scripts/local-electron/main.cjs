@@ -113,6 +113,10 @@ function registerPackagedProtocol() {
     }
 
     if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+      const hasAssetExtension = /\.[a-z0-9]+$/i.test(path.basename(relativePath));
+      if (hasAssetExtension) {
+        return new Response('Not found', { status: 404 });
+      }
       filePath = path.join(webRoot, 'index.html');
     }
 

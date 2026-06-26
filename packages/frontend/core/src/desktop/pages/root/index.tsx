@@ -1,5 +1,7 @@
 import { NotificationCenter } from '@blank/component';
 import { DefaultServerService } from '@blank/core/modules/cloud';
+import { BlankAuthWorkspaceSync } from '@blank/core/modules/blank-auth/blank-auth-workspace-sync';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { isLocalOnlyMode } from '@blank/core/utils/local-only';
 import { FrameworkScope, useService } from '@toeverything/infra';
 import { useEffect, useState } from 'react';
@@ -34,6 +36,7 @@ export const RootWrapper = () => {
     <FrameworkScope scope={defaultServerService.server.scope}>
       <GlobalDialogs />
       <NotificationCenter />
+      {isBlankBuild() ? <BlankAuthWorkspaceSync /> : null}
       <Outlet />
       <CustomThemeModifier />
       <VisualThemeModifier />
