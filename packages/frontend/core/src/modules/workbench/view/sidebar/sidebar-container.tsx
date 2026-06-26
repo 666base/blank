@@ -1,3 +1,4 @@
+import { isDesktopApp } from '@blank/core/utils/local-only';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import { useCallback } from 'react';
@@ -27,7 +28,7 @@ export const SidebarContainer = ({
   return (
     <div className={clsx(styles.sidebarContainerInner, className)} {...props}>
       <Header onToggle={handleToggleOpen}>
-        <SidebarHeaderSwitcher />
+        {!isDesktopApp() ? <SidebarHeaderSwitcher /> : null}
       </Header>
       {sidebarTabs.length > 0 ? (
         sidebarTabs.map(sidebar => (

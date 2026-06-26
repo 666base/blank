@@ -13,6 +13,7 @@ import { useServices } from '@toeverything/infra';
 import { useCallback } from 'react';
 
 import { useAppSettingHelper } from '../../../../../components/hooks/blank/use-app-setting-helper';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { isLocalOnlyMode } from '../../../../../utils/local-only';
 import * as styles from './style.css';
 import { UpdateCheckSection } from './update-check-section';
@@ -67,10 +68,12 @@ export const AboutBlank = () => {
         >
           <img src={appIcon} alt={appName} width={56} height={56} />
         </SettingRow>
-        <SettingRow
-          name={t['com.blank.aboutBlank.version.editor.title']()}
-          desc={BUILD_CONFIG.editorVersion}
-        />
+        {!isBlankBuild() ? (
+          <SettingRow
+            name={t['com.blank.aboutBlank.version.editor.title']()}
+            desc={BUILD_CONFIG.editorVersion}
+          />
+        ) : null}
         {BUILD_CONFIG.isElectron ? (
           <>
             <UpdateCheckSection />
@@ -106,7 +109,7 @@ export const AboutBlank = () => {
             </SettingRow>
           </>
         ) : null}
-        {!localOnly ? (
+        {!localOnly && !isBlankBuild() ? (
           <SettingRow
             name={t['com.blank.telemetry.enable']()}
             desc={t['com.blank.telemetry.enable.desc']()}

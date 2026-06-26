@@ -47,7 +47,7 @@ const useUpdateStatusLabels = (checkUpdateStatus: CheckUpdateStatus) => {
     } else if (checkingForUpdates) {
       return t['com.blank.aboutBlank.checkUpdate.subtitle.checking']();
     } else if (updateAvailable && downloadProgress !== null) {
-      return t['com.blank.aboutBlank.checkUpdate.subtitle.downloading']();
+      return `${t['com.blank.aboutBlank.checkUpdate.subtitle.downloading']()} (${Math.round(downloadProgress)}%)`;
     } else if (checkUpdateStatus === CheckUpdateStatus.ERROR) {
       return t['com.blank.aboutBlank.checkUpdate.subtitle.error']();
     } else if (checkUpdateStatus === CheckUpdateStatus.LATEST) {

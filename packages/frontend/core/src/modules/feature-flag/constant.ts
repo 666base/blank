@@ -1,3 +1,5 @@
+import { isBlankBuild } from '../../utils/blank-links';
+
 import type { FlagInfo } from './types';
 
 // const isNotStableBuild = BUILD_CONFIG.appBuildType !== 'stable';
@@ -7,7 +9,7 @@ const isMobile = BUILD_CONFIG.isMobileEdition;
 const isIOS = BUILD_CONFIG.isIOS;
 const isAndroid = BUILD_CONFIG.isAndroid;
 
-export const BLANK_FLAGS = {
+const BASE_BLANK_FLAGS = {
   enable_ai: {
     category: 'blank',
     displayName:
@@ -180,7 +182,7 @@ export const BLANK_FLAGS = {
     description:
       'com.blank.settings.workspace.experimental-features.enable-mobile-edgeless-editing.description',
     configurable: isMobile,
-    defaultState: false,
+    defaultState: isMobile,
   },
   enable_pdf_embed_preview: {
     category: 'blank',
@@ -320,5 +322,52 @@ export const BLANK_FLAGS = {
   },
 } satisfies { [key in string]: FlagInfo };
 
+/** Stable defaults for Blank product builds — no experimental toggles in settings. */
+const BLANK_STABLE_DEFAULT_OVERRIDES: Partial<
+  Record<keyof typeof BASE_BLANK_FLAGS, boolean>
+> = {
+  enable_turbo_renderer: false,
+  enable_dom_renderer: false,
+  enable_edgeless_scribbled_style: false,
+  enable_view_analytics_panel: false,
+  enable_adapter_panel: false,
+  enable_theme_editor: false,
+  enable_advanced_block_visibility: false,
+  enable_setting_subpage_animation: false,
+  enable_pdf_embed_preview: false,
+  enable_mermaid_wasm_native_renderer: false,
+  enable_two_step_journal_confirmation: false,
+  enable_pdfmake_export: false,
+  enable_editor_rtl: false,
+};
+
+function applyBlankStableFlags(
+  flags: typeof BASE_BLANK_FLAGS
+): typeof BASE_BLANK_FLAGS {
+  if (!isBlankBuild()) {
+    return flags;
+  }
+  return Object.fromEntries(
+    Object.entries(flags).map(([key, flag]) => {
+      const stableDefault =
+        BLANK_STABLE_DEFAULT_OVERRIDES[
+          key as keyof typeof BASE_BLANK_FLAGS
+        ];
+      return [
+        key,
+        {
+          ...flag,
+          configurable: false,
+          ...(stableDefault !== undefined
+            ? { defaultState: stableDefault }
+            : {}),
+        },
+      ];
+    })
+  ) as typeof BASE_BLANK_FLAGS;
+}
+
+export const BLANK_FLAGS = applyBlankStableFlags(BASE_BLANK_FLAGS);
+
 // oxlint-disable-next-line no-redeclare
-export type BLANK_FLAGS = typeof BLANK_FLAGS;
+export type BLANK_FLAGS = typeof BASE_BLANK_FLAGS;

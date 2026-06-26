@@ -13,12 +13,13 @@ export const AboutGroup = () => {
     latestVersion,
     checkForUpdates,
     downloadUpdate,
+    downloadProgress,
     error,
   } = useMobileAppUpdater();
 
   const handleUpdateAction = useCallback(() => {
     if (status === 'available') {
-      downloadUpdate();
+      void downloadUpdate();
       return;
     }
     void checkForUpdates();
@@ -27,6 +28,12 @@ export const AboutGroup = () => {
   const updateHint = (() => {
     if (status === 'checking') {
       return t['com.blank.aboutBlank.checkUpdate.subtitle.checking']();
+    }
+    if (status === 'downloading' && downloadProgress !== null) {
+      return `${t['com.blank.aboutBlank.checkUpdate.subtitle.downloading']()} (${Math.round(downloadProgress)}%)`;
+    }
+    if (status === 'download-ready') {
+      return t['com.blank.aboutBlank.checkUpdate.subtitle.restart']();
     }
     if (status === 'error') {
       return (
@@ -45,6 +52,11 @@ export const AboutGroup = () => {
   })();
 
   const updateButtonLabel = (() => {
+    if (status === 'downloading') {
+      return downloadProgress !== null
+        ? `${Math.round(downloadProgress)}%`
+        : t['com.blank.appUpdater.downloading']();
+    }
     if (status === 'available') {
       return t['com.blank.aboutBlank.checkUpdate.button.download']();
     }
@@ -75,7 +87,7 @@ export const AboutGroup = () => {
             <Button
               size="small"
               onClick={handleUpdateAction}
-              disabled={status === 'checking'}
+              disabled={status === 'checking' || status === 'downloading'}
             >
               {updateButtonLabel}
             </Button>

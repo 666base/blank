@@ -24,7 +24,7 @@ const borderWidthVar = createVar('borderWidth');
 export const button = style({
   vars: {
     // default vars
-    [gapVar]: '4px',
+    [gapVar]: 'var(--sp-1)',
     [wVar]: 'unset',
     [hVar]: 'unset',
     [borderWidthVar]: '1px',
@@ -37,8 +37,8 @@ export const button = style({
   justifyContent: 'center',
   userSelect: 'none',
   outline: 0,
-  borderRadius: 8,
-  transition: 'all .3s',
+  borderRadius: 'var(--radius-md)',
+  transition: 'all var(--duration-normal) var(--ease-default)',
   ['WebkitAppRegion' as string]: 'no-drag',
 
   // hover layer
@@ -89,34 +89,31 @@ export const button = style({
     '&[data-size="default"]': {
       vars: {
         [hVar]: '28px', // line-height + paddingY * 2 (to ignore border width)
-        [paddingVar]: '0px 8px',
         [iconSizeVar]: '16px',
-        [paddingVar]: '4px 12px',
-        [fontSizeVar]: cssVar('fontXs'),
-        [fontWeightVar]: '500',
-        [lineHeightVar]: '20px',
+        [paddingVar]: 'var(--sp-1) var(--sp-3)',
+        [fontSizeVar]: 'var(--text-xs)',
+        [fontWeightVar]: 'var(--weight-medium)',
+        [lineHeightVar]: 'var(--leading-base)',
       },
     },
     '&[data-size="large"]': {
       vars: {
         [hVar]: '32px',
-        [paddingVar]: '0px 8px',
         [iconSizeVar]: '20px',
-        [paddingVar]: '4px 12px',
-        [fontSizeVar]: '15px',
-        [fontWeightVar]: '500',
-        [lineHeightVar]: '24px',
+        [paddingVar]: 'var(--sp-1) var(--sp-3)',
+        [fontSizeVar]: 'var(--text-md)',
+        [fontWeightVar]: 'var(--weight-medium)',
+        [lineHeightVar]: 'var(--leading-md)',
       },
     },
     '&[data-size="extraLarge"]': {
       vars: {
         [hVar]: '40px',
-        [paddingVar]: '0px 8px',
         [iconSizeVar]: '24px',
-        [paddingVar]: '8px 18px',
-        [fontSizeVar]: '15',
-        [fontWeightVar]: '600',
-        [lineHeightVar]: '24px',
+        [paddingVar]: 'var(--sp-2) 18px',
+        [fontSizeVar]: 'var(--text-md)',
+        [fontWeightVar]: 'var(--weight-semibold)',
+        [lineHeightVar]: 'var(--leading-md)',
       },
     },
 

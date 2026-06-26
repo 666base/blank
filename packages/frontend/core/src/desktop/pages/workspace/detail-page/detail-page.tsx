@@ -14,7 +14,7 @@ import { PageDetailEditor } from '@blank/core/components/page-detail-editor';
 import { WorkspacePropertySidebar } from '@blank/core/components/properties/sidebar';
 import { TrashPageFooter } from '@blank/core/components/pure/trash-page-footer';
 import { TopTip } from '@blank/core/components/top-tip';
-import { ServerService } from '@blank/core/modules/cloud';
+import { isDocEditBlocked } from '@blank/core/modules/permissions';
 import { DocService } from '@blank/core/modules/doc';
 import { EditorService } from '@blank/core/modules/editor';
 import { FeatureFlagService } from '@blank/core/modules/feature-flag';
@@ -307,7 +307,7 @@ const DetailPageImpl = memo(function DetailPageImpl() {
 
   const canEdit = useGuard('Doc_Update', doc.id);
 
-  const readonly = !canEdit || isInTrash;
+  const readonly = isDocEditBlocked(canEdit) || isInTrash;
 
   return (
     <FrameworkScope scope={editor.scope}>

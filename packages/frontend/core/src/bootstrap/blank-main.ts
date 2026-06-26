@@ -4,10 +4,12 @@
 import { revalidateBlankCloudWorkspaces } from '../modules/workspace-engine';
 import { preloadBlankWorkspaceSchema } from '../modules/workspace/global-schema';
 import { seedInstantBootStorage, prepareBootShellForApp } from '../utils/blank-fast-boot';
+import { seedVisualThemeFromStorage } from '../components/visual-theme/visual-theme-modifier';
 import { isBlankBuild } from '../utils/blank-links';
 import { blankGetSession, ensureBlankSupabaseConfig } from '../utils/blank-supabase';
 
 seedInstantBootStorage();
+seedVisualThemeFromStorage();
 prepareBootShellForApp();
 preloadBlankWorkspaceSchema();
 
@@ -18,7 +20,7 @@ if (typeof requestIdleCallback === 'function') {
         m.preloadBlockSuiteEditor()
       );
     },
-    { timeout: 2000 }
+    { timeout: 500 }
   );
 } else {
   setTimeout(() => {
@@ -47,7 +49,7 @@ if (isBlankBuild()) {
     })();
   };
   if (typeof requestIdleCallback === 'function') {
-    requestIdleCallback(run, { timeout: 4000 });
+    requestIdleCallback(run, { timeout: 1000 });
   } else {
     setTimeout(run, 0);
   }

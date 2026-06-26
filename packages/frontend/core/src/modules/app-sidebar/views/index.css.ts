@@ -8,7 +8,7 @@ export const navWrapperStyle = style({
       zIndex: -1,
     },
   },
-  paddingBottom: 8,
+  paddingBottom: 'var(--sp-2)',
   selectors: {
     '&[data-has-border=true]': {
       borderRight: `0.5px solid ${cssVarV2('layer/insideBorder/border')}`,
@@ -24,9 +24,9 @@ export const hoverNavWrapperStyle = style({
       backgroundColor: cssVarV2('layer/background/primary'),
       height: 'calc(100% - 60px)',
       marginTop: '52px',
-      marginLeft: '4px',
-      boxShadow: cssVar('--blank-popover-shadow'),
-      borderRadius: '6px',
+      marginLeft: 'var(--sp-1)',
+      boxShadow: 'var(--shadow-md)',
+      borderRadius: 'var(--radius-md)',
     },
     '&[data-is-floating="true"][data-is-electron="true"]': {
       height: '100%',
@@ -67,7 +67,7 @@ export const navStyle = style({
 export const navHeaderStyle = style({
   flex: '0 0 auto',
   height: '52px',
-  padding: '0px 8px',
+  padding: `0 var(--sp-2)`,
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -78,7 +78,7 @@ export const navBodyStyle = style({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  rowGap: '4px',
+  rowGap: 'var(--sp-1)',
   selectors: {
     [`${navStyle}[data-has-nav-header="true"] &`]: {
       height: 'calc(100% - 52px)',
@@ -86,7 +86,7 @@ export const navBodyStyle = style({
   },
 });
 export const sidebarFloatMaskStyle = style({
-  transition: 'opacity .15s',
+  transition: `opacity var(--duration-normal) var(--ease-default)`,
   opacity: 0,
   pointerEvents: 'none',
   position: 'fixed',

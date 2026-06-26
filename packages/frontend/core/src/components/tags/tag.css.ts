@@ -41,7 +41,7 @@ export const innerContainer = style({
   position: 'absolute',
   height: '100%',
   maxWidth: '100%',
-  transition: 'all 0.2s 0.3s ease-in-out',
+  transition: `all var(--duration-normal) var(--ease-default)`,
   selectors: {
     [`${root}:hover &`]: {
       maxWidth: hoverMaxWidth,
@@ -57,7 +57,7 @@ export const innerBackdrop = style({
   right: 0,
   height: '100%',
   opacity: 0,
-  transition: 'all 0.2s',
+  transition: `opacity var(--duration-normal) var(--ease-default)`,
   background: `linear-gradient(90deg, transparent 0%, ${cssVar(
     'hoverColorFilled'
   )} 40%)`,
@@ -121,8 +121,8 @@ export const tagLabelMode = style([
   {
     fontSize: cssVar('fontSm'),
     background: tagColorVar,
-    padding: '0 8px',
-    borderRadius: 4,
+    padding: '0 var(--sp-2)',
+    borderRadius: 'var(--radius-sm)',
     border: `1px solid ${cssVarV2('database/border')}`,
     gap: 4,
     selectors: {
@@ -163,6 +163,6 @@ export const tagRemove = style({
   flexShrink: 0,
   cursor: 'pointer',
   ':hover': {
-    background: 'var(--blank-hover-color)',
+    background: 'var(--bg-hover)',
   },
 });

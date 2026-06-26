@@ -1,6 +1,7 @@
 import { ColorScheme } from '@blocksuite/blank/model';
 import { createSignalFromObservable } from '@blocksuite/blank-shared/utils';
 import type { Signal } from '@preact/signals-core';
+import { isDarkColorMode } from '@blank/core/utils/color-mode';
 import { Entity, LiveData } from '@toeverything/infra';
 
 export class AppTheme extends Entity {
@@ -12,7 +13,7 @@ export class AppTheme extends Entity {
     super();
     const { signal, cleanup } = createSignalFromObservable<ColorScheme>(
       this.theme$.map(theme =>
-        theme === 'dark' ? ColorScheme.Dark : ColorScheme.Light
+        isDarkColorMode(theme) ? ColorScheme.Dark : ColorScheme.Light
       ),
       ColorScheme.Light
     );

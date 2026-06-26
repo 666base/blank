@@ -7,6 +7,7 @@ import { useRegisterFindInPageCommands } from '@blank/core/components/hooks/blan
 import { useRegisterWorkspaceCommands } from '@blank/core/components/hooks/use-register-workspace-commands';
 import { OverCapacityNotification } from '@blank/core/components/over-capacity';
 import { DocsService } from '@blank/core/modules/doc';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
 import { EditorSettingService } from '@blank/core/modules/editor-setting';
 import { useRegisterNavigationCommands } from '@blank/core/modules/navigation/view/use-register-navigation-commands';
 import { QuickSearchContainer } from '@blank/core/modules/quicksearch';
@@ -19,11 +20,12 @@ import {
   fromPromise,
   onStart,
   throwIfAborted,
+  useLiveData,
   useService,
   useServices,
 } from '@toeverything/infra';
 import { useSetAtom } from 'jotai';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { catchError, EMPTY, finalize, switchMap, tap, timeout } from 'rxjs';
 
 /**
@@ -42,6 +44,23 @@ export const WorkspaceSideEffects = () => {
   const docsList = docsService.list;
 
   const workbench = useService(WorkbenchService).workbench;
+  const workspaceDialogService = useService(WorkspaceDialogService);
+  const workbenchPathname = useLiveData(workbench.location$).pathname;
+  const prevWorkbenchPathRef = useRef(workbenchPathname);
+
+  useEffect(() => {
+    const prev = prevWorkbenchPathRef.current;
+    prevWorkbenchPathRef.current = workbenchPathname;
+    if (prev === workbenchPathname) {
+      return;
+    }
+    for (const dialog of workspaceDialogService.dialogs$.value) {
+      if (dialog.type === 'setting') {
+        workspaceDialogService.close(dialog.id);
+      }
+    }
+  }, [workbenchPathname, workspaceDialogService]);
+
   useEffect(() => {
     const insertTemplate = effect(
       switchMap(({ template, mode }: { template: string; mode: string }) => {

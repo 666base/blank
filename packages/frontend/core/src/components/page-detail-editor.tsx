@@ -2,7 +2,7 @@ import './page-detail-editor.css';
 
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect } from 'react';
 
 import { preloadBlockSuiteEditor } from '../blocksuite/preload-block-suite-editor';
 import type { BlankEditorContainer } from '../blocksuite/block-suite-editor';
@@ -61,8 +61,8 @@ export const PageDetailEditor = ({
     ? pageWidth === 'fullWidth'
     : settings.fullWidthLayout;
 
-  useEffect(() => {
-    editor.doc.blockSuiteDoc.readonly = readonly ?? false;
+  useLayoutEffect(() => {
+    editor.doc.blockSuiteDoc.readonly = readonly === true;
   }, [editor, readonly]);
 
   useEffect(() => {

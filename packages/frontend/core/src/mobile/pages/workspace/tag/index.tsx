@@ -1,11 +1,9 @@
-import { useThemeColorV2 } from '@blank/component';
 import { WorkbenchService } from '@blank/core/modules/workbench';
 import { useService } from '@toeverything/infra';
 import { useLayoutEffect } from 'react';
 
 /** @deprecated Tags list is on Home. */
 export const Component = () => {
-  useThemeColorV2('layer/background/mobile/primary');
   const workbench = useService(WorkbenchService).workbench;
 
   useLayoutEffect(() => {

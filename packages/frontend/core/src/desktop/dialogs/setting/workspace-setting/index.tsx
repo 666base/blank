@@ -88,12 +88,14 @@ export const useWorkspaceSettingList = (): SettingSidebarItem[] => {
       },
     ].filter(item => {
       if (isBlankBuild()) {
-        if (item.key === 'workspace:embedding' && isAiDisabled()) {
-          return false;
-        }
-        if (item.key === 'workspace:members') {
-          return false;
-        }
+        return (
+          item.key !== 'workspace:embedding' &&
+          item.key !== 'workspace:members' &&
+          item.key !== 'workspace:properties'
+        );
+      }
+      if (item.key === 'workspace:embedding' && isAiDisabled()) {
+        return false;
       }
       return true;
     });

@@ -5,6 +5,7 @@ import {
   WorkspaceDialogService,
 } from '@blank/core/modules/dialogs';
 import type { WORKSPACE_DIALOG_SCHEMA } from '@blank/core/modules/dialogs/constant';
+import { Loading } from '@blank/component';
 import { useLiveData, useService } from '@toeverything/infra';
 import {
   lazy,
@@ -14,16 +15,37 @@ import {
 } from 'react';
 
 function lazyDialog<P extends object>(
-  load: () => Promise<{ default: ComponentType<P> }>
+  load: () => Promise<{ default: ComponentType<P> }>,
+  fallback: FC | null = null
 ): FC<P> {
   const LazyDialog = lazy(load);
+  const Fallback = fallback;
   const Dialog = (props: P) => (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={
+        Fallback ? (
+          <Fallback />
+        ) : null
+      }
+    >
       <LazyDialog {...props} />
     </Suspense>
   );
   return Dialog;
 }
+
+const DialogLoading = () => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 48,
+    }}
+  >
+    <Loading size={24} />
+  </div>
+);
 
 const GLOBAL_DIALOGS = {
   'create-workspace': lazyDialog(() =>
@@ -87,8 +109,9 @@ const WORKSPACE_DIALOGS = {
   'date-selector': lazyDialog(() =>
     import('./selectors/date').then(m => ({ default: m.DateSelectorDialog }))
   ),
-  setting: lazyDialog(() =>
-    import('./setting').then(m => ({ default: m.SettingDialog }))
+  setting: lazyDialog(
+    () => import('./setting').then(m => ({ default: m.SettingDialog })),
+    DialogLoading
   ),
   import: lazyDialog(() =>
     import('./import').then(m => ({ default: m.ImportDialog }))

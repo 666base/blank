@@ -4,6 +4,7 @@ import { EditorsService } from '@blank/core/modules/editor';
 import { ViewService } from '@blank/core/modules/workbench/services/view';
 import { WorkspaceService } from '@blank/core/modules/workspace';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
+import { isDocAccessDenied } from '@blank/core/modules/permissions';
 import { preloadBlockSuiteEditor } from '@blank/core/blocksuite/preload-block-suite-editor';
 import {
   type PropsWithChildren,
@@ -48,9 +49,10 @@ const useLoadDoc = (pageId: string) => {
   const isInTrash = useLiveData(doc?.meta$.map(meta => meta.trash));
 
   useEffect(() => {
-    if (doc && isInTrash) {
-      doc.blockSuiteDoc.readonly = true;
+    if (!doc) {
+      return;
     }
+    doc.blockSuiteDoc.readonly = Boolean(isInTrash);
   }, [doc, isInTrash]);
 
   return {
@@ -87,9 +89,11 @@ export const DetailPageWrapper = ({
     return notFound;
   }
 
-  if (canAccess === undefined || !doc || !editor) {
+  if (!doc || !editor) {
     return skeleton;
-  } else if (!canAccess) {
+  }
+
+  if (isDocAccessDenied(canAccess)) {
     return notFound;
   }
 

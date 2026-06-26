@@ -3,8 +3,10 @@ import { bodyEmphasized } from '@toeverything/theme/typography';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { globalStyle, style } from '@vanilla-extract/css';
 
+const mobileBg = cssVarV2('layer/background/mobile/primary');
+
 export const root = style({
-  background: cssVarV2('layer/background/primary'),
+  background: mobileBg,
   minHeight: '100dvh',
   display: 'flex',
   flexDirection: 'column',
@@ -18,7 +20,7 @@ export const root = style({
 });
 
 export const header = style({
-  background: cssVarV2('layer/background/primary'),
+  background: mobileBg,
   position: 'fixed',
   top: 0,
   zIndex: 1,
@@ -75,7 +77,7 @@ export const blankDocViewport = style({
   flexDirection: 'column',
   containerName: 'viewport',
   containerType: 'inline-size',
-  background: cssVarV2('layer/background/primary'),
+  background: mobileBg,
   selectors: {
     '&[data-mode="edgeless"]': {
       position: 'absolute',
@@ -131,7 +133,7 @@ export const journalIconButton = style({
 });
 
 export const journalDatePicker = style({
-  background: cssVarV2('layer/background/primary'),
+  background: mobileBg,
 });
 
 // When edgeless mode is active, prevent document-level scrolling

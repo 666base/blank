@@ -1,5 +1,5 @@
-import { CategoryDivider } from '@blank/core/modules/app-sidebar/views';
 import { NavigationPanelService } from '@blank/core/modules/navigation-panel';
+import { ArrowDownSmallIcon } from '@blocksuite/icons/rc';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -11,11 +11,19 @@ import {
   useCallback,
 } from 'react';
 
-import { content, header, root } from './collapsible-section.css';
+import {
+  collapsedIconContainer,
+  iconContainer,
+  itemContent,
+  itemRoot,
+  postfix,
+} from '../tree/node.css';
+import * as styles from './collapsible-section.css';
 
 interface CollapsibleSectionProps extends PropsWithChildren {
   path: string[];
   title: string;
+  icon?: ReactNode;
   actions?: ReactNode;
 
   className?: string;
@@ -32,6 +40,7 @@ interface CollapsibleSectionProps extends PropsWithChildren {
 export const CollapsibleSection = ({
   path,
   title,
+  icon,
   actions,
   children,
 
@@ -56,26 +65,42 @@ export const CollapsibleSection = ({
     [navigationPanelService, path]
   );
 
+  const handleToggle = useCallback(() => {
+    setCollapsed(!collapsed);
+  }, [collapsed, setCollapsed]);
+
   return (
     <Collapsible.Root
       data-collapsed={collapsed}
-      className={clsx(root, className)}
+      className={clsx(styles.root, className)}
       open={!collapsed}
       data-testid={testId}
     >
-      <CategoryDivider
-        data-testid={headerTestId}
-        label={title}
-        setCollapsed={setCollapsed}
-        collapsed={collapsed}
+      <div
         ref={headerRef}
-        className={clsx(header, headerClassName)}
+        data-testid={headerTestId}
+        className={clsx(itemRoot, styles.header, headerClassName)}
+        data-collapsible="true"
+        onClick={handleToggle}
       >
-        {actions}
-      </CategoryDivider>
+        <div
+          className={collapsedIconContainer}
+          data-collapsed={collapsed}
+          data-disabled="false"
+        >
+          <ArrowDownSmallIcon width={16} height={16} />
+        </div>
+        {icon ? <div className={iconContainer}>{icon}</div> : null}
+        <span className={itemContent}>{title}</span>
+        {actions ? (
+          <div className={postfix} onClick={e => e.stopPropagation()}>
+            {actions}
+          </div>
+        ) : null}
+      </div>
       <Collapsible.Content
         data-testid="collapsible-section-content"
-        className={clsx(content, contentClassName)}
+        className={clsx(styles.content, contentClassName)}
         style={contentStyle}
       >
         {children}

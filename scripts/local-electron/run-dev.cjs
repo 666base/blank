@@ -5,6 +5,8 @@ const net = require('node:net');
 const path = require('node:path');
 
 const root = path.resolve(__dirname, '..', '..');
+const { applyToProcessEnv } = require('../load-blank-server-env.cjs');
+applyToProcessEnv();
 const devInfoFile = path.join(root, '.blank', 'electron-dev-server.json');
 const children = new Set();
 const isWindows = process.platform === 'win32';

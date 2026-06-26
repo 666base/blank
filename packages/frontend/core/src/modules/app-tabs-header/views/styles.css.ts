@@ -15,10 +15,14 @@ export const root = style({
   gap: '8px',
   overflow: 'clip',
   pointerEvents: 'auto',
+  backgroundColor: cssVar('backgroundPrimaryColor'),
   ['WebkitAppRegion' as string]: 'drag',
   selectors: {
     '&[data-is-windows="false"]': {
       paddingRight: 8,
+    },
+    '&[data-frameless="true"]': {
+      flexShrink: 0,
     },
   },
 });
@@ -27,7 +31,7 @@ export const headerLeft = style({
   display: 'flex',
   flexFlow: 'row',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  justifyContent: 'flex-start',
   paddingRight: 12,
   gap: 10,
   flexShrink: 0,
@@ -38,6 +42,26 @@ export const headerLeft = style({
   },
 });
 
+export const headerSidebarControls = style({
+  display: 'flex',
+  flexFlow: 'row',
+  alignItems: 'center',
+  gap: 4,
+  flexShrink: 0,
+  flexWrap: 'nowrap',
+  ['WebkitAppRegion' as string]: 'no-drag',
+});
+
+export const titleBarRightActions = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 4,
+  flexShrink: 0,
+  flexWrap: 'nowrap',
+  marginRight: 4,
+  ['WebkitAppRegion' as string]: 'no-drag',
+});
+
 export const tabs = style({
   display: 'flex',
   flexDirection: 'row',
@@ -45,6 +69,7 @@ export const tabs = style({
   paddingLeft: 8,
   overflow: 'hidden',
   height: '100%',
+  ['WebkitAppRegion' as string]: 'no-drag',
   selectors: {
     '&[data-pinned="true"]': {
       flexShrink: 0,
@@ -227,6 +252,7 @@ export const spacer = style({
   alignItems: 'center',
   marginLeft: -8,
   position: 'relative',
+  ['WebkitAppRegion' as string]: 'no-drag',
   selectors: {
     '&[data-dragged-over=true]:after': {
       content: '""',
@@ -240,12 +266,6 @@ export const spacer = style({
       background: cssVar('primaryColor'),
     },
   },
-});
-
-export const windowsAppControlsPlaceholder = style({
-  width: '120px',
-  height: '100%',
-  flexShrink: 0,
 });
 
 export const dropIndicator = style({

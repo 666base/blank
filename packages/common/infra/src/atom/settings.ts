@@ -18,7 +18,17 @@ export type AppSetting = {
   enableTelemetry: boolean;
   showLinkedDocInSidebar: boolean;
   disableImageAntialiasing: boolean;
+  sidebarShowFavorites: boolean;
+  sidebarShowOrganize: boolean;
+  sidebarShowTags: boolean;
+  sidebarShowCollections: boolean;
+  sidebarShowOthers: boolean;
+  visualTheme: 'default' | 'codex';
 };
+export const visualThemeOptions: AppSetting['visualTheme'][] = [
+  'default',
+  'codex',
+];
 export const windowFrameStyleOptions: AppSetting['windowFrameStyle'][] = [
   'frameless',
   'NativeTitleBar',
@@ -28,7 +38,7 @@ export const APP_SETTINGS_STORAGE_KEY = 'blank-settings';
 const appSettingBaseAtom = atomWithStorage<AppSetting>(
   APP_SETTINGS_STORAGE_KEY,
   {
-    clientBorder: BUILD_CONFIG.isElectron && !environment.isWindows,
+    clientBorder: BUILD_CONFIG.isElectron,
     windowFrameStyle: 'frameless',
     enableBlurBackground: BUILD_CONFIG.isElectron && environment.isMacOs,
     enableNoisyBackground: true,
@@ -37,6 +47,12 @@ const appSettingBaseAtom = atomWithStorage<AppSetting>(
     enableTelemetry: true,
     showLinkedDocInSidebar: true,
     disableImageAntialiasing: false,
+    sidebarShowFavorites: true,
+    sidebarShowOrganize: true,
+    sidebarShowTags: true,
+    sidebarShowCollections: true,
+    sidebarShowOthers: true,
+    visualTheme: 'codex',
   },
   undefined,
   {

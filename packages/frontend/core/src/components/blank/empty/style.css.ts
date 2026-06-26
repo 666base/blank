@@ -7,7 +7,7 @@ export const root = style({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: 16,
+  gap: 'var(--sp-4)',
 
   // SVG illustration has a space from top, add some padding bottom to compensate
   paddingBottom: 35,
@@ -20,18 +20,18 @@ export const illustration = style({
 
 export const title = style({
   textAlign: 'center',
-  fontSize: 15,
-  lineHeight: '24px',
-  fontWeight: 500,
+  fontSize: 'var(--text-md)',
+  lineHeight: 'var(--leading-md)',
+  fontWeight: 'var(--weight-medium)',
   color: cssVarV2('text/primary'),
-  marginBottom: 4,
+  marginBottom: 'var(--sp-1)',
 });
 
 export const description = style({
   textAlign: 'center',
-  fontSize: 14,
-  fontWeight: 400,
-  lineHeight: '22px',
+  fontSize: 'var(--text-base)',
+  fontWeight: 'var(--weight-regular)',
+  lineHeight: 'var(--leading-base)',
   color: cssVarV2('text/secondary'),
   marginBottom: 0,
   maxWidth: 300,
@@ -46,14 +46,14 @@ export const absoluteCenter = style({
 
 export const actionGroup = style({
   display: 'flex',
-  gap: 16,
+  gap: 'var(--sp-4)',
 });
 
 export const actionButton = style({});
 export const mobileActionButton = style({
-  padding: '8px 18px',
+  padding: 'var(--sp-2) 18px',
   height: 'auto',
-  fontWeight: 600,
+  fontWeight: 'var(--weight-semibold)',
 });
 
 export const actionContent = style({

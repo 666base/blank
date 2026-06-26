@@ -94,8 +94,7 @@ const AppTabLink = ({ route }: { route: AppTabLink }) => {
       key={route.to}
       replaceHistory
     >
-      <TabItem id={route.key} label={route.to.slice(1)}>
-        <route.Icon />
+      <TabItem id={route.key} label={route.to.slice(1)} icon={route.icon}>
       </TabItem>
     </Link>
   );

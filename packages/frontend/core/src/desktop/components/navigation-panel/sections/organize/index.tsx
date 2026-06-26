@@ -12,7 +12,7 @@ import {
 import type { BlankDNDData } from '@blank/core/types/dnd';
 import { useI18n } from '@blank/i18n';
 import { track } from '@blank/track';
-import { AddOrganizeIcon } from '@blocksuite/icons/rc';
+import { AddOrganizeIcon, FolderIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -106,6 +106,7 @@ export const NavigationPanelOrganize = () => {
     <CollapsibleSection
       path={path}
       title={t['com.blank.rootAppSidebar.organize']()}
+      icon={<FolderIcon />}
       actions={
         <IconButton
           data-testid="navigation-panel-bar-add-organize-button"

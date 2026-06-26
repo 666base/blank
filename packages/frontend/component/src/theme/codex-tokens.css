@@ -1,0 +1,202 @@
+/* ============================================================
+   VISUAL DNA — Codex-inspired design tokens (Blank)
+   Semantic layer: use var(--bg-*) in new code.
+   Existing UI reads remapped --affine-* via codex-overrides.css
+   ============================================================ */
+
+html[data-visual-theme='codex'],
+html:not([data-visual-theme]) {
+  /* --- BACKGROUNDS (4 layers + interaction) --- */
+  --bg-root: #0c0c0c;
+  --bg-surface: #131313;
+  --bg-card: #191919;
+  --bg-raised: #202020;
+  --bg-hover: #242424;
+  --bg-active: #2a2a2a;
+
+  /* --- BORDERS --- */
+  --border-ghost: rgba(255, 255, 255, 0.03);
+  --border-faint: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* --- TEXT --- */
+  --text-primary: #efefef;
+  --text-secondary: #8c8c8c;
+  --text-muted: #4a4a4a;
+
+  /* --- ACCENT --- */
+  --accent: #4f8cf7;
+  --accent-hover: #6fa3ff;
+  --accent-dim: rgba(79, 140, 247, 0.12);
+  --accent-border: rgba(79, 140, 247, 0.3);
+
+  /* --- SEMANTIC --- */
+  --color-danger: #d95f5f;
+  --color-success: #4caf7d;
+  --color-warning: #d4a843;
+
+  /* --- TYPOGRAPHY --- */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Source Code Pro', 'Fira Code', monospace;
+
+  --text-2xs: 10px;
+  --leading-2xs: 14px;
+  --text-xs: 11px;
+  --leading-xs: 16px;
+  --text-sm: 12px;
+  --leading-sm: 18px;
+  --text-base: 14px;
+  --leading-base: 20px;
+  --text-md: 15px;
+  --leading-md: 22px;
+  --text-lg: 18px;
+  --leading-lg: 26px;
+  --text-xl: 22px;
+  --leading-xl: 30px;
+  --text-2xl: 28px;
+  --leading-2xl: 36px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* --- SPACING (4px grid) --- */
+  --sp-0: 2px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* --- BORDER RADIUS --- */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* --- SHADOWS --- */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.22);
+
+  /* --- TRANSITIONS --- */
+  --ease-default: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 80ms;
+  --duration-normal: 140ms;
+  --duration-slow: 220ms;
+
+  /* --- LAYOUT --- */
+  --touch-target: 44px;
+  --sidebar-mode: fixed;
+}
+
+/* Light theme semantic tokens (minimal — AFFiNE light base stays underneath) */
+html[data-visual-theme='codex']:is([data-theme='light']),
+html:not([data-visual-theme]):is([data-theme='light']) {
+  --bg-root: #fafafa;
+  --bg-surface: #f4f4f4;
+  --bg-card: #ffffff;
+  --bg-raised: #ffffff;
+  --bg-hover: #f0f0f0;
+  --bg-active: #e8e8e8;
+
+  --border-ghost: rgba(0, 0, 0, 0.03);
+  --border-faint: rgba(0, 0, 0, 0.06);
+  --border-subtle: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.18);
+
+  --text-primary: #141414;
+  --text-secondary: #6b6b6b;
+  --text-muted: #a3a3a3;
+
+  --accent: #4f8cf7;
+  --accent-hover: #3a7ae8;
+  --accent-dim: rgba(79, 140, 247, 0.1);
+  --accent-border: rgba(79, 140, 247, 0.25);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+}
+
+/* Gray — neutral mid-dark palette */
+html[data-visual-theme='codex']:is([data-theme='gray']),
+html:not([data-visual-theme]):is([data-theme='gray']) {
+  --bg-root: #1c1c1c;
+  --bg-surface: #242424;
+  --bg-card: #2c2c2c;
+  --bg-raised: #343434;
+  --bg-hover: #3a3a3a;
+  --bg-active: #424242;
+
+  --border-ghost: rgba(255, 255, 255, 0.04);
+  --border-faint: rgba(255, 255, 255, 0.07);
+  --border-subtle: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --text-primary: #d6d6d6;
+  --text-secondary: #909090;
+  --text-muted: #5a5a5a;
+
+  --accent: #6b8fd4;
+  --accent-hover: #84a3de;
+  --accent-dim: rgba(107, 143, 212, 0.14);
+  --accent-border: rgba(107, 143, 212, 0.32);
+}
+
+/* Paper — warm reading palette */
+html[data-visual-theme='codex']:is([data-theme='paper']),
+html:not([data-visual-theme]):is([data-theme='paper']) {
+  --bg-root: #f3ede3;
+  --bg-surface: #ebe4d8;
+  --bg-card: #faf6ef;
+  --bg-raised: #fffdf8;
+  --bg-hover: #e6dfd2;
+  --bg-active: #dbd2c3;
+
+  --border-ghost: rgba(42, 35, 24, 0.04);
+  --border-faint: rgba(42, 35, 24, 0.08);
+  --border-subtle: rgba(42, 35, 24, 0.12);
+  --border-strong: rgba(42, 35, 24, 0.2);
+
+  --text-primary: #2a2318;
+  --text-secondary: #6e6253;
+  --text-muted: #a39685;
+
+  --accent: #4a7fd4;
+  --accent-hover: #3a6fbe;
+  --accent-dim: rgba(74, 127, 212, 0.12);
+  --accent-border: rgba(74, 127, 212, 0.28);
+
+  --shadow-xs: 0 1px 2px rgba(42, 35, 24, 0.06);
+  --shadow-sm: 0 2px 6px rgba(42, 35, 24, 0.08);
+  --shadow-md: 0 6px 20px rgba(42, 35, 24, 0.1);
+  --shadow-lg: 0 16px 48px rgba(42, 35, 24, 0.12);
+}
+
+@media (max-width: 768px) {
+  html[data-visual-theme='codex'],
+html:not([data-visual-theme]) {
+    --text-base: 15px;
+    --leading-base: 22px;
+    --sidebar-mode: overlay;
+  }
+}
+
+@media (max-width: 480px) {
+  html[data-visual-theme='codex'],
+html:not([data-visual-theme]) {
+    --sp-4: 14px;
+    --sp-6: 18px;
+  }
+}

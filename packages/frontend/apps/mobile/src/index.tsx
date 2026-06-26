@@ -1,20 +1,21 @@
 import './setup';
 
 import { Telemetry } from '@blank/core/components/telemetry';
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './app';
 
 function mountApp() {
-  // oxlint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const root = document.getElementById('app')!;
+  const root = document.getElementById('app');
+  if (!root) {
+    return;
+  }
   try {
     createRoot(root).render(
-      <StrictMode>
+      <>
         <Telemetry />
         <App />
-      </StrictMode>
+      </>
     );
   } catch (err) {
     document.getElementById('blank-boot-splash')?.remove();

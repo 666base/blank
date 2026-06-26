@@ -15,7 +15,7 @@ import type { BlankDNDData } from '@blank/core/types/dnd';
 import { inferOpenMode } from '@blank/core/utils';
 import { useI18n } from '@blank/i18n';
 import { track } from '@blank/track';
-import { PlusIcon } from '@blocksuite/icons/rc';
+import { PlusIcon, FavoriteIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { type MouseEventHandler, useCallback, useMemo } from 'react';
 
@@ -164,6 +164,7 @@ export const NavigationPanelFavorites = () => {
     <CollapsibleSection
       path={path}
       title={t['com.blank.rootAppSidebar.favorites']()}
+      icon={<FavoriteIcon />}
       headerRef={dropTargetRef}
       testId="navigation-panel-favorites"
       headerTestId="navigation-panel-favorite-category-divider"

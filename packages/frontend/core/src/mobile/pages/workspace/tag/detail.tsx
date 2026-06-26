@@ -1,4 +1,3 @@
-import { useThemeColorV2 } from '@blank/component';
 import { PageNotFound } from '@blank/core/desktop/pages/404';
 import { GlobalContextService } from '@blank/core/modules/global-context';
 import { TagService } from '@blank/core/modules/tag';
@@ -9,7 +8,6 @@ import { useParams } from 'react-router-dom';
 import { TagDetail } from '../../../views';
 
 export const Component = () => {
-  useThemeColorV2('layer/background/mobile/primary');
   const params = useParams();
   const tagId = params.tagId;
 

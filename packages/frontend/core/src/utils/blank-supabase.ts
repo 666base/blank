@@ -16,6 +16,24 @@ function normalizeUrl(url: string) {
   return url.trim().replace(/\/+$/, '');
 }
 
+function isLocalhostUrl(url: string) {
+  try {
+    const host = new URL(url).hostname;
+    return host === '127.0.0.1' || host === 'localhost';
+  } catch {
+    return false;
+  }
+}
+
+function isNativeClient() {
+  return (
+    BUILD_CONFIG.isAndroid ||
+    BUILD_CONFIG.isIOS ||
+    BUILD_CONFIG.isElectron ||
+    Boolean(globalThis.__CAPACITOR_NATIVE__)
+  );
+}
+
 export function getBlankSupabaseUrl(): string | undefined {
   const fromBuild = BUILD_CONFIG.blankSupabaseUrl?.trim();
   if (fromBuild) {
@@ -154,18 +172,29 @@ export function resetBlankSupabaseClient() {
 
 /** Fetch public sync config from optional Docker proxy. */
 export async function loadBlankSyncConfigFromProxy(baseUrl: string) {
-  const res = await fetch(`${normalizeUrl(baseUrl)}/v1/config`);
-  if (!res.ok) return null;
-  const data = (await res.json()) as {
-    protocol?: string;
-    auth?: { supabaseUrl?: string | null; supabaseAnonKey?: string | null };
-  };
-  if (data.protocol !== BLANK_NATIVE_SYNC_PROTOCOL) return null;
-  if (data.auth?.supabaseUrl && data.auth?.supabaseAnonKey) {
-    setBlankSupabaseConfig(data.auth.supabaseUrl, data.auth.supabaseAnonKey);
-    resetBlankSupabaseClient();
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 5_000);
+
+  try {
+    const res = await fetch(`${normalizeUrl(baseUrl)}/v1/config`, {
+      signal: controller.signal,
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as {
+      protocol?: string;
+      auth?: { supabaseUrl?: string | null; supabaseAnonKey?: string | null };
+    };
+    if (data.protocol !== BLANK_NATIVE_SYNC_PROTOCOL) return null;
+    if (data.auth?.supabaseUrl && data.auth?.supabaseAnonKey) {
+      setBlankSupabaseConfig(data.auth.supabaseUrl, data.auth.supabaseAnonKey);
+      resetBlankSupabaseClient();
+    }
+    return data;
+  } catch {
+    return null;
+  } finally {
+    window.clearTimeout(timeoutId);
   }
-  return data;
 }
 
 /** Resolve Supabase keys at startup (build env → localStorage → config proxy). */
@@ -176,6 +205,15 @@ export async function ensureBlankSupabaseConfig() {
 
   const proxy = BUILD_CONFIG.blankConfigProxyUrl?.trim();
   if (!proxy) {
+    return false;
+  }
+
+  // Installed APK/EXE on a device cannot reach the dev machine's localhost proxy.
+  if (
+    isNativeClient() &&
+    isLocalhostUrl(proxy) &&
+    !BUILD_CONFIG.blankSupabaseUrl?.trim()
+  ) {
     return false;
   }
 

@@ -6,8 +6,11 @@ import { FrameworkScope, useService } from '@toeverything/infra';
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import { AdaptiveStatusBar } from '../../components/adaptive-status-bar';
 import { AppFallback } from '../../components/app-fallback';
+import { MobileBootPlaceholder } from '../../components/boot-placeholder';
 import { GlobalDialogs } from '../../dialogs';
+import { VisualThemeModifier } from '../../../components/visual-theme/visual-theme-modifier';
 
 export const RootWrapper = () => {
   const defaultServerService = useService(DefaultServerService);
@@ -32,13 +35,15 @@ export const RootWrapper = () => {
   }, [defaultServerService, isServerReady]);
 
   if (!isServerReady) {
-    return isBlankBuild() ? null : <AppFallback />;
+    return isBlankBuild() ? <MobileBootPlaceholder /> : <AppFallback />;
   }
 
   return (
     <FrameworkScope scope={defaultServerService.server.scope}>
+      <AdaptiveStatusBar />
       <GlobalDialogs />
       <NotificationCenter />
+      <VisualThemeModifier />
       <Outlet />
     </FrameworkScope>
   );

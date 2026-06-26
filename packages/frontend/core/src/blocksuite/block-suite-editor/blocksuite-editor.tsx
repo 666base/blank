@@ -30,7 +30,7 @@ import { useLiveData, useService } from '@toeverything/infra';
 import { cssVar } from '@toeverything/theme';
 import clsx from 'clsx';
 import type { CSSProperties, HTMLAttributes } from 'react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { DefaultOpenProperty } from '../../components/properties';
 import { ensureBlockSuiteEditorEffects } from './ensure-effects';
@@ -150,6 +150,10 @@ const BlockSuiteEditorImpl = ({
 
     return proxy;
   }, [mode, page]);
+
+  useLayoutEffect(() => {
+    page.readonly = readonly === true;
+  }, [page, readonly]);
 
   const handleClickPageModeBlank = useCallback(() => {
     if (shared || readonly || page.readonly) return;

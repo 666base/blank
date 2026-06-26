@@ -165,6 +165,7 @@ function isInternalUrl(targetUrl, appUrl) {
 
 let mainWindow = null;
 let blankApi = null;
+let trayManager = null;
 
 function syncFastBootToLocalStorage(win) {
   if (!win || win.isDestroyed()) {
@@ -191,6 +192,9 @@ function syncFastBootToLocalStorage(win) {
 
 function createWindow() {
   const startUrl = getStartUrl();
+  const isMac = process.platform === 'darwin';
+  const isWin = process.platform === 'win32';
+
   const win = new BrowserWindow({
     width: 1280,
     height: 860,
@@ -200,6 +204,13 @@ function createWindow() {
     backgroundColor: '#121212',
     show: true,
     autoHideMenuBar: true,
+    frame: isWin ? false : true,
+    ...(isMac
+      ? {
+          titleBarStyle: 'hiddenInset',
+          trafficLightPosition: { x: 14, y: 12 },
+        }
+      : {}),
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
@@ -265,21 +276,33 @@ function createWindow() {
   blankApi?.attachWindow(win);
   mainWindow = win;
 
+  if (trayManager?.shouldStartMinimized()) {
+    win.hide();
+  }
+
   return win;
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   ensureDefaultRouteFile();
   blankApi = registerBlankDesktopApi(() => mainWindow);
+  trayManager = blankApi.trayManager;
 
   if (shouldUsePackagedWeb()) {
     registerPackagedProtocol();
   }
 
   Menu.setApplicationMenu(null);
+  await blankApi.globalStateReady;
+  trayManager.init();
   createWindow();
 
   app.on('activate', () => {
+    const win = mainWindow;
+    if (win && !win.isDestroyed()) {
+      trayManager.showMainWindow();
+      return;
+    }
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
@@ -287,7 +310,11 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
+  if (process.platform === 'darwin') {
+    return;
   }
+  if (trayManager?.shouldKeepRunningInBackground()) {
+    return;
+  }
+  app.quit();
 });

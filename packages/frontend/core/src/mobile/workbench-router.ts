@@ -1,17 +1,21 @@
 import type { RouteObject } from 'react-router-dom';
 
+import { Component as MobileDetailPage } from './pages/workspace/detail/mobile-detail-page';
+import { Component as MobileHomePage } from './pages/workspace/home';
+import { Component as JournalsPage } from './pages/workspace/journals';
+
 export const workbenchRoutes = [
   {
     path: '/home',
-    lazy: () => import('./pages/workspace/home'),
+    Component: MobileHomePage,
   },
   {
     path: '/home/collections',
-    lazy: () => import('./pages/workspace/home'),
+    Component: MobileHomePage,
   },
   {
     path: '/home/tags',
-    lazy: () => import('./pages/workspace/home'),
+    Component: MobileHomePage,
   },
   {
     path: '/search',
@@ -39,7 +43,7 @@ export const workbenchRoutes = [
   },
   {
     path: '/journals',
-    lazy: () => import('./pages/workspace/journals'),
+    Component: JournalsPage,
   },
   {
     path: '/trash',
@@ -47,7 +51,7 @@ export const workbenchRoutes = [
   },
   {
     path: '/:pageId',
-    lazy: () => import('./pages/workspace/detail/mobile-detail-page'),
+    Component: MobileDetailPage,
   },
   {
     path: '*',

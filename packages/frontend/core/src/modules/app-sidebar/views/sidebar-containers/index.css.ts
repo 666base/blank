@@ -51,20 +51,7 @@ export const scrollableContainer = style([
   },
 ]);
 export const scrollbar = style({
-  display: 'flex',
-  flexDirection: 'column',
-  userSelect: 'none',
-  touchAction: 'none',
-  padding: '0 2px',
-  width: 'var(--scrollbar-width)',
-  height: '100%',
-  opacity: 1,
-  transition: 'opacity .15s',
-  selectors: {
-    '&[data-state="hidden"]': {
-      opacity: 0,
-    },
-  },
+  display: 'none',
 });
 export const scrollbarThumb = style({
   position: 'relative',

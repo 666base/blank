@@ -4,10 +4,14 @@ import { type PropsWithChildren, useCallback, useMemo } from 'react';
 
 import { cacheKey } from './constants';
 import { tabItem } from './styles.css';
+import { TabBarIcon } from './tab-bar-icon';
+
+import type { TabBarIconName } from './tab-bar-icon';
 
 export interface TabItemProps extends PropsWithChildren {
   id: string;
   label: string;
+  icon?: TabBarIconName;
   onClick?: (isActive: boolean) => void;
   /** Action tabs (e.g. create) should not stay highlighted after tap. */
   persistActive?: boolean;
@@ -16,6 +20,7 @@ export interface TabItemProps extends PropsWithChildren {
 export const TabItem = ({
   id,
   label,
+  icon,
   children,
   onClick,
   persistActive = true,
@@ -46,7 +51,7 @@ export const TabItem = ({
       data-active={isActive}
       onClick={handleClick}
     >
-      {children}
+      {icon ? <TabBarIcon name={icon} active={isActive} /> : children}
     </li>
   );
 };

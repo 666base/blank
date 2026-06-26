@@ -96,4 +96,14 @@ export class ObjectPool<Key, T> {
 
     this.objects.clear();
   }
+
+  /** Drop a workspace/engine immediately (e.g. after auth token refresh). */
+  forceEvict(key: Key) {
+    const exist = this.objects.get(key);
+    if (!exist) {
+      return;
+    }
+    this.options.onDelete?.(exist.obj);
+    this.objects.delete(key);
+  }
 }

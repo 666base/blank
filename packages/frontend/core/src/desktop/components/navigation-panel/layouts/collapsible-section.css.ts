@@ -3,7 +3,9 @@ import { style } from '@vanilla-extract/css';
 
 export const root = style({});
 export const content = style({
-  paddingTop: 6,
+  paddingLeft: 20,
+  paddingTop: 2,
+  paddingBottom: 4,
 });
 
 export const header = style({

@@ -906,9 +906,13 @@ __metadata:
     "@blank/nbstore": "workspace:*"
     "@blank/track": "workspace:*"
     "@blocksuite/blank": "workspace:*"
+    "@capacitor-community/file-opener": "npm:^7.0.1"
     "@capacitor/android": "npm:^7.6.5"
     "@capacitor/cli": "npm:^7.6.5"
     "@capacitor/core": "npm:^7.6.5"
+    "@capacitor/file-transfer": "npm:^1.0.6"
+    "@capacitor/filesystem": "npm:^7.1.4"
+    "@capacitor/status-bar": "npm:^7.0.1"
     "@emotion/react": "npm:^11.14.0"
     "@toeverything/infra": "workspace:*"
     "@types/react": "npm:^19.0.1"
@@ -2823,6 +2827,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@capacitor-community/file-opener@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "@capacitor-community/file-opener@npm:7.0.1"
+  peerDependencies:
+    "@capacitor/core": ">=7.0.0"
+  checksum: 10/2e6f3d0156f33cb5a4c00ac18a3c267992248dbe33845c5ee6ff55ae23419d908be09645dc945d2b72a02539908834cf2b56e497c33b513eae22189814a85b5c
+  languageName: node
+  linkType: hard
+
 "@capacitor/android@npm:^7.6.5":
   version: 7.6.7
   resolution: "@capacitor/android@npm:7.6.7"
@@ -2866,6 +2879,44 @@ __metadata:
   dependencies:
     tslib: "npm:^2.1.0"
   checksum: 10/68594e58080b92be3034b8209e9401afb52536da540a1b451c75c28274b3bd56c9ea58b859c2146adbaa2e8211e652ecb74764f61052859eafd53369d09b8519
+  languageName: node
+  linkType: hard
+
+"@capacitor/file-transfer@npm:^1.0.6":
+  version: 1.0.12
+  resolution: "@capacitor/file-transfer@npm:1.0.12"
+  dependencies:
+    "@capacitor/synapse": "npm:^1.0.3"
+  peerDependencies:
+    "@capacitor/core": ">=7.0.0"
+  checksum: 10/ff6b564f53e914b27b224d248be124f238a6986cb8c05111165f5751f2d611a74c677bc8c120991b278b1a54a25eab42c4e4531912bd1ff878fdd12651c891fd
+  languageName: node
+  linkType: hard
+
+"@capacitor/filesystem@npm:^7.1.4":
+  version: 7.1.8
+  resolution: "@capacitor/filesystem@npm:7.1.8"
+  dependencies:
+    "@capacitor/synapse": "npm:^1.0.3"
+  peerDependencies:
+    "@capacitor/core": ">=7.0.0"
+  checksum: 10/3f5e7129a39cb6f5250b463be0faaa0456afb91fed36df48abae7675b6f83d6b5f3f3e502d2985c23b2ab8e841f334c01b555e04976214f9be9c486e4044f830
+  languageName: node
+  linkType: hard
+
+"@capacitor/status-bar@npm:^7.0.1":
+  version: 7.0.6
+  resolution: "@capacitor/status-bar@npm:7.0.6"
+  peerDependencies:
+    "@capacitor/core": ">=7.0.0"
+  checksum: 10/1658ae3b95719b2cac64c905fa7b809cf3c1d23c2458307f9e4b9257ef906021cb211140710dd820bad42aa5cb2b55c4d970253aeeec2628de6e85cfd77177d6
+  languageName: node
+  linkType: hard
+
+"@capacitor/synapse@npm:^1.0.3":
+  version: 1.0.4
+  resolution: "@capacitor/synapse@npm:1.0.4"
+  checksum: 10/1e7d4e4abb7ad0890e37544062523eb4ab1ec4478aaccd1d9d4550033ab67c126f50de622cfc202f0bad1c38aaee686505c248196873c81fa4175158214cafaa
   languageName: node
   linkType: hard
 

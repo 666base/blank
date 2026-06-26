@@ -2,7 +2,6 @@ import {
   Button,
   SafeArea,
   startScopedViewTransition,
-  useThemeColorV2,
 } from '@blank/component';
 import { CollectionService } from '@blank/core/modules/collection';
 import {
@@ -10,9 +9,8 @@ import {
   QuickSearchTagIcon,
 } from '@blank/core/modules/quicksearch';
 import { TagService } from '@blank/core/modules/tag';
-import { UserFriendlyError } from '@blank/error';
+import { preferInstantNavigation } from '@blank/core/utils/blank-mobile-perf';
 import { useI18n } from '@blank/i18n';
-import { sleep } from '@blocksuite/blank/global/utils';
 import { ViewLayersIcon } from '@blocksuite/icons/rc';
 import {
   LiveData,
@@ -133,7 +131,6 @@ const WithQueryList = () => {
 
 export const Component = () => {
   const t = useI18n();
-  useThemeColorV2('layer/background/mobile/primary');
   const searchInput = useLiveData(searchInput$);
   const searchService = useService(MobileSearchService);
 
@@ -154,10 +151,13 @@ export const Component = () => {
   );
 
   const transitionBack = useCallback(() => {
-    startScopedViewTransition(searchVTScope, async () => {
-      history.back();
-      await sleep(10);
-    });
+    startScopedViewTransition(
+      searchVTScope,
+      () => {
+        history.back();
+      },
+      { instant: preferInstantNavigation() }
+    );
   }, []);
 
   return (

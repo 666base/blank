@@ -2,6 +2,14 @@ const { spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 
+const { applyToProcessEnv } = require('./load-blank-server-env.cjs');
+const loadedSupabase = applyToProcessEnv();
+if (loadedSupabase.BLANK_SUPABASE_URL) {
+  console.log(
+    `Supabase URL baked in from services/blank-server/.env: ${loadedSupabase.BLANK_SUPABASE_URL}`
+  );
+}
+
 const root = path.resolve(__dirname, '..');
 const mobileRoot = path.join(root, 'packages/frontend/apps/mobile');
 const mobileDist = path.join(mobileRoot, 'dist');
@@ -154,6 +162,13 @@ function assertNoAiInBundle(distDir, label) {
   console.log(`  Verified ${label} bundle has no obvious AI modules.`);
 }
 
+function runBlankBundle(packageName, bundleEnv) {
+  const runner = path.join(root, 'tools/cli/bin/runner.js');
+  run(process.execPath, [runner, 'blank.ts', 'bundle', '-p', packageName], {
+    env: bundleEnv,
+  });
+}
+
 function bundleMobile() {
   const bundleEnv = {
     ...process.env,
@@ -164,23 +179,7 @@ function bundleMobile() {
     console.log(`Sync server URL baked in: ${bundleEnv.BLANK_SYNC_SERVER_URL}`);
   }
 
-  if (process.env.npm_execpath) {
-    run(process.execPath, [
-      process.env.npm_execpath,
-      'run',
-      'blank',
-      '--',
-      'bundle',
-      '-p',
-      '@blank/mobile',
-    ], { env: bundleEnv });
-    return;
-  }
-
-  run('yarn', ['blank', 'bundle', '-p', '@blank/mobile'], {
-    shell: isWindows,
-    env: bundleEnv,
-  });
+  runBlankBundle('@blank/mobile', bundleEnv);
 }
 
 function assertMobileBundleUsesLocalAssets() {
@@ -239,6 +238,8 @@ run('npx', ['cap', 'sync', 'android'], { cwd: mobileRoot, shell: true });
 
 run('node', ['scripts/android/ensure-keystore.cjs']);
 run('node', ['scripts/patch-android-signing.cjs']);
+run('node', ['scripts/patch-android-splash.cjs']);
+run('node', ['scripts/patch-android-apk-install.cjs']);
 
 ensureExists(gradlew, 'Gradle wrapper');
 

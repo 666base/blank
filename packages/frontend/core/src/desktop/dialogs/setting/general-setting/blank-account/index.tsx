@@ -4,10 +4,12 @@ import {
   SettingRow,
   SettingWrapper,
 } from '@blank/component/setting-components';
-import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { useNavigateHelper, RouteLogic } from '@blank/core/components/hooks/use-navigate-helper';
 import { GlobalDialogService } from '@blank/core/modules/dialogs';
 import { useBlankAuth } from '@blank/core/modules/blank-auth/use-blank-auth';
+import { BLANK_CLOUD_FLAVOUR } from '@blank/core/modules/workspace-engine';
 import { fetchBlankWorkspaces } from '@blank/core/utils/blank-supabase';
+import { prepareBlankWorkspaceRoute } from '@blank/core/utils/blank-workspace-nav';
 import { useI18n } from '@blank/i18n';
 import { useService } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
@@ -80,8 +82,9 @@ export const BlankAccountSettings = () => {
     if (!syncWorkspaceId) {
       return;
     }
+    prepareBlankWorkspaceRoute(syncWorkspaceId, 'all', BLANK_CLOUD_FLAVOUR);
     globalDialogService.close('setting');
-    openPage(syncWorkspaceId, 'all');
+    openPage(syncWorkspaceId, 'all', RouteLogic.PUSH, BLANK_CLOUD_FLAVOUR);
   }, [globalDialogService, openPage, syncWorkspaceId]);
 
   const displayError = localError ?? error;

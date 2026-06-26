@@ -1,6 +1,6 @@
 {
   "name": "@blank/monorepo",
-  "version": "0.28.8",
+  "version": "0.29.4",
   "description": "Blank local notes app",
   "private": true,
   "author": "local",
@@ -21,7 +21,7 @@
   "scripts": {
     "blank": "node tools/cli/bin/runner.js blank.ts",
     "dev": "yarn blank dev",
-    "mobile:dev": "cross-env PORT=8081 node tools/cli/bin/runner.js blank.ts bundle -p @blank/mobile --dev",
+    "mobile:dev": "node scripts/run-mobile-dev.cjs",
     "web:dev": "cross-env PORT=8080 node tools/cli/bin/runner.js blank.ts bundle -p @blank/web --dev",
     "desktop:dev": "node scripts/local-electron/run-dev.cjs",
     "blank:dev": "node scripts/ensure-blank-server-docker.cjs && node scripts/local-electron/run-dev.cjs",

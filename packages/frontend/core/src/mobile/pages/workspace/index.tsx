@@ -33,13 +33,16 @@ const SharePage = reactLazy(() =>
 );
 
 type Route = { Component: React.ComponentType };
+
+const MobileRouteFallback = () => <MobileBootPlaceholder />;
+
 /**
  * Source: core/src/modules/workbench/view/route-container.tsx
  **/
 const MobileRouteContainer = ({ route }: { route: Route }) => {
   return (
     <BlankErrorBoundary>
-      <Suspense>
+      <Suspense fallback={<MobileRouteFallback />}>
         <route.Component />
       </Suspense>
     </BlankErrorBoundary>

@@ -710,7 +710,7 @@ export function useBlankI18N(): {
       */
     ["com.blank.auth.notConfigured"](): string;
     /**
-      * `Docker Blank server should start with desktop:dev (port 3020). Or set BLANK_SUPABASE_URL at build time.`
+      * `Supabase keys from services/blank-server/.env are not in the app bundle. For APK/EXE: run android:build or desktop:build after filling .env. For PC dev: run blank:server:up or blank:dev.`
       */
     ["com.blank.auth.notConfigured.desc"](): string;
     /**
@@ -1051,13 +1051,29 @@ export function useBlankI18N(): {
       */
     ["com.blank.appearanceSettings.clientBorder.title"](): string;
     /**
-      * `Choose your colour mode`
+      * `Dark, light, gray, or paper`
       */
     ["com.blank.appearanceSettings.color.description"](): string;
     /**
       * `Colour mode`
       */
     ["com.blank.appearanceSettings.color.title"](): string;
+    /**
+      * `Visual style`
+      */
+    ["com.blank.appearanceSettings.visualTheme.title"](): string;
+    /**
+      * `Codex is Blank's refined dark UI. Classic uses the original AFFiNE look.`
+      */
+    ["com.blank.appearanceSettings.visualTheme.description"](): string;
+    /**
+      * `Classic`
+      */
+    ["com.blank.appearanceSettings.visualTheme.default"](): string;
+    /**
+      * `Codex`
+      */
+    ["com.blank.appearanceSettings.visualTheme.codex"](): string;
     /**
       * `Edit all Blank theme variables here`
       */
@@ -1126,6 +1142,34 @@ export function useBlankI18N(): {
       * `Sidebar`
       */
     ["com.blank.appearanceSettings.sidebar.title"](): string;
+    /**
+      * `Sidebar sections`
+      */
+    ["com.blank.settings.sidebar.sections.title"](): string;
+    /**
+      * `Show this section in the navigation sidebar`
+      */
+    ["com.blank.settings.sidebar.sections.item.description"](): string;
+    /**
+      * `Favorites`
+      */
+    ["com.blank.settings.sidebar.sections.favorites"](): string;
+    /**
+      * `Organize`
+      */
+    ["com.blank.settings.sidebar.sections.organize"](): string;
+    /**
+      * `Tags`
+      */
+    ["com.blank.settings.sidebar.sections.tags"](): string;
+    /**
+      * `Collections`
+      */
+    ["com.blank.settings.sidebar.sections.collections"](): string;
+    /**
+      * `Others`
+      */
+    ["com.blank.settings.sidebar.sections.others"](): string;
     /**
       * `Customize your Blank appearance`
       */
@@ -7544,6 +7588,14 @@ export function useBlankI18N(): {
       * `Light`
       */
     ["com.blank.themeSettings.light"](): string;
+    /**
+      * `Gray`
+      */
+    ["com.blank.themeSettings.gray"](): string;
+    /**
+      * `Paper`
+      */
+    ["com.blank.themeSettings.paper"](): string;
     /**
       * `System`
       */

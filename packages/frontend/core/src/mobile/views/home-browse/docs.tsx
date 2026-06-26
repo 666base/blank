@@ -14,13 +14,10 @@ export const HomeBrowseDocs = () => {
   const [explorerContextValue] = useState(() =>
     createDocExplorerContext({
       quickFavorite: false,
-      showDocIcon: false,
-      displayProperties: [
-        'system:createdAt',
-        'system:updatedAt',
-        'system:tags',
-      ],
-      view: 'masonry',
+      showDocIcon: true,
+      showDocPreview: false,
+      displayProperties: ['system:updatedAt', 'system:tags'],
+      view: 'list',
       showDragHandle: false,
       groupBy: undefined,
       orderBy: undefined,

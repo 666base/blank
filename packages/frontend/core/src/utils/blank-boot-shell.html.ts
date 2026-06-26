@@ -1,56 +1,70 @@
-/** Static instant shell — inlined in index.html (no network, shows before JS). */
-export const BLANK_BOOT_SHELL_HTML = `<div id="blank-boot-shell" class="blank-boot-shell" aria-hidden="true">
-  <div class="blank-boot-tabs">
-    <img class="blank-boot-logo" src="/imgs/blank-app-icon.png" width="20" height="20" alt="" />
-  </div>
-  <div class="blank-boot-body">
-    <aside class="blank-boot-sidebar">
-      <div class="blank-boot-line blank-boot-line--lg"></div>
-      <div class="blank-boot-line"></div>
-      <div class="blank-boot-line"></div>
-      <div class="blank-boot-line blank-boot-line--sm"></div>
-      <div class="blank-boot-line"></div>
-      <div class="blank-boot-line blank-boot-line--sm"></div>
-    </aside>
-    <main class="blank-boot-main">
-      <div class="blank-boot-line blank-boot-line--title"></div>
-      <div class="blank-boot-line"></div>
-      <div class="blank-boot-line"></div>
-      <div class="blank-boot-line blank-boot-line--short"></div>
-    </main>
+const MOBILE_BOOT_SHELL_HTML = `<div id="blank-boot-shell" class="blank-boot-shell" aria-hidden="true">
+  <div class="blank-boot-mobile">
+    <div class="blank-boot-mobile-top">
+      <div class="blank-boot-shimmer blank-boot-icon"></div>
+      <div class="blank-boot-shimmer blank-boot-icon"></div>
+      <div class="blank-boot-shimmer blank-boot-icon"></div>
+      <div class="blank-boot-shimmer blank-boot-icon"></div>
+    </div>
+    <div class="blank-boot-mobile-tabs">
+      <div class="blank-boot-shimmer blank-boot-tab blank-boot-tab--active"></div>
+      <div class="blank-boot-shimmer blank-boot-tab"></div>
+      <div class="blank-boot-shimmer blank-boot-tab"></div>
+    </div>
+    <div class="blank-boot-mobile-content">
+      <div class="blank-boot-shimmer blank-boot-line blank-boot-line--lg"></div>
+      <div class="blank-boot-shimmer blank-boot-card"></div>
+      <div class="blank-boot-shimmer blank-boot-card"></div>
+      <div class="blank-boot-shimmer blank-boot-line"></div>
+      <div class="blank-boot-shimmer blank-boot-line blank-boot-line--sm"></div>
+      <div class="blank-boot-shimmer blank-boot-line"></div>
+    </div>
+    <div class="blank-boot-mobile-navbar">
+      <div class="blank-boot-shimmer blank-boot-nav-icon blank-boot-nav-icon--active"></div>
+      <div class="blank-boot-shimmer blank-boot-nav-icon"></div>
+      <div class="blank-boot-shimmer blank-boot-nav-icon"></div>
+    </div>
   </div>
 </div>`;
 
-/** Mobile: solid app background only — no cached doc preview before React. */
-export const BLANK_BOOT_SHELL_MOBILE_HTML = `<div id="blank-boot-shell" class="blank-boot-shell blank-boot-shell--mobile" aria-hidden="true"></div>`;
+const DESKTOP_BOOT_SHELL_HTML = `<div id="blank-boot-shell" class="blank-boot-shell" aria-hidden="true"></div>`;
 
-export const BLANK_BOOT_SHELL_CSS = `
-.blank-boot-shell{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;background:#121212;color:#e8e8e8;font-family:system-ui,-apple-system,sans-serif;transition:opacity .12s ease}
-.blank-boot-tabs{height:40px;flex-shrink:0;border-bottom:1px solid #2a2a2a;background:#161616;display:flex;align-items:center;padding:0 12px}
-.blank-boot-logo{border-radius:4px;opacity:.92}
-.blank-boot-body{flex:1;display:flex;min-height:0;overflow:hidden}
-.blank-boot-sidebar{width:248px;flex-shrink:0;border-right:1px solid #2a2a2a;padding:14px 12px;display:flex;flex-direction:column;gap:10px;background:#141414}
-.blank-boot-main{flex:1;padding:28px 32px;display:flex;flex-direction:column;gap:12px;background:#121212}
-.blank-boot-line{height:14px;border-radius:6px;background:linear-gradient(90deg,#1e1e1e 0%,#262626 50%,#1e1e1e 100%);background-size:200% 100%;animation:blank-boot-shimmer 1.2s ease-in-out infinite}
-.blank-boot-line--lg{height:28px;width:72%}
-.blank-boot-line--title{height:28px;width:42%;margin-bottom:8px}
-.blank-boot-line--short{width:55%}
-.blank-boot-line--sm{width:80%;opacity:.75}
-.blank-boot-cached-title{font-size:28px;font-weight:600;line-height:1.3;margin-bottom:12px;color:#e8e8e8;word-break:break-word}
-.blank-boot-cached-preview{font-size:15px;line-height:1.65;color:#a8a8a8;white-space:pre-wrap;word-break:break-word;max-width:720px}
-@keyframes blank-boot-shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+const BOOT_SHELL_BASE_CSS = `
+html,body{margin:0;background:#141414}
+#app{min-height:100dvh;background:#141414}
+.blank-boot-shell{position:fixed;inset:0;z-index:99999;background:#141414;pointer-events:none}
+@keyframes blank-boot-shimmer{0%{opacity:.45}50%{opacity:.9}100%{opacity:.45}}
+.blank-boot-shimmer{animation:blank-boot-shimmer 1.2s ease-in-out infinite;background:#2a2a2a;border-radius:8px}
 `;
 
-export const BLANK_BOOT_SHELL_MOBILE_CSS = `
-.blank-boot-shell--mobile{background:#141414}
+const MOBILE_BOOT_SHELL_CSS = `
+.blank-boot-mobile{height:100dvh;display:flex;flex-direction:column;background:#141414;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.blank-boot-mobile-top{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:8px 16px 4px;min-height:44px}
+.blank-boot-icon{width:40px;height:40px;border-radius:10px}
+.blank-boot-mobile-tabs{display:flex;gap:10px;padding:4px 16px 12px}
+.blank-boot-tab{height:34px;width:72px;border-radius:999px}
+.blank-boot-tab--active{width:84px;background:#333}
+.blank-boot-mobile-content{flex:1;padding:0 16px 16px;display:flex;flex-direction:column;gap:12px}
+.blank-boot-line{height:16px;width:100%}
+.blank-boot-line--lg{width:42%;height:18px}
+.blank-boot-line--sm{width:58%}
+.blank-boot-card{height:88px;width:100%;border-radius:12px}
+.blank-boot-mobile-navbar{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-top:.5px solid #2a2a2a}
+.blank-boot-nav-icon{width:30px;height:30px;border-radius:8px}
+.blank-boot-nav-icon--active{background:#333}
 `;
+
+/** Static instant shell — inlined in index.html (no network, shows before JS bundles load). */
+export const BLANK_BOOT_SHELL_HTML = DESKTOP_BOOT_SHELL_HTML;
+
+export const BLANK_BOOT_SHELL_CSS = `${BOOT_SHELL_BASE_CSS}`;
 
 export function getBlankBootShellHtml(isMobileEdition: boolean) {
-  return isMobileEdition ? BLANK_BOOT_SHELL_MOBILE_HTML : BLANK_BOOT_SHELL_HTML;
+  return isMobileEdition ? MOBILE_BOOT_SHELL_HTML : DESKTOP_BOOT_SHELL_HTML;
 }
 
 export function getBlankBootShellCss(isMobileEdition: boolean) {
   return isMobileEdition
-    ? `${BLANK_BOOT_SHELL_CSS}${BLANK_BOOT_SHELL_MOBILE_CSS}`
-    : BLANK_BOOT_SHELL_CSS;
+    ? `${BOOT_SHELL_BASE_CSS}${MOBILE_BOOT_SHELL_CSS}`
+    : BOOT_SHELL_BASE_CSS;
 }

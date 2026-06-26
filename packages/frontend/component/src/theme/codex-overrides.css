@@ -1,0 +1,149 @@
+/* Remap @toeverything/theme variables → Codex tokens (visual only) */
+
+html[data-visual-theme='codex']:is([data-theme='dark'], [data-theme='gray']),
+html:not([data-visual-theme]):is([data-theme='dark'], [data-theme='gray']) {
+  /* v1 — colors */
+  --affine-primary-color: var(--accent);
+  --affine-primary-color-04: var(--accent-dim);
+  --affine-background-primary-color: var(--bg-root);
+  --affine-text-primary-color: var(--text-primary);
+  --affine-text-secondary-color: var(--text-secondary);
+  --affine-text-disable-color: var(--text-muted);
+  --affine-text-emphasis-color: var(--accent);
+  --affine-border-color: var(--border-faint);
+  --affine-icon-color: var(--text-secondary);
+  --affine-icon-secondary: color-mix(in srgb, var(--text-secondary) 60%, transparent);
+
+  /* v1 — typography */
+  --affine-font-family: var(--font-sans);
+  --affine-font-sans-family: var(--font-sans);
+  --affine-font-base: var(--text-base);
+  --affine-font-sm: var(--text-sm);
+  --affine-font-xs: var(--text-xs);
+
+  /* v1 — radius */
+  --affine-popover-radius: var(--radius-lg);
+
+  /* v1 — shadows (subtle, surface-integrated) */
+  --affine-button-shadow: var(--shadow-xs);
+  --affine-overlay-panel-shadow: var(--shadow-md);
+  --affine-menu-shadow: var(--shadow-md);
+  --affine-shadow-1: var(--shadow-xs);
+  --affine-shadow-2: var(--shadow-sm);
+  --affine-shadow-3: var(--shadow-md);
+  --affine-active-shadow: 0 0 0 2px var(--accent-border);
+  --affine-float-button-shadow: var(--shadow-sm);
+  --affine-cmd-shadow: var(--shadow-lg);
+
+  /* v2 — layer backgrounds */
+  --affine-v2-layer-background-primary: var(--bg-root);
+  --affine-v2-layer-background-secondary: var(--bg-surface);
+  --affine-v2-layer-background-tertiary: var(--bg-card);
+  --affine-v2-layer-background-overlayPanel: var(--bg-raised);
+  --affine-v2-layer-background-modal: color-mix(in srgb, var(--bg-root) 55%, transparent);
+  --affine-v2-layer-background-modalWhite: color-mix(in srgb, var(--bg-raised) 85%, transparent);
+  --affine-v2-layer-background-hoverOverlay: color-mix(in srgb, #ffffff 9%, transparent);
+  --affine-v2-layer-background-codeBlock: var(--bg-surface);
+  --affine-v2-layer-background-linkedDocOnEdgeless: var(--bg-surface);
+
+  /* v2 — borders */
+  --affine-v2-layer-insideBorder-border: var(--border-faint);
+  --affine-v2-layer-insideBorder-primaryBorder: var(--accent-border);
+  --affine-v2-layer-insideBorder-blackBorder: var(--border-ghost);
+  --affine-v2-layer-insideBorder-whiteBorder: var(--border-subtle);
+
+  /* v2 — text */
+  --affine-v2-text-primary: var(--text-primary);
+  --affine-v2-text-secondary: var(--text-secondary);
+
+  /* v2 — icons */
+  --affine-v2-icon-primary: var(--text-primary);
+  --affine-v2-icon-secondary: var(--text-secondary);
+  --affine-v2-icon-tertiary: var(--text-muted);
+  --affine-v2-icon-activated: var(--accent);
+  --affine-v2-icon-monotone: var(--text-secondary);
+  --affine-v2-icon-disable: var(--text-muted);
+
+  /* v2 — buttons */
+  --affine-v2-button-primary: var(--accent);
+  --affine-v2-button-checkBox: var(--accent);
+  --affine-v2-button-secondary: color-mix(in srgb, #ffffff 9%, transparent);
+  --affine-v2-button-iconButtonSolid: color-mix(in srgb, #ffffff 9%, transparent);
+  --affine-v2-button-innerBlackBorder: var(--border-ghost);
+  --affine-v2-button-sidebarButton-background: var(--border-ghost);
+
+  /* v1 — interaction surfaces */
+  --affine-hover-color: var(--bg-hover);
+  --affine-hover-color-filled: var(--bg-active);
+  --affine-background-secondary-color: var(--bg-surface);
+  --affine-divider-color: var(--border-faint);
+  --affine-placeholder-color: var(--bg-raised);
+}
+
+html[data-visual-theme='codex']:is([data-theme='light'], [data-theme='paper']),
+html:not([data-visual-theme]):is([data-theme='light'], [data-theme='paper']) {
+  --affine-primary-color: var(--accent);
+  --affine-primary-color-04: var(--accent-dim);
+  --affine-popover-radius: var(--radius-lg);
+  --affine-v2-text-primary: var(--text-primary);
+  --affine-v2-text-secondary: var(--text-secondary);
+  --affine-v2-icon-activated: var(--accent);
+  --affine-v2-button-primary: var(--accent);
+  --affine-v2-button-checkBox: var(--accent);
+}
+
+/* Global motion + weight clamp (Codex: max 600 in UI chrome) */
+html[data-visual-theme='codex'],
+html:not([data-visual-theme]) {
+  color-scheme: dark light;
+}
+
+html[data-visual-theme='codex']:is([data-theme='dark'], [data-theme='gray']),
+html:not([data-visual-theme]):is([data-theme='dark'], [data-theme='gray']) {
+  color-scheme: dark;
+}
+
+html[data-visual-theme='codex']:is([data-theme='light'], [data-theme='paper']),
+html:not([data-visual-theme]):is([data-theme='light'], [data-theme='paper']) {
+  color-scheme: light;
+}
+
+html[data-visual-theme='codex'] body,
+html:not([data-visual-theme]) body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-visual-theme='codex'] :where(
+    button,
+    a,
+    [role='button'],
+    input,
+    select,
+    textarea,
+    summary
+  ),
+  html:not([data-visual-theme]) :where(
+    button,
+    a,
+    [role='button'],
+    input,
+    select,
+    textarea,
+    summary
+  ) {
+    transition-property: color, background-color, border-color, box-shadow, opacity;
+    transition-duration: var(--duration-normal);
+    transition-timing-function: var(--ease-default);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-visual-theme='codex'] :where(*),
+  html:not([data-visual-theme]) :where(*) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

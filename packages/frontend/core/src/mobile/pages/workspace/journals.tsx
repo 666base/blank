@@ -4,14 +4,13 @@ import {
 } from '@blank/core/desktop/pages/workspace/journals';
 import { JournalService } from '@blank/core/modules/journal';
 import { ViewService, WorkbenchService } from '@blank/core/modules/workbench';
-import { i18nTime } from '@blank/i18n';
+import { scheduleRemoveBootSplash } from '@blank/core/utils/blank-fast-boot';
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVarV2 } from '@toeverything/theme/v2';
-import dayjs from 'dayjs';
 import { useCallback, useLayoutEffect } from 'react';
 
-import { AppTabs, PageHeader } from '../../components';
-import { JournalDatePicker } from './detail/journal-date-picker';
+import { AppTabs } from '../../components';
+import { JournalPageHeader } from './detail/journal-date-picker';
 import * as styles from './journals.css';
 
 export const JournalsPageWithConfirmation = () => {
@@ -44,37 +43,31 @@ export const JournalsPageWithConfirmation = () => {
 
   useLayoutEffect(() => {
     if (!location.pathname.startsWith('/journals')) return;
-    if (!existingJournalId) return;
+    if (!existingJournalId) {
+      scheduleRemoveBootSplash();
+      return;
+    }
     openJournalDoc(existingJournalId);
   }, [dateString, existingJournalId, location.pathname, openJournalDoc]);
 
   if (existingJournalId) {
-    return (
-      <AppTabs background={cssVarV2('layer/background/primary')} hidden />
-    );
+    return null;
   }
 
   return (
     <>
       <div className={styles.container}>
-        <PageHeader
+        <JournalPageHeader
           className={styles.header}
-          bottom={
-            <JournalDatePicker
-              date={dateString}
-              onChange={handleDateChange}
-              withDotDates={allJournalDates}
-              className={styles.journalDatePicker}
-            />
-          }
           contentClassName={styles.headerTitle}
-          bottomSpacer={94}
-        >
-          {i18nTime(dayjs(dateString), { absolute: { accuracy: 'month' } })}
-        </PageHeader>
+          date={dateString}
+          onChange={handleDateChange}
+          withDotDates={allJournalDates}
+          pickerClassName={styles.journalDatePicker}
+        />
         <JournalPlaceholder dateString={dateString} />
       </div>
-      <AppTabs background={cssVarV2('layer/background/primary')} />
+      <AppTabs background={cssVarV2('layer/background/mobile/primary')} />
     </>
   );
 };

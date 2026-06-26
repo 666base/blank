@@ -43,7 +43,21 @@ globalStyle('html', {
   height: '100dvh',
   overflowY: 'auto',
   background: cssVarV2('layer/background/secondary'),
+  WebkitOverflowScrolling: 'touch',
+  overscrollBehaviorY: 'none',
 });
+
+globalStyle('button, a, [role="button"], [role="tab"]', {
+  touchAction: 'manipulation',
+});
+
+globalStyle(
+  '[data-testid="doc-card"], [data-testid="docs-list-item"], [data-testid="recent-docs-list"] li',
+  {
+    contentVisibility: 'auto',
+    containIntrinsicSize: '0 96px',
+  }
+);
 
 globalStyle('a:focus', {
   outline: 'none',

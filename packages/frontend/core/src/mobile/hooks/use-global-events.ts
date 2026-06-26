@@ -11,11 +11,17 @@ function initGlobalEvent<T extends keyof WindowEventMap>(name: T) {
   const prev = _handlesMap.get(name);
   if (!prev) {
     const handlers = [] as Handler<WindowEventMap[T]>[];
-    window.addEventListener(name, e => {
-      handlers.forEach(handler => {
-        handler(e);
-      });
-    });
+    const passive =
+      name === 'scroll' || name === 'wheel' || name === 'touchmove';
+    window.addEventListener(
+      name,
+      e => {
+        handlers.forEach(handler => {
+          handler(e);
+        });
+      },
+      passive ? { passive: true } : undefined
+    );
     _handlesMap.set(name, handlers as any);
     return handlers;
   }

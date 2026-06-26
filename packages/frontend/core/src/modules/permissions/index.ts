@@ -1,3 +1,7 @@
+export {
+  isDocAccessDenied,
+  isDocEditBlocked,
+} from './doc-access';
 export type { Member } from './entities/members';
 export {
   DocGrantedUsersService,

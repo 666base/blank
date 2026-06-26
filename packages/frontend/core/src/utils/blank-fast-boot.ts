@@ -2,6 +2,20 @@ import { getWorkspaceDocPath } from '../desktop/route-paths';
 import { BLANK_DOC_SNAPSHOT_PREFIX } from './blank-doc-snapshot';
 import { isBlankBuild } from './blank-links';
 
+const BLANK_CLOUD_FLAVOUR = 'blank-cloud';
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export function inferBlankWorkspaceFlavour(workspaceId: string): string {
+  if (workspaceId === BLANK_INSTANT_WORKSPACE_ID) {
+    return BLANK_INSTANT_WORKSPACE_FLAVOUR;
+  }
+  if (isBlankBuild() && UUID_RE.test(workspaceId)) {
+    return BLANK_CLOUD_FLAVOUR;
+  }
+  return BLANK_INSTANT_WORKSPACE_FLAVOUR;
+}
+
 export const BLANK_INSTANT_WORKSPACE_ID = 'blank-default';
 export const BLANK_INSTANT_WORKSPACE_FLAVOUR = 'local';
 
@@ -75,10 +89,11 @@ export function getOptimisticWorkspaceMeta(
     if (lastId !== workspaceId) {
       return null;
     }
+    const storedFlavour =
+      globalThis.localStorage?.getItem(LAST_FLAVOUR_KEY) ?? undefined;
     return {
       id: workspaceId,
-      flavour:
-        globalThis.localStorage?.getItem(LAST_FLAVOUR_KEY) ?? 'local',
+      flavour: storedFlavour ?? inferBlankWorkspaceFlavour(workspaceId),
     };
   } catch {
     return null;
@@ -152,16 +167,10 @@ export function removeBootSplash() {
   if (!el) {
     return;
   }
-  const instant =
-    typeof BUILD_CONFIG !== 'undefined' && BUILD_CONFIG.isMobileEdition;
-  if (instant) {
-    el.remove();
-    return;
-  }
-  el.style.opacity = '0';
-  el.style.pointerEvents = 'none';
-  window.setTimeout(() => el.remove(), 120);
+  el.remove();
 }
+
+let bootSplashFadeStarted = false;
 
 /** Let the app receive input even while React is still on a loading fallback. */
 export function prepareBootShellForApp() {
@@ -176,9 +185,28 @@ export function prepareBootShellForApp() {
 
 /** Fade boot shell only after the real layout has painted underneath. */
 export function scheduleRemoveBootSplash() {
+  if (bootSplashFadeStarted) {
+    return;
+  }
+  bootSplashFadeStarted = true;
+
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      removeBootSplash();
+      const el =
+        document.getElementById('blank-boot-shell') ??
+        document.getElementById('blank-boot-splash');
+      if (!el) {
+        return;
+      }
+
+      el.style.transition = 'opacity 140ms ease-out';
+      el.style.opacity = '0';
+
+      const finalize = () => {
+        el.remove();
+      };
+      el.addEventListener('transitionend', finalize, { once: true });
+      window.setTimeout(finalize, 200);
     });
   });
 }

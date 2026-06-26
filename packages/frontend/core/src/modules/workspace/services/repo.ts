@@ -82,6 +82,10 @@ export class WorkspaceRepositoryService extends Service {
     return workspaceMetadata && this.open({ metadata: workspaceMetadata });
   };
 
+  evictWorkspace(workspaceId: string) {
+    this.pool.forceEvict(workspaceId);
+  }
+
   instantiate(
     openOptions: WorkspaceOpenOptions,
     customEngineWorkerInitOptions?: WorkerInitOptions

@@ -1,11 +1,13 @@
 import type { Framework } from '@toeverything/infra';
 
+import type { TabBarIconName } from './tab-bar-icon';
+
 interface AppTabBase {
   key: string;
   onClick?: (framework: Framework, isActive: boolean) => void;
 }
 export interface AppTabLink extends AppTabBase {
-  Icon: React.FC;
+  icon: TabBarIconName;
   to: string;
   LinkComponent?: React.FC;
 }

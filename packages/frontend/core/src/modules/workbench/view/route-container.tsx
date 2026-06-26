@@ -54,15 +54,16 @@ export const RouteContainer = () => {
     workbench.toggleSidebar();
   }, [workbench]);
 
-  const showSwitch = !isDesktopApp() && viewPosition.isFirst;
+  const showSwitch = viewPosition.isFirst;
+  const showSidebarToggles = !isDesktopApp();
 
   return (
     <div className={styles.root}>
       <div
         className={styles.header}
-        data-show-switch={showSwitch && !leftSidebarOpen}
+        data-show-switch={showSidebarToggles && showSwitch && !leftSidebarOpen}
       >
-        {showSwitch && (
+        {showSidebarToggles && showSwitch && (
           <SidebarSwitch
             show={!leftSidebarOpen}
             className={styles.leftSidebarButton}
@@ -72,7 +73,7 @@ export const RouteContainer = () => {
           viewId={view.id}
           className={styles.viewHeaderContainer}
         />
-        {!isDesktopApp() && viewPosition.isLast && (
+        {showSidebarToggles && !sidebarOpen && viewPosition.isLast && (
           <ToggleButton
             show={!sidebarOpen}
             className={styles.rightSidebarButton}

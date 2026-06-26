@@ -11,10 +11,10 @@ export const scrollableContainerRoot = style({
 export const scrollTopBorder = style({
   position: 'absolute',
   top: 0,
-  left: '16px',
-  right: '16px',
+  left: 'var(--sp-4)',
+  right: 'var(--sp-4)',
   height: '1px',
-  transition: 'opacity .3s .2s',
+  transition: `opacity var(--duration-slow) var(--ease-default)`,
   opacity: 0,
   background: cssVar('borderColor'),
   selectors: {
@@ -41,7 +41,7 @@ export const scrollbar = style({
   width: 'var(--scrollbar-width)',
   height: '100%',
   opacity: 1,
-  transition: 'width .15s',
+  transition: `width var(--duration-normal) var(--ease-default)`,
   ':hover': {
     background: cssVar('backgroundSecondaryColor'),
     width: 'calc(var(--scrollbar-width) + 3px)',
@@ -61,14 +61,14 @@ export const mobileScrollbar = style({
 export const TableScrollbar = style({
   marginTop: '60px',
   height: 'calc(100% - 120px)',
-  borderRadius: '4px',
+  borderRadius: 'var(--radius-sm)',
 });
 export const scrollbarThumb = style({
   position: 'relative',
   background: cssVar('dividerColor'),
   width: '50%',
   overflow: 'hidden',
-  borderRadius: '4px',
+  borderRadius: 'var(--radius-sm)',
   ':hover': {
     background: cssVar('iconColor'),
   },

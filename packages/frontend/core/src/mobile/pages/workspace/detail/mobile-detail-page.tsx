@@ -1,12 +1,12 @@
-import { useThemeColorV2 } from '@blank/component';
 import type { BlankEditorContainer } from '@blank/core/blocksuite/block-suite-editor';
 import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
-import { CachedDetailPageLoading } from '@blank/core/components/cached-detail-page-loading';
+import { scheduleRemoveBootSplash } from '@blank/core/utils/blank-fast-boot';
 import { preloadBlockSuiteEditor } from '@blank/core/blocksuite/preload-block-suite-editor';
 import { usePersistDocSnapshot } from '@blank/core/components/hooks/use-persist-doc-snapshot';
 import { useGuard } from '@blank/core/components/guard';
 import { useActiveBlocksuiteEditor } from '@blank/core/components/hooks/use-block-suite-editor';
 import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { isDocEditBlocked } from '@blank/core/modules/permissions';
 import { PageDetailEditor } from '@blank/core/components/page-detail-editor';
 import { DetailPageWrapper } from '@blank/core/desktop/pages/workspace/detail-page/detail-page-wrapper';
 import { PageHeader } from '@blank/core/mobile/components';
@@ -20,7 +20,6 @@ import { JournalService } from '@blank/core/modules/journal';
 import { WorkbenchService } from '@blank/core/modules/workbench';
 import { ViewService } from '@blank/core/modules/workbench/services/view';
 import { WorkspaceService } from '@blank/core/modules/workspace';
-import { i18nTime } from '@blank/i18n';
 import { DisposableGroup } from '@blocksuite/blank/global/disposable';
 import { RefNodeSlotsProvider } from '@blocksuite/blank/inlines/reference';
 import {
@@ -35,15 +34,14 @@ import {
 } from '@toeverything/infra';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import clsx from 'clsx';
-import dayjs from 'dayjs';
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { AppTabs } from '../../../components';
 import { globalVars } from '../../../styles/variables.css';
 import { JournalConflictBlock } from './journal-conflict-block';
-import { JournalDatePicker } from './journal-date-picker';
+import { JournalDatePickerTitle, JournalPageHeader } from './journal-date-picker';
 import * as styles from './mobile-detail-page.css';
 import {
   getImmersiveZoomToolbarBottom,
@@ -105,8 +103,6 @@ const DetailPageImpl = ({
 
   const editorContainer = useLiveData(editor.editorContainer$);
 
-  const enableKeyboardToolbar =
-    featureFlagService.flags.enable_mobile_keyboard_toolbar.value;
   const enableEdgelessEditing =
     featureFlagService.flags.enable_mobile_edgeless_editing.value;
 
@@ -199,9 +195,8 @@ const DetailPageImpl = ({
   const canEdit = useGuard('Doc_Update', doc.id);
 
   const readonly =
-    !canEdit ||
+    isDocEditBlocked(canEdit) ||
     isInTrash ||
-    !enableKeyboardToolbar ||
     (mode === 'edgeless' && !enableEdgelessEditing);
 
   const immersiveZoomToolbarBottom = getImmersiveZoomToolbarBottom({
@@ -323,6 +318,28 @@ const MobileDetailPageHeader = ({
     };
   }, [trackScrollTitle]);
 
+  if (date) {
+    return (
+      <JournalPageHeader
+        back={!fromTab}
+        className={styles.header}
+        contentClassName={styles.headerContent}
+        suffix={
+          <>
+            <PageHeaderShareButton />
+            <PageHeaderMenuButton />
+          </>
+        }
+        date={date}
+        onChange={handleDateChange}
+        withDotDates={allJournalDates}
+        pickerClassName={styles.journalDatePicker}
+      >
+        <JournalDatePickerTitle />
+      </JournalPageHeader>
+    );
+  }
+
   return (
     <PageHeader
       back={!fromTab}
@@ -334,22 +351,9 @@ const MobileDetailPageHeader = ({
           <PageHeaderMenuButton />
         </>
       }
-      bottom={
-        date ? (
-          <JournalDatePicker
-            date={date}
-            onChange={handleDateChange}
-            withDotDates={allJournalDates}
-            className={styles.journalDatePicker}
-          />
-        ) : null
-      }
-      bottomSpacer={94}
     >
-      <span data-show={!!date || showTitle} className={styles.headerTitle}>
-        {date
-          ? i18nTime(dayjs(date), { absolute: { accuracy: 'month' } })
-          : title}
+      <span data-show={showTitle} className={styles.headerTitle}>
+        {title}
       </span>
     </PageHeader>
   );
@@ -510,7 +514,7 @@ const MobileDetailPageContent = ({
         immersiveTapHandlers={immersiveTapHandlers}
       />
       <AppTabs
-        background={cssVarV2('layer/background/primary')}
+        background={cssVarV2('layer/background/mobile/primary')}
         hidden={immersive && !chromeVisible}
       />
     </>
@@ -530,6 +534,10 @@ const MobileDetailPage = ({
   const title = useLiveData(docDisplayMetaService.title$(pageId));
 
   const canAccess = useGuard('Doc_Read', pageId);
+
+  useLayoutEffect(() => {
+    scheduleRemoveBootSplash();
+  }, [pageId]);
 
   const allJournalDates = useLiveData(journalService.allJournalDates$);
 
@@ -574,7 +582,6 @@ const MobileDetailPage = ({
 };
 
 export const Component = () => {
-  useThemeColorV2('layer/background/primary');
   const journalService = useService(JournalService);
   const params = useParams();
   const pageId = params.pageId;

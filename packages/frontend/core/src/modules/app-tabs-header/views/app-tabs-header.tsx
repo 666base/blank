@@ -31,9 +31,13 @@ import {
   useState,
 } from 'react';
 
+import { WindowsAppControls } from '../../../components/pure/header/windows-app-controls';
 import { AppSidebarService } from '../../app-sidebar';
+import { SidebarSwitch } from '../../app-sidebar/views/sidebar-header';
+import { SidebarHeaderSwitcher } from '../../workbench/view/sidebar/sidebar-header-switcher';
 import { DesktopApiService } from '../../desktop-api';
 import { resolveLinkToDoc } from '../../navigation';
+import { WorkbenchService } from '../../workbench';
 import { iconNameToIcon } from '../../workbench/constants';
 import { DesktopStateSynchronizer } from '../../workbench/services/desktop-state-synchronizer';
 import {
@@ -394,6 +398,11 @@ export const AppTabsHeader = ({
 
   const tabsHeaderService = useService(AppTabsHeaderService);
   const tabs = useLiveData(tabsHeaderService.tabsStatus$);
+  const workbenchService = useServiceOptional(WorkbenchService);
+  const workbenchSidebarOpen = useLiveData(
+    workbenchService?.workbench.sidebarOpen$
+  );
+  const isInWorkspace = !!workbenchService;
 
   const [pinned, unpinned] = partition(tabs, tab => tab.pinned);
 
@@ -408,6 +417,8 @@ export const AppTabsHeader = ({
   const onToggleRightSidebar = useAsyncCallback(async () => {
     await tabsHeaderService.onToggleRightSidebar?.();
   }, [tabsHeaderService]);
+
+  const showRightSidebarToggle = workbenchSidebarOpen !== true;
 
   useEffect(() => {
     if (mode === 'app') {
@@ -492,6 +503,7 @@ export const AppTabsHeader = ({
     );
 
   const trafficLightOffset = isMacosDesktop && !fullScreen ? 70 : 0;
+  const headerLeftCollapsedWidth = isMacosDesktop ? 120 + trafficLightOffset : 52;
 
   return (
     <div
@@ -499,18 +511,30 @@ export const AppTabsHeader = ({
       style={style}
       data-mode={mode}
       data-is-windows={isWindowsDesktop}
+      data-frameless={isDesktopApp()}
     >
       <div
         style={{
           transition: sidebarResizing ? 'none' : undefined,
           paddingLeft: 12 + trafficLightOffset,
-          width: sidebarOpen ? sidebarWidth : 120 + trafficLightOffset,
+          width: sidebarOpen ? sidebarWidth : headerLeftCollapsedWidth,
           // minus 16 to account for the padding on the right side of the header (for box shadow)
           marginRight: sidebarOpen ? -16 : 0,
         }}
         className={styles.headerLeft}
       >
-        {left}
+        <div className={styles.headerSidebarControls}>
+          {isDesktopApp() && isInWorkspace ? (
+            <SidebarSwitch show />
+          ) : (
+            left
+          )}
+          {showRightSidebarToggle && !isDesktopApp() ? (
+            <IconButton size="24" onClick={onToggleRightSidebar}>
+              <RightSidebarIcon />
+            </IconButton>
+          ) : null}
+        </div>
       </div>
       <div className={styles.tabs}>
         {pinned.map(tab => {
@@ -556,12 +580,22 @@ export const AppTabsHeader = ({
           icon={<PlusIcon />}
         />
       </div>
-      <IconButton size="24" onClick={onToggleRightSidebar}>
-        <RightSidebarIcon />
-      </IconButton>
-      {isWindowsDesktop && (
-        <div className={styles.windowsAppControlsPlaceholder} />
-      )}
+      {isInWorkspace ? (
+        <div className={styles.titleBarRightActions}>
+          <SidebarHeaderSwitcher />
+          {isDesktopApp() && showRightSidebarToggle ? (
+            <IconButton
+              size="24"
+              onClick={onToggleRightSidebar}
+              tooltip="Open sidebar"
+              data-testid="title-bar-right-sidebar-toggle"
+            >
+              <RightSidebarIcon />
+            </IconButton>
+          ) : null}
+        </div>
+      ) : null}
+      {isWindowsDesktop && !fullScreen ? <WindowsAppControls /> : null}
     </div>
   );
 };

@@ -47,6 +47,9 @@ export const tabItem = style({
   lineHeight: 0,
 
   selectors: {
+    '&[data-active="false"]': {
+      color: cssVarV2.icon.secondary,
+    },
     '&[data-active="true"]': {
       color: cssVarV2.button.primary,
     },

@@ -21,17 +21,14 @@ import {
 import {
   type PropsWithChildren,
   useEffect,
-  useLayoutEffect,
-  useState,
 } from 'react';
 
 import { WorkspaceDialogs } from '../../dialogs';
-import { MobileBootPlaceholder } from '../../components/boot-placeholder';
 import {
   persistFastBootRoute,
-  scheduleRemoveBootSplash,
 } from '@blank/core/utils/blank-fast-boot';
 import { ensureInstantWorkspace } from '@blank/core/utils/blank-instant-workspace';
+import { useOpenedWorkspace } from '@blank/core/utils/use-opened-workspace';
 
 // TODO(@forehalo): reuse the global context with [core/electron]
 declare global {
@@ -61,31 +58,14 @@ export const WorkspaceLayout = ({
       DefaultServerService,
     });
 
-  const [workspace, setWorkspace] = useState<Workspace | null>(null);
-  const workspaceServer = workspace?.scope.get(WorkspaceServerService)?.server;
-
-  useLayoutEffect(() => {
-    const ref = workspacesService.open({ metadata: meta });
-    setWorkspace(ref.workspace);
-    return () => {
-      ref.dispose();
-    };
-  }, [meta, workspacesService]);
+  const workspace = useOpenedWorkspace(workspacesService, meta);
+  const workspaceServer = workspace.scope.get(WorkspaceServerService)?.server;
 
   useEffect(() => {
-    if (workspace) {
-      scheduleRemoveBootSplash();
-    }
-  }, [workspace]);
-
-  useEffect(() => {
-    if (workspace) {
-      void ensureInstantWorkspace(workspacesService, workspace);
-    }
+    void ensureInstantWorkspace(workspacesService, workspace);
   }, [workspace, workspacesService]);
 
   useEffect(() => {
-    if (workspace) {
       // for debug purpose
       window.currentWorkspace = workspace ?? undefined;
       window.dispatchEvent(
@@ -113,18 +93,12 @@ export const WorkspaceLayout = ({
         }
         globalContextService.globalContext.workspaceFlavour.set(null);
       };
-    }
-    return;
   }, [
     defaultServerService.server.id,
     globalContextService,
     workspace,
     workspaceServer,
   ]);
-
-  if (!workspace) {
-    return <MobileBootPlaceholder />;
-  }
 
   return (
     <FrameworkScope scope={workspaceServer?.scope}>

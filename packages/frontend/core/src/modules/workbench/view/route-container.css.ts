@@ -19,7 +19,7 @@ export const header = style({
   alignItems: 'center',
   flexShrink: 0,
   background: cssVar('backgroundPrimaryColor'),
-  padding: '0 16px',
+  padding: `0 var(--sp-4)`,
   contain: 'strict',
   '@media': {
     print: {
@@ -28,7 +28,7 @@ export const header = style({
   },
   selectors: {
     '&[data-show-switch=true]': {
-      paddingLeft: 8,
+      paddingLeft: 'var(--sp-2)',
     },
   },
 });
@@ -41,17 +41,17 @@ export const viewBodyContainer = style({
 });
 
 export const leftSidebarButton = style({
-  margin: '0 16px 0 0',
+  margin: `0 var(--sp-4) 0 0`,
 });
 
 export const rightSidebarButton = style({
-  transition: 'all 0.2s ease-in-out',
+  transition: `all var(--duration-normal) var(--ease-default)`,
   selectors: {
     '&[data-show=true]': {
       opacity: 1,
       width: 32,
       maxWidth: 32,
-      marginLeft: 16,
+      marginLeft: 'var(--sp-4)',
     },
     '&[data-show=false]': {
       opacity: 0,

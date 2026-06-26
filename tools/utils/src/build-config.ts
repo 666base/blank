@@ -52,8 +52,12 @@ export function getBuildConfig(
         CAPTCHA_SITE_KEY: process.env.CAPTCHA_SITE_KEY ?? '',
         SENTRY_DSN: process.env.SENTRY_DSN ?? '',
         blankSyncServerUrl: process.env.BLANK_SYNC_SERVER_URL ?? '',
-        blankSupabaseUrl: process.env.BLANK_SUPABASE_URL ?? '',
-        blankSupabaseAnonKey: process.env.BLANK_SUPABASE_ANON_KEY ?? '',
+        blankSupabaseUrl:
+          process.env.BLANK_SUPABASE_URL ?? process.env.SUPABASE_URL ?? '',
+        blankSupabaseAnonKey:
+          process.env.BLANK_SUPABASE_ANON_KEY ??
+          process.env.SUPABASE_ANON_KEY ??
+          '',
         blankConfigProxyUrl:
           process.env.BLANK_CONFIG_PROXY_URL ?? 'http://127.0.0.1:3020',
       };

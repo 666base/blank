@@ -11,15 +11,15 @@ export const itemRoot = style({
   textAlign: 'left',
   color: 'inherit',
   width: '100%',
-  minHeight: '30px',
+  minHeight: 'var(--touch-target)',
   userSelect: 'none',
   cursor: 'pointer',
   fontSize: cssVar('fontSm'),
   position: 'relative',
   marginTop: '0px',
-  padding: '8px',
+  padding: 'var(--sp-2)',
   borderRadius: 0,
-  gap: 12,
+  gap: 'var(--sp-3)',
   selectors: {
     '&[data-disabled="true"]': {
       cursor: 'default',
@@ -49,7 +49,7 @@ export const collapsedIconContainer = style({
   alignItems: 'center',
   justifyContent: 'center',
   borderRadius: '2px',
-  transition: 'transform 0.2s',
+  transition: `transform var(--duration-normal) var(--ease-default)`,
   color: cssVarV2('icon/primary'),
   fontSize: 16,
   selectors: {
@@ -63,7 +63,7 @@ export const collapsedIconContainer = style({
   },
 });
 export const collapsedIcon = style({
-  transition: 'transform 0.2s ease-in-out',
+  transition: `transform var(--duration-normal) var(--ease-default)`,
   selectors: {
     '&[data-collapsed="true"]': {
       transform: 'rotate(-90deg)',

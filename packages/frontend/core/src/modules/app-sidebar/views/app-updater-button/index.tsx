@@ -102,6 +102,9 @@ function DownloadingUpdate({
       <div className={clsx([styles.installLabelNormal])}>
         <span className={styles.ellipsisTextOverflow}>
           {t['com.blank.appUpdater.downloading']()}
+          {downloadProgress !== null
+            ? ` · ${Math.round(downloadProgress)}%`
+            : ''}
         </span>
         <span className={styles.versionLabel}>{updateAvailable?.version}</span>
       </div>
@@ -161,12 +164,15 @@ function WhatsNew({ onDismissChangelog }: ButtonContentProps) {
 const getButtonContentRenderer = (props: ButtonContentProps) => {
   if (props.updateReady) {
     return UpdateReady;
-  } else if (props.updateAvailable?.allowAutoUpdate) {
-    if (props.autoDownload && props.updateAvailable.allowAutoUpdate) {
-      return DownloadingUpdate;
-    } else {
-      return DownloadUpdate;
-    }
+  }
+  if (
+    props.downloadProgress !== null &&
+    props.updateAvailable?.allowAutoUpdate
+  ) {
+    return DownloadingUpdate;
+  }
+  if (props.updateAvailable?.allowAutoUpdate) {
+    return DownloadUpdate;
   } else if (props.updateAvailable && !props.updateAvailable?.allowAutoUpdate) {
     return OpenDownloadPage;
   } else if (props.changelogUnread) {

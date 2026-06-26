@@ -52,13 +52,13 @@ export const variant = {
     borderRadius: '50%',
   }),
   rectangular: style({
-    borderRadius: '4px',
+    borderRadius: 'var(--radius-sm)',
   }),
   rounded: style({
-    borderRadius: '8px',
+    borderRadius: 'var(--radius-md)',
   }),
   text: style({
-    borderRadius: '4px',
+    borderRadius: 'var(--radius-sm)',
     height: '1.2em',
     marginTop: '0.2em',
     marginBottom: '0.2em',

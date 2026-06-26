@@ -1,6 +1,8 @@
 import { ConfirmModalProvider, PromptModalProvider } from '@blank/component';
 import { ProviderComposer } from '@blank/component/provider-composer';
 import { ThemeProvider } from '@blank/core/components/theme-provider';
+import { BlankAuthProvider } from '@blank/core/modules/blank-auth/blank-auth-provider';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import type { createStore } from 'jotai';
 import { Provider } from 'jotai';
 import type { PropsWithChildren } from 'react';
@@ -21,6 +23,9 @@ export function BlankContext(props: BlankContextProps) {
           [
             <Provider key="JotaiProvider" store={props.store} />,
             <ThemeProvider key="ThemeProvider" />,
+            isBlankBuild() ? (
+              <BlankAuthProvider key="BlankAuthProvider" />
+            ) : null,
             <ConfirmModalProvider key="ConfirmModalProvider" />,
             <PromptModalProvider key="PromptModalProvider" />,
           ].filter(Boolean),

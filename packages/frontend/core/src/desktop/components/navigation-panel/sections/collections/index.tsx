@@ -4,7 +4,7 @@ import { NavigationPanelService } from '@blank/core/modules/navigation-panel';
 import { WorkbenchService } from '@blank/core/modules/workbench';
 import { useI18n } from '@blank/i18n';
 import { track } from '@blank/track';
-import { AddCollectionIcon } from '@blocksuite/icons/rc';
+import { AddCollectionIcon, ViewLayersIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useMemo } from 'react';
 
@@ -65,6 +65,7 @@ export const NavigationPanelCollections = () => {
       path={path}
       testId="navigation-panel-collections"
       title={t['com.blank.rootAppSidebar.collections']()}
+      icon={<ViewLayersIcon />}
       actions={
         <IconButton
           data-testid="navigation-panel-bar-add-collection-button"

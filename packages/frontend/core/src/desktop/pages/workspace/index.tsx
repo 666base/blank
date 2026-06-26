@@ -21,7 +21,9 @@ import {
   isInstantBootEnabled,
   persistFastBootRoute,
 } from '@blank/core/utils/blank-fast-boot';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { ensureInstantWorkspace } from '@blank/core/utils/blank-instant-workspace';
+import { useOpenedWorkspace } from '@blank/core/utils/use-opened-workspace';
 import {
   FrameworkScope,
   LiveData,
@@ -30,7 +32,7 @@ import {
   useServices,
 } from '@toeverything/infra';
 import type { PropsWithChildren, ReactElement } from 'react';
-import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import {
   matchPath,
   useLocation,
@@ -236,9 +238,9 @@ export const Component = (): ReactElement => {
       isInstantBootEnabled() &&
       params.workspaceId === BLANK_INSTANT_WORKSPACE_ID
     ) {
-      return <AppContainer />;
+      return isBlankBuild() ? null : <AppContainer />;
     }
-    return <AppContainer fallback />;
+    return isBlankBuild() ? null : <AppContainer fallback />;
   }
 
   return (
@@ -267,18 +269,9 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
     GlobalContextService,
   });
 
-  const [workspace, setWorkspace] = useState<Workspace | null>(null);
-
-  useLayoutEffect(() => {
-    const ref = workspacesService.open({ metadata: meta });
-    setWorkspace(ref.workspace);
-    return () => {
-      ref.dispose();
-    };
-  }, [meta, workspacesService]);
+  const workspace = useOpenedWorkspace(workspacesService, meta);
 
   useEffect(() => {
-    if (workspace) {
       // for debug purpose
       window.currentWorkspace = workspace ?? undefined;
       window.dispatchEvent(
@@ -342,16 +335,7 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
         globalContextService.globalContext.workspaceId.set(null);
         globalContextService.globalContext.workspaceFlavour.set(null);
       };
-    }
-    return;
-  }, [globalContextService, workspace]);
-
-  if (!workspace) {
-    if (isInstantBootEnabled() && meta.id === BLANK_INSTANT_WORKSPACE_ID) {
-      return <AppContainer />;
-    }
-    return <AppContainer fallback />;
-  }
+  }, [globalContextService, workspace, workspacesService]);
 
   return (
     <FrameworkScope scope={workspace.scope}>

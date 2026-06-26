@@ -9,26 +9,26 @@ export const root = style({
 export const dragPreview = style({
   display: 'flex',
   alignItems: 'center',
-  gap: 8,
-  padding: '8px 16px 8px 12px',
+  gap: 'var(--sp-2)',
+  padding: 'var(--sp-2) var(--sp-4) var(--sp-2) var(--sp-3)',
   background: cssVarV2.layer.background.primary,
-  borderRadius: 4,
-  border: `1px solid ${cssVarV2.layer.insideBorder.border}`,
-  fontSize: 14,
+  borderRadius: 'var(--radius-sm)',
+  border: `1px solid var(--border-faint)`,
+  fontSize: 'var(--text-base)',
 });
 export const dragPreviewIcon = style({
   fontSize: 24,
 });
 
 export const listViewRoot = style({
-  padding: '0px 4px',
+  padding: '0 var(--sp-1)',
   width: '100%',
   height: '100%',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  gap: 8,
-  borderRadius: 4,
+  gap: 'var(--sp-2)',
+  borderRadius: 'var(--radius-sm)',
   overflow: 'hidden',
   containerName: 'list-view-root',
   containerType: 'size',
@@ -72,7 +72,7 @@ export const listSelect = style({
   overflow: 'hidden',
   alignItems: 'center',
   justifyContent: 'end',
-  transition: 'width 0.25s ease, margin-left 0.25s ease',
+  transition: `width var(--duration-normal) var(--ease-default), margin-left var(--duration-normal) var(--ease-default)`,
   // when select mode is on, the whole item can be clicked,
   // the selection will be handled by the parent, the checkbox here just for the visual effect
   pointerEvents: 'none',

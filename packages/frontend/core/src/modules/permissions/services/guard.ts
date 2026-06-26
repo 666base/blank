@@ -15,6 +15,12 @@ import {
   Observable,
 } from 'rxjs';
 
+import { isBlankBuild } from '../../../utils/blank-links';
+import {
+  isCapacitorNative,
+  isElectronShell,
+  isLocalOnlyMode,
+} from '../../../utils/local-only';
 import type { WorkspaceService } from '../../workspace';
 import type {
   DocPermissionActions,
@@ -63,6 +69,22 @@ export class GuardService extends Service {
     ...args: T extends DocPermissionActions ? [string] : []
   ): LiveData<boolean | undefined> {
     const docId = args[0];
+    const workspace = this.workspaceService.workspace;
+    if (
+      workspace.flavour === 'local' ||
+      isLocalOnlyMode() ||
+      isBlankBuild() ||
+      isCapacitorNative() ||
+      isElectronShell() ||
+      BUILD_CONFIG.isMobileEdition
+    ) {
+      return LiveData.from(
+        new Observable(subscriber => {
+          subscriber.next(true);
+        }),
+        true
+      );
+    }
     return LiveData.from(
       new Observable(subscriber => {
         let prev: boolean | undefined = undefined;
@@ -165,7 +187,14 @@ export class GuardService extends Service {
   );
 
   private readonly loadWorkspacePermission = async () => {
-    if (this.workspaceService.workspace.flavour === 'local') {
+    if (
+      this.workspaceService.workspace.flavour === 'local' ||
+      isLocalOnlyMode() ||
+      isBlankBuild() ||
+      isCapacitorNative() ||
+      isElectronShell() ||
+      BUILD_CONFIG.isMobileEdition
+    ) {
       return {} as Record<WorkspacePermissionActions, boolean>;
     }
     if (this.workspaceService.workspace.openOptions.isSharedMode) {
@@ -177,7 +206,14 @@ export class GuardService extends Service {
   };
 
   private readonly loadDocPermission = async (docId: string) => {
-    if (this.workspaceService.workspace.flavour === 'local') {
+    if (
+      this.workspaceService.workspace.flavour === 'local' ||
+      isLocalOnlyMode() ||
+      isBlankBuild() ||
+      isCapacitorNative() ||
+      isElectronShell() ||
+      BUILD_CONFIG.isMobileEdition
+    ) {
       return {} as Record<DocPermissionActions, boolean>;
     }
     if (this.workspaceService.workspace.openOptions.isSharedMode) {

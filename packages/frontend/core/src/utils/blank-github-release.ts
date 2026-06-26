@@ -6,6 +6,7 @@ import {
   getBlankGithubUrl,
   getBlankUpdateReleasesUrl,
 } from './blank-links';
+import { nativeFetchJson } from './native-http';
 
 export type BlankReleaseManifest = {
   version: string;
@@ -103,16 +104,7 @@ function manifestFromReleaseJson(
 }
 
 async function fetchJson(url: string) {
-  const response = await fetch(url, {
-    headers: {
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status} for ${url}`);
-  }
-  return response.json();
+  return nativeFetchJson<Record<string, unknown>>(url);
 }
 
 function manifestFromVersionJson(

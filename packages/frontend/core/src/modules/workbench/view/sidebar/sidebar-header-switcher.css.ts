@@ -6,3 +6,7 @@ export const iconContainer = style({
   alignItems: 'center',
   pointerEvents: 'none',
 });
+
+export const switcher = style({
+  ['WebkitAppRegion' as string]: 'no-drag',
+});

@@ -1,5 +1,4 @@
 import { IconButton } from '@blank/component';
-import { isDesktopApp } from '@blank/core/utils/local-only';
 
 import * as styles from './sidebar-header.css';
 
@@ -64,12 +63,8 @@ export const Header = ({ children, onToggle }: HeaderProps) => {
   return (
     <Container className={styles.header}>
       {children}
-      {!isDesktopApp() && (
-        <>
-          <div className={styles.spacer} />
-          <ToggleButton onToggle={onToggle} />
-        </>
-      )}
+      <div className={styles.spacer} />
+      <ToggleButton onToggle={onToggle} />
     </Container>
   );
 };

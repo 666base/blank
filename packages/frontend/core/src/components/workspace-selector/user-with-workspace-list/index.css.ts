@@ -12,11 +12,7 @@ export const workspaceFooter = style({
   padding: '0px 8px 10px 8px',
 });
 export const scrollbar = style({
-  width: 9,
-  padding: '0px 2px',
-  ':hover': {
-    padding: 0,
-  },
+  display: 'none',
 });
 export const scrollbarThumb = style({
   width: 5,

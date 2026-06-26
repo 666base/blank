@@ -12,9 +12,9 @@ const MENUBAR_SETTING_KEY: typeof MenubarStateKey = 'menubarState';
 const defaultTraySetting: MenubarStateSchema = {
   enabled: true,
   minimizeToTray: false,
-  closeToTray: false,
+  closeToTray: true,
   startMinimized: false,
-  openOnLeftClick: false,
+  openOnLeftClick: true,
 };
 
 export class TraySettingService extends Service {

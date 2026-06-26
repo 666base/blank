@@ -7,10 +7,9 @@ import { AppSidebarService } from '@blank/core/modules/app-sidebar';
 import {
   AppSidebarFallback,
   OpenInAppCard,
-  SidebarSwitch,
 } from '@blank/core/modules/app-sidebar/views';
 import { AppTabsHeader } from '@blank/core/modules/app-tabs-header';
-import { NavigationButtons } from '@blank/core/modules/navigation';
+import { AppUpdateBanner } from '@blank/core/components/app-update-banner';
 import { WorkspaceService } from '@blank/core/modules/workspace';
 import { isDesktopApp, isElectronShell, isLocalOnlyMode } from '@blank/core/utils/local-only';
 import {
@@ -74,16 +73,11 @@ const DesktopLayout = ({
   return (
     <div className={styles.desktopAppViewContainer}>
       <div className={styles.desktopTabsHeader}>
-        <AppTabsHeader
-          left={
-            <>
-              {isInWorkspace && <SidebarSwitch show />}
-              {isInWorkspace && <NavigationButtons />}
-            </>
-          }
-        />
+        <AppTabsHeader />
       </div>
       <div className={styles.desktopAppViewMain}>
+        <AppUpdateBanner />
+        <div className={styles.desktopAppViewMainRow}>
         {fallback ? (
           isBlankBuild() ? null : (
             <AppSidebarFallback />
@@ -92,6 +86,7 @@ const DesktopLayout = ({
           isInWorkspace && <RootAppSidebar />
         )}
         <MainContainer fallback={fallback}>{children}</MainContainer>
+      </div>
       </div>
     </div>
   );

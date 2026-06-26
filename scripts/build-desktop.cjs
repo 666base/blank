@@ -3,6 +3,14 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
+const { applyToProcessEnv } = require('./load-blank-server-env.cjs');
+const loadedSupabase = applyToProcessEnv();
+if (loadedSupabase.BLANK_SUPABASE_URL) {
+  console.log(
+    `Supabase URL baked in from services/blank-server/.env: ${loadedSupabase.BLANK_SUPABASE_URL}`
+  );
+}
+
 const root = path.resolve(__dirname, '..');
 const webDist = path.join(root, 'packages/frontend/apps/web/dist');
 const desktopReleaseDir = path.join(root, 'releases/desktop');
@@ -50,6 +58,13 @@ function assertNoAiInBundle(distDir, label) {
   console.log(`  Verified ${label} bundle has no obvious AI modules.`);
 }
 
+function runBlankBundle(packageName, bundleEnv) {
+  const runner = path.join(root, 'tools/cli/bin/runner.js');
+  run(process.execPath, [runner, 'blank.ts', 'bundle', '-p', packageName], {
+    env: bundleEnv,
+  });
+}
+
 function bundleWeb() {
   const bundleEnv = {
     ...process.env,
@@ -60,23 +75,7 @@ function bundleWeb() {
     console.log(`Sync server URL baked in: ${bundleEnv.BLANK_SYNC_SERVER_URL}`);
   }
 
-  if (process.env.npm_execpath) {
-    run(process.execPath, [
-      process.env.npm_execpath,
-      'run',
-      'blank',
-      '--',
-      'bundle',
-      '-p',
-      '@blank/web',
-    ], { env: bundleEnv });
-    return;
-  }
-
-  run('yarn', ['blank', 'bundle', '-p', '@blank/web'], {
-    shell: isWindows,
-    env: bundleEnv,
-  });
+  runBlankBundle('@blank/web', bundleEnv);
 }
 
 function assertDesktopBundleUsesLocalAssets() {

@@ -1,5 +1,6 @@
 import { useI18n } from '@blank/i18n';
 
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { SettingGroup } from '../group';
 import { FontStyleSetting } from './font';
 import { LanguageSetting } from './language';
@@ -10,7 +11,7 @@ export const AppearanceGroup = () => {
   return (
     <SettingGroup title={t['com.blank.mobile.setting.appearance.title']()}>
       <ThemeSetting />
-      <FontStyleSetting />
+      {isBlankBuild() ? null : <FontStyleSetting />}
       <LanguageSetting />
     </SettingGroup>
   );

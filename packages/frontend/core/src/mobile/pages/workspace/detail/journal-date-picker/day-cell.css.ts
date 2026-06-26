@@ -8,7 +8,7 @@ export const dayCell = style([
     position: 'relative',
     height: 34,
     minWidth: 34,
-    padding: 4,
+    padding: '4px 4px 6px',
     borderRadius: 8,
     display: 'flex',
     alignItems: 'center',

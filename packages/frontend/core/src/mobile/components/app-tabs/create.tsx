@@ -5,7 +5,6 @@ import { TemplateDocService } from '@blank/core/modules/template-doc';
 import { WorkbenchService } from '@blank/core/modules/workbench';
 import { WorkspaceService } from '@blank/core/modules/workspace';
 import track from '@blank/track';
-import { EditIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 
 import { TabItem } from './tab-item';
@@ -42,9 +41,8 @@ export const AppTabCreate = ({ tab }: AppTabCustomFCProps) => {
       id={tab.key}
       onClick={createPage}
       label="New Page"
+      icon="create"
       persistActive={false}
-    >
-      <EditIcon />
-    </TabItem>
+    />
   );
 };

@@ -1,0 +1,38 @@
+/* Map Codex semantic tokens → AFFiNE variables when classic theme is active */
+
+html[data-visual-theme='default'] {
+  --bg-root: var(--affine-background-primary-color);
+  --bg-surface: var(--affine-background-secondary-color);
+  --bg-card: var(--affine-background-primary-color);
+  --bg-raised: var(--affine-v2-layer-background-overlayPanel);
+  --bg-hover: var(--affine-hover-color);
+  --bg-active: var(--affine-hover-color-filled);
+
+  --border-ghost: var(--affine-v2-layer-insideBorder-blackBorder);
+  --border-faint: var(--affine-border-color);
+  --border-subtle: var(--affine-v2-layer-insideBorder-border);
+  --border-strong: var(--affine-v2-layer-insideBorder-primaryBorder);
+
+  --text-primary: var(--affine-text-primary-color);
+  --text-secondary: var(--affine-text-secondary-color);
+  --text-muted: var(--affine-text-disable-color);
+
+  --accent: var(--affine-primary-color);
+  --accent-hover: var(--affine-primary-color);
+  --accent-dim: var(--affine-primary-color-04);
+  --accent-border: var(--affine-v2-layer-insideBorder-primaryBorder);
+
+  --font-sans: var(--affine-font-family);
+  --text-base: var(--affine-font-base);
+  --leading-base: 22px;
+  --weight-semibold: 600;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  --duration-normal: 0.3s;
+  --ease-default: ease;
+}

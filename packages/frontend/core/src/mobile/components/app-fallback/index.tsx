@@ -2,6 +2,8 @@ import { SafeArea, Skeleton } from '@blank/component';
 import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { cssVarV2 } from '@toeverything/theme/v2';
 
+import { MobileBootPlaceholder } from '../boot-placeholder';
+
 const SectionTitleFallback = () => {
   return (
     <div style={{ padding: '0 16px' }}>
@@ -50,6 +52,9 @@ const Section = () => {
 };
 
 export const AppFallback = () => {
+  if (isBlankBuild() && BUILD_CONFIG.isMobileEdition) {
+    return <MobileBootPlaceholder />;
+  }
   if (isBlankBuild()) {
     return null;
   }

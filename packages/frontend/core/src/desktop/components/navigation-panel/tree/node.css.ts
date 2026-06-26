@@ -8,14 +8,14 @@ export const linkItemRoot = style({
 export const itemRoot = style({
   display: 'inline-flex',
   alignItems: 'center',
-  borderRadius: '4px',
+  borderRadius: 'var(--radius-sm)',
   textAlign: 'left',
   color: 'inherit',
   width: '100%',
   minHeight: '30px',
   userSelect: 'none',
   cursor: 'pointer',
-  padding: '0 6px',
+  padding: `0 var(--sp-2)`,
   fontSize: cssVar('fontSm'),
   position: 'relative',
   marginTop: '0px',
@@ -42,7 +42,7 @@ export const itemMain = style({
   width: 0,
   flex: 1,
   position: 'relative',
-  gap: 12,
+  gap: 'var(--sp-3)',
 });
 export const toggleIcon = style({
   width: 20,
@@ -50,7 +50,7 @@ export const toggleIcon = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginRight: 12,
+  marginRight: 'var(--sp-3)',
 });
 export const itemRenameAnchor = style({
   pointerEvents: 'none',
@@ -106,8 +106,8 @@ export const collapsedIconContainer = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: '2px',
-  transition: 'transform 0.2s',
+  borderRadius: 'var(--radius-xs)',
+  transition: `transform var(--duration-normal) var(--ease-default)`,
   color: cssVarV2('icon/primary'),
   position: 'absolute',
   opacity: 0,
@@ -130,7 +130,7 @@ export const collapsedIconContainer = style({
   },
 });
 export const collapsedIcon = style({
-  transition: 'transform 0.2s ease-in-out',
+  transition: `transform var(--duration-normal) var(--ease-default)`,
   fontSize: 16,
   selectors: {
     '&[data-collapsed="true"]': {
@@ -178,7 +178,7 @@ export const contentContainer = style({
 export const draggingContainer = style({
   background: cssVar('--blank-background-primary-color'),
   width: '200px',
-  borderRadius: '6px',
+  borderRadius: 'var(--radius-sm)',
 });
 
 export const draggedOverEffect = style({

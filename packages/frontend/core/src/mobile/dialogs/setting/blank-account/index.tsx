@@ -1,5 +1,7 @@
 import { Button, Input } from '@blank/component';
-import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { useNavigateHelper, RouteLogic } from '@blank/core/components/hooks/use-navigate-helper';
+import { BLANK_CLOUD_FLAVOUR } from '@blank/core/modules/workspace-engine';
+import { prepareBlankWorkspaceRoute } from '@blank/core/utils/blank-workspace-nav';
 import { useBlankAuth } from '@blank/core/modules/blank-auth/use-blank-auth';
 import { fetchBlankWorkspaces } from '@blank/core/utils/blank-supabase';
 import { useI18n } from '@blank/i18n';
@@ -56,13 +58,15 @@ export const BlankAccountGroup = () => {
   }, [isSignedIn]);
 
   const onOpenSyncWorkspace = useCallback(() => {
-    if (syncWorkspaceId) {
-      openPage(syncWorkspaceId, 'all');
+    if (!syncWorkspaceId) {
+      return;
     }
+    prepareBlankWorkspaceRoute(syncWorkspaceId, 'all', BLANK_CLOUD_FLAVOUR);
+    openPage(syncWorkspaceId, 'all', RouteLogic.PUSH, BLANK_CLOUD_FLAVOUR);
   }, [openPage, syncWorkspaceId]);
 
   return (
-    <SettingGroup title={t['com.blank.auth.title']()}>
+    <SettingGroup title={t['com.blank.auth.title']()} id="mobile-setting-account">
       {!configured ? (
         <RowLayout label={t['com.blank.auth.notConfigured']()}>
           {t['com.blank.auth.notConfigured.desc']()}

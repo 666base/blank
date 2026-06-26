@@ -2,7 +2,7 @@ import { BlockSuiteError, ErrorCode } from '@blocksuite/global/exceptions';
 import { SignalWatcher, WithDisposable } from '@blocksuite/global/lit';
 import { type BlockModel, type BlockViewType, Store } from '@blocksuite/store';
 import { consume, provide } from '@lit/context';
-import { computed } from '@preact/signals-core';
+import { computed, effect } from '@preact/signals-core';
 import { nothing, type TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
@@ -228,6 +228,13 @@ export class BlockComponent<
 
     this._disposables.add(
       this.model.propsUpdated.subscribe(() => {
+        this.requestUpdate();
+      })
+    );
+
+    this._disposables.add(
+      effect(() => {
+        this.store.readonly$.value;
         this.requestUpdate();
       })
     );

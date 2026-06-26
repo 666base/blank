@@ -9,7 +9,7 @@ export const inputWrapper = style({
   color: cssVarV2('text/primary'),
   border: '1px solid',
   backgroundColor: cssVarV2('input/background'),
-  borderRadius: 8,
+  borderRadius: 'var(--radius-md)',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -47,7 +47,7 @@ export const inputWrapper = style({
     '&.default:is(:focus-within, :focus, :focus-visible)': {
       borderColor: cssVarV2('button/primary'),
       outline: 'none',
-      boxShadow: '0px 0px 0px 2px rgba(30, 150, 235, 0.30);',
+      boxShadow: `0 0 0 2px var(--accent-border)`,
     },
   },
 });
@@ -56,7 +56,7 @@ export const mobileInputWrapper = style([
   inputWrapper,
   {
     height: 30,
-    borderRadius: 4,
+    borderRadius: 'var(--radius-sm)',
   },
 ]);
 
@@ -65,7 +65,7 @@ export const input = style({
   width: '0',
   flex: 1,
   boxSizing: 'border-box',
-  padding: '0 12px',
+  padding: '0 var(--sp-3)',
   // prevent default style
   WebkitAppearance: 'none',
   WebkitTapHighlightColor: 'transparent',

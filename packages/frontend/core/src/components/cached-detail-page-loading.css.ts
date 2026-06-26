@@ -16,6 +16,7 @@ export const cachedContainer = style({
   '@media': {
     'screen and (max-width: 768px)': {
       padding: '24px 20px 16px',
+      background: cssVarV2('layer/background/mobile/primary'),
     },
   },
 });

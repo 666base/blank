@@ -3,15 +3,27 @@ const setScope = (scope: string) =>
 const rmScope = (scope: string) =>
   document.body.removeAttribute(`data-${scope}`);
 
+function runInstant(cb: () => Promise<void> | void) {
+  const result = cb();
+  if (result && typeof result.catch === 'function') {
+    result.catch(console.error);
+  }
+}
+
 /**
  * A wrapper around `document.startViewTransition` that adds a scope attribute to the body element.
  */
 export function startScopedViewTransition(
   scope: string | string[],
   cb: () => Promise<void> | void,
-  options?: { timeout?: number }
+  options?: { timeout?: number; instant?: boolean }
 ) {
   if (typeof document === 'undefined') return;
+
+  if (options?.instant) {
+    runInstant(cb);
+    return;
+  }
 
   if (typeof document.startViewTransition === 'function') {
     const scopes = Array.isArray(scope) ? scope : [scope];

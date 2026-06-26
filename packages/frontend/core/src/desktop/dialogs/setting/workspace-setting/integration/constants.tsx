@@ -73,6 +73,9 @@ export function getAllowedIntegrationList(
   isCloudWorkspace: boolean,
   showByok: boolean
 ) {
+  if (isBlankBuild()) {
+    return [];
+  }
   return INTEGRATION_LIST.filter(item => {
     if (!item) return false;
     if (isBlankBuild() && (item.id === 'web-clipper' || item.id === 'byok')) {

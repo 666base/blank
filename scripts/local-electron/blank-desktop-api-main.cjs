@@ -3,6 +3,7 @@ const path = require('node:path');
 const { ipcMain, BrowserWindow, app } = require('electron');
 const { KeyValueStore } = require('./kv-store.cjs');
 const { initBlankUpdater, updaterHandlers } = require('./updater-main.cjs');
+const { createTrayManager } = require('./tray-main.cjs');
 
 const CHANNEL_PREFIX = 'blank:';
 
@@ -10,6 +11,7 @@ function registerBlankDesktopApi(getMainWindow) {
   const globalState = new KeyValueStore(
     path.join(app.getPath('userData'), 'blank-global-state.json')
   );
+  const trayManager = createTrayManager({ getMainWindow, globalState });
   const globalCache = new KeyValueStore(
     path.join(app.getPath('userData'), 'blank-global-cache.json')
   );
@@ -43,6 +45,9 @@ function registerBlankDesktopApi(getMainWindow) {
   ipcMain.handle(`${CHANNEL_PREFIX}storage:globalState:set`, async (_e, key, value) => {
     await globalState.ready;
     globalState.set(key, value);
+    if (key === 'menubarState') {
+      trayManager.refreshFromSettings();
+    }
     emitToRenderer('storage:globalState:changed', { key, value });
   });
   ipcMain.handle(`${CHANNEL_PREFIX}storage:globalState:del`, async (_e, key) => {
@@ -134,7 +139,13 @@ function registerBlankDesktopApi(getMainWindow) {
       }
       broadcastWindowState(win);
     },
-    handleCloseApp: async () => getMainWindow()?.close(),
+    handleCloseApp: async () => {
+      const win = getMainWindow();
+      if (!win) {
+        return;
+      }
+      win.close();
+    },
     handleWindowResize: async () => {},
     pingAppLayoutReady: async () => {},
     handleOpenMainApp: async () => {},
@@ -151,7 +162,7 @@ function registerBlankDesktopApi(getMainWindow) {
     activateView: async () => {},
     showTabContextMenu: async () => {},
     toggleRightSidebar: async () => {},
-    handleHideApp: async () => {},
+    handleHideApp: async () => trayManager.hideMainWindow(),
     updateActiveViewMeta: async () => {},
   };
 
@@ -185,14 +196,25 @@ function registerBlankDesktopApi(getMainWindow) {
 
   initBlankUpdater((name, payload) => emitToRenderer(name, payload));
 
-  for (const [method, handler] of Object.entries(updaterHandlers)) {
+  const wrappedUpdaterHandlers = {
+    ...updaterHandlers,
+    quitAndInstall: async () => {
+      trayManager.markQuitting();
+      await updaterHandlers.quitAndInstall();
+    },
+  };
+
+  for (const [method, handler] of Object.entries(wrappedUpdaterHandlers)) {
     ipcMain.handle(`${CHANNEL_PREFIX}updater:${method}`, async (_event, ...args) =>
       handler(...args)
     );
   }
 
   return {
+    trayManager,
+    globalStateReady: globalState.ready,
     attachWindow(win) {
+      trayManager.attachWindow(win);
       win.on('maximize', () => broadcastWindowState(win));
       win.on('unmaximize', () => broadcastWindowState(win));
       win.on('enter-full-screen', () => broadcastWindowState(win));

@@ -7,6 +7,7 @@ import { Outlet } from 'react-router-dom';
 
 import { GlobalDialogs } from '../../dialogs';
 import { CustomThemeModifier } from './custom-theme';
+import { VisualThemeModifier } from '../../../components/visual-theme/visual-theme-modifier';
 import { FindInPagePopup } from './find-in-page/find-in-page-popup';
 
 export const RootWrapper = () => {
@@ -35,6 +36,7 @@ export const RootWrapper = () => {
       <NotificationCenter />
       <Outlet />
       <CustomThemeModifier />
+      <VisualThemeModifier />
       {BUILD_CONFIG.isElectron && <FindInPagePopup />}
     </FrameworkScope>
   );

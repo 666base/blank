@@ -9,7 +9,7 @@ export const header = style({
   flexShrink: 0,
   padding: '0 16px',
   zIndex: 1,
-  gap: '12px',
+  gap: 'var(--sp-3)',
   background: cssVar('backgroundPrimaryColor'),
   '@media': {
     print: {

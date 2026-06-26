@@ -11,6 +11,8 @@ export const JournalDatePickerContext = createContext<{
   selected: string;
   onSelect: (date: string) => void;
   withDotDates: Set<string | null | undefined>;
+  expanded: boolean;
+  toggleExpanded: () => void;
 }>({
   width: window.innerWidth,
   cursor: '',
@@ -18,4 +20,6 @@ export const JournalDatePickerContext = createContext<{
   selected: '',
   onSelect: () => {},
   withDotDates: new Set(),
+  expanded: false,
+  toggleExpanded: () => {},
 });

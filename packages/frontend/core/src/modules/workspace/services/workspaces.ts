@@ -46,6 +46,10 @@ export class WorkspacesService extends Service {
     return this.workspaceRepo.openByWorkspaceId;
   }
 
+  get evictWorkspace() {
+    return this.workspaceRepo.evictWorkspace;
+  }
+
   get create() {
     return this.workspaceFactory.create;
   }

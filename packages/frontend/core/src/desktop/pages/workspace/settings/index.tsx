@@ -1,31 +1,26 @@
 import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
 import type { SettingTab } from '@blank/core/modules/dialogs/constant';
-import { WorkbenchService } from '@blank/core/modules/workbench';
 import { useService } from '@toeverything/infra';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export const Component = () => {
-  const workbenchService = useService(WorkbenchService);
   const workspaceDialogService = useService(WorkspaceDialogService);
-  const workbench = workbenchService.workbench;
 
   const [searchParams] = useSearchParams();
   const tab = searchParams.get('tab') ?? undefined;
   const scrollAnchor = searchParams.get('scrollAnchor') ?? undefined;
 
-  const isOpened = useRef(false);
-
   useEffect(() => {
-    if (isOpened.current) {
-      return;
-    }
-    isOpened.current = true; // prevent open multiple times
-    workbench.openAll();
-    workspaceDialogService.open('setting', {
+    const dialogId = workspaceDialogService.open('setting', {
       activeTab: tab as SettingTab,
       scrollAnchor,
     });
-  }, [scrollAnchor, tab, workbench, workspaceDialogService]);
+
+    return () => {
+      workspaceDialogService.close(dialogId);
+    };
+  }, [scrollAnchor, tab, workspaceDialogService]);
+
   return null;
 };

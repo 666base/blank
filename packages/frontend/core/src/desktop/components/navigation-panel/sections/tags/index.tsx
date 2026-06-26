@@ -4,7 +4,7 @@ import { NavigationPanelService } from '@blank/core/modules/navigation-panel';
 import { TagService } from '@blank/core/modules/tag';
 import { useI18n } from '@blank/i18n';
 import { track } from '@blank/track';
-import { AddTagIcon } from '@blocksuite/icons/rc';
+import { AddTagIcon, TagIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -49,6 +49,7 @@ export const NavigationPanelTags = () => {
       testId="navigation-panel-tags"
       headerClassName={styles.draggedOverHighlight}
       title={t['com.blank.rootAppSidebar.tags']()}
+      icon={<TagIcon />}
       actions={
         <div className={styles.iconContainer}>
           <IconButton

@@ -225,7 +225,7 @@ export const SettingSidebar = ({
         {t['com.blank.settingSidebar.title']()}
       </div>
 
-      {isBlankBuild() && !blankAuth.isSignedIn && !blankAuth.loading ? (
+      {isBlankBuild() && !blankAuth.isSignedIn ? (
         <BlankSignInButton />
       ) : null}
       {isBlankBuild() && blankAuth.isSignedIn ? (

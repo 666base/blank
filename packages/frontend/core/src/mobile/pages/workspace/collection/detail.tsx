@@ -1,4 +1,3 @@
-import { useThemeColorV2 } from '@blank/component';
 import { PageNotFound } from '@blank/core/desktop/pages/404';
 import { CollectionService } from '@blank/core/modules/collection';
 import { GlobalContextService } from '@blank/core/modules/global-context';
@@ -9,7 +8,6 @@ import { useParams } from 'react-router-dom';
 import { CollectionDetail } from '../../../views';
 
 export const Component = () => {
-  useThemeColorV2('layer/background/mobile/primary');
   const { collectionService, globalContextService } = useServices({
     CollectionService,
     GlobalContextService,

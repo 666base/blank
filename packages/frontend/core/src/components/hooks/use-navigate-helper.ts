@@ -1,6 +1,7 @@
 import type { SettingTab } from '@blank/core/modules/dialogs/constant';
 import { toDocSearchParams } from '@blank/core/modules/navigation';
 import { getOpenUrlInDesktopAppLink } from '@blank/core/modules/open-in-app';
+import { prepareBlankWorkspaceRoute } from '@blank/core/utils/blank-workspace-nav';
 import type { DocMode } from '@blocksuite/blank/model';
 import { nanoid } from 'nanoid';
 import { createContext, useCallback, useContext, useMemo } from 'react';
@@ -84,8 +85,10 @@ export function useNavigateHelper() {
     (
       workspaceId: string,
       pageId: string,
-      logic: RouteLogic = RouteLogic.PUSH
+      logic: RouteLogic = RouteLogic.PUSH,
+      flavour?: string | null
     ) => {
+      prepareBlankWorkspaceRoute(workspaceId, pageId, flavour);
       return navigate(`/workspace/${workspaceId}/${pageId}`, {
         replace: logic === RouteLogic.REPLACE,
       });
@@ -176,8 +179,13 @@ export function useNavigateHelper() {
   );
 
   const openPage = useCallback(
-    (workspaceId: string, pageId: string, logic?: RouteLogic) => {
-      return jumpToPage(workspaceId, pageId, logic);
+    (
+      workspaceId: string,
+      pageId: string,
+      logic: RouteLogic = RouteLogic.PUSH,
+      flavour?: string | null
+    ) => {
+      return jumpToPage(workspaceId, pageId, logic, flavour);
     },
     [jumpToPage]
   );

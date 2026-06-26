@@ -1,5 +1,5 @@
 import { Menu, type MenuProps } from '@blank/component';
-import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { useNavigateHelper, RouteLogic } from '@blank/core/components/hooks/use-navigate-helper';
 import { GlobalContextService } from '@blank/core/modules/global-context';
 import { WorkbenchService } from '@blank/core/modules/workbench';
 import {
@@ -167,14 +167,19 @@ export const WorkspaceNavigator = ({
       if (document.startViewTransition) {
         document.startViewTransition(() => {
           closeInactiveViews();
-          jumpToPage(workspaceMetadata.id, 'all');
+          jumpToPage(workspaceMetadata.id, 'all', RouteLogic.PUSH, workspaceMetadata.flavour);
           return new Promise(resolve =>
             setTimeout(resolve, 150)
           ); /* start transition after 150ms */
         });
       } else {
         closeInactiveViews();
-        jumpToPage(workspaceMetadata.id, 'all');
+        jumpToPage(
+          workspaceMetadata.id,
+          'all',
+          RouteLogic.PUSH,
+          workspaceMetadata.flavour
+        );
       }
     },
     [jumpToPage, onSelectWorkspace, workbench]
@@ -185,9 +190,19 @@ export const WorkspaceNavigator = ({
       if (document.startViewTransition) {
         document.startViewTransition(() => {
           if (payload.defaultDocId) {
-            jumpToPage(payload.metadata.id, payload.defaultDocId);
+            jumpToPage(
+              payload.metadata.id,
+              payload.defaultDocId,
+              RouteLogic.PUSH,
+              payload.metadata.flavour
+            );
           } else {
-            jumpToPage(payload.metadata.id, 'all');
+            jumpToPage(
+              payload.metadata.id,
+              'all',
+              RouteLogic.PUSH,
+              payload.metadata.flavour
+            );
           }
           return new Promise(resolve =>
             setTimeout(resolve, 150)
@@ -195,9 +210,19 @@ export const WorkspaceNavigator = ({
         });
       } else {
         if (payload.defaultDocId) {
-          jumpToPage(payload.metadata.id, payload.defaultDocId);
+          jumpToPage(
+            payload.metadata.id,
+            payload.defaultDocId,
+            RouteLogic.PUSH,
+            payload.metadata.flavour
+          );
         } else {
-          jumpToPage(payload.metadata.id, 'all');
+          jumpToPage(
+            payload.metadata.id,
+            'all',
+            RouteLogic.PUSH,
+            payload.metadata.flavour
+          );
         }
       }
     },

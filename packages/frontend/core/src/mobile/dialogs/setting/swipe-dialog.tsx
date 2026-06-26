@@ -188,7 +188,7 @@ export const SwipeDialog = ({
     if (!overlay || !dialog || !swipeBackTrigger) return;
 
     const swipeHelper = new SwipeHelper();
-    return swipeHelper.init(swipeBackTrigger, {
+    const dispose = swipeHelper.init(swipeBackTrigger, {
       preventScroll: true,
       onSwipeStart: () => {},
       onSwipe({ deltaX }) {
@@ -206,6 +206,11 @@ export const SwipeDialog = ({
         }
       },
     });
+
+    return () => {
+      dispose();
+      reset(overlay, dialog, prev ?? document.querySelector('#app'));
+    };
   }, [handleClose, open, prev]);
 
   useEffect(() => {

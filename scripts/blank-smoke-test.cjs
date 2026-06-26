@@ -160,7 +160,10 @@ async function main() {
     'instant boot shell',
     read('packages/frontend/core/src/utils/blank-boot-shell.html.ts')?.includes(
       'blank-boot-shell'
-    )
+    ) &&
+      !read('packages/frontend/core/src/utils/blank-boot-shell.html.ts')?.includes(
+        'blank-boot-logo'
+      )
   );
   ok(
     'instant first-open route',
@@ -174,14 +177,15 @@ async function main() {
   ok(
     'mobile boot shell',
     read('packages/frontend/core/src/utils/blank-boot-shell.html.ts')?.includes(
-      'blank-boot-shell--mobile'
+      'background:#141414'
     )
   );
   const mobileDistIndex = read('packages/frontend/apps/mobile/dist/index.html');
   ok(
     'mobile dist instant boot (rebuild if fail)',
     !mobileDistIndex ||
-      (mobileDistIndex.includes('blank-boot-shell--mobile') &&
+      (mobileDistIndex.includes('blank-boot-shell') &&
+        !mobileDistIndex.includes('blank-boot-logo') &&
         mobileDistIndex.includes('blank-default')),
     mobileDistIndex
       ? 'run npm run android:build to refresh dist'
@@ -193,6 +197,7 @@ async function main() {
     'web dist instant boot (rebuild if fail)',
     !distIndex ||
       (distIndex.includes('blank-boot-shell') &&
+        !distIndex.includes('blank-boot-logo') &&
         distIndex.includes('blank-default')),
     distIndex
       ? 'run npm run desktop:build to refresh dist'

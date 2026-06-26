@@ -7,32 +7,34 @@ const searchHeight = createVar('searchHeight');
 
 export const root = style({
   vars: {
-    [headerHeight]: '44px',
+    [headerHeight]: 'var(--touch-target)',
     [wsSelectorHeight]: '48px',
-    [searchHeight]: '44px',
+    [searchHeight]: 'var(--touch-target)',
   },
   width: '100dvw',
 });
 export const headerSettingRow = style({
-  height: 44,
+  height: 'var(--touch-target)',
 });
 export const wsSelectorAndSearch = style({
   display: 'flex',
   flexDirection: 'column',
   gap: 15,
-  padding: '4px 16px 8px 16px',
+  padding: 'var(--sp-1) var(--sp-4) var(--sp-2) var(--sp-4)',
 });
 
 export const headerIconActions = style({
   display: 'flex',
   alignItems: 'center',
-  gap: 4,
+  gap: 'var(--sp-1)',
   flexShrink: 0,
 });
 
 export const headerIconActionButton = style({
-  width: 28,
-  height: 28,
+  width: 'var(--touch-target)',
+  height: 'var(--touch-target)',
+  minWidth: 'var(--touch-target)',
+  minHeight: 'var(--touch-target)',
 });
 
 export const float = style({
@@ -40,19 +42,22 @@ export const float = style({
   top: 0,
   width: '100%',
   zIndex: 2,
+  willChange: 'background-color',
 
   display: 'flex',
   alignItems: 'center',
-  padding: '4px 10px 4px 16px',
+  padding: 'var(--sp-1) 10px var(--sp-1) var(--sp-4)',
   gap: 10,
 
-  // visibility control
-  background: 'transparent',
+  background: cssVarV2('layer/background/secondary'),
   selectors: {
     '&.dense': {
       background: cssVarV2('layer/background/mobile/primary'),
     },
   },
+});
+export const floatActionsOnly = style({
+  justifyContent: 'flex-end',
 });
 export const floatWsSelector = style({
   width: 0,

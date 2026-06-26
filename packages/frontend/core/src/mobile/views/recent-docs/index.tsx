@@ -34,7 +34,7 @@ export const RecentDocs = ({ max = 5 }: { max?: number }) => {
         <ul className={styles.list}>
           {cardMetas.map(doc => (
             <li key={doc.id} className={styles.cardWrapper}>
-              <DocCard meta={doc} />
+              <DocCard meta={doc} showPreview={false} />
             </li>
           ))}
         </ul>

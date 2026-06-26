@@ -1,4 +1,4 @@
-import { SafeArea, useThemeColorV2 } from '@blank/component';
+import { SafeArea } from '@blank/component';
 import { WorkbenchService } from '@blank/core/modules/workbench';
 import { scheduleRemoveBootSplash } from '@blank/core/utils/blank-fast-boot';
 import { useLiveData, useService } from '@toeverything/infra';
@@ -16,7 +16,6 @@ import * as browseStyles from '../../views/home-browse/styles.css';
 import { HomeHeader, RecentDocs } from '../../views';
 
 export const Component = () => {
-  useThemeColorV2('layer/background/mobile/primary');
   const workbench = useService(WorkbenchService).workbench;
   const pathname = useLiveData(workbench.location$).pathname;
   const activeTab = resolveHomeBrowseTab(pathname);

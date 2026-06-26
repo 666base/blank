@@ -1,16 +1,18 @@
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { style } from '@vanilla-extract/css';
 
+const mobileBg = cssVarV2('layer/background/mobile/primary');
+
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
   height: '100dvh',
   overflow: 'hidden',
-  backgroundColor: cssVarV2('layer/background/primary'),
+  backgroundColor: mobileBg,
 });
 
 export const header = style({
-  backgroundColor: cssVarV2('layer/background/primary'),
+  backgroundColor: mobileBg,
 });
 
 export const headerTitle = style({
@@ -22,5 +24,5 @@ export const headerTitle = style({
 });
 
 export const journalDatePicker = style({
-  backgroundColor: cssVarV2('layer/background/primary'),
+  backgroundColor: mobileBg,
 });

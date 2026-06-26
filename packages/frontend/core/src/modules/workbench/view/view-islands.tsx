@@ -57,7 +57,11 @@ interface ViewIslandRegistry {
  * The `View` will create islands and place them in the registry,
  * while `Workbench` can use the KEY to retrieve and display the islands.
  */
-const ViewIslandRegistryContext = createContext<ViewIslandRegistry>({});
+export const ViewIslandRegistryContext = createContext<ViewIslandRegistry>({});
+
+export function useViewIslandRegistered(id: string) {
+  return !!useContext(ViewIslandRegistryContext)[id];
+}
 const ViewIslandSetContext = createContext<React.Dispatch<
   React.SetStateAction<ViewIslandRegistry>
 > | null>(null);

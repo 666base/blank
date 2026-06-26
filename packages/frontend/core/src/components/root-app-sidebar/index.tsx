@@ -24,6 +24,7 @@ import {
   AllDocsIcon,
   ImportIcon,
   JournalIcon,
+  MoreHorizontalIcon,
   SearchIcon,
   SettingsIcon,
 } from '@blocksuite/icons/rc';
@@ -39,6 +40,7 @@ import {
   NavigationPanelOrganize,
   NavigationPanelTags,
 } from '../../desktop/components/navigation-panel';
+import { useSidebarSectionVisibility } from '../sidebar-section-visibility-settings';
 import { WorkbenchService } from '../../modules/workbench';
 import { WorkspaceNavigator } from '../workspace-selector';
 import {
@@ -190,6 +192,8 @@ export const RootAppSidebar = memo((): ReactElement => {
     });
   }, [workspaceDialogService, handleOpenDocs]);
 
+  const sidebarSections = useSidebarSectionVisibility();
+
   return (
     <AppSidebar>
       <SidebarContainer>
@@ -236,15 +240,17 @@ export const RootAppSidebar = memo((): ReactElement => {
         </MenuItem>
       </SidebarContainer>
       <SidebarScrollableContainer>
-        <NavigationPanelFavorites />
-        <NavigationPanelOrganize />
-        <NavigationPanelMigrationFavorites />
-        <NavigationPanelTags />
-        <NavigationPanelCollections />
+        {sidebarSections.favorites ? <NavigationPanelFavorites /> : null}
+        {sidebarSections.organize ? <NavigationPanelOrganize /> : null}
+        {sidebarSections.favorites ? <NavigationPanelMigrationFavorites /> : null}
+        {sidebarSections.tags ? <NavigationPanelTags /> : null}
+        {sidebarSections.collections ? <NavigationPanelCollections /> : null}
+        {sidebarSections.others ? (
         <CollapsibleSection
           path={['others']}
           title={t['com.blank.rootAppSidebar.others']()}
-          contentStyle={{ padding: '6px 8px 0 8px' }}
+          icon={<MoreHorizontalIcon />}
+          contentStyle={{ padding: '2px 0 4px 20px' }}
         >
           <TrashButton />
           <MenuItem
@@ -264,6 +270,7 @@ export const RootAppSidebar = memo((): ReactElement => {
             />
           ) : null}
         </CollapsibleSection>
+        ) : null}
       </SidebarScrollableContainer>
       <SidebarContainer className={bottomContainer}>
         <SidebarAudioPlayer />

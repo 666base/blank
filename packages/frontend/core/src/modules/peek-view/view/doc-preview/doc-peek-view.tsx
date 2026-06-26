@@ -6,7 +6,7 @@ import { EditorOutlineViewer } from '@blank/core/blocksuite/outline-viewer';
 import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
 import { useGuard } from '@blank/core/components/guard';
 import { PageNotFound } from '@blank/core/desktop/pages/404';
-import { EditorService } from '@blank/core/modules/editor';
+import { isDocEditBlocked } from '@blank/core/modules/permissions';
 import { DebugLogger } from '@blank/debug';
 import { DisposableGroup } from '@blocksuite/blank/global/disposable';
 import { Bound } from '@blocksuite/blank/global/gfx';
@@ -133,7 +133,7 @@ function DocPeekPreviewEditor({
 
   const canEdit = useGuard('Doc_Update', doc.id);
 
-  const readonly = !canEdit || isInTrash;
+  const readonly = isDocEditBlocked(canEdit) || isInTrash;
 
   useEffect(() => {
     preloadBlockSuiteEditor();

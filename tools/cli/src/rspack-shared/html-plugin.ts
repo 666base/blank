@@ -114,7 +114,7 @@ function getHTMLPluginOptions(BUILD_CONFIG: BUILD_CONFIG_TYPE) {
     minify: false,
     templateParameters: templateParams,
     chunks: ['app'],
-    scriptLoading: 'blocking',
+    scriptLoading: 'defer',
   } satisfies HtmlRspackPluginOptions;
 }
 

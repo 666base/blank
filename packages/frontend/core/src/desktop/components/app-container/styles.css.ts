@@ -57,9 +57,19 @@ export const desktopAppViewContainer = style({
 
 export const desktopAppViewMain = style({
   display: 'flex',
-  flexFlow: 'row',
+  flexFlow: 'column',
   width: '100%',
   height: 'calc(100% - 40px)',
+  position: 'relative',
+  minHeight: 0,
+});
+
+export const desktopAppViewMainRow = style({
+  display: 'flex',
+  flexFlow: 'row',
+  width: '100%',
+  flex: 1,
+  minHeight: 0,
   position: 'relative',
 });
 
@@ -70,6 +80,8 @@ export const desktopTabsHeader = style({
   zIndex: 1,
   width: '100%',
   overflow: 'hidden',
+  flexShrink: 0,
+  backgroundColor: cssVar('backgroundPrimaryColor'),
 });
 
 export const mainContainerStyle = style({
@@ -82,8 +94,8 @@ export const mainContainerStyle = style({
 
   selectors: {
     '&[data-client-border="true"]': {
-      borderRadius: 6,
-      padding: '8px',
+      borderRadius: 'var(--radius-md)',
+      padding: 'var(--sp-2)',
       '@media': {
         print: {
           overflow: 'visible',
@@ -100,11 +112,11 @@ export const mainContainerStyle = style({
     },
     '&[data-client-border="false"][data-is-desktop="true"][data-side-bar-open="true"]':
       {
-        borderTopLeftRadius: 6,
+        borderTopLeftRadius: 'var(--radius-md)',
       },
     '&[data-client-border="false"][data-is-desktop="true"]': {
-      borderTop: `0.5px solid ${cssVar('borderColor')}`,
-      borderLeft: `0.5px solid ${cssVar('borderColor')}`,
+      borderTop: `0.5px solid var(--border-faint)`,
+      borderLeft: `0.5px solid var(--border-faint)`,
     },
     '&[data-transparent=true]': {
       backgroundColor: 'transparent',

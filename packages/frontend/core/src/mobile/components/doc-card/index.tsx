@@ -27,6 +27,7 @@ export interface DocCardProps extends Omit<WorkbenchLinkProps, 'to'> {
     title?: ReactNode;
   } & { [key: string]: any };
   showTags?: boolean;
+  showPreview?: boolean;
 
   /**
    * When enabled, preview's height will be calculated based on `meta.id`
@@ -36,7 +37,7 @@ export interface DocCardProps extends Omit<WorkbenchLinkProps, 'to'> {
 
 export const DocCard = forwardRef<HTMLAnchorElement, DocCardProps>(
   function DocCard(
-    { showTags = true, meta, className, autoHeightById, ...attrs },
+    { showTags = true, showPreview = true, meta, className, autoHeightById, ...attrs },
     outerRef
   ) {
     const containerRef = useRef<HTMLAnchorElement | null>(null);
@@ -85,16 +86,18 @@ export const DocCard = forwardRef<HTMLAnchorElement, DocCardProps>(
           />
         </header>
         <main className={styles.content} style={contentStyle}>
-          <PagePreview
-            fallback={
-              <>
-                <Skeleton />
-                <Skeleton width={'60%'} />
-              </>
-            }
-            pageId={meta.id}
-            emptyFallback={<div className={styles.contentEmpty}>Empty</div>}
-          />
+          {showPreview ? (
+            <PagePreview
+              fallback={
+                <>
+                  <Skeleton />
+                  <Skeleton width={'60%'} />
+                </>
+              }
+              pageId={meta.id}
+              emptyFallback={<div className={styles.contentEmpty}>Empty</div>}
+            />
+          ) : null}
         </main>
         {showTags ? <DocCardTags docId={meta.id} rows={2} /> : null}
       </WorkbenchLink>

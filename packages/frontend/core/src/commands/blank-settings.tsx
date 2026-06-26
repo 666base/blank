@@ -28,24 +28,6 @@ export function registerBlankSettingsCommands({
   // color modes
   unsubs.push(
     registerBlankCommand({
-      id: 'blank:change-color-mode-to-auto',
-      label: `${t['com.blank.cmdk.blank.color-mode.to']()} ${t[
-        'com.blank.themeSettings.system'
-      ]()}`,
-      category: 'blank:settings',
-      icon: <SettingsIcon />,
-      preconditionStrategy: () => theme.theme !== 'system',
-      run() {
-        track.$.cmdk.settings.changeAppSetting({
-          key: 'theme',
-          value: 'system',
-        });
-        theme.setTheme('system');
-      },
-    })
-  );
-  unsubs.push(
-    registerBlankCommand({
       id: 'blank:change-color-mode-to-dark',
       label: `${t['com.blank.cmdk.blank.color-mode.to']()} ${t[
         'com.blank.themeSettings.dark'
@@ -79,6 +61,44 @@ export function registerBlankSettingsCommands({
         });
 
         theme.setTheme('light');
+      },
+    })
+  );
+
+  unsubs.push(
+    registerBlankCommand({
+      id: 'blank:change-color-mode-to-gray',
+      label: `${t['com.blank.cmdk.blank.color-mode.to']()} ${t[
+        'com.blank.themeSettings.gray'
+      ]()}`,
+      category: 'blank:settings',
+      icon: <SettingsIcon />,
+      preconditionStrategy: () => theme.theme !== 'gray',
+      run() {
+        track.$.cmdk.settings.changeAppSetting({
+          key: 'theme',
+          value: 'gray',
+        });
+        theme.setTheme('gray');
+      },
+    })
+  );
+
+  unsubs.push(
+    registerBlankCommand({
+      id: 'blank:change-color-mode-to-paper',
+      label: `${t['com.blank.cmdk.blank.color-mode.to']()} ${t[
+        'com.blank.themeSettings.paper'
+      ]()}`,
+      category: 'blank:settings',
+      icon: <SettingsIcon />,
+      preconditionStrategy: () => theme.theme !== 'paper',
+      run() {
+        track.$.cmdk.settings.changeAppSetting({
+          key: 'theme',
+          value: 'paper',
+        });
+        theme.setTheme('paper');
       },
     })
   );
