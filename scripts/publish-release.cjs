@@ -48,29 +48,43 @@ if (fs.existsSync(blockmap)) {
   assets.push(blockmap);
 }
 
-const notes = [
-  '## Blank release',
-  '',
-  `- Windows: \`Blank-Setup-${version}.exe\` (in-app auto-update supported)`,
-  `- Android: \`Blank-${version}.apk\` (check Settings → About → Check for update)`,
-  '',
-  'Desktop installs can update from inside the app (Settings → About).',
-].join('\n');
+const notesPath = path.join(root, 'releases', `release-notes-${version}.md`);
+fs.mkdirSync(path.dirname(notesPath), { recursive: true });
+fs.writeFileSync(
+  notesPath,
+  [
+    '## Blank release',
+    '',
+    `- Windows: \`Blank-Setup-${version}.exe\` (in-app auto-update supported)`,
+    `- Android: \`Blank-${version}.apk\` (Settings → About → Check for update)`,
+    '',
+    'Desktop installs can update from inside the app (Settings → About).',
+  ].join('\n'),
+  'utf8'
+);
 
-const ghArgs = [
-  'release',
-  'create',
-  tag,
-  '--repo',
-  '666base/blank',
-  '--title',
-  `Blank ${version}`,
-  '--notes',
-  notes,
-  ...assets.flatMap(file => ['--attach', file]),
-];
+const existing = spawnSync(
+  'gh',
+  ['release', 'view', tag, '--repo', '666base/blank'],
+  { encoding: 'utf8', shell: true }
+);
+
+const ghArgs = existing.status === 0
+  ? ['release', 'upload', tag, '--repo', '666base/blank', ...assets]
+  : [
+      'release',
+      'create',
+      tag,
+      '--repo',
+      '666base/blank',
+      '--title',
+      `Blank ${version}`,
+      '--notes-file',
+      notesPath,
+      ...assets,
+    ];
 
 console.log(`Publishing ${tag} to GitHub...`);
-run('gh', ghArgs, { shell: true });
+run('gh', ghArgs, { shell: false });
 
 console.log(`\nPublished: https://github.com/666base/blank/releases/tag/${tag}`);

@@ -247,6 +247,8 @@ run(
     '--config',
     'electron-builder.json',
     '--win',
+    '-p',
+    'never',
     `--config.directories.output=${stagingDir}`,
   ],
   { shell: true }
