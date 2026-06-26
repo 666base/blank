@@ -1,8 +1,8 @@
 import { rmSync } from 'node:fs';
 import { cpus } from 'node:os';
 
-import { Logger } from '@affine-tools/utils/logger';
-import { Package } from '@affine-tools/utils/workspace';
+import { Logger } from '@blank-tools/utils/logger';
+import { Package } from '@blank-tools/utils/workspace';
 import rspack, { type MultiRspackOptions } from '@rspack/core';
 import {
   type Configuration as RspackDevServerConfiguration,
@@ -40,6 +40,23 @@ const BLANK_SLIM_WORKERS: BaseWorkerOptions = {
   includePdf: false,
 };
 
+const BLANK_SLIM_PACKAGES = new Set([
+  '@blank/web',
+  '@blank/mobile',
+  '@blank/electron-renderer',
+  '@blank/ios',
+  '@blank/android',
+]);
+
+function ensureBlankBundleSlimEnv(pkg: Package) {
+  if (!BLANK_SLIM_PACKAGES.has(pkg.name)) {
+    return;
+  }
+  if (process.env.BLANK_NO_AI === undefined) {
+    process.env.BLANK_NO_AI = '1';
+  }
+}
+
 function assertRspackSupportedPackage(pkg: Package) {
   assertRspackSupportedPackageName(pkg.name);
 }
@@ -64,7 +81,7 @@ function getBaseWorkerConfigs(
   createWorkerTargetConfig: CreateWorkerTargetConfig,
   options: BaseWorkerOptions = {}
 ) {
-  const core = new Package('@affine/core');
+  const core = new Package('@blank/core');
   const includeMermaidAndTypst = options.includeMermaidAndTypst ?? true;
   const includePdf = options.includePdf ?? true;
 
@@ -114,8 +131,8 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
   assertRspackSupportedPackage(pkg);
 
   switch (pkg.name) {
-    case '@affine/web':
-    case '@affine/mobile': {
+    case '@blank/web':
+    case '@blank/mobile': {
       const workerConfigs = getBaseWorkerConfigs(
         pkg,
         createRspackWorkerTargetConfig,
@@ -138,8 +155,8 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
         ...workerConfigs,
       ] as MultiRspackOptions;
     }
-    case '@affine/ios':
-    case '@affine/android': {
+    case '@blank/ios':
+    case '@blank/android': {
       const workerConfigs = getBaseWorkerConfigs(
         pkg,
         createRspackWorkerTargetConfig,
@@ -162,7 +179,7 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
         ...workerConfigs,
       ] as MultiRspackOptions;
     }
-    case '@affine/electron-renderer': {
+    case '@blank/electron-renderer': {
       const workerConfigs = getBaseWorkerConfigs(
         pkg,
         createRspackWorkerTargetConfig,
@@ -189,12 +206,12 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
         ...workerConfigs,
       ] as MultiRspackOptions;
     }
-    case '@affine/server': {
+    case '@blank/server': {
       return [
         createRspackNodeTargetConfig(pkg, pkg.srcPath.join('index.ts').value),
       ] as MultiRspackOptions;
     }
-    case '@affine/reader': {
+    case '@blank/reader': {
       return [
         createRspackNodeTargetConfig(pkg, pkg.srcPath.join('index.ts').value, {
           outputFilename: 'index.js',
@@ -205,7 +222,7 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
         }),
       ] as MultiRspackOptions;
     }
-    case '@affine/media-capture-playground': {
+    case '@blank/media-capture-playground': {
       return [
         createRspackHTMLTargetConfig(pkg, pkg.join('web/main.tsx').value, {
           template: pkg.join('web/index.html').value,
@@ -224,7 +241,7 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
 function getRspackDevServerConfig(
   pkg: Package
 ): RspackDevServerConfiguration | undefined {
-  if (pkg.name !== '@affine/media-capture-playground') {
+  if (pkg.name !== '@blank/media-capture-playground') {
     return;
   }
 
@@ -300,6 +317,7 @@ export class BundleCommand extends PackageCommand {
   static async buildWithRspack(pkg: Package) {
     process.env.NODE_ENV = 'production';
     assertRspackSupportedPackage(pkg);
+    ensureBlankBundleSlimEnv(pkg);
 
     const logger = new Logger('bundle');
     logger.info(`Packing package ${pkg.name} with rspack...`);
@@ -348,6 +366,7 @@ export class BundleCommand extends PackageCommand {
   ) {
     process.env.NODE_ENV = 'development';
     assertRspackSupportedPackage(pkg);
+    ensureBlankBundleSlimEnv(pkg);
 
     const logger = new Logger('bundle');
     logger.info(`Starting rspack dev server for ${pkg.name}...`);
@@ -360,7 +379,7 @@ export class BundleCommand extends PackageCommand {
       throw new Error('Failed to create rspack compiler');
     }
 
-    const isElectronDev = process.env.AFFINE_ELECTRON_DEV === '1';
+    const isElectronDev = process.env.BLANK_ELECTRON_DEV === '1';
 
     const startDevServer = async (port: number) => {
       process.env.PORT = String(port);
@@ -376,7 +395,7 @@ export class BundleCommand extends PackageCommand {
 
       let wroteElectronInfo = false;
       if (isElectronDev) {
-        compiler.hooks.done.tap('affine-electron-dev-ready', stats => {
+        compiler.hooks.done.tap('blank-electron-dev-ready', stats => {
           if (wroteElectronInfo || stats.hasErrors()) {
             return;
           }
@@ -399,7 +418,7 @@ export class BundleCommand extends PackageCommand {
     if (isElectronDev) {
       const port = Number(process.env.PORT);
       if (!port) {
-        throw new Error('AFFINE_ELECTRON_DEV requires PORT to be set');
+        throw new Error('BLANK_ELECTRON_DEV requires PORT to be set');
       }
       try {
         await startDevServer(port);

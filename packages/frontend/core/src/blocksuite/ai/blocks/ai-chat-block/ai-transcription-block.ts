@@ -1,6 +1,6 @@
-import type { TranscriptionBlockModel } from '@affine/core/blocksuite/ai/blocks/transcription-block/model';
-import { BlockComponent, BlockViewExtension } from '@blocksuite/affine/std';
-import type { ExtensionType } from '@blocksuite/affine/store';
+import type { TranscriptionBlockModel } from '@blank/core/blocksuite/ai/blocks/transcription-block/model';
+import { BlockComponent, BlockViewExtension } from '@blocksuite/blank/std';
+import type { ExtensionType } from '@blocksuite/blank/store';
 import { css, type PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 import { literal } from 'lit/static-html.js';
@@ -44,7 +44,7 @@ export class LitTranscriptionBlock extends BlockComponent<TranscriptionBlockMode
 }
 
 export const AITranscriptionBlockSpec: ExtensionType[] = [
-  BlockViewExtension('affine:transcription', () => {
+  BlockViewExtension('blank:transcription', () => {
     return literal`transcription-block`;
   }),
 ];

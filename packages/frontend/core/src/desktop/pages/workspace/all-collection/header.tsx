@@ -1,6 +1,6 @@
-import { IconButton } from '@affine/component';
-import { ExplorerNavigation } from '@affine/core/components/explorer/header/navigation';
-import { Header } from '@affine/core/components/pure/header';
+import { IconButton } from '@blank/component';
+import { ExplorerNavigation } from '@blank/core/components/explorer/header/navigation';
+import { Header } from '@blank/core/components/pure/header';
 import { PlusIcon } from '@blocksuite/icons/rc';
 import clsx from 'clsx';
 

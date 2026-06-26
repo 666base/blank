@@ -1,5 +1,5 @@
-import type { CopilotChatHistoryFragment } from '@affine/graphql';
-import type { NotificationService } from '@blocksuite/affine/shared/services';
+import type { CopilotChatHistoryFragment } from '@blank/graphql';
+import type { NotificationService } from '@blocksuite/blank/shared/services';
 
 import type { AIChatRuntime, AIChatSnapshot } from '../../runtime/chat';
 import type { DocDisplayConfig } from '../ai-chat-chips';

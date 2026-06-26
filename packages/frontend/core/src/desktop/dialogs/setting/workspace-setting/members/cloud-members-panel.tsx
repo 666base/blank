@@ -1,30 +1,30 @@
-import { Button, Loading, notify, useConfirmModal } from '@affine/component';
+import { Button, Loading, notify, useConfirmModal } from '@blank/component';
 import {
   InviteTeamMemberModal,
   type InviteTeamMemberModalProps,
   MemberLimitModal,
-} from '@affine/component/member-components';
-import { SettingRow } from '@affine/component/setting-components';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { Upload } from '@affine/core/components/pure/file-upload';
+} from '@blank/component/member-components';
+import { SettingRow } from '@blank/component/setting-components';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { Upload } from '@blank/core/components/pure/file-upload';
 import {
   ServerService,
   SubscriptionService,
   WorkspaceSubscriptionService,
-} from '@affine/core/modules/cloud';
+} from '@blank/core/modules/cloud';
 import {
   WorkspaceMembersService,
   WorkspacePermissionService,
-} from '@affine/core/modules/permissions';
-import { WorkspaceQuotaService } from '@affine/core/modules/quota';
-import { WorkspaceShareSettingService } from '@affine/core/modules/share-setting';
-import { copyTextToClipboard } from '@affine/core/utils/clipboard';
-import { emailRegex } from '@affine/core/utils/email-regex';
-import { UserFriendlyError } from '@affine/error';
-import type { WorkspaceInviteLinkExpireTime } from '@affine/graphql';
-import { ServerDeploymentType, SubscriptionPlan } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+} from '@blank/core/modules/permissions';
+import { WorkspaceQuotaService } from '@blank/core/modules/quota';
+import { WorkspaceShareSettingService } from '@blank/core/modules/share-setting';
+import { copyTextToClipboard } from '@blank/core/utils/clipboard';
+import { emailRegex } from '@blank/core/utils/email-regex';
+import { UserFriendlyError } from '@blank/error';
+import type { WorkspaceInviteLinkExpireTime } from '@blank/graphql';
+import { ServerDeploymentType, SubscriptionPlan } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
 import { ExportIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
@@ -128,8 +128,8 @@ export const CloudWorkspaceMembersPanel = ({
       setIdempotencyKey(nanoid());
       closeConfirmModal();
       notify.success({
-        title: t['com.affine.payment.resume.success.title'](),
-        message: t['com.affine.payment.resume.success.team.message'](),
+        title: t['com.blank.payment.resume.success.title'](),
+        message: t['com.blank.payment.resume.success.team.message'](),
       });
     } catch (err) {
       const error = UserFriendlyError.fromAny(err);
@@ -144,15 +144,15 @@ export const CloudWorkspaceMembersPanel = ({
   const openInviteModal = useCallback(() => {
     if (isTeam && workspaceSubscription?.canceledAt) {
       openConfirmModal({
-        title: t['com.affine.payment.member.team.retry-payment.title'](),
+        title: t['com.blank.payment.member.team.retry-payment.title'](),
         description:
           t[
-            `com.affine.payment.member.team.disabled-subscription.${isOwner ? 'owner' : 'admin'}.description`
+            `com.blank.payment.member.team.disabled-subscription.${isOwner ? 'owner' : 'admin'}.description`
           ](),
         confirmText:
           t[
             isOwner
-              ? 'com.affine.payment.member.team.disabled-subscription.resume-subscription'
+              ? 'com.blank.payment.member.team.disabled-subscription.resume-subscription'
               : 'Got it'
           ](),
         cancelText: t['Cancel'](),
@@ -215,7 +215,7 @@ export const CloudWorkspaceMembersPanel = ({
       const results = await membersService.inviteMembers(uniqueEmails);
       if (results) {
         notify({
-          title: t['com.affine.payment.member.team.invite.notify.title']({
+          title: t['com.blank.payment.member.team.invite.notify.title']({
             count: results.length.toString(),
           }),
           message: t['Invitation sent hint'](),
@@ -253,18 +253,18 @@ export const CloudWorkspaceMembersPanel = ({
     if (!workspaceQuota) return null;
 
     if (isTeam) {
-      return <span>{t['com.affine.payment.member.team.description']()}</span>;
+      return <span>{t['com.blank.payment.member.team.description']()}</span>;
     }
     return (
       <span>
-        {t['com.affine.payment.member.description2']()}
+        {t['com.blank.payment.member.description2']()}
         {hasPaymentFeature && isOwner ? (
           <div
             className={styles.goUpgradeWrapper}
             onClick={handleUpgradeConfirm}
           >
             <span className={styles.goUpgrade}>
-              {t['com.affine.payment.member.description.choose-plan']()}
+              {t['com.blank.payment.member.description.choose-plan']()}
             </span>
           </div>
         ) : null}
@@ -349,7 +349,7 @@ export const MembersPanelFallback = () => {
     <>
       <SettingRow
         name={t['Members']()}
-        desc={t['com.affine.payment.member.description2']()}
+        desc={t['com.blank.payment.member.description2']()}
       />
       <div className={styles.membersPanel}>
         <MemberListFallback memberCount={1} />
@@ -377,7 +377,7 @@ const MemberListFallback = ({ memberCount }: { memberCount?: number }) => {
       className={styles.membersFallback}
     >
       <Loading size={20} />
-      <span>{t['com.affine.settings.member.loading']()}</span>
+      <span>{t['com.blank.settings.member.loading']()}</span>
     </div>
   );
 };
@@ -392,7 +392,7 @@ const ImportCSV = ({ onImport }: { onImport: (file: File) => void }) => {
         prefix={<ExportIcon />}
         variant="secondary"
       >
-        {t['com.affine.payment.member.team.invite.import-csv']()}
+        {t['com.blank.payment.member.team.invite.import-csv']()}
       </Button>
     </Upload>
   );

@@ -1,17 +1,17 @@
-import { DEFAULT_LINK_PREVIEW_ENDPOINT } from '@blocksuite/affine/shared/consts';
+import { DEFAULT_LINK_PREVIEW_ENDPOINT } from '@blocksuite/blank/shared/consts';
 import {
   LinkPreviewCacheIdentifier,
   type LinkPreviewCacheProvider,
   LinkPreviewService,
   LinkPreviewServiceIdentifier,
-} from '@blocksuite/affine/shared/services';
-import { type ExtensionType } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/shared/services';
+import { type ExtensionType } from '@blocksuite/blank/store';
 import type { Container } from '@blocksuite/global/di';
 import type { FrameworkProvider } from '@toeverything/infra';
 
 import { ServerService } from '../../../modules/cloud/services/server';
 
-class AffineLinkPreviewService extends LinkPreviewService {
+class BlankLinkPreviewService extends LinkPreviewService {
   constructor(endpoint: string, cache: LinkPreviewCacheProvider) {
     super(cache);
     this.setEndpoint(endpoint);
@@ -45,7 +45,7 @@ export function patchLinkPreviewService(
   return {
     setup: (di: Container) => {
       di.override(LinkPreviewServiceIdentifier, provider => {
-        return new AffineLinkPreviewService(
+        return new BlankLinkPreviewService(
           linkPreviewUrl,
           provider.get(LinkPreviewCacheIdentifier)
         );

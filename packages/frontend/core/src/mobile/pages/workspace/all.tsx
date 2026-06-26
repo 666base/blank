@@ -1,11 +1,11 @@
-import { useThemeColorV2, Wrapper } from '@affine/component';
-import { EmptyDocs } from '@affine/core/components/affine/empty';
+import { useThemeColorV2, Wrapper } from '@blank/component';
+import { EmptyDocs } from '@blank/core/components/blank/empty';
 import {
   createDocExplorerContext,
   DocExplorerContext,
-} from '@affine/core/components/explorer/context';
-import { DocsExplorer } from '@affine/core/components/explorer/docs-view/docs-list';
-import { CollectionRulesService } from '@affine/core/modules/collection-rules';
+} from '@blank/core/components/explorer/context';
+import { DocsExplorer } from '@blank/core/components/explorer/docs-view/docs-list';
+import { CollectionRulesService } from '@blank/core/modules/collection-rules';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useEffect, useState } from 'react';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@affine/nbstore",
+  "name": "@blank/nbstore",
   "type": "module",
   "version": "0.27.0",
   "private": true,
@@ -12,14 +12,15 @@
     "./broadcast-channel": "./src/impls/broadcast-channel/index.ts",
     "./idb/v1": "./src/impls/idb/v1/index.ts",
     "./cloud": "./src/impls/cloud/index.ts",
+    "./blank-cloud": "./src/impls/blank-cloud/index.ts",
     "./sqlite": "./src/impls/sqlite/index.ts",
     "./sqlite/v1": "./src/impls/sqlite/v1/index.ts",
     "./sync": "./src/sync/index.ts",
     "./frontend": "./src/frontend/index.ts"
   },
   "dependencies": {
-    "@affine/reader": "workspace:*",
-    "@affine/realtime": "workspace:*",
+    "@blank/reader": "workspace:*",
+    "@blank/realtime": "workspace:*",
     "@toeverything/infra": "workspace:*",
     "eventemitter2": "^6.4.9",
     "graphemer": "^1.4.0",
@@ -31,20 +32,20 @@
     "yjs": "^13.6.27"
   },
   "devDependencies": {
-    "@affine/error": "workspace:*",
-    "@affine/graphql": "workspace:*",
-    "@affine/realtime": "workspace:*",
-    "@blocksuite/affine": "workspace:*",
+    "@blank/error": "workspace:*",
+    "@blank/graphql": "workspace:*",
+    "@blank/realtime": "workspace:*",
+    "@blocksuite/blank": "workspace:*",
     "fake-indexeddb": "^6.0.0",
     "idb": "^8.0.0",
     "socket.io-client": "^4.8.3",
     "vitest": "^4.1.8"
   },
   "peerDependencies": {
-    "@affine/error": "workspace:*",
-    "@affine/graphql": "workspace:*",
-    "@affine/realtime": "workspace:*",
-    "@blocksuite/affine": "workspace:*",
+    "@blank/error": "workspace:*",
+    "@blank/graphql": "workspace:*",
+    "@blank/realtime": "workspace:*",
+    "@blocksuite/blank": "workspace:*",
     "idb": "^8.0.0",
     "socket.io-client": "^4.8.3"
   }

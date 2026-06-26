@@ -36,8 +36,14 @@ declare interface BUILD_CONFIG_TYPE {
 
   CAPTCHA_SITE_KEY: string;
   SENTRY_DSN: string;
-  /** When set, Blank connects to this AFFiNE sync server (desktop + mobile). */
+  /** When set, Blank connects to this Blank sync server (desktop + mobile). */
   blankSyncServerUrl: string;
+  /** Supabase project URL for Blank native sync. */
+  blankSupabaseUrl: string;
+  /** Supabase anon (publishable) key — safe in client builds. */
+  blankSupabaseAnonKey: string;
+  /** Optional Blank config proxy (e.g. http://127.0.0.1:3020). */
+  blankConfigProxyUrl: string;
 }
 
 declare var BUILD_CONFIG: BUILD_CONFIG_TYPE;

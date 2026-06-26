@@ -1,16 +1,16 @@
-import type { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import type { PeekViewService } from '@affine/core/modules/peek-view';
-import type { AppThemeService } from '@affine/core/modules/theme';
-import type { CopilotChatHistoryFragment } from '@affine/graphql';
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import { isInsidePageEditor } from '@blocksuite/affine/shared/utils';
+import type { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import type { PeekViewService } from '@blank/core/modules/peek-view';
+import type { AppThemeService } from '@blank/core/modules/theme';
+import type { CopilotChatHistoryFragment } from '@blank/graphql';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import { isInsidePageEditor } from '@blocksuite/blank/shared/utils';
 import {
   type BlockStdScope,
   type EditorHost,
   ShadowlessElement,
-} from '@blocksuite/affine/std';
-import type { ExtensionType } from '@blocksuite/affine/store';
-import type { NotificationService } from '@blocksuite/affine-shared/services';
+} from '@blocksuite/blank/std';
+import type { ExtensionType } from '@blocksuite/blank/store';
+import type { NotificationService } from '@blocksuite/blank-shared/services';
 import type { Signal } from '@preact/signals-core';
 import { css, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
@@ -33,8 +33,8 @@ import { mergeStreamContent } from '../../utils/stream-objects';
 export class ChatMessageAssistant extends WithDisposable(ShadowlessElement) {
   static override styles = css`
     .message-info {
-      color: var(--affine-placeholder-color);
-      font-size: var(--affine-font-xs);
+      color: var(--blank-placeholder-color);
+      font-size: var(--blank-font-xs);
       font-weight: 400;
     }
   `;
@@ -61,10 +61,10 @@ export class ChatMessageAssistant extends WithDisposable(ShadowlessElement) {
   accessor extensions!: ExtensionType[];
 
   @property({ attribute: false })
-  accessor affineFeatureFlagService!: FeatureFlagService;
+  accessor blankFeatureFlagService!: FeatureFlagService;
 
   @property({ attribute: false })
-  accessor affineThemeService!: AppThemeService;
+  accessor blankThemeService!: AppThemeService;
 
   @property({ attribute: false })
   accessor session!: CopilotChatHistoryFragment | null | undefined;
@@ -149,9 +149,9 @@ export class ChatMessageAssistant extends WithDisposable(ShadowlessElement) {
       .state=${this.state}
       .width=${this.width}
       .extensions=${this.extensions}
-      .affineFeatureFlagService=${this.affineFeatureFlagService}
+      .blankFeatureFlagService=${this.blankFeatureFlagService}
       .notificationService=${this.notificationService}
-      .theme=${this.affineThemeService.appTheme.themeSignal}
+      .theme=${this.blankThemeService.appTheme.themeSignal}
       .independentMode=${this.independentMode}
       .docDisplayService=${this.docDisplayService}
       .peekViewService=${this.peekViewService}
@@ -164,8 +164,8 @@ export class ChatMessageAssistant extends WithDisposable(ShadowlessElement) {
       .text=${text}
       .state=${this.state}
       .extensions=${this.extensions}
-      .affineFeatureFlagService=${this.affineFeatureFlagService}
-      .theme=${this.affineThemeService.appTheme.themeSignal}
+      .blankFeatureFlagService=${this.blankFeatureFlagService}
+      .theme=${this.blankThemeService.appTheme.themeSignal}
     ></chat-content-rich-text>`;
   }
 

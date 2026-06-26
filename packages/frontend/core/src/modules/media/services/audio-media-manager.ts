@@ -1,5 +1,5 @@
-import { generateUrl } from '@affine/core/components/hooks/affine/use-share-url';
-import { AttachmentBlockModel } from '@blocksuite/affine/model';
+import { generateUrl } from '@blank/core/components/hooks/blank/use-share-url';
+import { AttachmentBlockModel } from '@blocksuite/blank/model';
 import {
   attachmentBlockAudioMediaKey,
   type AudioMediaDescriptor,
@@ -13,6 +13,7 @@ import {
 import { clamp } from 'lodash-es';
 import { distinctUntilChanged } from 'rxjs';
 
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { DesktopApiService } from '../../desktop-api';
 import type { WorkbenchService } from '../../workbench';
 import { AudioMedia } from '../entities/audio-media';
@@ -125,7 +126,7 @@ export class AudioMediaManagerService extends Service {
           blobId: descriptor.blobId,
           metadata: new MediaMetadata({
             title: descriptor.name,
-            artist: 'AFFiNE',
+            artist: isBlankBuild() ? 'Blank' : 'Blank',
             // todo: add artwork, like the app icon?
           }),
         })

@@ -1,8 +1,8 @@
-import { PropertyValue } from '@affine/component';
-import { AffinePageReference } from '@affine/core/components/affine/reference-link';
-import { ConfigModal } from '@affine/core/components/mobile';
-import { resolveLinkToDoc } from '@affine/core/modules/navigation';
-import { useI18n } from '@affine/i18n';
+import { PropertyValue } from '@blank/component';
+import { BlankPageReference } from '@blank/core/components/blank/reference-link';
+import { ConfigModal } from '@blank/core/components/mobile';
+import { resolveLinkToDoc } from '@blank/core/modules/navigation';
+import { useI18n } from '@blank/i18n';
 import { LinkIcon } from '@blocksuite/icons/rc';
 import type { LiveData } from '@toeverything/infra';
 import { useLiveData } from '@toeverything/infra';
@@ -116,7 +116,7 @@ export const LinkCell = ({
         onChange={handleOnChange}
         data-empty={!tempValue}
         placeholder={t[
-          'com.affine.page-properties.property-value-placeholder'
+          'com.blank.page-properties.property-value-placeholder'
         ]()}
       />
       <div
@@ -143,7 +143,7 @@ export const LinkCell = ({
       >
         {!editing ? (
           resolvedDocLink ? (
-            <AffinePageReference
+            <BlankPageReference
               pageId={resolvedDocLink.docId}
               params={resolvedDocLink.params}
             />

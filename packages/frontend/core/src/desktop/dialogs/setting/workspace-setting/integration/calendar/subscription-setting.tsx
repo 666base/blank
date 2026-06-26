@@ -1,5 +1,5 @@
-import { Checkbox } from '@affine/component';
-import type { CalendarAccountsQuery } from '@affine/graphql';
+import { Checkbox } from '@blank/component';
+import type { CalendarAccountsQuery } from '@blank/graphql';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { useCallback } from 'react';
 

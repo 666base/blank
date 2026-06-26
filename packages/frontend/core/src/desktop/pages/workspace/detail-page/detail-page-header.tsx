@@ -4,29 +4,29 @@ import {
   type InlineEditHandle,
   observeResize,
   useDraggable,
-} from '@affine/component';
-import { FavoriteButton } from '@affine/core/blocksuite/block-suite-header/favorite';
-import { InfoButton } from '@affine/core/blocksuite/block-suite-header/info';
-import { JournalWeekDatePicker } from '@affine/core/blocksuite/block-suite-header/journal/date-picker';
-import { JournalTodayButton } from '@affine/core/blocksuite/block-suite-header/journal/today-button';
-import { PageHeaderMenuButton } from '@affine/core/blocksuite/block-suite-header/menu';
-import { DetailPageHeaderPresentButton } from '@affine/core/blocksuite/block-suite-header/present/detail-header-present-button';
-import { BlocksuiteHeaderTitle } from '@affine/core/blocksuite/block-suite-header/title';
-import { EditorModeSwitch } from '@affine/core/blocksuite/block-suite-mode-switch';
-import { useRegisterCopyLinkCommands } from '@affine/core/components/hooks/affine/use-register-copy-link-commands';
-import { HeaderDivider } from '@affine/core/components/pure/header';
-import { DocService } from '@affine/core/modules/doc';
-import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
-import { EditorService } from '@affine/core/modules/editor';
-import { JournalService } from '@affine/core/modules/journal';
-import { SharePageButton } from '@affine/core/modules/share-menu';
-import { TemplateDocService } from '@affine/core/modules/template-doc';
-import { ViewIcon, ViewTitle } from '@affine/core/modules/workbench';
-import type { Workspace } from '@affine/core/modules/workspace';
-import type { AffineDNDData } from '@affine/core/types/dnd';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
-import type { Store } from '@blocksuite/affine/store';
+} from '@blank/component';
+import { FavoriteButton } from '@blank/core/blocksuite/block-suite-header/favorite';
+import { InfoButton } from '@blank/core/blocksuite/block-suite-header/info';
+import { JournalWeekDatePicker } from '@blank/core/blocksuite/block-suite-header/journal/date-picker';
+import { JournalTodayButton } from '@blank/core/blocksuite/block-suite-header/journal/today-button';
+import { PageHeaderMenuButton } from '@blank/core/blocksuite/block-suite-header/menu';
+import { DetailPageHeaderPresentButton } from '@blank/core/blocksuite/block-suite-header/present/detail-header-present-button';
+import { BlocksuiteHeaderTitle } from '@blank/core/blocksuite/block-suite-header/title';
+import { EditorModeSwitch } from '@blank/core/blocksuite/block-suite-mode-switch';
+import { useRegisterCopyLinkCommands } from '@blank/core/components/hooks/blank/use-register-copy-link-commands';
+import { HeaderDivider } from '@blank/core/components/pure/header';
+import { DocService } from '@blank/core/modules/doc';
+import { DocDisplayMetaService } from '@blank/core/modules/doc-display-meta';
+import { EditorService } from '@blank/core/modules/editor';
+import { JournalService } from '@blank/core/modules/journal';
+import { SharePageButton } from '@blank/core/modules/share-menu';
+import { TemplateDocService } from '@blank/core/modules/template-doc';
+import { ViewIcon, ViewTitle } from '@blank/core/modules/workbench';
+import type { Workspace } from '@blank/core/modules/workspace';
+import type { BlankDNDData } from '@blank/core/types/dnd';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
+import type { Store } from '@blocksuite/blank/store';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import {
@@ -203,7 +203,7 @@ export function DetailPageHeader(
   });
 
   const { dragRef, dragging, CustomDragPreview } =
-    useDraggable<AffineDNDData>(() => {
+    useDraggable<BlankDNDData>(() => {
       return {
         data: {
           from: {

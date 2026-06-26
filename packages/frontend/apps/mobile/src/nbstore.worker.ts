@@ -1,13 +1,14 @@
-import '@affine/core/bootstrap/browser';
+import '@blank/core/bootstrap/browser';
 
-import { broadcastChannelStorages } from '@affine/nbstore/broadcast-channel';
-import { cloudStorages } from '@affine/nbstore/cloud';
-import { idbStorages } from '@affine/nbstore/idb';
-import { idbV1Storages } from '@affine/nbstore/idb/v1';
+import { blankCloudStorages } from '@blank/nbstore/blank-cloud';
+import { broadcastChannelStorages } from '@blank/nbstore/broadcast-channel';
+import { cloudStorages } from '@blank/nbstore/cloud';
+import { idbStorages } from '@blank/nbstore/idb';
+import { idbV1Storages } from '@blank/nbstore/idb/v1';
 import {
   StoreManagerConsumer,
   type WorkerManagerOps,
-} from '@affine/nbstore/worker/consumer';
+} from '@blank/nbstore/worker/consumer';
 import { type MessageCommunicapable, OpConsumer } from '@toeverything/infra/op';
 
 const consumer = new StoreManagerConsumer([
@@ -15,6 +16,7 @@ const consumer = new StoreManagerConsumer([
   ...idbV1Storages,
   ...broadcastChannelStorages,
   ...cloudStorages,
+  ...blankCloudStorages,
 ]);
 
 if ('onconnect' in globalThis) {

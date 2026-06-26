@@ -1,6 +1,6 @@
 import type { RouteObject } from 'react-router-dom';
 
-import { isAiDisabled } from '@affine/core/utils/local-only';
+import { isAiDisabled } from '@blank/core/utils/local-only';
 
 export const workbenchRoutes = [
   ...(isAiDisabled()

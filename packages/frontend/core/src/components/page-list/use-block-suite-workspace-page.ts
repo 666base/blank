@@ -1,6 +1,6 @@
-import { DebugLogger } from '@affine/debug';
-import { DisposableGroup } from '@blocksuite/affine/global/disposable';
-import type { Store, Workspace } from '@blocksuite/affine/store';
+import { DebugLogger } from '@blank/debug';
+import { DisposableGroup } from '@blocksuite/blank/global/disposable';
+import type { Store, Workspace } from '@blocksuite/blank/store';
 import { useEffect, useState } from 'react';
 
 const logger = new DebugLogger('useBlockSuiteWorkspacePage');

@@ -2,22 +2,29 @@ import './page-detail-editor.css';
 
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 
-import type { AffineEditorContainer } from '../blocksuite/block-suite-editor';
-import { BlockSuiteEditor } from '../blocksuite/block-suite-editor';
+import { preloadBlockSuiteEditor } from '../blocksuite/preload-block-suite-editor';
+import type { BlankEditorContainer } from '../blocksuite/block-suite-editor';
 import { DocService } from '../modules/doc';
 import { EditorService } from '../modules/editor';
 import { EditorSettingService } from '../modules/editor-setting';
+import { CachedDetailPageLoading } from './cached-detail-page-loading';
 import * as styles from './page-detail-editor.css';
+
+const BlockSuiteEditor = lazy(() =>
+  preloadBlockSuiteEditor().then(module => ({
+    default: module.BlockSuiteEditor,
+  }))
+);
 
 declare global {
   // oxlint-disable-next-line no-var
-  var currentEditor: AffineEditorContainer | undefined;
+  var currentEditor: BlankEditorContainer | undefined;
 }
 
 export type OnLoadEditor = (
-  editor: AffineEditorContainer
+  editor: BlankEditorContainer
 ) => (() => void) | void;
 
 export interface PageDetailEditorProps {
@@ -58,6 +65,10 @@ export const PageDetailEditor = ({
     editor.doc.blockSuiteDoc.readonly = readonly ?? false;
   }, [editor, readonly]);
 
+  useEffect(() => {
+    preloadBlockSuiteEditor();
+  }, []);
+
   return (
     <>
       {docMeta?.headerImage && (
@@ -74,18 +85,20 @@ export const PageDetailEditor = ({
         />
       )}
 
-      <BlockSuiteEditor
-        className={clsx(styles.editor, {
-          'full-screen': !isSharedMode && fullWidthLayout,
-          'is-public': isSharedMode,
-        })}
-        mode={mode}
-        defaultOpenProperty={defaultOpenProperty}
-        page={editor.doc.blockSuiteDoc}
-        shared={isSharedMode}
-        readonly={readonly}
-        onEditorReady={onLoad}
-      />
+      <Suspense fallback={<CachedDetailPageLoading pageId={doc.id} />}>
+        <BlockSuiteEditor
+          className={clsx(styles.editor, {
+            'full-screen': !isSharedMode && fullWidthLayout,
+            'is-public': isSharedMode,
+          })}
+          mode={mode}
+          defaultOpenProperty={defaultOpenProperty}
+          page={editor.doc.blockSuiteDoc}
+          shared={isSharedMode}
+          readonly={readonly}
+          onEditorReady={onLoad}
+        />
+      </Suspense>
     </>
   );
 };

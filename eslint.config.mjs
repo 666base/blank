@@ -137,7 +137,7 @@ export default tseslint.config(
     rules: {
       'import-x/no-extraneous-dependencies': [
         'error',
-        { includeInternal: true, whitelist: ['@affine/core'] },
+        { includeInternal: true, whitelist: ['@blank/core'] },
       ],
     },
   },
@@ -146,7 +146,7 @@ export default tseslint.config(
     rules: {
       'import-x/no-extraneous-dependencies': [
         'error',
-        { includeInternal: true, whitelist: ['@affine/component'] },
+        { includeInternal: true, whitelist: ['@blank/component'] },
       ],
     },
   },

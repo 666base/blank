@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { ipcMain, BrowserWindow, app } = require('electron');
 const { KeyValueStore } = require('./kv-store.cjs');
+const { initBlankUpdater, updaterHandlers } = require('./updater-main.cjs');
 
 const CHANNEL_PREFIX = 'blank:';
 
@@ -81,6 +82,24 @@ function registerBlankDesktopApi(getMainWindow) {
     globalCache.clear();
     emitToRenderer('storage:globalCache:cleared', null);
   });
+
+  ipcMain.handle(
+    `${CHANNEL_PREFIX}fastBoot:setRoute`,
+    async (_e, { workspaceId, pageId, flavour }) => {
+      if (!workspaceId) {
+        return;
+      }
+      const file = path.join(app.getPath('userData'), 'blank-last-route.json');
+      fs.writeFileSync(
+        file,
+        JSON.stringify({
+          workspaceId,
+          pageId: pageId ?? null,
+          flavour: flavour ?? null,
+        })
+      );
+    }
+  );
 
   const uiHandlers = {
     getTabsStatus: async () => [],
@@ -163,6 +182,14 @@ function registerBlankDesktopApi(getMainWindow) {
   ipcMain.handle(`${CHANNEL_PREFIX}workspace:getBackupWorkspaces`, async () => []);
   ipcMain.handle(`${CHANNEL_PREFIX}workspace:recoverBackupWorkspace`, async () => {});
   ipcMain.handle(`${CHANNEL_PREFIX}workspace:deleteBackupWorkspace`, async () => {});
+
+  initBlankUpdater((name, payload) => emitToRenderer(name, payload));
+
+  for (const [method, handler] of Object.entries(updaterHandlers)) {
+    ipcMain.handle(`${CHANNEL_PREFIX}updater:${method}`, async (_event, ...args) =>
+      handler(...args)
+    );
+  }
 
   return {
     attachWindow(win) {

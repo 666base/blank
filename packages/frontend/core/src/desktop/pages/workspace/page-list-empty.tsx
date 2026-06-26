@@ -1,5 +1,5 @@
-import { EmptyDocs, EmptyTags } from '@affine/core/components/affine/empty';
-import { EmptyCollections } from '@affine/core/components/affine/empty/collections';
+import { EmptyDocs, EmptyTags } from '@blank/core/components/blank/empty';
+import { EmptyCollections } from '@blank/core/components/blank/empty/collections';
 import type { ReactNode } from 'react';
 
 import * as styles from './page-list-empty.css';

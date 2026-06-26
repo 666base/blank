@@ -45,6 +45,14 @@ export const productionCacheGroups = {
     test: testPackageName(/[\\/]node_modules[\\/](@blocksuite)[\\/]/),
     priority: 200,
     enforce: true,
+    chunks: 'async' as const,
+  },
+  blankBlocksuiteCore: {
+    name: 'blank-blocksuite-core',
+    test: /[\\/]packages[\\/]frontend[\\/]core[\\/]src[\\/]blocksuite[\\/]/,
+    priority: 205,
+    enforce: true,
+    chunks: 'async' as const,
   },
   react: {
     name: `npm-react`,

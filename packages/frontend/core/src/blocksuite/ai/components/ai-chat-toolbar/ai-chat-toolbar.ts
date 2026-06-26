@@ -1,9 +1,9 @@
-import type { CopilotChatHistoryFragment } from '@affine/graphql';
-import { createLitPortal } from '@blocksuite/affine/components/portal';
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import type { NotificationService } from '@blocksuite/affine/shared/services';
-import { unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
-import { ShadowlessElement } from '@blocksuite/affine/std';
+import type { CopilotChatHistoryFragment } from '@blank/graphql';
+import { createLitPortal } from '@blocksuite/blank/components/portal';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import type { NotificationService } from '@blocksuite/blank/shared/services';
+import { unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
+import { ShadowlessElement } from '@blocksuite/blank/std';
 import {
   HistoryIcon,
   PinedIcon,
@@ -100,7 +100,7 @@ export class AIChatToolbar extends WithDisposable(ShadowlessElement) {
               data-testid="ai-panel-new-chat"
             >
               ${PlusIcon()}
-              <affine-tooltip>New Chat</affine-tooltip>
+              <blank-tooltip>New Chat</blank-tooltip>
             </div>`
           : null}
         <div
@@ -111,9 +111,9 @@ export class AIChatToolbar extends WithDisposable(ShadowlessElement) {
           data-testid="ai-panel-pin-chat"
         >
           ${pinned ? PinedIcon() : PinIcon()}
-          <affine-tooltip>
+          <blank-tooltip>
             ${pinned ? 'Unpin this Chat' : 'Pin this Chat'}
-          </affine-tooltip>
+          </blank-tooltip>
         </div>
         <div
           class="chat-toolbar-icon history-button"
@@ -121,7 +121,7 @@ export class AIChatToolbar extends WithDisposable(ShadowlessElement) {
           data-testid="ai-panel-chat-history"
         >
           ${HistoryIcon()}
-          <affine-tooltip>Chat History</affine-tooltip>
+          <blank-tooltip>Chat History</blank-tooltip>
         </div>
       </div>
     `;
@@ -224,7 +224,7 @@ export class AIChatToolbar extends WithDisposable(ShadowlessElement) {
         ></ai-session-history>
       `,
       portalStyles: {
-        zIndex: 'var(--affine-z-index-popover)',
+        zIndex: 'var(--blank-z-index-popover)',
       },
       container: document.body,
       computePosition: {

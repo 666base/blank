@@ -801,10 +801,10 @@ export type EventArgs = {
       | 'New Edgeless'
       | 'Start recording meeting'
       | 'Stop recording'
-      | 'Open AFFiNE'
-      | 'About AFFiNE'
+      | 'Open Blank'
+      | 'About Blank'
       | 'Meeting Settings'
-      | 'Quit AFFiNE Completely';
+      | 'Quit Blank Completely';
   };
   mentionMember: {
     type: 'member' | 'invite' | 'more';

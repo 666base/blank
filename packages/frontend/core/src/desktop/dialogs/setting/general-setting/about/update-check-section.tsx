@@ -1,9 +1,9 @@
-import { Loading } from '@affine/component';
-import { SettingRow } from '@affine/component/setting-components';
-import { Button } from '@affine/component/ui/button';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { useAppUpdater } from '@affine/core/components/hooks/use-app-updater';
-import { useI18n } from '@affine/i18n';
+import { Loading } from '@blank/component';
+import { SettingRow } from '@blank/component/setting-components';
+import { Button } from '@blank/component/ui/button';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { useAppUpdater } from '@blank/core/components/hooks/use-app-updater';
+import { useI18n } from '@blank/i18n';
 import clsx from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
 
@@ -23,37 +23,37 @@ const useUpdateStatusLabels = (checkUpdateStatus: CheckUpdateStatus) => {
 
   const buttonLabel = useMemo(() => {
     if (updateReady) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.button.restart']();
+      return t['com.blank.aboutBlank.checkUpdate.button.restart']();
     }
     if (updateAvailable && downloadProgress === null) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.button.download']();
+      return t['com.blank.aboutBlank.checkUpdate.button.download']();
     }
     if (
       checkUpdateStatus === CheckUpdateStatus.LATEST ||
       checkUpdateStatus === CheckUpdateStatus.ERROR
     ) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.button.retry']();
+      return t['com.blank.aboutBlank.checkUpdate.button.retry']();
     }
-    return t['com.affine.aboutAFFiNE.checkUpdate.button.check']();
+    return t['com.blank.aboutBlank.checkUpdate.button.check']();
   }, [checkUpdateStatus, downloadProgress, t, updateAvailable, updateReady]);
 
   const subtitleLabel = useMemo(() => {
     if (updateReady) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.subtitle.restart']();
+      return t['com.blank.aboutBlank.checkUpdate.subtitle.restart']();
     } else if (updateAvailable && downloadProgress === null) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.subtitle.update-available']({
+      return t['com.blank.aboutBlank.checkUpdate.subtitle.update-available']({
         version: updateAvailable.version,
       });
     } else if (checkingForUpdates) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.subtitle.checking']();
+      return t['com.blank.aboutBlank.checkUpdate.subtitle.checking']();
     } else if (updateAvailable && downloadProgress !== null) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.subtitle.downloading']();
+      return t['com.blank.aboutBlank.checkUpdate.subtitle.downloading']();
     } else if (checkUpdateStatus === CheckUpdateStatus.ERROR) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.subtitle.error']();
+      return t['com.blank.aboutBlank.checkUpdate.subtitle.error']();
     } else if (checkUpdateStatus === CheckUpdateStatus.LATEST) {
-      return t['com.affine.aboutAFFiNE.checkUpdate.subtitle.latest']();
+      return t['com.blank.aboutBlank.checkUpdate.subtitle.latest']();
     }
-    return t['com.affine.aboutAFFiNE.checkUpdate.subtitle.check']();
+    return t['com.blank.aboutBlank.checkUpdate.subtitle.check']();
   }, [
     checkUpdateStatus,
     downloadProgress,
@@ -145,7 +145,7 @@ export const UpdateCheckSection = () => {
 
   return (
     <SettingRow
-      name={t['com.affine.aboutAFFiNE.checkUpdate.title']()}
+      name={t['com.blank.aboutBlank.checkUpdate.title']()}
       desc={subtitle}
     >
       <Button

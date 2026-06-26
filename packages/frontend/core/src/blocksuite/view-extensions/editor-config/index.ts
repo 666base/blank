@@ -1,8 +1,8 @@
-import { getEditorConfigExtension } from '@affine/core/blocksuite/view-extensions/editor-config/get-config';
+import { getEditorConfigExtension } from '@blank/core/blocksuite/view-extensions/editor-config/get-config';
 import {
   type ViewExtensionContext,
   ViewExtensionProvider,
-} from '@blocksuite/affine/ext-loader';
+} from '@blocksuite/blank/ext-loader';
 import { FrameworkProvider } from '@toeverything/infra';
 import { z } from 'zod';
 
@@ -10,16 +10,16 @@ const optionsSchema = z.object({
   framework: z.instanceof(FrameworkProvider).optional(),
 });
 
-type AffineEditorConfigViewOptions = z.infer<typeof optionsSchema>;
+type BlankEditorConfigViewOptions = z.infer<typeof optionsSchema>;
 
-export class AffineEditorConfigViewExtension extends ViewExtensionProvider<AffineEditorConfigViewOptions> {
-  override name = 'affine-view-editor-config';
+export class BlankEditorConfigViewExtension extends ViewExtensionProvider<BlankEditorConfigViewOptions> {
+  override name = 'blank-view-editor-config';
 
   override schema = optionsSchema;
 
   override setup(
     context: ViewExtensionContext,
-    options?: AffineEditorConfigViewOptions
+    options?: BlankEditorConfigViewOptions
   ) {
     super.setup(context, options);
     const framework = options?.framework;

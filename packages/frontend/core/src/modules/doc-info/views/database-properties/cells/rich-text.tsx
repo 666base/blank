@@ -1,9 +1,9 @@
-import { PropertyValue } from '@affine/component';
-import { ConfigModal } from '@affine/core/components/mobile';
-import { DefaultInlineManagerExtension } from '@blocksuite/affine/inlines/preset';
-import { RichText } from '@blocksuite/affine/rich-text';
-import type { BlockStdScope } from '@blocksuite/affine/std';
-import type { Store } from '@blocksuite/affine/store';
+import { PropertyValue } from '@blank/component';
+import { ConfigModal } from '@blank/core/components/mobile';
+import { DefaultInlineManagerExtension } from '@blocksuite/blank/inlines/preset';
+import { RichText } from '@blocksuite/blank/rich-text';
+import type { BlockStdScope } from '@blocksuite/blank/std';
+import type { Store } from '@blocksuite/blank/store';
 import { TextIcon } from '@blocksuite/icons/rc';
 import { type LiveData, useLiveData } from '@toeverything/infra';
 import { type CSSProperties, useEffect, useRef, useState } from 'react';

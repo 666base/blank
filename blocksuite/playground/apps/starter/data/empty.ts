@@ -1,4 +1,4 @@
-import { Text, type Workspace } from '@blocksuite/affine/store';
+import { Text, type Workspace } from '@blocksuite/blank/store';
 
 import type { InitFn } from './utils.js';
 
@@ -9,16 +9,16 @@ export const empty: InitFn = (collection: Workspace, id: string) => {
 
   doc.load(() => {
     // Add root block and surface block at root level
-    const rootId = store.addBlock('affine:page', {
+    const rootId = store.addBlock('blank:page', {
       title: new Text(),
     });
 
-    store.addBlock('affine:surface', {}, rootId);
+    store.addBlock('blank:surface', {}, rootId);
 
     // Add note block inside root block
-    const noteId = store.addBlock('affine:note', {}, rootId);
+    const noteId = store.addBlock('blank:note', {}, rootId);
     // Add paragraph block inside note block
-    store.addBlock('affine:paragraph', {}, noteId);
+    store.addBlock('blank:paragraph', {}, noteId);
   });
 
   store.resetHistory();

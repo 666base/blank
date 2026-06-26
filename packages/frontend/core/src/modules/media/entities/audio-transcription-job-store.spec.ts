@@ -2,7 +2,7 @@ import {
   retryTranscriptTaskMutation,
   settleTranscriptTaskMutation,
   submitTranscriptTaskMutation,
-} from '@affine/graphql';
+} from '@blank/graphql';
 import { Framework } from '@toeverything/infra';
 import { describe, expect, test, vi } from 'vitest';
 

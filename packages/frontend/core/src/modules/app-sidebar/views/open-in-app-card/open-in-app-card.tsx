@@ -1,7 +1,7 @@
-import { Button, Checkbox, IconButton } from '@affine/component';
-import { getBlankDownloadUrl } from '@affine/core/utils/blank-links';
-import { appIconMap } from '@affine/core/utils';
-import { Trans, useI18n } from '@affine/i18n';
+import { Button, Checkbox, IconButton } from '@blank/component';
+import { getBlankDownloadUrl } from '@blank/core/utils/blank-links';
+import { appIconMap } from '@blank/core/utils';
+import { Trans, useI18n } from '@blank/i18n';
 import { CloseIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useState } from 'react';
@@ -45,7 +45,7 @@ export const OpenInAppCard = () => {
       </div>
       <div className={styles.contentCol}>
         <div className={styles.titleRow}>
-          {t.t('com.affine.open-in-app.card.title')}
+          {t.t('com.blank.open-in-app.card.title')}
           <div className={styles.spacer} />
           <IconButton
             className={styles.closeButton}
@@ -54,7 +54,7 @@ export const OpenInAppCard = () => {
           />
         </div>
         <div className={styles.subtitleRow}>
-          <Trans i18nKey="com.affine.open-in-app.card.subtitle">
+          <Trans i18nKey="com.blank.open-in-app.card.subtitle">
             Don&apos;t have the app?
             <a
               href={getBlankDownloadUrl()}
@@ -74,7 +74,7 @@ export const OpenInAppCard = () => {
               checked={remember}
               onChange={onToggleRemember}
             />
-            {t.t('com.affine.open-in-app.card.remember')}
+            {t.t('com.blank.open-in-app.card.remember')}
           </label>
           <div className={styles.spacer} />
           <div className={styles.buttonGroup}>
@@ -84,7 +84,7 @@ export const OpenInAppCard = () => {
               className={styles.button}
               onClick={onDismiss}
             >
-              {t.t('com.affine.open-in-app.card.button.dismiss')}
+              {t.t('com.blank.open-in-app.card.button.dismiss')}
             </Button>
             <Button
               variant="primary"
@@ -92,7 +92,7 @@ export const OpenInAppCard = () => {
               className={styles.button}
               onClick={onOpen}
             >
-              {t.t('com.affine.open-in-app.card.button.open')}
+              {t.t('com.blank.open-in-app.card.button.open')}
             </Button>
           </div>
         </div>

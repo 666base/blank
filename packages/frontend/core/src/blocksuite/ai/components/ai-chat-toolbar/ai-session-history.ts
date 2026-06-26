@@ -1,8 +1,8 @@
-import type { CopilotChatHistoryFragment } from '@affine/graphql';
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import { scrollbarStyle } from '@blocksuite/affine/shared/styles';
-import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
-import { ShadowlessElement } from '@blocksuite/affine/std';
+import type { CopilotChatHistoryFragment } from '@blank/graphql';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import { scrollbarStyle } from '@blocksuite/blank/shared/styles';
+import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
+import { ShadowlessElement } from '@blocksuite/blank/std';
 import { DeleteIcon } from '@blocksuite/icons/lit';
 import { css, html, nothing, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
@@ -65,8 +65,8 @@ export class AISessionHistory extends WithDisposable(ShadowlessElement) {
       .loading-title,
       .empty-title {
         font-weight: 600;
-        font-size: var(--affine-font-sm);
-        color: var(--affine-text-secondary-color);
+        font-size: var(--blank-font-sm);
+        color: var(--blank-text-secondary-color);
       }
 
       .ai-session-group {
@@ -297,9 +297,9 @@ export class AISessionHistory extends WithDisposable(ShadowlessElement) {
             >
               <div class="ai-session-title">
                 ${sessionTitle}
-                <affine-tooltip .offsetX=${60}>
+                <blank-tooltip .offsetX=${60}>
                   Click to open this chat
-                </affine-tooltip>
+                </blank-tooltip>
               </div>
               ${session.docId
                 ? this.renderSessionDoc(session.docId, session.sessionId)
@@ -312,7 +312,7 @@ export class AISessionHistory extends WithDisposable(ShadowlessElement) {
                 }}
               >
                 ${DeleteIcon()}
-                <affine-tooltip>Delete</affine-tooltip>
+                <blank-tooltip>Delete</blank-tooltip>
               </div>
             </div>
           `;
@@ -334,7 +334,7 @@ export class AISessionHistory extends WithDisposable(ShadowlessElement) {
     >
       ${docIcon}
       <span class="doc-title"> ${this.docDisplayConfig.getTitle(docId)} </span>
-      <affine-tooltip>Open this doc</affine-tooltip>
+      <blank-tooltip>Open this doc</blank-tooltip>
     </div>`;
   }
 

@@ -1,22 +1,22 @@
-import { LinkExtension } from '@blocksuite/affine-inline-link';
-import { textKeymap } from '@blocksuite/affine-inline-preset';
+import { LinkExtension } from '@blocksuite/blank-inline-link';
+import { textKeymap } from '@blocksuite/blank-inline-preset';
 import type {
   ListBlockModel,
   ParagraphBlockModel,
-} from '@blocksuite/affine-model';
-import { insertContent } from '@blocksuite/affine-rich-text';
-import { REFERENCE_NODE } from '@blocksuite/affine-shared/consts';
-import { createDefaultDoc } from '@blocksuite/affine-shared/utils';
+} from '@blocksuite/blank-model';
+import { insertContent } from '@blocksuite/blank-rich-text';
+import { REFERENCE_NODE } from '@blocksuite/blank-shared/consts';
+import { createDefaultDoc } from '@blocksuite/blank-shared/utils';
 import { TextSelection } from '@blocksuite/std';
 import type { InlineMarkdownMatch } from '@blocksuite/std/inline';
 import { Text } from '@blocksuite/store';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { defaultSlashMenuConfig } from '../../../../affine/widgets/slash-menu/src/config.js';
+import { defaultSlashMenuConfig } from '../../../../blank/widgets/slash-menu/src/config.js';
 import type {
   SlashMenuActionItem,
   SlashMenuItem,
-} from '../../../../affine/widgets/slash-menu/src/types.js';
+} from '../../../../blank/widgets/slash-menu/src/types.js';
 import { wait } from '../utils/common.js';
 import { addNote } from '../utils/edgeless.js';
 import { setupEditor } from '../utils/setup.js';
@@ -169,7 +169,7 @@ describe('markdown/list/paragraph/quote/code/link', () => {
       throw new Error('Cannot find note model');
     }
     const model = note.children[0] as ListBlockModel;
-    expect(model.flavour).toBe('affine:list');
+    expect(model.flavour).toBe('blank:list');
     expect(model.props.type).toBe('todo');
     expect(model.props.checked).toBe(true);
   });
@@ -183,7 +183,7 @@ describe('markdown/list/paragraph/quote/code/link', () => {
       throw new Error('Cannot find heading note model');
     }
     const headingModel = headingNote.children[0] as ParagraphBlockModel;
-    expect(headingModel.flavour).toBe('affine:paragraph');
+    expect(headingModel.flavour).toBe('blank:paragraph');
     expect(headingModel.props.type).toBe('h1');
 
     const { noteId: quoteNoteId, paragraphId: quoteParagraphId } =
@@ -194,7 +194,7 @@ describe('markdown/list/paragraph/quote/code/link', () => {
       throw new Error('Cannot find quote note model');
     }
     const quoteModel = quoteNote.children[0] as ParagraphBlockModel;
-    expect(quoteModel.flavour).toBe('affine:paragraph');
+    expect(quoteModel.flavour).toBe('blank:paragraph');
     expect(quoteModel.props.type).toBe('quote');
   });
 
@@ -207,7 +207,7 @@ describe('markdown/list/paragraph/quote/code/link', () => {
       throw new Error('Cannot find note model');
     }
     const model = note.children[0];
-    expect(model.flavour).toBe('affine:code');
+    expect(model.flavour).toBe('blank:code');
     expect((model as any).props.language).toBe('typescript');
   });
 
@@ -235,15 +235,15 @@ describe('markdown/list/paragraph/quote/code/link', () => {
     const { paragraphId: linkParagraphId } = await createParagraph();
     await triggerMarkdown(
       linkParagraphId,
-      '[AFFiNE](https://affine.pro) ',
+      '[Blank](https://blank.pro) ',
       'link'
     );
     const linkRichText = getRichTextByBlockId(linkParagraphId);
-    expect(linkRichText.inlineEditor.yTextString).toBe('AFFiNE');
+    expect(linkRichText.inlineEditor.yTextString).toBe('Blank');
     expect(
       linkRichText.inlineEditor.getFormat({ index: 1, length: 0 })
     ).toMatchObject({
-      link: 'https://affine.pro',
+      link: 'https://blank.pro',
     });
   });
 });
@@ -310,7 +310,7 @@ describe('hotkey/bracket/linked-page', () => {
     expect(collection.docs.has(linkedDoc.id)).toBe(true);
 
     const richText = getRichTextByBlockId(paragraphId);
-    expect(richText.querySelectorAll('affine-reference').length).toBe(2);
+    expect(richText.querySelectorAll('blank-reference').length).toBe(2);
     expect(richText.inlineEditor.yTextString.length).toBe(2);
   });
 });
@@ -324,7 +324,7 @@ describe('slash-menu action semantics', () => {
     }
     const first = note.children[0] as ParagraphBlockModel;
     const secondId = doc.addBlock(
-      'affine:paragraph',
+      'blank:paragraph',
       { text: new Text('second') },
       noteId
     );

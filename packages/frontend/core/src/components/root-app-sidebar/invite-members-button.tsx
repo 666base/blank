@@ -1,7 +1,8 @@
-import { MenuItem } from '@affine/core/modules/app-sidebar/views';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
+import { MenuItem } from '@blank/core/modules/app-sidebar/views';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
 import { CollaborationIcon } from '@blocksuite/icons/rc';
 import { useService } from '@toeverything/infra';
 import { useCallback } from 'react';
@@ -20,7 +21,7 @@ export const InviteMembersButton = () => {
 
   const t = useI18n();
 
-  if (isLocal) {
+  if (isLocal || isBlankBuild()) {
     return null;
   }
 

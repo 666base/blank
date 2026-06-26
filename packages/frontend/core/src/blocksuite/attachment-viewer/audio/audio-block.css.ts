@@ -51,7 +51,7 @@ export const reloadButtonIcon = style({
 });
 
 /** Render our own border for audio block  */
-globalStyle(`.affine-attachment-container:has(${root})`, {
+globalStyle(`.blank-attachment-container:has(${root})`, {
   border: 'none',
   overflow: 'visible',
   height: 'fit-content !important',

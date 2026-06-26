@@ -1,4 +1,4 @@
-import { FeatureType } from '@affine/graphql';
+import { FeatureType } from '@blank/graphql';
 import {
   catchErrorInto,
   effect,

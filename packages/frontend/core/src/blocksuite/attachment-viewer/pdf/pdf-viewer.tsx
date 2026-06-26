@@ -1,7 +1,7 @@
-import { IconButton, Menu, observeResize } from '@affine/component';
-import type { PDF, PDFMeta, PDFRendererState } from '@affine/core/modules/pdf';
-import { PDFService, PDFStatus } from '@affine/core/modules/pdf';
-import { cacheBitmap } from '@affine/core/modules/pdf/cache/bitmap-cache';
+import { IconButton, Menu, observeResize } from '@blank/component';
+import type { PDF, PDFMeta, PDFRendererState } from '@blank/core/modules/pdf';
+import { PDFService, PDFStatus } from '@blank/core/modules/pdf';
+import { cacheBitmap } from '@blank/core/modules/pdf/cache/bitmap-cache';
 import {
   Item,
   List,
@@ -13,8 +13,8 @@ import {
   type PDFVirtuosoProps,
   Scroller,
   ScrollSeekPlaceholder,
-} from '@affine/core/modules/pdf/views';
-import track from '@affine/track';
+} from '@blank/core/modules/pdf/views';
+import track from '@blank/track';
 import {
   CollapseIcon,
   ExpandIcon,

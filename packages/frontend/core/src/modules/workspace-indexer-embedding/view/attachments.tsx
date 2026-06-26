@@ -1,8 +1,8 @@
-import { Loading, Tooltip, useConfirmModal } from '@affine/component';
-import { Pagination } from '@affine/component/setting-components';
-import { useI18n } from '@affine/i18n';
-import { getAttachmentFileIconRC } from '@blocksuite/affine/components/icons';
-import { cssVarV2 } from '@blocksuite/affine/shared/theme';
+import { Loading, Tooltip, useConfirmModal } from '@blank/component';
+import { Pagination } from '@blank/component/setting-components';
+import { useI18n } from '@blank/i18n';
+import { getAttachmentFileIconRC } from '@blocksuite/blank/components/icons';
+import { cssVarV2 } from '@blocksuite/blank/shared/theme';
 import { CloseIcon, WarningIcon } from '@blocksuite/icons/rc';
 import clsx from 'clsx';
 import { useCallback } from 'react';
@@ -104,11 +104,11 @@ const AttachmentItem: React.FC<AttachmentItemProps> = ({
     openConfirmModal({
       title:
         t[
-          'com.affine.settings.workspace.indexer-embedding.embedding.additional-attachments.remove-attachment.title'
+          'com.blank.settings.workspace.indexer-embedding.embedding.additional-attachments.remove-attachment.title'
         ](),
       description:
         t[
-          'com.affine.settings.workspace.indexer-embedding.embedding.additional-attachments.remove-attachment.description'
+          'com.blank.settings.workspace.indexer-embedding.embedding.additional-attachments.remove-attachment.description'
         ](),
       confirmText: t['Confirm'](),
       confirmButtonOptions: {
@@ -138,7 +138,7 @@ const AttachmentItem: React.FC<AttachmentItemProps> = ({
         <div className={attachmentOperation}>
           <Tooltip
             content={t[
-              'com.affine.settings.workspace.indexer-embedding.embedding.additional-attachments.remove-attachment.tooltip'
+              'com.blank.settings.workspace.indexer-embedding.embedding.additional-attachments.remove-attachment.tooltip'
             ]()}
           >
             <CloseIcon

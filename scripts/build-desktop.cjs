@@ -68,12 +68,12 @@ function bundleWeb() {
       '--',
       'bundle',
       '-p',
-      '@affine/web',
+      '@blank/web',
     ], { env: bundleEnv });
     return;
   }
 
-  run('yarn', ['blank', 'bundle', '-p', '@affine/web'], {
+  run('yarn', ['blank', 'bundle', '-p', '@blank/web'], {
     shell: isWindows,
     env: bundleEnv,
   });
@@ -82,9 +82,9 @@ function bundleWeb() {
 function assertDesktopBundleUsesLocalAssets() {
   const indexHtml = path.join(webDist, 'index.html');
   const html = fs.readFileSync(indexHtml, 'utf8');
-  if (/affineassets\.com/i.test(html)) {
+  if (/blankassets\.com/i.test(html)) {
     console.error(
-      'Desktop bundle must not load JS/CSS from affineassets CDN.\n' +
+      'Desktop bundle must not load JS/CSS from blankassets CDN.\n' +
         'Rebuild with npm run desktop:build (uses PUBLIC_PATH=/).'
     );
     process.exit(1);
@@ -121,7 +121,11 @@ function copyArtifacts(sourceDir, targetDir) {
   const copied = [];
 
   for (const entry of fs.readdirSync(sourceDir)) {
-    if (!/\.exe$/i.test(entry) && !/\.blockmap$/i.test(entry)) {
+    if (
+      !/\.exe$/i.test(entry) &&
+      !/\.blockmap$/i.test(entry) &&
+      !/^latest.*\.yml$/i.test(entry)
+    ) {
       continue;
     }
     const from = path.join(sourceDir, entry);
@@ -172,6 +176,7 @@ function assertElectronPackageIncludesShell(stagingDir) {
     'scripts/local-electron/preload.cjs',
     'scripts/local-electron/blank-desktop-api-main.cjs',
     'scripts/local-electron/kv-store.cjs',
+    'scripts/local-electron/updater-main.cjs',
   ];
   const missing = required.filter(
     file => !listing.includes(file) && !listing.includes(file.replace(/\//g, '\\'))
@@ -211,7 +216,7 @@ function cleanStaleDesktopReleaseArtifacts() {
 console.log('Step 1/5: Generating Blank icons...');
 run('node', ['scripts/generate-blank-icons.cjs']);
 
-console.log('Step 2/5: Building desktop web bundle (@affine/web)...');
+console.log('Step 2/5: Building desktop web bundle (@blank/web)...');
 if (
   process.env.BLANK_SKIP_WEB_BUNDLE === '1' &&
   fs.existsSync(path.join(webDist, 'index.html'))
@@ -266,3 +271,5 @@ if (artifacts.length) {
 }
 
 console.log('\nInstall on PC: run Blank-Setup-*.exe (normal Windows installer).');
+
+run('node', ['scripts/generate-release-manifest.cjs']);

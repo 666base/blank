@@ -1,12 +1,12 @@
-import { notify } from '@affine/component';
-import { SettingRow } from '@affine/component/setting-components';
-import { Button } from '@affine/component/ui/button';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { DesktopApiService } from '@affine/core/modules/desktop-api';
-import type { Workspace } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import { universalId } from '@affine/nbstore';
-import track from '@affine/track';
+import { notify } from '@blank/component';
+import { SettingRow } from '@blank/component/setting-components';
+import { Button } from '@blank/component/ui/button';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { DesktopApiService } from '@blank/core/modules/desktop-api';
+import type { Workspace } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import { universalId } from '@blank/nbstore';
+import track from '@blank/track';
 import { ExportIcon } from '@blocksuite/icons/rc';
 import { useService } from '@toeverything/infra';
 import { useState } from 'react';
@@ -70,7 +70,7 @@ export const DesktopExportPanel = ({ workspace }: ExportPanelProps) => {
       >
         <Button
           variant="primary"
-          data-testid="export-affine-backup"
+          data-testid="export-blank-backup"
           onClick={onExport}
           disabled={saving}
         >
@@ -90,7 +90,7 @@ export const DesktopExportPanel = ({ workspace }: ExportPanelProps) => {
       >
         <Button
           variant="primary"
-          data-testid="export-affine-full-sync"
+          data-testid="export-blank-full-sync"
           onClick={fullSync}
           loading={fullSyncing}
           disabled={fullSyncing}
@@ -104,7 +104,7 @@ export const DesktopExportPanel = ({ workspace }: ExportPanelProps) => {
         desc={t['Quick Export Description']()}
       >
         <Button
-          data-testid="export-affine-backup"
+          data-testid="export-blank-backup"
           onClick={onExport}
           disabled={saving}
         >

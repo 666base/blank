@@ -1,10 +1,10 @@
-import { Switch } from '@affine/component';
+import { Switch } from '@blank/component';
 import {
-  AFFINE_FLAGS,
+  BLANK_FLAGS,
   FeatureFlagService,
   type Flag,
-} from '@affine/core/modules/feature-flag';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/feature-flag';
+import { useI18n } from '@blank/i18n';
 import { ArrowRightSmallIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useState } from 'react';
@@ -43,11 +43,11 @@ const ExperimentalFeatureList = () => {
 
   return (
     <ul className={styles.content}>
-      {Object.keys(AFFINE_FLAGS).map(key => (
+      {Object.keys(BLANK_FLAGS).map(key => (
         <ExperimentalFeaturesItem
           key={key}
           flagKey={key}
-          flag={featureFlagService.flags[key as keyof AFFINE_FLAGS]}
+          flag={featureFlagService.flags[key as keyof BLANK_FLAGS]}
         />
       ))}
     </ul>

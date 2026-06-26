@@ -1,16 +1,16 @@
-import { Button, IconButton, Menu, MenuItem, MenuSub } from '@affine/component';
-import { usePageHelper } from '@affine/core/blocksuite/block-suite-page-list/utils';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { DocsService } from '@affine/core/modules/doc';
-import { EditorSettingService } from '@affine/core/modules/editor-setting';
-import { TemplateDocService } from '@affine/core/modules/template-doc';
-import { TemplateListMenuContentScrollable } from '@affine/core/modules/template-doc/view/template-list-menu';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { inferOpenMode } from '@affine/core/utils';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
-import type { DocMode } from '@blocksuite/affine/model';
+import { Button, IconButton, Menu, MenuItem, MenuSub } from '@blank/component';
+import { usePageHelper } from '@blank/core/blocksuite/block-suite-page-list/utils';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { DocsService } from '@blank/core/modules/doc';
+import { EditorSettingService } from '@blank/core/modules/editor-setting';
+import { TemplateDocService } from '@blank/core/modules/template-doc';
+import { TemplateListMenuContentScrollable } from '@blank/core/modules/template-doc/view/template-list-menu';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { inferOpenMode } from '@blank/core/utils';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
+import type { DocMode } from '@blocksuite/blank/model';
 import {
   ArrowDownSmallIcon,
   EdgelessIcon,

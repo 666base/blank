@@ -1,5 +1,5 @@
 {
-  "name": "@affine/revert-update",
+  "name": "@blank/revert-update",
   "version": "0.27.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "generate": "r ./index.ts"
   },
   "dependencies": {
-    "@affine-tools/cli": "workspace:*",
+    "@blank-tools/cli": "workspace:*",
     "yjs": "^13.6.27"
   },
   "devDependencies": {

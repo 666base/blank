@@ -1,10 +1,10 @@
-import { getStoreManager } from '@affine/core/blocksuite/manager/store';
-import { toArrayBuffer } from '@affine/core/utils/array-buffer';
-import { Container } from '@blocksuite/affine/global/di';
+import { getStoreManager } from '@blank/core/blocksuite/manager/store';
+import { toArrayBuffer } from '@blank/core/utils/array-buffer';
+import { Container } from '@blocksuite/blank/global/di';
 import {
   customImageProxyMiddleware,
   MarkdownAdapter,
-} from '@blocksuite/affine/shared/adapters';
+} from '@blocksuite/blank/shared/adapters';
 import {
   type BlockModel,
   type DocSnapshot,
@@ -12,15 +12,13 @@ import {
   type Store,
   Text,
   Transformer,
-} from '@blocksuite/affine/store';
+} from '@blocksuite/blank/store';
 import { Service } from '@toeverything/infra';
 import { Doc as YDoc } from 'yjs';
 
 import type { DefaultServerService, WorkspaceServerService } from '../../cloud';
-import {
-  getAFFiNEWorkspaceSchema,
-  type WorkspaceService,
-} from '../../workspace';
+import { getBlankWorkspaceSchema } from '../../workspace/global-schema';
+import type { WorkspaceService } from '../../workspace';
 import { WorkspaceImpl } from '../../workspace/impls/workspace';
 
 export class SnapshotHelper extends Service {
@@ -69,7 +67,7 @@ export class SnapshotHelper extends Service {
   // todo: cache the transformer?
   getTransformer() {
     const collection = this.getTempWorkspace();
-    const schema = getAFFiNEWorkspaceSchema();
+    const schema = getBlankWorkspaceSchema();
     const imageProxyUrl = new URL(
       BUILD_CONFIG.imageProxyUrl,
       this.serverService.baseUrl
@@ -130,15 +128,15 @@ export class SnapshotHelper extends Service {
       const store = doc.getStore();
       store.load(() => {
         // Add root page block with empty title
-        const rootId = store.addBlock('affine:page', {
+        const rootId = store.addBlock('blank:page', {
           title: new Text(''),
         });
 
         // Add note block
-        const noteId = store.addBlock('affine:note', {}, rootId);
+        const noteId = store.addBlock('blank:note', {}, rootId);
 
         // Add default paragraph block
-        store.addBlock('affine:paragraph', {}, noteId);
+        store.addBlock('blank:paragraph', {}, noteId);
       });
 
       // Reset history to prevent initial creation operations from being undone

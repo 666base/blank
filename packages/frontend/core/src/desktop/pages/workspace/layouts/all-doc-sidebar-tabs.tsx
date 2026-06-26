@@ -1,5 +1,5 @@
-import { Scrollable } from '@affine/component';
-import { ViewSidebarTab } from '@affine/core/modules/workbench';
+import { Scrollable } from '@blank/component';
+import { ViewSidebarTab } from '@blank/core/modules/workbench';
 import { TodayIcon } from '@blocksuite/icons/rc';
 
 import { sidebarScrollArea } from '../detail-page/detail-page.css';

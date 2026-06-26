@@ -1,19 +1,19 @@
-import { Button } from '@affine/component';
-import { AuthHeader } from '@affine/component/auth-components';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { useWorkspaceName } from '@affine/core/components/hooks/use-workspace-info';
-import { WorkspaceSelector } from '@affine/core/components/workspace-selector';
-import { AuthService, ServerService } from '@affine/core/modules/cloud';
+import { Button } from '@blank/component';
+import { AuthHeader } from '@blank/component/auth-components';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { useWorkspaceName } from '@blank/core/components/hooks/use-workspace-info';
+import { WorkspaceSelector } from '@blank/core/components/workspace-selector';
+import { AuthService, ServerService } from '@blank/core/modules/cloud';
 import {
   type ClipperInput,
   ImportClipperService,
-} from '@affine/core/modules/import-clipper';
+} from '@blank/core/modules/import-clipper';
 import {
   type WorkspaceMetadata,
   WorkspacesService,
-} from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+} from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import { AllDocsIcon } from '@blocksuite/icons/rc';
 import { LiveData, useLiveData, useService } from '@toeverything/infra';
 import { cssVar } from '@toeverything/theme';
@@ -27,7 +27,7 @@ const port$ = new LiveData<MessagePort | null>(null);
 window.addEventListener('message', event => {
   if (
     typeof event.data === 'object' &&
-    event.data.type === 'affine-clipper:import'
+    event.data.type === 'blank-clipper:import'
   ) {
     clipperInput$.value = event.data.payload;
 
@@ -97,7 +97,7 @@ export const Component = () => {
   );
 
   const handleSuccess = useCallback(() => {
-    const arg = { type: 'affine-clipper:import:success' };
+    const arg = { type: 'blank-clipper:import:success' };
     const port = port$.value;
     track.clipper.$.$.createDoc();
     if (port) {
@@ -139,7 +139,7 @@ export const Component = () => {
     setImporting(true);
     try {
       await importClipperService.importToNewWorkspace(
-        'affine-cloud',
+        'blank-cloud',
         'Workspace',
         clipperInputSnapshot
       );
@@ -201,7 +201,7 @@ export const Component = () => {
       <div className={styles.container}>
         <AuthHeader
           className={styles.authHeader}
-          title={t['com.affine.auth.sign.in']()}
+          title={t['com.blank.auth.sign.in']()}
           subTitle={serverConfig.serverName}
         />
         <Button
@@ -209,7 +209,7 @@ export const Component = () => {
           variant="primary"
           onClick={handleClickSignIn}
         >
-          {t['com.affine.auth.sign.in']()}
+          {t['com.blank.auth.sign.in']()}
         </Button>
       </div>
     );
@@ -219,7 +219,7 @@ export const Component = () => {
     <div className={styles.container}>
       <AllDocsIcon className={styles.mainIcon} />
       <h6 className={styles.mainTitle}>
-        {t['com.affine.import-clipper.dialog.createDocFromClipper']()}
+        {t['com.blank.import-clipper.dialog.createDocFromClipper']()}
       </h6>
       {noWorkspace ? (
         <p className={styles.desc}>A new workspace will be created.</p>
@@ -247,12 +247,12 @@ export const Component = () => {
       <div className={styles.buttonContainer}>
         {importingError && (
           <span style={{ color: cssVar('warningColor') }}>
-            {t['com.affine.import-clipper.dialog.errorImport']()}
+            {t['com.blank.import-clipper.dialog.errorImport']()}
           </span>
         )}
         {isMissingInput ? (
           <span style={{ color: cssVar('warningColor') }}>
-            {t['com.affine.import-clipper.dialog.errorLoad']()}
+            {t['com.blank.import-clipper.dialog.errorLoad']()}
           </span>
         ) : selectedWorkspace ? (
           <Button
@@ -264,7 +264,7 @@ export const Component = () => {
             data-testid="import-clipper-to-workspace-btn"
           >
             {selectedWorkspaceName &&
-              t['com.affine.import-clipper.dialog.createDocToWorkspace']({
+              t['com.blank.import-clipper.dialog.createDocToWorkspace']({
                 workspace: selectedWorkspaceName,
               })}
           </Button>
@@ -276,7 +276,7 @@ export const Component = () => {
             disabled={disabled}
             onClick={handleImportToNewWorkspace}
           >
-            {t['com.affine.import-clipper.dialog.createDocToNewWorkspace']()}
+            {t['com.blank.import-clipper.dialog.createDocToNewWorkspace']()}
           </Button>
         )}
       </div>

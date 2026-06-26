@@ -1,9 +1,9 @@
-import { SafeArea } from '@affine/component';
-import { GlobalCacheService } from '@affine/core/modules/storage';
+import { SafeArea } from '@blank/component';
+import { GlobalCacheService } from '@blank/core/modules/storage';
 import {
   WorkbenchLink,
   WorkbenchService,
-} from '@affine/core/modules/workbench';
+} from '@blank/core/modules/workbench';
 import { useLiveData, useService } from '@toeverything/infra';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import React, { useEffect } from 'react';

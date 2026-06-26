@@ -1,6 +1,6 @@
-import { NotificationCenter } from '@affine/component';
-import { DefaultServerService } from '@affine/core/modules/cloud';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
+import { NotificationCenter } from '@blank/component';
+import { DefaultServerService } from '@blank/core/modules/cloud';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
 import { FrameworkScope, useService } from '@toeverything/infra';
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';

@@ -1,12 +1,12 @@
 import '../../style.css';
 
-import * as databaseBlocks from '@blocksuite/affine/blocks/database';
-import * as noteBlocks from '@blocksuite/affine/blocks/note';
-import * as globalUtils from '@blocksuite/affine/global/utils';
-import * as services from '@blocksuite/affine/shared/services';
-import * as blockStd from '@blocksuite/affine/std';
-import * as store from '@blocksuite/affine/store';
-import * as affineModel from '@blocksuite/affine-model';
+import * as databaseBlocks from '@blocksuite/blank/blocks/database';
+import * as noteBlocks from '@blocksuite/blank/blocks/note';
+import * as globalUtils from '@blocksuite/blank/global/utils';
+import * as services from '@blocksuite/blank/shared/services';
+import * as blockStd from '@blocksuite/blank/std';
+import * as store from '@blocksuite/blank/store';
+import * as blankModel from '@blocksuite/blank-model';
 import * as editor from '@blocksuite/integration-test';
 import { effects as itEffects } from '@blocksuite/integration-test/effects';
 import { getTestStoreManager } from '@blocksuite/integration-test/store';
@@ -46,7 +46,7 @@ async function main() {
         services,
         editor,
         blockStd: blockStd,
-        affineModel: affineModel,
+        blankModel: blankModel,
       }),
     });
     await prepareTestApp(collection);

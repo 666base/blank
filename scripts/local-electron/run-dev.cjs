@@ -34,10 +34,10 @@ async function isPortFree(port) {
 }
 
 async function pickDevServerPort() {
-  if (process.env.AFFINE_DESKTOP_URL) {
-    const url = new URL(process.env.AFFINE_DESKTOP_URL);
+  if (process.env.BLANK_DESKTOP_URL) {
+    const url = new URL(process.env.BLANK_DESKTOP_URL);
     return {
-      url: process.env.AFFINE_DESKTOP_URL,
+      url: process.env.BLANK_DESKTOP_URL,
       port: url.port || (url.protocol === 'https:' ? '443' : '80'),
     };
   }
@@ -55,7 +55,7 @@ async function pickDevServerPort() {
   }
 
   throw new Error(
-    `No free port found near ${startPort}. Stop other dev servers or set PORT / AFFINE_DESKTOP_URL.`
+    `No free port found near ${startPort}. Stop other dev servers or set PORT / BLANK_DESKTOP_URL.`
   );
 }
 
@@ -153,27 +153,11 @@ async function waitForElectronDevServer(expectedPort, timeoutMs = 300000) {
 }
 
 function startWebDevServer(desktopPackage, env) {
-  if (process.env.npm_execpath) {
-    return run(
-      process.execPath,
-      [
-        process.env.npm_execpath,
-        'run',
-        'blank',
-        '--',
-        'bundle',
-        '-p',
-        desktopPackage,
-        '--dev',
-      ],
-      { env, shell: false }
-    );
-  }
-
+  const runner = path.join(root, 'tools', 'cli', 'bin', 'runner.js');
   return run(
-    'yarn',
-    ['blank', 'bundle', '-p', desktopPackage, '--dev'],
-    { env }
+    process.execPath,
+    [runner, 'blank.ts', 'bundle', '-p', desktopPackage, '--dev'],
+    { env, shell: false }
   );
 }
 
@@ -183,17 +167,21 @@ process.on('SIGTERM', () => stopAll(0));
 (async () => {
   cleanDevInfo();
 
-  const desktopPackage = process.env.AFFINE_DESKTOP_PACKAGE || '@affine/web';
+  const { ensureBlankServerDocker } = require('../ensure-blank-server-docker.cjs');
+  await ensureBlankServerDocker();
+
+  const desktopPackage = process.env.BLANK_DESKTOP_PACKAGE || '@blank/web';
   const { url: devServerUrl, port: devServerPort } = await pickDevServerPort();
 
   const env = {
     ...process.env,
     NODE_ENV: process.env.NODE_ENV || 'development',
     PORT: devServerPort,
-    AFFINE_ELECTRON_DEV: '1',
-    AFFINE_ENABLE_BACKEND_PROXY:
-      process.env.AFFINE_ENABLE_BACKEND_PROXY || 'false',
-    AFFINE_DESKTOP_URL: devServerUrl,
+    BLANK_ELECTRON_DEV: '1',
+    BLANK_NO_AI: process.env.BLANK_NO_AI || '1',
+    BLANK_ENABLE_BACKEND_PROXY:
+      process.env.BLANK_ENABLE_BACKEND_PROXY || 'false',
+    BLANK_DESKTOP_URL: devServerUrl,
   };
 
   console.log(`Starting ${desktopPackage} dev server for Electron...`);
@@ -209,7 +197,7 @@ process.on('SIGTERM', () => stopAll(0));
 
   console.log('Waiting for dev server to compile (this may take a minute)...');
   const running = await waitForElectronDevServer(devServerPort);
-  env.AFFINE_DESKTOP_URL = running.url;
+  env.BLANK_DESKTOP_URL = running.url;
 
   console.log(`Dev server ready at ${running.url}`);
   console.log('Launching Electron...');

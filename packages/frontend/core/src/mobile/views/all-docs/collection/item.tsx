@@ -1,8 +1,8 @@
-import { IconButton } from '@affine/component';
-import { IsFavoriteIcon } from '@affine/core/components/pure/icons';
-import type { CollectionMeta } from '@affine/core/modules/collection';
-import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
-import { WorkbenchLink } from '@affine/core/modules/workbench';
+import { IconButton } from '@blank/component';
+import { IsFavoriteIcon } from '@blank/core/components/pure/icons';
+import type { CollectionMeta } from '@blank/core/modules/collection';
+import { CompatibleFavoriteItemsAdapter } from '@blank/core/modules/favorite';
+import { WorkbenchLink } from '@blank/core/modules/workbench';
 import { ViewLayersIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { type MouseEvent, useCallback } from 'react';

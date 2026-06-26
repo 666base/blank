@@ -16,7 +16,7 @@ export const container = style({
 });
 
 export const header = style({
-  background: 'var(--affine-background-primary-color)',
+  background: 'var(--blank-background-primary-color)',
   position: 'relative',
   padding: '8px var(--h-padding, 16px)',
   width: '100%',
@@ -32,7 +32,7 @@ export const header = style({
 export const title = style({
   fontSize: '14px',
   fontWeight: 500,
-  color: 'var(--affine-text-secondary-color)',
+  color: 'var(--blank-text-secondary-color)',
   display: 'flex',
   alignItems: 'center',
 });
@@ -74,14 +74,14 @@ export const loading = style({
 
 export const loadingTitle = style({
   fontWeight: 600,
-  fontSize: 'var(--affine-font-sm)',
-  color: 'var(--affine-text-secondary-color)',
+  fontSize: 'var(--blank-font-sm)',
+  color: 'var(--blank-text-secondary-color)',
 });
 
 export const loadingIcon = style({
   width: '44px',
   height: '44px',
-  color: 'var(--affine-icon-secondary)',
+  color: 'var(--blank-icon-secondary)',
 });
 
 export const tabsContainer = style({
@@ -95,7 +95,7 @@ export const tabsContainer = style({
 globalStyle(`${playground} svg`, {
   width: '18px',
   height: '18px',
-  color: 'var(--affine-text-secondary-color)',
+  color: 'var(--blank-text-secondary-color)',
 });
 
 globalStyle(`${playground}:hover svg`, {

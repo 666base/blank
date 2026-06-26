@@ -172,12 +172,12 @@ function bundleMobile() {
       '--',
       'bundle',
       '-p',
-      '@affine/mobile',
+      '@blank/mobile',
     ], { env: bundleEnv });
     return;
   }
 
-  run('yarn', ['blank', 'bundle', '-p', '@affine/mobile'], {
+  run('yarn', ['blank', 'bundle', '-p', '@blank/mobile'], {
     shell: isWindows,
     env: bundleEnv,
   });
@@ -186,9 +186,9 @@ function bundleMobile() {
 function assertMobileBundleUsesLocalAssets() {
   const indexHtml = path.join(mobileDist, 'index.html');
   const html = fs.readFileSync(indexHtml, 'utf8');
-  if (/affineassets\.com/i.test(html)) {
+  if (/blankassets\.com/i.test(html)) {
     console.error(
-      'Mobile bundle must not load JS/CSS from affineassets CDN.\n' +
+      'Mobile bundle must not load JS/CSS from blankassets CDN.\n' +
         'Rebuild with npm run android:build (uses PUBLIC_PATH=/).'
     );
     process.exit(1);
@@ -214,7 +214,7 @@ requireAndroidToolchain();
 console.log('Step 1/5: Generating Blank icons...');
 run('node', ['scripts/generate-blank-icons.cjs']);
 
-console.log('Step 2/5: Building mobile web bundle (@affine/mobile)...');
+console.log('Step 2/5: Building mobile web bundle (@blank/mobile)...');
 if (
   process.env.BLANK_SKIP_MOBILE_BUNDLE === '1' &&
   fs.existsSync(path.join(mobileDist, 'index.html'))
@@ -281,3 +281,5 @@ console.log(`Also: ${releaseApkLatest}`);
 console.log(
   '\nInstall from GitHub: signed release APK (not debug). Play Protect may still ask once — choose Install anyway.'
 );
+
+run('node', ['scripts/generate-release-manifest.cjs']);

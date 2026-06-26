@@ -1,4 +1,4 @@
-import type { DocMode } from '@blocksuite/affine/model';
+import type { DocMode } from '@blocksuite/blank/model';
 import { Entity, LiveData } from '@toeverything/infra';
 import { map } from 'rxjs';
 

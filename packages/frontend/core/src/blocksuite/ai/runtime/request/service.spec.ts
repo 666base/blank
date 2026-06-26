@@ -1,7 +1,7 @@
 /**
  * @vitest-environment happy-dom
  */
-import { UserFriendlyError } from '@affine/error';
+import { UserFriendlyError } from '@blank/error';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { type CopilotClient, Endpoint } from './copilot-client';
@@ -38,11 +38,11 @@ const createWorkspaceByokLocalLeaseMutation = vi.hoisted(() =>
   Symbol('createWorkspaceByokLocalLeaseMutation')
 );
 
-vi.mock('@affine/electron-api', () => ({
+vi.mock('@blank/electron-api', () => ({
   apis: electronApis,
 }));
 
-vi.mock('@affine/graphql', () => ({
+vi.mock('@blank/graphql', () => ({
   ByokProvider: {
     openai: 'openai',
     anthropic: 'anthropic',

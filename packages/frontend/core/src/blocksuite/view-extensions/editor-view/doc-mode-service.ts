@@ -1,11 +1,11 @@
-import type { DocService, DocsService } from '@affine/core/modules/doc';
-import type { EditorService } from '@affine/core/modules/editor';
-import type { DocMode } from '@blocksuite/affine/model';
+import type { DocService, DocsService } from '@blank/core/modules/doc';
+import type { EditorService } from '@blank/core/modules/editor';
+import type { DocMode } from '@blocksuite/blank/model';
 import {
   DocModeExtension,
   type DocModeProvider,
-} from '@blocksuite/affine/shared/services';
-import type { ExtensionType } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/shared/services';
+import type { ExtensionType } from '@blocksuite/blank/store';
 
 export function patchDocModeService(
   docService: DocService,
@@ -13,7 +13,7 @@ export function patchDocModeService(
   editorService: EditorService
 ): ExtensionType {
   const DEFAULT_MODE = 'page';
-  class AffineDocModeService implements DocModeProvider {
+  class BlankDocModeService implements DocModeProvider {
     setEditorMode = (mode: DocMode) => {
       editorService.editor.setMode(mode);
     };
@@ -48,7 +48,7 @@ export function patchDocModeService(
     };
   }
 
-  const docModeExtension = DocModeExtension(new AffineDocModeService());
+  const docModeExtension = DocModeExtension(new BlankDocModeService());
 
   return docModeExtension;
 }

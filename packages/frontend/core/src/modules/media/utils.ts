@@ -1,4 +1,4 @@
-import type { AttachmentBlockModel } from '@blocksuite/affine/model';
+import type { AttachmentBlockModel } from '@blocksuite/blank/model';
 
 const imageExts = new Set([
   'jpg',

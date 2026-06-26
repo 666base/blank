@@ -1,8 +1,8 @@
-import type { DocStorage } from '@affine/nbstore';
+import type { DocStorage } from '@blank/nbstore';
 
 import {
-  AFFiNE_WORKSPACE_DB_SCHEMA,
-  AFFiNE_WORKSPACE_USERDATA_DB_SCHEMA,
+  Blank_WORKSPACE_DB_SCHEMA,
+  Blank_WORKSPACE_USERDATA_DB_SCHEMA,
 } from './schema';
 
 export async function transformWorkspaceDBLocalToCloud(
@@ -12,7 +12,7 @@ export async function transformWorkspaceDBLocalToCloud(
   cloudDocStorage: DocStorage,
   accountId: string
 ) {
-  for (const tableName of Object.keys(AFFiNE_WORKSPACE_DB_SCHEMA)) {
+  for (const tableName of Object.keys(Blank_WORKSPACE_DB_SCHEMA)) {
     const localDocName = `db$${tableName}`;
     const localDoc = await localDocStorage.getDoc(localDocName);
     if (localDoc) {
@@ -24,7 +24,7 @@ export async function transformWorkspaceDBLocalToCloud(
     }
   }
 
-  for (const tableName of Object.keys(AFFiNE_WORKSPACE_USERDATA_DB_SCHEMA)) {
+  for (const tableName of Object.keys(Blank_WORKSPACE_USERDATA_DB_SCHEMA)) {
     const localDocName = `userdata$__local__$${tableName}`;
     const localDoc = await localDocStorage.getDoc(localDocName);
     if (localDoc) {

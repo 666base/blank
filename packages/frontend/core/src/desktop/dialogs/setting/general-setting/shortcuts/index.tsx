@@ -1,16 +1,16 @@
 import {
   SettingHeader,
   SettingWrapper,
-} from '@affine/component/setting-components';
-import { useI18n } from '@affine/i18n';
+} from '@blank/component/setting-components';
+import { useI18n } from '@blank/i18n';
 
-import type { ShortcutsInfo } from '../../../../../components/hooks/affine/use-shortcuts';
+import type { ShortcutsInfo } from '../../../../../components/hooks/blank/use-shortcuts';
 import {
   useEdgelessShortcuts,
   useGeneralShortcuts,
   useMarkdownShortcuts,
   usePageShortcuts,
-} from '../../../../../components/hooks/affine/use-shortcuts';
+} from '../../../../../components/hooks/blank/use-shortcuts';
 import { shortcutKey, shortcutKeyContainer, shortcutRow } from './style.css';
 
 const ShortcutsPanel = ({
@@ -51,8 +51,8 @@ export const Shortcuts = () => {
   return (
     <>
       <SettingHeader
-        title={t['com.affine.keyboardShortcuts.title']()}
-        subtitle={t['com.affine.keyboardShortcuts.subtitle']()}
+        title={t['com.blank.keyboardShortcuts.title']()}
+        subtitle={t['com.blank.keyboardShortcuts.subtitle']()}
         data-testid="keyboard-shortcuts-title"
       />
       <ShortcutsPanel shortcutsInfo={generalShortcutsInfo} />

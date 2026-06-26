@@ -1,10 +1,10 @@
-import { MobileMenu } from '@affine/component';
+import { MobileMenu } from '@blank/component';
 import {
   type BaseNavigationPanelTreeNodeProps,
   NavigationPanelTreeContext,
-} from '@affine/core/desktop/components/navigation-panel';
-import { WorkbenchLink } from '@affine/core/modules/workbench';
-import { extractEmojiIcon } from '@affine/core/utils';
+} from '@blank/core/desktop/components/navigation-panel';
+import { WorkbenchLink } from '@blank/core/modules/workbench';
+import { extractEmojiIcon } from '@blank/core/utils';
 import { ArrowDownSmallIcon, MoreHorizontalIcon } from '@blocksuite/icons/rc';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { assignInlineVars } from '@vanilla-extract/dynamic';

@@ -1,4 +1,4 @@
-import type { Package } from '@affine-tools/utils/workspace';
+import type { Package } from '@blank-tools/utils/workspace';
 
 import { PackageToDistribution } from './distribution';
 
@@ -39,7 +39,7 @@ export function getBuildConfig(
           distribution === 'android',
         appBuildType: 'stable' as const,
         appVersion: pkg.version,
-        // editorVersion: pkg.dependencies['@blocksuite/affine'],
+        // editorVersion: pkg.dependencies['@blocksuite/blank'],
         editorVersion: pkg.version,
         githubUrl: 'https://github.com/666base/blank',
         changelogUrl: 'https://github.com/666base/blank/releases',
@@ -52,6 +52,10 @@ export function getBuildConfig(
         CAPTCHA_SITE_KEY: process.env.CAPTCHA_SITE_KEY ?? '',
         SENTRY_DSN: process.env.SENTRY_DSN ?? '',
         blankSyncServerUrl: process.env.BLANK_SYNC_SERVER_URL ?? '',
+        blankSupabaseUrl: process.env.BLANK_SUPABASE_URL ?? '',
+        blankSupabaseAnonKey: process.env.BLANK_SUPABASE_ANON_KEY ?? '',
+        blankConfigProxyUrl:
+          process.env.BLANK_CONFIG_PROXY_URL ?? 'http://127.0.0.1:3020',
       };
     },
     get beta() {

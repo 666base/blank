@@ -1,9 +1,9 @@
-import { type MenuRef, PropertyValue } from '@affine/component';
-import type { FilterParams } from '@affine/core/modules/collection-rules';
-import { type DocRecord, DocService } from '@affine/core/modules/doc';
-import { type Tag, TagService } from '@affine/core/modules/tag';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
+import { type MenuRef, PropertyValue } from '@blank/component';
+import type { FilterParams } from '@blank/core/modules/collection-rules';
+import { type DocRecord, DocService } from '@blank/core/modules/doc';
+import { type Tag, TagService } from '@blank/core/modules/tag';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
 import { TagsIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVarV2 } from '@toeverything/theme/v2';
@@ -39,7 +39,7 @@ export const TagsValue = ({ readonly }: PropertyValueProps) => {
       <TagsInlineEditor
         className={styles.tagInlineEditor}
         placeholder={t[
-          'com.affine.page-properties.property-value-placeholder'
+          'com.blank.page-properties.property-value-placeholder'
         ]()}
         pageId={doc.id}
         onChange={() => {}}
@@ -112,7 +112,7 @@ export const TagsFilterValue = ({
     <WorkspaceTagsInlineEditor
       placeholder={
         <span style={{ color: cssVarV2('text/placeholder') }}>
-          {t['com.affine.filter.empty']()}
+          {t['com.blank.filter.empty']()}
         </span>
       }
       selectedTags={selectedTags}
@@ -259,7 +259,7 @@ export const TagsGroupHeader = ({ groupId, docCount }: GroupHeaderProps) => {
           />
         }
       >
-        {t['com.affine.page.display.grouping.group-by-tag.untagged']()}
+        {t['com.blank.page.display.grouping.group-by-tag.untagged']()}
       </PlainTextDocGroupHeader>
     );
   }

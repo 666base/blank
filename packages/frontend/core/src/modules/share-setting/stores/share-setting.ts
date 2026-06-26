@@ -1,9 +1,9 @@
-import type { WorkspaceServerService } from '@affine/core/modules/cloud';
+import type { WorkspaceServerService } from '@blank/core/modules/cloud';
 import {
   setEnableAiMutation,
   setEnableSharingMutation,
   setEnableUrlPreviewMutation,
-} from '@affine/graphql';
+} from '@blank/graphql';
 import { Store } from '@toeverything/infra';
 
 import type { NbstoreService } from '../../storage';

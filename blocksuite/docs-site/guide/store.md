@@ -18,7 +18,7 @@ import { DocCollection, Schema } from '@blocksuite/store';
 const schema = new Schema();
 
 // You can register a batch of block schemas to the collection
-schema.register(AffineSchemas);
+schema.register(BlankSchemas);
 
 const collection = new DocCollection({ schema });
 collection.meta.initialize();
@@ -37,11 +37,11 @@ const doc = collection.createDoc();
 As an example, the `createEmptyDoc` is a simple helper implemented exactly in this way ([source](https://github.com/toeverything/blocksuite/blob/master/packages/presets/src/helpers/index.ts)):
 
 ```ts
-import { AffineSchemas } from '@blocksuite/blocks/models';
+import { BlankSchemas } from '@blocksuite/blocks/models';
 import { Schema, DocCollection } from '@blocksuite/store';
 
 export function createEmptyDoc() {
-  const schema = new Schema().register(AffineSchemas);
+  const schema = new Schema().register(BlankSchemas);
   const collection = new DocCollection({ schema });
   collection.meta.initialize();
   const doc = collection.createDoc();
@@ -50,10 +50,10 @@ export function createEmptyDoc() {
     doc,
     async init() {
       await doc.load(() => {
-        const rootBlockId = doc.addBlock('affine:page', {});
-        doc.addBlock('affine:surface', {}, rootBlockId);
-        const noteId = doc.addBlock('affine:note', {}, rootBlockId);
-        doc.addBlock('affine:paragraph', {}, noteId);
+        const rootBlockId = doc.addBlock('blank:page', {});
+        doc.addBlock('blank:surface', {}, rootBlockId);
+        const noteId = doc.addBlock('blank:note', {}, rootBlockId);
+        doc.addBlock('blank:paragraph', {}, noteId);
       });
       return doc;
     },

@@ -1,11 +1,11 @@
-import { CodeBlockPreviewIdentifier } from '@blocksuite/affine/blocks/code';
-import { addImages } from '@blocksuite/affine/blocks/image';
-import { getSurfaceBlock } from '@blocksuite/affine/blocks/surface';
-import { LoadingIcon } from '@blocksuite/affine/components/icons';
-import { addTree } from '@blocksuite/affine/gfx/mindmap';
-import { fitContent } from '@blocksuite/affine/gfx/shape';
-import { createTemplateJob } from '@blocksuite/affine/gfx/template';
-import { Bound } from '@blocksuite/affine/global/gfx';
+import { CodeBlockPreviewIdentifier } from '@blocksuite/blank/blocks/code';
+import { addImages } from '@blocksuite/blank/blocks/image';
+import { getSurfaceBlock } from '@blocksuite/blank/blocks/surface';
+import { LoadingIcon } from '@blocksuite/blank/components/icons';
+import { addTree } from '@blocksuite/blank/gfx/mindmap';
+import { fitContent } from '@blocksuite/blank/gfx/shape';
+import { createTemplateJob } from '@blocksuite/blank/gfx/template';
+import { Bound } from '@blocksuite/blank/global/gfx';
 import {
   EDGELESS_TEXT_BLOCK_MIN_HEIGHT,
   EDGELESS_TEXT_BLOCK_MIN_WIDTH,
@@ -14,15 +14,15 @@ import {
   type MindmapElementModel,
   NoteDisplayMode,
   type ShapeElementModel,
-} from '@blocksuite/affine/model';
-import { TelemetryProvider } from '@blocksuite/affine/shared/services';
-import type { EditorHost } from '@blocksuite/affine/std';
-import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
-import { Text } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/model';
+import { TelemetryProvider } from '@blocksuite/blank/shared/services';
+import type { EditorHost } from '@blocksuite/blank/std';
+import { GfxControllerIdentifier } from '@blocksuite/blank/std/gfx';
+import { Text } from '@blocksuite/blank/store';
 import {
-  AFFINE_TOOLBAR_WIDGET,
-  type AffineToolbarWidget,
-} from '@blocksuite/affine/widgets/toolbar';
+  BLANK_TOOLBAR_WIDGET,
+  type BlankToolbarWidget,
+} from '@blocksuite/blank/widgets/toolbar';
 import {
   ChatWithAiIcon,
   DeleteIcon,
@@ -47,26 +47,26 @@ import {
   getCopilotSelectedElems,
   getSurfaceElementFromEditor,
 } from '../utils/selection-utils';
-import type { AffineAIPanelWidget } from '../widgets/ai-panel/ai-panel';
+import type { BlankAIPanelWidget } from '../widgets/ai-panel/ai-panel';
 import type { EdgelessCopilotWidget } from '../widgets/edgeless-copilot';
 import { EXCLUDING_INSERT_ACTIONS, generatingStages } from './consts';
 
 type FinishConfig = Exclude<
-  AffineAIPanelWidget['config'],
+  BlankAIPanelWidget['config'],
   null
 >['finishStateConfig'];
 
 type ErrorConfig = Exclude<
-  AffineAIPanelWidget['config'],
+  BlankAIPanelWidget['config'],
   null
 >['errorStateConfig'];
 
 export function getToolbar(host: EditorHost) {
   const rootBlockId = host.store.root?.id as string;
   const toolbar = host.view.getWidget(
-    AFFINE_TOOLBAR_WIDGET,
+    BLANK_TOOLBAR_WIDGET,
     rootBlockId
-  ) as AffineToolbarWidget;
+  ) as BlankToolbarWidget;
 
   return toolbar.querySelector('editor-toolbar');
 }
@@ -78,7 +78,7 @@ export function getTriggerEntry(host: EditorHost) {
 }
 
 export function discard(
-  panel: AffineAIPanelWidget,
+  panel: BlankAIPanelWidget,
   _: EdgelessCopilotWidget
 ): AIItemConfig {
   return {
@@ -92,7 +92,7 @@ export function discard(
   };
 }
 
-export function retry(panel: AffineAIPanelWidget): AIItemConfig {
+export function retry(panel: BlankAIPanelWidget): AIItemConfig {
   return {
     name: 'Retry',
     icon: ResetIcon(),
@@ -252,10 +252,10 @@ function createBlockAndInsert(
       EDGELESS_TEXT_BLOCK_MIN_WIDTH,
       EDGELESS_TEXT_BLOCK_MIN_HEIGHT
     );
-    const surfaceBlock = doc.getBlocksByFlavour('affine:surface')[0];
+    const surfaceBlock = doc.getBlocksByFlavour('blank:surface')[0];
     if (type === 'edgelessText') {
       blockId = doc.addBlock(
-        'affine:edgeless-text',
+        'blank:edgeless-text',
         {
           xywh: bounds.serialize(),
         },
@@ -264,7 +264,7 @@ function createBlockAndInsert(
     } else {
       const bounds = edgelessCopilot.determineInsertionBounds(800, 95);
       blockId = doc.addBlock(
-        'affine:note',
+        'blank:note',
         {
           xywh: bounds.serialize(),
           displayMode: NoteDisplayMode.EdgelessOnly,
@@ -504,20 +504,20 @@ function responseToMakeItReal(host: EditorHost, ctx: AIContext) {
 
     if (ifUseCodeBlock) {
       const note = host.store.addBlock(
-        'affine:note',
+        'blank:note',
         {
           xywh: bounds.serialize(),
         },
         host.store.root
       );
       host.store.addBlock(
-        'affine:code',
+        'blank:code',
         { text: new Text(html), language: 'html', preview: true },
         note
       );
     } else {
       host.store.addBlock(
-        'affine:embed-html',
+        'blank:embed-html',
         {
           html,
           design: 'ai:makeItReal', // as tag
@@ -721,7 +721,7 @@ export function actionToGenerating<T extends keyof BlockSuitePresets.AIActions>(
 export function actionToErrorResponse<
   T extends keyof BlockSuitePresets.AIActions,
 >(
-  panel: AffineAIPanelWidget,
+  panel: BlankAIPanelWidget,
   id: T,
   host: EditorHost,
   ctx: AIContext,

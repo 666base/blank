@@ -1,9 +1,9 @@
 import {
-  AFFINE_FLAGS,
+  BLANK_FLAGS,
   type FeatureFlagService,
-} from '@affine/core/modules/feature-flag';
-import { FeatureFlagService as BSFeatureFlagService } from '@blocksuite/affine/shared/services';
-import { type ExtensionType, StoreExtension } from '@blocksuite/affine/store';
+} from '@blank/core/modules/feature-flag';
+import { FeatureFlagService as BSFeatureFlagService } from '@blocksuite/blank/shared/services';
+import { type ExtensionType, StoreExtension } from '@blocksuite/blank/store';
 
 export function getFeatureFlagSyncer(
   featureFlagService: FeatureFlagService
@@ -13,10 +13,10 @@ export function getFeatureFlagSyncer(
 
     override loaded() {
       const bsFeatureFlagService = this.store.get(BSFeatureFlagService);
-      Object.entries(AFFINE_FLAGS).forEach(([key, flag]) => {
+      Object.entries(BLANK_FLAGS).forEach(([key, flag]) => {
         if (flag.category === 'blocksuite') {
           const value =
-            featureFlagService.flags[key as keyof AFFINE_FLAGS].value;
+            featureFlagService.flags[key as keyof BLANK_FLAGS].value;
           if (value !== undefined) {
             bsFeatureFlagService.setFlag(flag.bsFlag, value);
           }

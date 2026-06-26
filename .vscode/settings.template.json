@@ -35,7 +35,7 @@
   "eslint.runtime": "node",
   "eslint.execArgv": ["--max_old_space_size=16384"],
   "rust-analyzer.check.extraEnv": {
-    "DATABASE_URL": "sqlite:affine.db"
+    "DATABASE_URL": "sqlite:blank.db"
   },
   "typescript.tsdk": "node_modules/typescript/lib"
 }

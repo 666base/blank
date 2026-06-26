@@ -1,7 +1,7 @@
-import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
-import { unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
-import { ShadowlessElement } from '@blocksuite/affine/std';
-import { isImageProxyURL } from '@blocksuite/affine-shared/adapters';
+import { SignalWatcher, WithDisposable } from '@blocksuite/blank/global/lit';
+import { unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
+import { ShadowlessElement } from '@blocksuite/blank/std';
+import { isImageProxyURL } from '@blocksuite/blank-shared/adapters';
 import { ToggleDownIcon, ToolIcon } from '@blocksuite/icons/lit';
 import { type Signal } from '@preact/signals-core';
 import { css, html, nothing, type TemplateResult } from 'lit';

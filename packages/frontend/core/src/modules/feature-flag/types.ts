@@ -1,4 +1,4 @@
-import type { BlockSuiteFlags } from '@blocksuite/affine/shared/services';
+import type { BlockSuiteFlags } from '@blocksuite/blank/shared/services';
 
 type FeedbackType = 'discord' | 'email' | 'github';
 
@@ -15,7 +15,7 @@ export type FlagInfo = {
   feedbackLink?: string;
 } & (
   | {
-      category: 'affine';
+      category: 'blank';
     }
   | {
       category: 'blocksuite';

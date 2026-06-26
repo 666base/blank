@@ -2,15 +2,16 @@ import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { ProjectRoot } from '@affine-tools/utils/path';
-import { Package } from '@affine-tools/utils/workspace';
+import { ProjectRoot } from '@blank-tools/utils/path';
+import { Package } from '@blank-tools/utils/workspace';
+import { PackageList } from '../../../tools/utils/src/workspace.gen.ts';
 import { runCli } from '@magic-works/i18n-codegen';
 import { glob } from 'glob';
 
 const isDev = process.argv.includes('--dev');
 const shouldCleanup = process.argv.includes('--cleanup');
 
-const i18nPkg = new Package('@affine/i18n');
+const i18nPkg = new Package('@blank/i18n');
 const resourcesDir = i18nPkg.join('src', 'resources').toString();
 
 function readResource(lang: string): Record<string, string> {
@@ -48,8 +49,8 @@ async function cleanupResources() {
   });
 
   const dynamicPrefixes = new Set<string>();
-  const templatePrefixRegex = /`[^`]*?(com\.affine\.[^`]*?)\$\{/g;
-  const concatPrefixRegex = /['"](com\.affine\.[^'"]*?\.)['"]\s*\+/g;
+  const templatePrefixRegex = /`[^`]*?(com\.blank\.[^`]*?)\$\{/g;
+  const concatPrefixRegex = /['"](com\.blank\.[^'"]*?\.)['"]\s*\+/g;
   const addDynamicPrefix = (rawPrefix: string) => {
     let prefix = rawPrefix;
     if (!prefix.endsWith('.')) {
@@ -89,7 +90,7 @@ async function cleanupResources() {
 
   for (const resource of Object.values(resources)) {
     Object.keys(resource).forEach(key => {
-      if (!key.startsWith('com.affine.payment.modal.')) {
+      if (!key.startsWith('com.blank.payment.modal.')) {
         candidateKeys.add(key);
       }
     });
@@ -182,7 +183,11 @@ function i18nnext() {
 }
 
 async function appendErrorI18n() {
-  const server = new Package('@affine/server');
+  const meta = PackageList.find(item => item.name === '@blank/server');
+  if (!meta) {
+    return;
+  }
+  const server = new Package('@blank/server', meta);
   const defFilePath = server.srcPath.join('base/error/def.ts');
 
   if (!defFilePath.exists()) {

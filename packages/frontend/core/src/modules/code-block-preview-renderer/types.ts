@@ -1,11 +1,11 @@
 import type {
   MermaidRenderRequest,
   MermaidRenderResult,
-} from '@affine/core/modules/mermaid/renderer';
+} from '@blank/core/modules/mermaid/renderer';
 import type {
   TypstRenderRequest,
   TypstRenderResult,
-} from '@affine/core/modules/typst/renderer';
+} from '@blank/core/modules/typst/renderer';
 
 export type PreviewRenderRequestMap = {
   mermaid: MermaidRenderRequest;

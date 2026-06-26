@@ -12,14 +12,14 @@ import {
   Slider,
   Switch,
   useConfirmModal,
-} from '@affine/component';
+} from '@blank/component';
 import {
   SettingRow,
   SettingWrapper,
-} from '@affine/component/setting-components';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { ServerService } from '@affine/core/modules/cloud';
-import { DesktopApiService } from '@affine/core/modules/desktop-api';
+} from '@blank/component/setting-components';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { ServerService } from '@blank/core/modules/cloud';
+import { DesktopApiService } from '@blank/core/modules/desktop-api';
 import {
   type EditorSettingSchema,
   EditorSettingService,
@@ -27,15 +27,15 @@ import {
   fontStyleOptions,
   type NewDocDateTitleFormat,
   newDocDateTitleFormatOptions,
-} from '@affine/core/modules/editor-setting';
-import { SpellCheckSettingService } from '@affine/core/modules/editor-setting/services/spell-check-setting';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { isAiDisabled } from '@affine/core/utils/local-only';
+} from '@blank/core/modules/editor-setting';
+import { SpellCheckSettingService } from '@blank/core/modules/editor-setting/services/spell-check-setting';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { isAiDisabled } from '@blank/core/utils/local-only';
 import {
   type FontData,
   SystemFontFamilyService,
-} from '@affine/core/modules/system-font-family';
-import { Trans, useI18n } from '@affine/i18n';
+} from '@blank/core/modules/system-font-family';
+import { Trans, useI18n } from '@blank/i18n';
 import { DoneIcon, SearchIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService, useServices } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -55,13 +55,13 @@ import * as styles from './style.css';
 const getLabel = (fontKey: FontFamily, t: ReturnType<typeof useI18n>) => {
   switch (fontKey) {
     case 'Sans':
-      return t['com.affine.appearanceSettings.fontStyle.sans']();
+      return t['com.blank.appearanceSettings.fontStyle.sans']();
     case 'Serif':
-      return t['com.affine.appearanceSettings.fontStyle.serif']();
+      return t['com.blank.appearanceSettings.fontStyle.serif']();
     case 'Mono':
-      return t[`com.affine.appearanceSettings.fontStyle.mono`]();
+      return t[`com.blank.appearanceSettings.fontStyle.mono`]();
     case 'Custom':
-      return t['com.affine.settings.editorSettings.edgeless.custom']();
+      return t['com.blank.settings.editorSettings.edgeless.custom']();
     default:
       return '';
   }
@@ -123,8 +123,8 @@ const FontFamilySettings = () => {
 
   return (
     <SettingRow
-      name={t['com.affine.appearanceSettings.font.title']()}
-      desc={t['com.affine.appearanceSettings.font.description']()}
+      name={t['com.blank.appearanceSettings.font.title']()}
+      desc={t['com.blank.appearanceSettings.font.description']()}
     >
       <RadioGroup
         items={radioItems}
@@ -291,10 +291,10 @@ const CustomFontFamilySettings = () => {
   return (
     <SettingRow
       name={t[
-        'com.affine.settings.editorSettings.general.font-family.custom.title'
+        'com.blank.settings.editorSettings.general.font-family.custom.title'
       ]()}
       desc={t[
-        'com.affine.settings.editorSettings.general.font-family.custom.description'
+        'com.blank.settings.editorSettings.general.font-family.custom.description'
       ]()}
     >
       <Menu
@@ -323,7 +323,7 @@ const FontSizeSettings = () => {
       editorSettingService.editorSetting.set('fontSize', size);
       // Update CSS variable immediately
       document.documentElement.style.setProperty(
-        '--affine-font-base',
+        '--blank-font-base',
         `${size}px`
       );
     },
@@ -333,16 +333,16 @@ const FontSizeSettings = () => {
   // Apply current font size to CSS variable on mount
   useEffect(() => {
     document.documentElement.style.setProperty(
-      '--affine-font-base',
+      '--blank-font-base',
       `${settings.fontSize}px`
     );
   }, [settings.fontSize]);
 
   return (
     <SettingRow
-      name={t['com.affine.settings.editorSettings.general.font-size.title']()}
+      name={t['com.blank.settings.editorSettings.general.font-size.title']()}
       desc={t[
-        'com.affine.settings.editorSettings.general.font-size.description'
+        'com.blank.settings.editorSettings.general.font-size.description'
       ]()}
     >
       <div className={styles.fontSizeContainer}>
@@ -384,7 +384,7 @@ const NewDocDefaultModeSettings = () => {
         },
         {
           value: 'ask',
-          label: t['com.affine.settings.editorSettings.ask-me-every-time'](),
+          label: t['com.blank.settings.editorSettings.ask-me-every-time'](),
           testId: 'ask-every-time-trigger',
         },
       ] as const,
@@ -399,10 +399,10 @@ const NewDocDefaultModeSettings = () => {
   return (
     <SettingRow
       name={t[
-        'com.affine.settings.editorSettings.general.default-new-doc.title'
+        'com.blank.settings.editorSettings.general.default-new-doc.title'
       ]()}
       desc={t[
-        'com.affine.settings.editorSettings.general.default-new-doc.description'
+        'com.blank.settings.editorSettings.general.default-new-doc.description'
       ]()}
     >
       <Menu
@@ -432,7 +432,7 @@ const NewDocDefaultModeSettings = () => {
 };
 
 const getDateTitleFormatLabel = (format: NewDocDateTitleFormat) => {
-  return `com.affine.settings.editorSettings.general.auto-date-title.format.${format.toLowerCase()}` as const;
+  return `com.blank.settings.editorSettings.general.auto-date-title.format.${format.toLowerCase()}` as const;
 };
 
 export const NewDocDateTitleSettings = () => {
@@ -476,10 +476,10 @@ export const NewDocDateTitleSettings = () => {
     <>
       <SettingRow
         name={t[
-          'com.affine.settings.editorSettings.general.auto-date-title.title'
+          'com.blank.settings.editorSettings.general.auto-date-title.title'
         ]()}
         desc={t[
-          'com.affine.settings.editorSettings.general.auto-date-title.description'
+          'com.blank.settings.editorSettings.general.auto-date-title.description'
         ]()}
       >
         <Switch
@@ -491,10 +491,10 @@ export const NewDocDateTitleSettings = () => {
       {settings.autoTitleNewDocWithCurrentDate ? (
         <SettingRow
           name={t[
-            'com.affine.settings.editorSettings.general.auto-date-title.format.title'
+            'com.blank.settings.editorSettings.general.auto-date-title.format.title'
           ]()}
           desc={t[
-            'com.affine.settings.editorSettings.general.auto-date-title.format.description'
+            'com.blank.settings.editorSettings.general.auto-date-title.format.description'
           ]()}
         >
           <Menu
@@ -524,10 +524,10 @@ export const NewDocDateTitleSettings = () => {
       ) : null}
       <SettingRow
         name={t.t(
-          'com.affine.settings.editorSettings.general.add-icon-option.title'
+          'com.blank.settings.editorSettings.general.add-icon-option.title'
         )}
         desc={t.t(
-          'com.affine.settings.editorSettings.general.add-icon-option.description'
+          'com.blank.settings.editorSettings.general.add-icon-option.description'
         )}
       >
         <Switch
@@ -560,19 +560,19 @@ const AISettings = () => {
     (checked: boolean) => {
       openConfirmModal({
         title: checked
-          ? t['com.affine.settings.editorSettings.general.ai.enable.title']()
-          : t['com.affine.settings.editorSettings.general.ai.disable.title'](),
+          ? t['com.blank.settings.editorSettings.general.ai.enable.title']()
+          : t['com.blank.settings.editorSettings.general.ai.disable.title'](),
         description: checked
           ? t[
-              'com.affine.settings.editorSettings.general.ai.enable.description'
+              'com.blank.settings.editorSettings.general.ai.enable.description'
             ]()
           : t[
-              'com.affine.settings.editorSettings.general.ai.disable.description'
+              'com.blank.settings.editorSettings.general.ai.disable.description'
             ](),
         confirmText: checked
-          ? t['com.affine.settings.editorSettings.general.ai.enable.confirm']()
+          ? t['com.blank.settings.editorSettings.general.ai.enable.confirm']()
           : t[
-              'com.affine.settings.editorSettings.general.ai.disable.confirm'
+              'com.blank.settings.editorSettings.general.ai.disable.confirm'
             ](),
         cancelText: t['Cancel'](),
         onConfirm: () => onAIChange(checked),
@@ -590,8 +590,8 @@ const AISettings = () => {
 
   return (
     <SettingRow
-      name={t['com.affine.settings.editorSettings.general.ai.title']()}
-      desc={t['com.affine.settings.editorSettings.general.ai.description']()}
+      name={t['com.blank.settings.editorSettings.general.ai.title']()}
+      desc={t['com.blank.settings.editorSettings.general.ai.description']()}
     >
       <Switch checked={enableAI} onChange={onToggleAI} />
     </SettingRow>
@@ -622,11 +622,11 @@ const SpellCheckSettings = () => {
 
   return (
     <SettingRow
-      name={t['com.affine.settings.editorSettings.general.spell-check.title']()}
+      name={t['com.blank.settings.editorSettings.general.spell-check.title']()}
       desc={
         requireRestart ? (
           <div className={styles.spellCheckSettingDescription}>
-            <Trans i18nKey="com.affine.settings.editorSettings.general.spell-check.restart-hint">
+            <Trans i18nKey="com.blank.settings.editorSettings.general.spell-check.restart-hint">
               Settings changed; please restart the app.
               <button
                 onClick={onRestart}
@@ -638,7 +638,7 @@ const SpellCheckSettings = () => {
           </div>
         ) : (
           t[
-            'com.affine.settings.editorSettings.general.spell-check.description'
+            'com.blank.settings.editorSettings.general.spell-check.description'
           ]()
         )
       }
@@ -661,10 +661,10 @@ const MiddleClickPasteSettings = () => {
   return (
     <SettingRow
       name={t[
-        'com.affine.settings.editorSettings.general.middle-click-paste.title'
+        'com.blank.settings.editorSettings.general.middle-click-paste.title'
       ]()}
       desc={t[
-        'com.affine.settings.editorSettings.general.middle-click-paste.description'
+        'com.blank.settings.editorSettings.general.middle-click-paste.description'
       ]()}
     >
       <Switch
@@ -679,7 +679,7 @@ export const General = () => {
   const t = useI18n();
 
   return (
-    <SettingWrapper title={t['com.affine.settings.editorSettings.general']()}>
+    <SettingWrapper title={t['com.blank.settings.editorSettings.general']()}>
       {!isAiDisabled() ? <AISettings /> : null}
       <FontFamilySettings />
       <CustomFontFamilySettings />

@@ -1,7 +1,7 @@
-import { track, tracker } from '@affine/track';
-import type { EditorHost } from '@blocksuite/affine/std';
-import type { GfxPrimitiveElementModel } from '@blocksuite/affine/std/gfx';
-import type { BlockModel } from '@blocksuite/affine/store';
+import { track, tracker } from '@blank/track';
+import type { EditorHost } from '@blocksuite/blank/std';
+import type { GfxPrimitiveElementModel } from '@blocksuite/blank/std/gfx';
+import type { BlockModel } from '@blocksuite/blank/store';
 import { lowerCase, omit } from 'lodash-es';
 
 import type {
@@ -76,7 +76,7 @@ const trackAction = ({
 };
 
 const inferPageMode = (host: EditorHost) => {
-  return host.querySelector('affine-page-root') ? 'doc' : 'edgeless';
+  return host.querySelector('blank-page-root') ? 'doc' : 'edgeless';
 };
 
 const defaultActionOptions = [
@@ -120,13 +120,13 @@ function inferObjectType(event: AIRequestActionEvent) {
     return 'draw object';
   } else if (models.every(isBlockModel)) {
     const flavour = models[0].flavour;
-    if (flavour === 'affine:note') {
+    if (flavour === 'blank:note') {
       return 'note';
     } else if (
-      ['affine:paragraph', 'affine:list', 'affine:code'].includes(flavour)
+      ['blank:paragraph', 'blank:list', 'blank:code'].includes(flavour)
     ) {
       return 'text';
-    } else if (flavour === 'affine:image') {
+    } else if (flavour === 'blank:image') {
       return 'image';
     }
   }

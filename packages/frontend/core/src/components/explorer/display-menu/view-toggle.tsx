@@ -1,5 +1,5 @@
-import { RadioGroup, type RadioItem } from '@affine/component';
-import track from '@affine/track';
+import { RadioGroup, type RadioItem } from '@blank/component';
+import track from '@blank/track';
 import { useCallback } from 'react';
 
 import {

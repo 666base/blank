@@ -53,7 +53,7 @@ async function main() {
   const webHtml = read('packages/frontend/apps/web/dist/index.html');
   ok('web dist exists', !!webHtml);
   ok('web PUBLIC_PATH=/', webHtml?.includes('name="env:publicPath"') && webHtml.includes('content="/"'));
-  ok('web no affineassets CDN', webHtml && !/affineassets\.com/i.test(webHtml));
+  ok('web no blankassets CDN', webHtml && !/blankassets\.com/i.test(webHtml));
   ok('web local /js scripts', webHtml && webHtml.includes('src="/js/'));
   ok('web no onboarding folder', !fs.existsSync(path.join(root, 'packages/frontend/apps/web/dist/onboarding')));
   ok('web dist size 80-160MB', (() => {
@@ -64,15 +64,34 @@ async function main() {
   const mobHtml = read('packages/frontend/apps/mobile/dist/index.html');
   ok('mobile dist exists', !!mobHtml);
   ok('mobile PUBLIC_PATH=/', mobHtml?.includes('content="/"'));
-  ok('mobile no CDN', mobHtml && !/affineassets\.com/i.test(mobHtml));
+  ok('mobile no CDN', mobHtml && !/blankassets\.com/i.test(mobHtml));
   ok('mobile dist size 80-160MB', (() => {
     const mb = distSizeMb('packages/frontend/apps/mobile/dist');
     return mb !== null && mb >= 80 && mb <= 160 ? mb + ' MB' : false;
   })());
 
+  ok(
+    'electron updater module',
+    read('scripts/local-electron/updater-main.cjs')?.includes('electron-updater')
+  );
+  ok(
+    'electron publish config',
+    read('electron-builder.json')?.includes('"provider": "github"')
+  );
+  ok(
+    'release workflow',
+    fs.existsSync(path.join(root, '.github/workflows/release.yml'))
+  );
+  ok(
+    'github release helper',
+    read('packages/frontend/core/src/utils/blank-github-release.ts')?.includes(
+      'checkBlankAppUpdate'
+    )
+  );
+
   for (const rel of [
-    'releases/desktop/Blank-Setup-0.28.1.exe',
-    'releases/android/Blank-0.28.1.apk',
+    'releases/desktop/Blank-Setup-0.28.2.exe',
+    'releases/android/Blank-0.28.2.apk',
   ]) {
     const p = path.join(root, rel);
     const mb = fs.existsSync(p)
@@ -108,6 +127,22 @@ async function main() {
   ok('Blank manifest name', read('packages/frontend/core/public/manifest.json')?.includes('"name": "Blank"'));
   ok('Blank favicon-192', fs.existsSync(path.join(root, 'packages/frontend/core/public/favicon-192.png')));
   ok('Blank electron icon', fs.existsSync(path.join(root, 'scripts/local-electron/build/icon.ico')));
+  ok(
+    'blank i18n branding filter',
+    read('packages/frontend/i18n/src/i18next.ts')?.includes('applyBlankBranding')
+  );
+  ok(
+    'blank-cloud workspace flavour',
+    read('packages/frontend/core/src/modules/workspace-engine/impls/blank-cloud.ts')?.includes(
+      'BLANK_CLOUD_FLAVOUR'
+    )
+  );
+  ok(
+    'blank-cloud bootstrap',
+    read('packages/frontend/core/src/modules/workspace-engine/impls/blank-cloud.ts')?.includes(
+      'bootstrapWorkspace'
+    )
+  );
   ok('channel appIconMap blank', read('packages/frontend/core/src/utils/channel.ts')?.includes('/imgs/blank-app-icon.png'));
   ok(
     'electron-builder packs shell api',
@@ -116,10 +151,40 @@ async function main() {
   );
   ok('mobile local-only mode', read('packages/frontend/core/src/utils/local-only.ts')?.includes('isMobileEdition'));
   ok(
-    'AI store ext schema-only import',
-    read('packages/frontend/core/src/blocksuite/store-extensions/ai/index.ts')?.includes(
-      'ai-chat-block/model'
+    'no affine in packages source',
+    !read('packages/frontend/core/package.json')?.includes('@affine/') &&
+      !read('packages/frontend/i18n/src/resources/en.json')?.match(/affine/i) &&
+      fs.existsSync(path.join(root, 'blocksuite/blank/all/package.json'))
+  );
+  ok(
+    'instant boot shell',
+    read('packages/frontend/core/src/utils/blank-boot-shell.html.ts')?.includes(
+      'blank-boot-shell'
     )
+  );
+  ok(
+    'instant first-open route',
+    read('packages/frontend/core/src/utils/blank-fast-boot.ts')?.includes(
+      'blank-default'
+    ) &&
+      read('packages/frontend/core/src/utils/blank-instant-workspace.ts')?.includes(
+        'ensureInstantWorkspace'
+      )
+  );
+  const distIndex = read('packages/frontend/apps/web/dist/index.html');
+  ok(
+    'web dist instant boot (rebuild if fail)',
+    !distIndex ||
+      (distIndex.includes('blank-boot-shell') &&
+        distIndex.includes('blank-default')),
+    distIndex
+      ? 'run npm run desktop:build to refresh dist'
+      : 'no dist yet',
+    true
+  );
+  ok(
+    'monorepo @blank scope',
+    read('package.json')?.includes('"name": "@blank/monorepo"')
   );
 
   // Optional: dev server if running

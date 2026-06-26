@@ -1,7 +1,7 @@
-import { createTemplateJob } from '@blocksuite/affine/gfx/template';
-import type { EditorHost } from '@blocksuite/affine/std';
-import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
-import type { BlockSnapshot } from '@blocksuite/affine/store';
+import { createTemplateJob } from '@blocksuite/blank/gfx/template';
+import type { EditorHost } from '@blocksuite/blank/std';
+import { GfxControllerIdentifier } from '@blocksuite/blank/std/gfx';
+import type { BlockSnapshot } from '@blocksuite/blank/store';
 
 import { markdownToSnapshot } from '../../utils';
 import { getSurfaceElementFromEditor } from '../utils/selection-utils';

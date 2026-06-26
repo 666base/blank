@@ -1,6 +1,6 @@
 const canonicalHost = 'blocksuite.io';
 const redirectHosts = new Set([
-  'blocksuite.affine.pro',
+  'blocksuite.blank.pro',
   'block-suite.com',
   'blocksite.dev',
   'blocksite.io',

@@ -1,4 +1,4 @@
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
 import { Navigate } from 'react-router-dom';
 
 export const Component = () => {

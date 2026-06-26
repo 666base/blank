@@ -1,8 +1,8 @@
 import 'fake-indexeddb/auto';
 
-import { getStoreManager } from '@affine/core/blocksuite/manager/store';
-import { Text } from '@blocksuite/affine/store';
-import { TestWorkspace } from '@blocksuite/affine/store/test';
+import { getStoreManager } from '@blank/core/blocksuite/manager/store';
+import { Text } from '@blocksuite/blank/store';
+import { TestWorkspace } from '@blocksuite/blank/store/test';
 import { describe, expect, test } from 'vitest';
 
 import { insertFromMarkdown } from './markdown-utils';
@@ -16,10 +16,10 @@ describe('markdown-utils', () => {
 
     const store = collection.createDoc('page0').getStore({ extensions });
     store.load();
-    const rootId = store.addBlock('affine:page', {
+    const rootId = store.addBlock('blank:page', {
       title: new Text(''),
     });
-    const noteId = store.addBlock('affine:note', {}, rootId);
+    const noteId = store.addBlock('blank:note', {}, rootId);
 
     await insertFromMarkdown(
       undefined,

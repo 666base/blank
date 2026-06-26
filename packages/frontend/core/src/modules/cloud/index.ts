@@ -113,7 +113,7 @@ import { DocCreatedByUpdatedBySyncStore } from './stores/doc-created-by-updated-
 import { AccessTokenService } from './services/access-token';
 import { AccessTokenStore } from './stores/access-token';
 import { GlobalDialogService } from '../dialogs';
-import { isAiDisabled } from '@affine/core/utils/local-only';
+import { isAiDisabled } from '@blank/core/utils/local-only';
 
 export function configureCloudModule(framework: Framework) {
   configureDefaultAuthProvider(framework);

@@ -1,8 +1,8 @@
-import { Checkbox, useDraggable } from '@affine/component';
-import { WorkbenchLink } from '@affine/core/modules/workbench';
-import type { AffineDNDData } from '@affine/core/types/dnd';
-import { stopPropagation } from '@affine/core/utils';
-import { useI18n } from '@affine/i18n';
+import { Checkbox, useDraggable } from '@blank/component';
+import { WorkbenchLink } from '@blank/core/modules/workbench';
+import type { BlankDNDData } from '@blank/core/types/dnd';
+import { stopPropagation } from '@blank/core/utils';
+import { useI18n } from '@blank/i18n';
 import type { ForwardedRef, PropsWithChildren } from 'react';
 import { forwardRef, useCallback, useMemo } from 'react';
 
@@ -105,7 +105,7 @@ export const CollectionListItem = (props: CollectionListItemProps) => {
     props.title,
   ]);
 
-  const { dragRef, dragging, CustomDragPreview } = useDraggable<AffineDNDData>(
+  const { dragRef, dragging, CustomDragPreview } = useDraggable<BlankDNDData>(
     () => ({
       data: {
         entity: {

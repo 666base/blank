@@ -2,13 +2,13 @@
 import {
   CanvasRenderer,
   type SurfaceBlockModel,
-} from '@blocksuite/affine/blocks/surface';
-import { fitContent } from '@blocksuite/affine/gfx/shape';
-import type { Bound } from '@blocksuite/affine/global/gfx';
-import type { Color, ShapeElementModel } from '@blocksuite/affine/model';
-import { ThemeProvider } from '@blocksuite/affine/shared/services';
-import { BlockComponent } from '@blocksuite/affine/std';
-import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
+} from '@blocksuite/blank/blocks/surface';
+import { fitContent } from '@blocksuite/blank/gfx/shape';
+import type { Bound } from '@blocksuite/blank/global/gfx';
+import type { Color, ShapeElementModel } from '@blocksuite/blank/model';
+import { ThemeProvider } from '@blocksuite/blank/shared/services';
+import { BlockComponent } from '@blocksuite/blank/std';
+import { GfxControllerIdentifier } from '@blocksuite/blank/std/gfx';
 import { html } from 'lit';
 import { query } from 'lit/decorators.js';
 
@@ -142,17 +142,17 @@ export class MindmapSurfaceBlock extends BlockComponent<SurfaceBlockModel> {
   override render() {
     return html`
       <style>
-        .affine-mini-mindmap-surface {
+        .blank-mini-mindmap-surface {
           width: 100%;
           height: 100%;
         }
       </style>
-      <div class="affine-mini-mindmap-surface">
+      <div class="blank-mini-mindmap-surface">
         <!-- attach cavnas later in renderer -->
       </div>
     `;
   }
 
-  @query('.affine-mini-mindmap-surface')
+  @query('.blank-mini-mindmap-surface')
   accessor editorContainer!: HTMLDivElement;
 }

@@ -1,16 +1,16 @@
-import { Button, Modal, notify, useConfirmModal } from '@affine/component';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { Upload } from '@affine/core/components/pure/file-upload';
+import { Button, Modal, notify, useConfirmModal } from '@blank/component';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { Upload } from '@blank/core/components/pure/file-upload';
 import {
   SelfhostLicenseService,
   WorkspaceSubscriptionService,
-} from '@affine/core/modules/cloud';
-import { WorkspacePermissionService } from '@affine/core/modules/permissions';
-import { WorkspaceQuotaService } from '@affine/core/modules/quota';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { copyTextToClipboard } from '@affine/core/utils/clipboard';
-import { UserFriendlyError } from '@affine/error';
-import { Trans, useI18n } from '@affine/i18n';
+} from '@blank/core/modules/cloud';
+import { WorkspacePermissionService } from '@blank/core/modules/permissions';
+import { WorkspaceQuotaService } from '@blank/core/modules/quota';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { copyTextToClipboard } from '@blank/core/utils/clipboard';
+import { UserFriendlyError } from '@blank/error';
+import { Trans, useI18n } from '@blank/i18n';
 import { CopyIcon, FileIcon } from '@blocksuite/icons/rc';
 import { useService } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
@@ -51,11 +51,11 @@ export const UploadLicenseModal = ({
         openConfirmModal({
           title:
             t[
-              'com.affine.settings.workspace.license.self-host-team.upload-license-file.success.title'
+              'com.blank.settings.workspace.license.self-host-team.upload-license-file.success.title'
             ](),
           description:
             t[
-              'com.affine.settings.workspace.license.self-host-team.upload-license-file.success.description'
+              'com.blank.settings.workspace.license.self-host-team.upload-license-file.success.description'
             ](),
           confirmText: t['Confirm'](),
           cancelButtonOptions: {
@@ -74,7 +74,7 @@ export const UploadLicenseModal = ({
         openConfirmModal({
           title:
             t[
-              'com.affine.settings.workspace.license.self-host-team.upload-license-file.failed'
+              'com.blank.settings.workspace.license.self-host-team.upload-license-file.failed'
             ](),
           description: err.message,
           confirmText: t['Confirm'](),
@@ -129,22 +129,22 @@ export const UploadLicenseModal = ({
       open={open}
       onOpenChange={handleOpenChange}
       title={t[
-        'com.affine.settings.workspace.license.self-host-team.upload-license-file'
+        'com.blank.settings.workspace.license.self-host-team.upload-license-file'
       ]()}
       description={t[
-        'com.affine.settings.workspace.license.self-host-team.upload-license-file.description'
+        'com.blank.settings.workspace.license.self-host-team.upload-license-file.description'
       ]()}
     >
       <div className={styles.activateModalContent}>
         <div className={styles.tipsContainer}>
           <div className={styles.tipsTitle}>
             {t[
-              'com.affine.settings.workspace.license.self-host-team.upload-license-file.tips.title'
+              'com.blank.settings.workspace.license.self-host-team.upload-license-file.tips.title'
             ]()}
           </div>
           <div className={styles.tipsContent}>
             <Trans
-              i18nKey="com.affine.settings.workspace.license.self-host-team.upload-license-file.tips.content"
+              i18nKey="com.blank.settings.workspace.license.self-host-team.upload-license-file.tips.content"
               components={{
                 1: (
                   <a
@@ -160,7 +160,7 @@ export const UploadLicenseModal = ({
           <div className={styles.workspaceIdContainer}>
             <div className={styles.workspaceIdLabel}>
               {t[
-                'com.affine.settings.workspace.license.self-host-team.upload-license-file.tips.workspace-id'
+                'com.blank.settings.workspace.license.self-host-team.upload-license-file.tips.workspace-id'
               ]()}
             </div>
             <Button
@@ -187,14 +187,14 @@ export const UploadLicenseModal = ({
             <span className={styles.uploadButtonContent}>
               <FileIcon className={styles.uploadButtonIcon} />
               {t[
-                'com.affine.settings.workspace.license.self-host-team.upload-license-file.click-to-upload'
+                'com.blank.settings.workspace.license.self-host-team.upload-license-file.click-to-upload'
               ]()}
             </span>
           </Button>
         </Upload>
         <div className={styles.footer}>
           {t[
-            'com.affine.settings.workspace.license.self-host-team.upload-license-file.help'
+            'com.blank.settings.workspace.license.self-host-team.upload-license-file.help'
           ]()}
         </div>
       </div>

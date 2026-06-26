@@ -1,9 +1,9 @@
-import { FlexWrapper } from '@affine/component';
-import { ExplorerDisplayMenuButton } from '@affine/core/components/explorer/display-menu';
-import { ViewToggle } from '@affine/core/components/explorer/display-menu/view-toggle';
-import { ExplorerNavigation } from '@affine/core/components/explorer/header/navigation';
-import type { ExplorerDisplayPreference } from '@affine/core/components/explorer/types';
-import { Header } from '@affine/core/components/pure/header';
+import { FlexWrapper } from '@blank/component';
+import { ExplorerDisplayMenuButton } from '@blank/core/components/explorer/display-menu';
+import { ViewToggle } from '@blank/core/components/explorer/display-menu/view-toggle';
+import { ExplorerNavigation } from '@blank/core/components/explorer/header/navigation';
+import type { ExplorerDisplayPreference } from '@blank/core/components/explorer/types';
+import { Header } from '@blank/core/components/pure/header';
 
 export const CollectionDetailHeader = ({
   displayPreference,

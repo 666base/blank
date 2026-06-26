@@ -1,15 +1,15 @@
-import { CodeBlockHighlighter } from '@blocksuite/affine/blocks/code';
-import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
-import { ColorScheme } from '@blocksuite/affine/model';
-import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
-import { type BlockStdScope } from '@blocksuite/affine/std';
+import { CodeBlockHighlighter } from '@blocksuite/blank/blocks/code';
+import { SignalWatcher, WithDisposable } from '@blocksuite/blank/global/lit';
+import { ColorScheme } from '@blocksuite/blank/model';
+import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
+import { type BlockStdScope } from '@blocksuite/blank/std';
 import {
   type BlockSnapshot,
   nanoid,
   type SliceSnapshot,
   Text,
-} from '@blocksuite/affine/store';
-import type { NotificationService } from '@blocksuite/affine-shared/services';
+} from '@blocksuite/blank/store';
+import type { NotificationService } from '@blocksuite/blank-shared/services';
 import {
   CodeBlockIcon,
   CopyIcon,
@@ -376,7 +376,7 @@ export class CodeArtifactTool extends ArtifactTool<
       flex-direction: column;
     }
 
-    .code-artifact-preview > affine-html-preview {
+    .code-artifact-preview > blank-html-preview {
       height: 100%;
     }
 
@@ -487,7 +487,7 @@ export class CodeArtifactTool extends ArtifactTool<
 
     return html`<div class="code-artifact-preview">
       ${this.mode === 'preview'
-        ? html`<affine-html-preview .html=${htmlContent}></affine-html-preview>`
+        ? html`<blank-html-preview .html=${htmlContent}></blank-html-preview>`
         : html`<code-highlighter
             .std=${this.std}
             .code=${htmlContent}
@@ -514,7 +514,7 @@ export class CodeArtifactTool extends ArtifactTool<
       const codeBlock: BlockSnapshot = {
         type: 'block',
         id: nanoid(),
-        flavour: 'affine:code',
+        flavour: 'blank:code',
         version: 1,
         props: {
           language: 'html',
@@ -567,12 +567,12 @@ export class CodeArtifactTool extends ArtifactTool<
       try {
         const store = this.std?.store;
         if (!store) return;
-        const notes = store.getBlocksByFlavour('affine:note');
+        const notes = store.getBlocksByFlavour('blank:note');
         const parentId = notes.length > 0 ? notes[0].id : store.root?.id;
         if (!parentId) return;
         const html = preprocessHtml(htmlContent);
         store.addBlock(
-          'affine:code',
+          'blank:code',
           { text: new Text(html), language: 'html', preview: true },
           parentId
         );

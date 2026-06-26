@@ -1,5 +1,5 @@
-import { DocRole } from '@affine/graphql';
-import type { DocGrantedUserSnapshot } from '@affine/realtime';
+import { DocRole } from '@blank/graphql';
+import type { DocGrantedUserSnapshot } from '@blank/realtime';
 import {
   catchErrorInto,
   effect,

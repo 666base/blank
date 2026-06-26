@@ -1,7 +1,7 @@
-import '@blocksuite/affine/effects';
+import '@blocksuite/blank/effects';
 
-import { TestAffineEditorContainer } from './editors/index.js';
+import { TestBlankEditorContainer } from './editors/index.js';
 
 export function effects() {
-  customElements.define('affine-editor-container', TestAffineEditorContainer);
+  customElements.define('blank-editor-container', TestBlankEditorContainer);
 }

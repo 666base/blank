@@ -1,4 +1,4 @@
-import type { ServerFeature } from '@affine/graphql';
+import type { ServerFeature } from '@blank/graphql';
 import {
   backoffRetry,
   effect,

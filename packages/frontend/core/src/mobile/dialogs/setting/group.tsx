@@ -1,4 +1,4 @@
-import { ConfigModal } from '@affine/core/components/mobile';
+import { ConfigModal } from '@blank/core/components/mobile';
 import clsx from 'clsx';
 import {
   type CSSProperties,

@@ -1,4 +1,4 @@
-import type { PackageName } from '@affine-tools/utils/workspace';
+import type { PackageName } from '@blank-tools/utils/workspace';
 
 import { getDefaultDevServerPort } from './bundle-shared';
 import { Option, PackageSelectorCommand } from './command';
@@ -7,8 +7,8 @@ export class DevCommand extends PackageSelectorCommand {
   static override paths = [['dev'], ['d']];
 
   protected override availablePackages: PackageName[] = [
-    '@affine/web',
-    '@affine/mobile',
+    '@blank/web',
+    '@blank/mobile',
   ];
 
   protected deps = Option.Boolean('--deps', {

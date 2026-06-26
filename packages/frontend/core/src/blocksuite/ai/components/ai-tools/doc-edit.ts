@@ -1,8 +1,8 @@
-import track from '@affine/track';
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
-import { type EditorHost, ShadowlessElement } from '@blocksuite/affine/std';
-import type { NotificationService } from '@blocksuite/affine-shared/services';
+import track from '@blank/track';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
+import { type EditorHost, ShadowlessElement } from '@blocksuite/blank/std';
+import type { NotificationService } from '@blocksuite/blank-shared/services';
 import {
   CloseIcon,
   CopyIcon,
@@ -81,7 +81,7 @@ export class DocEditTool extends WithDisposable(ShadowlessElement) {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      background: ${unsafeCSSVar('--affine-overlay-panel-shadow')};
+      background: ${unsafeCSSVar('--blank-overlay-panel-shadow')};
       box-shadow: ${unsafeCSSVar('shadow1')};
       border-radius: 8px;
       width: 100%;
@@ -369,13 +369,13 @@ export class DocEditTool extends WithDisposable(ShadowlessElement) {
                   <div class="doc-edit-tool-result-card-header-operations">
                     <button @click=${() => this._toggleCollapse()}>
                       ${this.isCollapsed ? ExpandFullIcon() : ExpandCloseIcon()}
-                      <affine-tooltip>
+                      <blank-tooltip>
                         ${this.isCollapsed ? 'Expand' : 'Collapse'}
-                      </affine-tooltip>
+                      </blank-tooltip>
                     </button>
                     <button @click=${() => this._handleCopy(changedContent)}>
                       ${CopyIcon()}
-                      <affine-tooltip>Copy</affine-tooltip>
+                      <blank-tooltip>Copy</blank-tooltip>
                     </button>
                     <button @click=${() => this._handleApply(op)}>Apply</button>
                   </div>

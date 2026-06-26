@@ -4,8 +4,8 @@ import {
   ServerDeploymentType,
   updateUserProfileMutation,
   uploadAvatarMutation,
-} from '@affine/graphql';
-import type { CurrentUserProfileSnapshot } from '@affine/realtime';
+} from '@blank/graphql';
+import type { CurrentUserProfileSnapshot } from '@blank/realtime';
 import { Store } from '@toeverything/infra';
 
 import type { GlobalState, NbstoreService } from '../../storage';

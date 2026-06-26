@@ -1,7 +1,7 @@
 import {
   type ViewExtensionContext,
   ViewExtensionProvider,
-} from '@blocksuite/affine/ext-loader';
+} from '@blocksuite/blank/ext-loader';
 import { FrameworkProvider } from '@toeverything/infra';
 import { z } from 'zod';
 
@@ -11,16 +11,16 @@ const optionsSchema = z.object({
   framework: z.instanceof(FrameworkProvider).optional(),
 });
 
-type AffineIconPickerViewOptions = z.infer<typeof optionsSchema>;
+type BlankIconPickerViewOptions = z.infer<typeof optionsSchema>;
 
-export class AffineIconPickerExtension extends ViewExtensionProvider<AffineIconPickerViewOptions> {
-  override name = 'affine-icon-picker-extension';
+export class BlankIconPickerExtension extends ViewExtensionProvider<BlankIconPickerViewOptions> {
+  override name = 'blank-icon-picker-extension';
 
   override schema = optionsSchema;
 
   override setup(
     context: ViewExtensionContext,
-    options?: AffineIconPickerViewOptions
+    options?: BlankIconPickerViewOptions
   ) {
     super.setup(context, options);
     if (!options?.framework) {

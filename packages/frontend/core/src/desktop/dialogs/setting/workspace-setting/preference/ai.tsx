@@ -1,13 +1,13 @@
-import { Switch } from '@affine/component';
+import { Switch } from '@blank/component';
 import {
   SettingRow,
   SettingWrapper,
-} from '@affine/component/setting-components';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { ServerService } from '@affine/core/modules/cloud';
-import { WorkspacePermissionService } from '@affine/core/modules/permissions';
-import { WorkspaceShareSettingService } from '@affine/core/modules/share-setting';
-import { useI18n } from '@affine/i18n';
+} from '@blank/component/setting-components';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { ServerService } from '@blank/core/modules/cloud';
+import { WorkspacePermissionService } from '@blank/core/modules/permissions';
+import { WorkspaceShareSettingService } from '@blank/core/modules/share-setting';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 
 export const AiSetting = () => {
@@ -50,11 +50,11 @@ const AiSettingInner = ({
 
   return (
     <SettingWrapper
-      title={t['com.affine.settings.workspace.affine-ai.title']()}
+      title={t['com.blank.settings.workspace.blank-ai.title']()}
     >
       <SettingRow
-        name={t['com.affine.settings.workspace.affine-ai.label']()}
-        desc={t['com.affine.settings.workspace.affine-ai.description']()}
+        name={t['com.blank.settings.workspace.blank-ai.label']()}
+        desc={t['com.blank.settings.workspace.blank-ai.description']()}
       >
         <Switch
           checked={!!workspaceEnableAi}

@@ -1,15 +1,15 @@
-import type { CopilotChatHistoryFragment } from '@affine/graphql';
-import { Tooltip } from '@blocksuite/affine/components/tooltip';
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import { noop } from '@blocksuite/affine/global/utils';
-import { unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
-import { createButtonPopper } from '@blocksuite/affine/shared/utils';
+import type { CopilotChatHistoryFragment } from '@blank/graphql';
+import { Tooltip } from '@blocksuite/blank/components/tooltip';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import { noop } from '@blocksuite/blank/global/utils';
+import { unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
+import { createButtonPopper } from '@blocksuite/blank/shared/utils';
 import type {
   BlockSelection,
   EditorHost,
   TextSelection,
-} from '@blocksuite/affine/std';
-import type { NotificationService } from '@blocksuite/affine-shared/services';
+} from '@blocksuite/blank/std';
+import type { NotificationService } from '@blocksuite/blank-shared/services';
 import { CopyIcon, MoreHorizontalIcon, ResetIcon } from '@blocksuite/icons/lit';
 import { css, html, LitElement, nothing, type PropertyValues } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
@@ -37,7 +37,7 @@ export class ChatCopyMore extends WithDisposable(LitElement) {
       }
 
       div:hover {
-        background-color: var(--affine-hover-color);
+        background-color: var(--blank-hover-color);
       }
 
       .button {
@@ -54,8 +54,8 @@ export class ChatCopyMore extends WithDisposable(LitElement) {
     .more-menu {
       width: 226px;
       border-radius: 8px;
-      background-color: var(--affine-background-overlay-panel-color);
-      box-shadow: var(--affine-menu-shadow);
+      background-color: var(--blank-background-overlay-panel-color);
+      box-shadow: var(--blank-menu-shadow);
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -76,7 +76,7 @@ export class ChatCopyMore extends WithDisposable(LitElement) {
       }
 
       > div:hover {
-        background-color: var(--affine-hover-color);
+        background-color: var(--blank-hover-color);
       }
     }
   `;
@@ -190,7 +190,7 @@ export class ChatCopyMore extends WithDisposable(LitElement) {
               data-testid="action-copy-button"
             >
               ${CopyIcon({ width: '20px', height: '20px' })}
-              <affine-tooltip>Copy</affine-tooltip>
+              <blank-tooltip>Copy</blank-tooltip>
             </div>`
           : nothing}
         ${isLast
@@ -200,7 +200,7 @@ export class ChatCopyMore extends WithDisposable(LitElement) {
               data-testid="action-retry-button"
             >
               ${ResetIcon({ width: '20px', height: '20px' })}
-              <affine-tooltip .autoShift=${true}>Retry</affine-tooltip>
+              <blank-tooltip .autoShift=${true}>Retry</blank-tooltip>
             </div>`
           : nothing}
         ${showMoreIcon && host

@@ -1,3 +1,3 @@
-# @affine/error
+# @blank/error
 
-AFFiNE error handler utilities
+Blank error handler utilities

@@ -1,9 +1,9 @@
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import { ThemeProvider } from '@blocksuite/affine/shared/services';
-import { scrollbarStyle } from '@blocksuite/affine/shared/styles';
-import { unsafeCSSVar } from '@blocksuite/affine/shared/theme';
-import { on, stopPropagation } from '@blocksuite/affine/shared/utils';
-import type { EditorHost } from '@blocksuite/affine/std';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import { ThemeProvider } from '@blocksuite/blank/shared/services';
+import { scrollbarStyle } from '@blocksuite/blank/shared/styles';
+import { unsafeCSSVar } from '@blocksuite/blank/shared/theme';
+import { on, stopPropagation } from '@blocksuite/blank/shared/utils';
+import type { EditorHost } from '@blocksuite/blank/std';
 import { darkCssVariables, lightCssVariables } from '@toeverything/theme';
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
@@ -24,26 +24,26 @@ export class EdgelessCopilotPanel extends WithDisposable(LitElement) {
       min-width: 330px;
       overflow-y: auto;
       overscroll-behavior: contain;
-      background: ${unsafeCSSVar('--affine-background-overlay-panel-color')};
-      box-shadow: ${unsafeCSSVar('--affine-overlay-shadow')};
+      background: ${unsafeCSSVar('--blank-background-overlay-panel-color')};
+      box-shadow: ${unsafeCSSVar('--blank-overlay-shadow')};
       border-radius: 8px;
-      z-index: var(--affine-z-index-popover);
+      z-index: var(--blank-z-index-popover);
     }
 
     .edgeless-copilot-panel[data-app-theme='light'] {
       background: ${unsafeCSS(
-        lightCssVariables['--affine-background-overlay-panel-color']
+        lightCssVariables['--blank-background-overlay-panel-color']
       )};
 
-      box-shadow: ${unsafeCSS(lightCssVariables['--affine-overlay-shadow'])};
+      box-shadow: ${unsafeCSS(lightCssVariables['--blank-overlay-shadow'])};
     }
 
     .edgeless-copilot-panel[data-app-theme='dark'] {
       background: ${unsafeCSS(
-        darkCssVariables['--affine-background-overlay-panel-color']
+        darkCssVariables['--blank-background-overlay-panel-color']
       )};
 
-      box-shadow: ${unsafeCSS(darkCssVariables['--affine-overlay-shadow'])};
+      box-shadow: ${unsafeCSS(darkCssVariables['--blank-overlay-shadow'])};
     }
 
     .edgeless-copilot-panel[data-app-theme='dark'] ai-item {
@@ -52,15 +52,15 @@ export class EdgelessCopilotPanel extends WithDisposable(LitElement) {
 
     ${scrollbarStyle('.edgeless-copilot-panel')}
     .edgeless-copilot-panel:hover::-webkit-scrollbar-thumb {
-      background-color: var(--affine-black-30);
+      background-color: var(--blank-black-30);
     }
 
     .edgeless-copilot-panel[data-app-theme='light']:hover::-webkit-scrollbar-thumb {
-      background-color: ${unsafeCSS(lightCssVariables['--affine-black30'])};
+      background-color: ${unsafeCSS(lightCssVariables['--blank-black30'])};
     }
 
     .edgeless-copilot-panel[data-app-theme='dark']:hover::-webkit-scrollbar-thumb {
-      background-color: ${unsafeCSS(darkCssVariables['--affine-black30'])};
+      background-color: ${unsafeCSS(darkCssVariables['--blank-black30'])};
     }
   `;
 

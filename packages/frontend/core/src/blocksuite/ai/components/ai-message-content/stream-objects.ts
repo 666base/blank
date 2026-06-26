@@ -1,19 +1,19 @@
-import type { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import type { PeekViewService } from '@affine/core/modules/peek-view';
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import type { ColorScheme } from '@blocksuite/affine/model';
+import type { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import type { PeekViewService } from '@blank/core/modules/peek-view';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import type { ColorScheme } from '@blocksuite/blank/model';
 import {
   type BlockStdScope,
   type EditorHost,
   ShadowlessElement,
-} from '@blocksuite/affine/std';
-import type { ExtensionType } from '@blocksuite/affine/store';
-import type { NotificationService } from '@blocksuite/affine-shared/services';
+} from '@blocksuite/blank/std';
+import type { ExtensionType } from '@blocksuite/blank/store';
+import type { NotificationService } from '@blocksuite/blank-shared/services';
 import type { Signal } from '@preact/signals-core';
 import { css, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import type { AffineAIPanelState } from '../../widgets/ai-panel/type';
+import type { BlankAIPanelState } from '../../widgets/ai-panel/type';
 import type { DocDisplayConfig } from '../ai-chat-chips';
 import type { StreamObject } from '../ai-chat-messages';
 
@@ -39,7 +39,7 @@ export class ChatContentStreamObjects extends WithDisposable(
   accessor std: BlockStdScope | null | undefined;
 
   @property({ attribute: false })
-  accessor state: AffineAIPanelState = 'finished';
+  accessor state: BlankAIPanelState = 'finished';
 
   @property({ attribute: false })
   accessor width: Signal<number | undefined> | undefined;
@@ -48,7 +48,7 @@ export class ChatContentStreamObjects extends WithDisposable(
   accessor extensions!: ExtensionType[];
 
   @property({ attribute: false })
-  accessor affineFeatureFlagService!: FeatureFlagService;
+  accessor blankFeatureFlagService!: FeatureFlagService;
 
   @property({ attribute: false })
   accessor theme!: Signal<ColorScheme>;
@@ -146,7 +146,7 @@ export class ChatContentStreamObjects extends WithDisposable(
           <section-edit-tool
             .data=${streamObject}
             .extensions=${this.extensions}
-            .affineFeatureFlagService=${this.affineFeatureFlagService}
+            .blankFeatureFlagService=${this.blankFeatureFlagService}
             .notificationService=${this.notificationService}
             .theme=${this.theme}
             .host=${this.host}
@@ -248,7 +248,7 @@ export class ChatContentStreamObjects extends WithDisposable(
           <section-edit-tool
             .data=${streamObject}
             .extensions=${this.extensions}
-            .affineFeatureFlagService=${this.affineFeatureFlagService}
+            .blankFeatureFlagService=${this.blankFeatureFlagService}
             .notificationService=${this.notificationService}
             .theme=${this.theme}
             .host=${this.host}
@@ -272,7 +272,7 @@ export class ChatContentStreamObjects extends WithDisposable(
       .text=${text}
       .state=${this.state}
       .extensions=${this.extensions}
-      .affineFeatureFlagService=${this.affineFeatureFlagService}
+      .blankFeatureFlagService=${this.blankFeatureFlagService}
       .theme=${this.theme}
     ></chat-content-rich-text>`;
   }

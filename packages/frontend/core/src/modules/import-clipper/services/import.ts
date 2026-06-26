@@ -1,13 +1,10 @@
-import { getStoreManager } from '@affine/core/blocksuite/manager/store';
-import { MarkdownTransformer } from '@blocksuite/affine/widgets/linked-doc';
+import { getStoreManager } from '@blank/core/blocksuite/manager/store';
+import { MarkdownTransformer } from '@blocksuite/blank/widgets/linked-doc';
 import { Service } from '@toeverything/infra';
 
 import { DocsService } from '../../doc';
-import {
-  getAFFiNEWorkspaceSchema,
-  type WorkspaceMetadata,
-  type WorkspacesService,
-} from '../../workspace';
+import { ensureBlankWorkspaceSchema } from '../../workspace/global-schema';
+import type { WorkspaceMetadata, WorkspacesService } from '../../workspace';
 
 export interface ClipperInput {
   title: string;
@@ -33,7 +30,7 @@ export class ImportClipperService extends Service {
     await workspace.engine.doc.waitForDocReady(workspace.id); // wait for root doc ready
     const docId = await MarkdownTransformer.importMarkdownToDoc({
       collection: workspace.docCollection,
-      schema: getAFFiNEWorkspaceSchema(),
+      schema: await ensureBlankWorkspaceSchema(),
       markdown: clipperInput.contentMarkdown,
       extensions: getStoreManager().config.init().value.get('store'),
     });
@@ -67,7 +64,7 @@ export class ImportClipperService extends Service {
         docCollection.doc.getMap('meta').set('name', workspaceName);
         docId = await MarkdownTransformer.importMarkdownToDoc({
           collection: docCollection,
-          schema: getAFFiNEWorkspaceSchema(),
+          schema: await ensureBlankWorkspaceSchema(),
           markdown: clipperInput.contentMarkdown,
           extensions: getStoreManager().config.init().value.get('store'),
         });

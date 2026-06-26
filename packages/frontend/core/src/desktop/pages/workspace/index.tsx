@@ -1,21 +1,22 @@
-import { DNDContext } from '@affine/component';
-import { AffineOtherPageLayout } from '@affine/component/affine-other-page-layout';
-import { workbenchRoutes } from '@affine/core/desktop/workbench-router';
+import { DNDContext } from '@blank/component';
+import { BlankOtherPageLayout } from '@blank/component/blank-other-page-layout';
+import { workbenchRoutes } from '@blank/core/desktop/workbench-router';
 import {
   DefaultServerService,
   ServersService,
-} from '@affine/core/modules/cloud';
-import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import { DndService } from '@affine/core/modules/dnd/services';
-import { GlobalContextService } from '@affine/core/modules/global-context';
-import { OpenInAppGuard } from '@affine/core/modules/open-in-app';
+} from '@blank/core/modules/cloud';
+import { GlobalDialogService } from '@blank/core/modules/dialogs';
+import { DndService } from '@blank/core/modules/dnd/services';
+import { GlobalContextService } from '@blank/core/modules/global-context';
+import { OpenInAppGuard } from '@blank/core/modules/open-in-app';
 import {
-  getAFFiNEWorkspaceSchema,
   type Workspace,
   type WorkspaceMetadata,
   WorkspacesService,
-} from '@affine/core/modules/workspace';
-import { ZipTransformer } from '@blocksuite/affine/widgets/linked-doc';
+} from '@blank/core/modules/workspace';
+import { ensureBlankWorkspaceSchema } from '@blank/core/modules/workspace/global-schema';
+import { getOptimisticWorkspaceMeta, persistFastBootRoute } from '@blank/core/utils/blank-fast-boot';
+import { ensureInstantWorkspace } from '@blank/core/utils/blank-instant-workspace';
 import {
   FrameworkScope,
   LiveData,
@@ -24,7 +25,7 @@ import {
   useServices,
 } from '@toeverything/infra';
 import type { PropsWithChildren, ReactElement } from 'react';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   matchPath,
   useLocation,
@@ -34,12 +35,15 @@ import {
 import { map } from 'rxjs';
 import * as _Y from 'yjs';
 
-import { AffineErrorBoundary } from '../../../components/affine/affine-error-boundary';
+import { BlankErrorBoundary } from '../../../components/blank/blank-error-boundary';
 import { WorkbenchRoot } from '../../../modules/workbench';
 import { AppContainer } from '../../components/app-container';
 import { PageNotFound } from '../404';
 import { WorkspaceLayout } from './layouts/workspace-layout';
-import { SharePage } from './share/share-page';
+
+const SharePage = lazy(() =>
+  import('./share/share-page').then(m => ({ default: m.SharePage }))
+);
 
 declare global {
   /**
@@ -54,7 +58,7 @@ declare global {
   // oxlint-disable-next-line no-var
   var Y: typeof _Y;
   interface WindowEventMap {
-    'affine:workspace:change': CustomEvent<{ id: string }>;
+    'blank:workspace:change': CustomEvent<{ id: string }>;
   }
 }
 
@@ -110,15 +114,22 @@ export const Component = (): ReactElement => {
     return workspaces.find(({ id }) => id === params.workspaceId);
   }, [workspaces, params.workspaceId]);
 
+  const effectiveMeta = useMemo(() => {
+    if (meta) {
+      return meta;
+    }
+    return getOptimisticWorkspaceMeta(params.workspaceId) ?? undefined;
+  }, [meta, params.workspaceId]);
+
   // if listLoading is false, we can show 404 page, otherwise we should show loading page.
   useEffect(() => {
-    if (listLoading === false && meta === undefined) {
+    if (listLoading === false && effectiveMeta === undefined) {
       setWorkspaceNotFound(true);
     }
-    if (meta) {
+    if (effectiveMeta) {
       setWorkspaceNotFound(false);
     }
-  }, [listLoading, meta, workspacesService]);
+  }, [listLoading, effectiveMeta, workspacesService]);
 
   // if workspace is not found, we should retry
   const retryTimesRef = useRef(3);
@@ -129,7 +140,7 @@ export const Component = (): ReactElement => {
     }
   }, [params.workspaceId, workspacesService]);
   useEffect(() => {
-    if (listLoading === false && meta === undefined) {
+    if (listLoading === false && effectiveMeta === undefined) {
       const timer = setTimeout(() => {
         if (retryTimesRef.current > 0) {
           workspacesService.list.revalidate();
@@ -139,7 +150,7 @@ export const Component = (): ReactElement => {
       return () => clearTimeout(timer);
     }
     return;
-  }, [listLoading, meta, workspaceNotFound, workspacesService]);
+  }, [listLoading, effectiveMeta, workspaceNotFound, workspacesService]);
 
   // server search params
   const serverFromSearchParams = useLiveData(
@@ -149,8 +160,8 @@ export const Component = (): ReactElement => {
   );
   // server from workspace
   const serverFromWorkspace = useLiveData(
-    meta?.flavour && meta.flavour !== 'local'
-      ? serversService.server$(meta?.flavour)
+    effectiveMeta?.flavour && effectiveMeta.flavour !== 'local'
+      ? serversService.server$(effectiveMeta?.flavour)
       : undefined
   );
   const server = serverFromWorkspace ?? serverFromSearchParams;
@@ -198,28 +209,30 @@ export const Component = (): ReactElement => {
     if (detailDocRoute) {
       return (
         <FrameworkScope scope={server?.scope}>
-          <SharePage
-            docId={detailDocRoute.docId}
-            workspaceId={detailDocRoute.workspaceId}
-          />
+          <Suspense fallback={<AppContainer fallback />}>
+            <SharePage
+              docId={detailDocRoute.docId}
+              workspaceId={detailDocRoute.workspaceId}
+            />
+          </Suspense>
         </FrameworkScope>
       );
     }
     return (
       <FrameworkScope scope={server?.scope}>
-        <AffineOtherPageLayout>
+        <BlankOtherPageLayout>
           <PageNotFound noPermission />
-        </AffineOtherPageLayout>
+        </BlankOtherPageLayout>
       </FrameworkScope>
     );
   }
-  if (!meta) {
+  if (!effectiveMeta) {
     return <AppContainer fallback />;
   }
 
   return (
     <FrameworkScope scope={server?.scope}>
-      <WorkspacePage meta={meta} />
+      <WorkspacePage meta={effectiveMeta} />
     </FrameworkScope>
   );
 };
@@ -253,35 +266,25 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
     };
   }, [meta, workspacesService]);
 
-  const rootDocReady$ = useMemo(
-    () =>
-      workspace
-        ? LiveData.from(
-            workspace.engine.doc
-              .docState$(workspace.id)
-              .pipe(map(v => v.ready)),
-            false
-          )
-        : null,
-    [workspace]
-  );
-  const isRootDocReady = useLiveData(rootDocReady$) ?? false;
-
   useEffect(() => {
     if (workspace) {
       // for debug purpose
       window.currentWorkspace = workspace ?? undefined;
       window.dispatchEvent(
-        new CustomEvent('affine:workspace:change', {
+        new CustomEvent('blank:workspace:change', {
           detail: {
             id: workspace.id,
           },
         })
       );
       window.exportWorkspaceSnapshot = async (docs?: string[]) => {
+        const { ZipTransformer } = await import(
+          '@blocksuite/blank/widgets/linked-doc'
+        );
+        const schema = await ensureBlankWorkspaceSchema();
         await ZipTransformer.exportDocs(
           workspace.docCollection,
-          getAFFiNEWorkspaceSchema(),
+          schema,
           Array.from(workspace.docCollection.docs.values())
             .filter(doc => (docs ? docs.includes(doc.id) : true))
             .map(doc => doc.getStore())
@@ -295,9 +298,13 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
           if (input.files && input.files.length > 0) {
             const file = input.files[0];
             const blob = new Blob([file], { type: 'application/zip' });
+            const { ZipTransformer } = await import(
+              '@blocksuite/blank/widgets/linked-doc'
+            );
+            const schema = await ensureBlankWorkspaceSchema();
             const newDocs = await ZipTransformer.importDocs(
               workspace.docCollection,
-              getAFFiNEWorkspaceSchema(),
+              schema,
               blob
             );
             console.log(
@@ -313,7 +320,8 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
         };
         input.click();
       };
-      localStorage.setItem('last_workspace_id', workspace.id);
+      persistFastBootRoute(workspace.id, undefined, workspace.flavour);
+      void ensureInstantWorkspace(workspacesService, workspace);
       globalContextService.globalContext.workspaceId.set(workspace.id);
       globalContextService.globalContext.workspaceFlavour.set(
         workspace.flavour
@@ -331,27 +339,15 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
     return <AppContainer fallback />;
   }
 
-  if (!isRootDocReady) {
-    return (
-      <FrameworkScope scope={workspace.scope}>
-        <DNDContextProvider>
-          <OpenInAppGuard>
-            <AppContainer fallback />
-          </OpenInAppGuard>
-        </DNDContextProvider>
-      </FrameworkScope>
-    );
-  }
-
   return (
     <FrameworkScope scope={workspace.scope}>
       <DNDContextProvider>
         <OpenInAppGuard>
-          <AffineErrorBoundary height="100vh">
+          <BlankErrorBoundary height="100vh">
             <WorkspaceLayout>
               <WorkbenchRoot />
             </WorkspaceLayout>
-          </AffineErrorBoundary>
+          </BlankErrorBoundary>
         </OpenInAppGuard>
       </DNDContextProvider>
     </FrameworkScope>

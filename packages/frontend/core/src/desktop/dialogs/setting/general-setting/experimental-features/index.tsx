@@ -1,14 +1,14 @@
-import { Button, Checkbox, Loading, Switch, Tooltip } from '@affine/component';
-import { SettingHeader } from '@affine/component/setting-components';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { getBlankGithubUrl } from '@affine/core/utils/blank-links';
-import { isBlankBranding } from '@affine/core/utils/blank-branding';
+import { Button, Checkbox, Loading, Switch, Tooltip } from '@blank/component';
+import { SettingHeader } from '@blank/component/setting-components';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { getBlankGithubUrl } from '@blank/core/utils/blank-links';
+import { isBlankBranding } from '@blank/core/utils/blank-branding';
 import {
-  AFFINE_FLAGS,
+  BLANK_FLAGS,
   FeatureFlagService,
   type Flag,
-} from '@affine/core/modules/feature-flag';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/feature-flag';
+import { useI18n } from '@blank/i18n';
 import {
   ArrowRightSmallIcon,
   DiscordIcon,
@@ -42,7 +42,7 @@ const ExperimentalFeaturesPrompt = ({
     <div className={styles.promptRoot} data-testid="experimental-prompt">
       <div className={styles.promptTitle}>
         {t[
-          'com.affine.settings.workspace.experimental-features.prompt-header'
+          'com.blank.settings.workspace.experimental-features.prompt-header'
         ]()}
       </div>
       <div className={styles.promptArt}>
@@ -51,11 +51,11 @@ const ExperimentalFeaturesPrompt = ({
       <div className={styles.promptWarning}>
         <div className={styles.promptWarningTitle}>
           {t[
-            'com.affine.settings.workspace.experimental-features.prompt-warning-title'
+            'com.blank.settings.workspace.experimental-features.prompt-warning-title'
           ]()}
         </div>
         {t[
-          'com.affine.settings.workspace.experimental-features.prompt-warning'
+          'com.blank.settings.workspace.experimental-features.prompt-warning'
         ]()}
       </div>
 
@@ -68,7 +68,7 @@ const ExperimentalFeaturesPrompt = ({
           data-testid="experimental-prompt-disclaimer"
         />
         {t[
-          'com.affine.settings.workspace.experimental-features.prompt-disclaimer'
+          'com.blank.settings.workspace.experimental-features.prompt-disclaimer'
         ]()}
       </label>
 
@@ -80,7 +80,7 @@ const ExperimentalFeaturesPrompt = ({
           data-testid="experimental-confirm-button"
         >
           {t[
-            'com.affine.settings.workspace.experimental-features.get-started'
+            'com.blank.settings.workspace.experimental-features.get-started'
           ]()}
         </Button>
       </div>
@@ -106,7 +106,7 @@ const feedbackLink: Record<NonNullable<Flag['feedbackType']>, string> = {
   email: 'mailto:support@toeverything.info',
   github: isBlankBranding()
     ? `${getBlankGithubUrl()}/issues`
-    : 'https://github.com/toeverything/AFFiNE/issues',
+    : 'https://github.com/666base/blank/issues',
 };
 
 const ExperimentalFeaturesItem = ({
@@ -172,21 +172,21 @@ const ExperimentalFeaturesMain = () => {
     <>
       <SettingHeader
         title={t[
-          'com.affine.settings.workspace.experimental-features.header.plugins'
+          'com.blank.settings.workspace.experimental-features.header.plugins'
         ]()}
         subtitle={t[
-          'com.affine.settings.workspace.experimental-features.header.subtitle'
+          'com.blank.settings.workspace.experimental-features.header.subtitle'
         ]()}
       />
       <div
         className={styles.settingsContainer}
         data-testid="experimental-settings"
       >
-        {Object.keys(AFFINE_FLAGS).map(key => (
+        {Object.keys(BLANK_FLAGS).map(key => (
           <ExperimentalFeaturesItem
             key={key}
             flagKey={key}
-            flag={featureFlagService.flags[key as keyof AFFINE_FLAGS]}
+            flag={featureFlagService.flags[key as keyof BLANK_FLAGS]}
           />
         ))}
       </div>
@@ -196,7 +196,7 @@ const ExperimentalFeaturesMain = () => {
 
 // TODO(@Peng): save to workspace meta instead?
 const experimentalFeaturesDisclaimerAtom = atomWithStorage(
-  'affine:experimental-features-disclaimer',
+  'blank:experimental-features-disclaimer',
   false
 );
 

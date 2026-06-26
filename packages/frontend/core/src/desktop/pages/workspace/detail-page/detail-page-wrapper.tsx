@@ -1,9 +1,10 @@
-import { type Doc, DocsService } from '@affine/core/modules/doc';
-import type { Editor } from '@affine/core/modules/editor';
-import { EditorsService } from '@affine/core/modules/editor';
-import { ViewService } from '@affine/core/modules/workbench/services/view';
-import { WorkspaceService } from '@affine/core/modules/workspace';
+import { type Doc, DocsService } from '@blank/core/modules/doc';
+import type { Editor } from '@blank/core/modules/editor';
+import { EditorsService } from '@blank/core/modules/editor';
+import { ViewService } from '@blank/core/modules/workbench/services/view';
+import { WorkspaceService } from '@blank/core/modules/workspace';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
+import { preloadBlockSuiteEditor } from '@blank/core/blocksuite/preload-block-suite-editor';
 import {
   type PropsWithChildren,
   type ReactNode,
@@ -76,6 +77,11 @@ export const DetailPageWrapper = ({
   canAccess?: boolean;
 }>) => {
   const { doc, editor, docListReady } = useLoadDoc(pageId);
+
+  useEffect(() => {
+    preloadBlockSuiteEditor();
+  }, [pageId]);
+
   // if sync engine has been synced and the page is null, show 404 page.
   if (docListReady && !doc) {
     return notFound;

@@ -3,19 +3,19 @@ import {
   Button,
   Tooltip,
   useConfirmModal,
-} from '@affine/component';
-import { AudioPlayer } from '@affine/component/ui/audio-player';
-import { useEnableAI } from '@affine/core/components/hooks/affine/use-enable-ai';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { useSeekTime } from '@affine/core/components/hooks/use-seek-time';
-import { CurrentServerScopeProvider } from '@affine/core/components/providers/current-server-scope';
-import { PublicUserLabel } from '@affine/core/modules/cloud/views/public-user';
-import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import type { AudioAttachmentBlock } from '@affine/core/modules/media/entities/audio-attachment-block';
-import { AudioAttachmentService } from '@affine/core/modules/media/services/audio-attachment';
-import { Trans, useI18n } from '@affine/i18n';
-import track from '@affine/track';
-import type { AttachmentBlockModel } from '@blocksuite/affine/model';
+} from '@blank/component';
+import { AudioPlayer } from '@blank/component/ui/audio-player';
+import { useEnableAI } from '@blank/core/components/hooks/blank/use-enable-ai';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { useSeekTime } from '@blank/core/components/hooks/use-seek-time';
+import { CurrentServerScopeProvider } from '@blank/core/components/providers/current-server-scope';
+import { PublicUserLabel } from '@blank/core/modules/cloud/views/public-user';
+import { GlobalDialogService } from '@blank/core/modules/dialogs';
+import type { AudioAttachmentBlock } from '@blank/core/modules/media/entities/audio-attachment-block';
+import { AudioAttachmentService } from '@blank/core/modules/media/services/audio-attachment';
+import { Trans, useI18n } from '@blank/i18n';
+import track from '@blank/track';
+import type { AttachmentBlockModel } from '@blocksuite/blank/model';
 import { ResetIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import bytes from 'bytes';
@@ -96,13 +96,13 @@ const AttachmentAudioPlayer = ({ block }: { block: AudioAttachmentBlock }) => {
 
     if (!block.transcriptionJob.currentUserId) {
       confirmModal.openConfirmModal({
-        title: t['com.affine.ai.login-required.dialog-title'](),
-        description: t['com.affine.ai.login-required.dialog-content'](),
-        confirmText: t['com.affine.ai.login-required.dialog-confirm'](),
+        title: t['com.blank.ai.login-required.dialog-title'](),
+        description: t['com.blank.ai.login-required.dialog-content'](),
+        confirmText: t['com.blank.ai.login-required.dialog-confirm'](),
         confirmButtonOptions: {
           variant: 'primary',
         },
-        cancelText: t['com.affine.ai.login-required.dialog-cancel'](),
+        cancelText: t['com.blank.ai.login-required.dialog-cancel'](),
         onConfirm: () => {
           globalDialogService.open('sign-in', {});
         },
@@ -119,9 +119,9 @@ const AttachmentAudioPlayer = ({ block }: { block: AudioAttachmentBlock }) => {
     setPreflightChecking(false);
     if (result?.error === 'created-by-others') {
       confirmModal.openConfirmModal({
-        title: t['com.affine.audio.transcribe.non-owner.confirm.title'](),
+        title: t['com.blank.audio.transcribe.non-owner.confirm.title'](),
         description: (
-          <Trans i18nKey="com.affine.audio.transcribe.non-owner.confirm.message">
+          <Trans i18nKey="com.blank.audio.transcribe.non-owner.confirm.message">
             Please contact <PublicUserLabel id={result.userId} /> to upgrade AI
             rights or resend the attachment.
           </Trans>
@@ -173,13 +173,13 @@ const AttachmentAudioPlayer = ({ block }: { block: AudioAttachmentBlock }) => {
         onClick={handleNotesClick}
       >
         {transcribing
-          ? t['com.affine.audio.transcribing']()
-          : t['com.affine.audio.notes']()}
+          ? t['com.blank.audio.transcribing']()
+          : t['com.blank.audio.notes']()}
       </Button>
     );
     if (transcribing) {
       return (
-        <Tooltip content={t['com.affine.audio.transcribing']()}>
+        <Tooltip content={t['com.blank.audio.transcribing']()}>
           {inner}
         </Tooltip>
       );

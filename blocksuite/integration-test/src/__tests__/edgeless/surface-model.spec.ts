@@ -1,9 +1,9 @@
-import type { SurfaceBlockModel } from '@blocksuite/affine/blocks/surface';
+import type { SurfaceBlockModel } from '@blocksuite/blank/blocks/surface';
 import type {
   BrushElementModel,
   ConnectorElementModel,
   GroupElementModel,
-} from '@blocksuite/affine/model';
+} from '@blocksuite/blank/model';
 import { serializeXYWH } from '@blocksuite/global/gfx';
 import { beforeEach, describe, expect, test } from 'vitest';
 
@@ -15,7 +15,7 @@ let model: SurfaceBlockModel;
 beforeEach(async () => {
   const cleanup = await setupEditor('edgeless');
   const models = doc.getModelsByFlavour(
-    'affine:surface'
+    'blank:surface'
   ) as SurfaceBlockModel[];
 
   model = models[0];

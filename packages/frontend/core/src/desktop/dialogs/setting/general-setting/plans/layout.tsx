@@ -1,6 +1,6 @@
-import { Divider } from '@affine/component';
-import { SettingHeader } from '@affine/component/setting-components';
-import { useI18n } from '@affine/i18n';
+import { Divider } from '@blank/component';
+import { SettingHeader } from '@blank/component/setting-components';
+import { useI18n } from '@blank/i18n';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 import { type ReactNode, useRef } from 'react';
 
@@ -12,7 +12,7 @@ export const SeeAllLink = () => {
 
   return (
     <span className={styles.allPlansLink}>
-      {t['com.affine.payment.see-all-plans']()}
+      {t['com.blank.payment.see-all-plans']()}
     </span>
   );
 };
@@ -31,7 +31,7 @@ export const PlanLayout = ({ cloud, ai }: PlanLayoutProps) => {
       {/* TODO(@catsjuice): SettingHeader component shouldn't have margin itself  */}
       <SettingHeader
         style={{ marginBottom: '0px' }}
-        title={t['com.affine.payment.title']()}
+        title={t['com.blank.payment.title']()}
       />
       {ai ? (
         <>
@@ -64,7 +64,7 @@ export const CloudPlanLayout = ({
 }: PlanCardProps) => {
   return (
     <CollapsibleWrapper title={title} caption={caption}>
-      <div className={styles.affineCloudHeader}>
+      <div className={styles.blankCloudHeader}>
         <div>{select}</div>
         <div>{toggle}</div>
       </div>

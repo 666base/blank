@@ -1,7 +1,7 @@
-import type { SettingTab } from '@affine/core/modules/dialogs/constant';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { MeetingSettingsService } from '@affine/core/modules/media/services/meeting-settings';
-import { useI18n } from '@affine/i18n';
+import type { SettingTab } from '@blank/core/modules/dialogs/constant';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { MeetingSettingsService } from '@blank/core/modules/media/services/meeting-settings';
+import { useI18n } from '@blank/i18n';
 import {
   AppearanceIcon,
   CloudWorkspaceIcon,
@@ -16,8 +16,9 @@ import {
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useMemo } from 'react';
 
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import type { SettingSidebarItem } from '../types';
-import { AboutAffine } from './about';
+import { AboutBlank } from './about';
 import { AppearanceSettings } from './appearance';
 import { BackupSettingPanel } from './backup';
 import { EditorSettings } from './editor';
@@ -25,6 +26,7 @@ import { ExperimentalFeatures } from './experimental-features';
 import { MeetingsSettings } from './meetings';
 import { NotificationSettings } from './notifications';
 import { Shortcuts } from './shortcuts';
+import { BlankAccountSettings } from './blank-account';
 import { BlankSyncSettings } from './sync';
 
 export type GeneralSettingList = SettingSidebarItem[];
@@ -45,20 +47,20 @@ export const useGeneralSettingList = (): GeneralSettingList => {
     const settings: GeneralSettingList = [
       {
         key: 'appearance',
-        title: t['com.affine.settings.appearance'](),
+        title: t['com.blank.settings.appearance'](),
         icon: <AppearanceIcon />,
         testId: 'appearance-panel-trigger',
       },
       {
         key: 'shortcuts',
-        title: t['com.affine.keyboardShortcuts.title'](),
+        title: t['com.blank.keyboardShortcuts.title'](),
         icon: <KeyboardIcon />,
         testId: 'shortcuts-panel-trigger',
       },
     ];
     settings.push({
       key: 'notifications',
-      title: t['com.affine.setting.notifications'](),
+      title: t['com.blank.setting.notifications'](),
       icon: <NotificationIcon />,
       testId: 'notifications-panel-trigger',
     });
@@ -66,7 +68,7 @@ export const useGeneralSettingList = (): GeneralSettingList => {
       // add editor settings to second position
       settings.splice(1, 0, {
         key: 'editor',
-        title: t['com.affine.settings.editorSettings'](),
+        title: t['com.blank.settings.editorSettings'](),
         icon: <PenIcon />,
         testId: 'editor-panel-trigger',
       });
@@ -78,7 +80,7 @@ export const useGeneralSettingList = (): GeneralSettingList => {
     ) {
       settings.push({
         key: 'meetings',
-        title: t['com.affine.settings.meetings'](),
+        title: t['com.blank.settings.meetings'](),
         icon: <MeetingIcon />,
         testId: 'meetings-panel-trigger',
         beta: !meetingSettings?.enabled,
@@ -88,29 +90,38 @@ export const useGeneralSettingList = (): GeneralSettingList => {
     if (BUILD_CONFIG.isElectron) {
       settings.push({
         key: 'backup',
-        title: t['com.affine.settings.workspace.backup'](),
+        title: t['com.blank.settings.workspace.backup'](),
         icon: <FolderIcon />,
         testId: 'backup-panel-trigger',
       });
     }
 
-    settings.push({
-      key: 'sync',
-      title: t['com.blank.sync.title'](),
-      icon: <CloudWorkspaceIcon />,
-      testId: 'sync-panel-trigger',
-    });
+    if (isBlankBuild()) {
+      settings.push({
+        key: 'sync',
+        title: t['com.blank.auth.title'](),
+        icon: <CloudWorkspaceIcon />,
+        testId: 'blank-account-panel-trigger',
+      });
+    } else {
+      settings.push({
+        key: 'sync',
+        title: t['com.blank.sync.title'](),
+        icon: <CloudWorkspaceIcon />,
+        testId: 'sync-panel-trigger',
+      });
+    }
 
     settings.push(
       {
         key: 'experimental-features',
-        title: t['com.affine.settings.workspace.experimental-features'](),
+        title: t['com.blank.settings.workspace.experimental-features'](),
         icon: <ExperimentIcon />,
         testId: 'experimental-features-trigger',
       },
       {
         key: 'about',
-        title: t['com.affine.aboutAFFiNE.title'](),
+        title: t['com.blank.aboutBlank.title'](),
         icon: <InformationIcon />,
         testId: 'about-panel-trigger',
       }
@@ -136,13 +147,13 @@ export const GeneralSetting = ({ activeTab }: GeneralSettingProps) => {
     case 'meetings':
       return <MeetingsSettings />;
     case 'about':
-      return <AboutAffine />;
+      return <AboutBlank />;
     case 'experimental-features':
       return <ExperimentalFeatures />;
     case 'backup':
       return <BackupSettingPanel />;
     case 'sync':
-      return <BlankSyncSettings />;
+      return isBlankBuild() ? <BlankAccountSettings /> : <BlankSyncSettings />;
     default:
       return null;
   }

@@ -1,4 +1,4 @@
-import { DebugLogger } from '@affine/debug';
+import { DebugLogger } from '@blank/debug';
 
 export type TelemetryEvent = {
   schemaVersion: 1;

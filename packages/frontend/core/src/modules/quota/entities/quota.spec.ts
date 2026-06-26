@@ -1,5 +1,5 @@
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import type { WorkspaceQuotaStateSnapshot } from '@affine/realtime';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import type { WorkspaceQuotaStateSnapshot } from '@blank/realtime';
 import { Framework } from '@toeverything/infra';
 import { Subject } from 'rxjs';
 import { describe, expect, test, vi } from 'vitest';

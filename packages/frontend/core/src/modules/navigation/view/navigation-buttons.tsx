@@ -1,5 +1,6 @@
-import { IconButton } from '@affine/component';
-import { useI18n } from '@affine/i18n';
+import { IconButton } from '@blank/component';
+import { isDesktopApp } from '@blank/core/utils/local-only';
+import { useI18n } from '@blank/i18n';
 import { ArrowLeftSmallIcon, ArrowRightSmallIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect } from 'react';
@@ -10,7 +11,7 @@ import * as styles from './navigation-buttons.css';
 const tooltipSideBottom = { side: 'bottom' as const };
 
 export const NavigationButtons = () => {
-  if (!BUILD_CONFIG.isElectron) {
+  if (!isDesktopApp()) {
     return null;
   }
 

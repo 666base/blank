@@ -1,36 +1,36 @@
-import { uniReactRoot } from '@affine/component';
-import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
-import { AiLoginRequiredModal } from '@affine/core/components/affine/auth/ai-login-required';
-import { SWRConfigProvider } from '@affine/core/components/providers/swr-config-provider';
-import { WorkspaceSideEffects } from '@affine/core/components/providers/workspace-side-effects';
+import { uniReactRoot } from '@blank/component';
+import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
+import { AiLoginRequiredModal } from '@blank/core/components/blank/auth/ai-login-required';
+import { SWRConfigProvider } from '@blank/core/components/providers/swr-config-provider';
+import { WorkspaceSideEffects } from '@blank/core/components/providers/workspace-side-effects';
 import {
   DefaultServerService,
   WorkspaceServerService,
-} from '@affine/core/modules/cloud';
-import { GlobalContextService } from '@affine/core/modules/global-context';
-import { PeekViewManagerModal } from '@affine/core/modules/peek-view';
+} from '@blank/core/modules/cloud';
+import { GlobalContextService } from '@blank/core/modules/global-context';
+import { PeekViewManagerModal } from '@blank/core/modules/peek-view';
 import type {
   Workspace,
   WorkspaceMetadata,
-} from '@affine/core/modules/workspace';
-import { WorkspacesService } from '@affine/core/modules/workspace';
+} from '@blank/core/modules/workspace';
+import { WorkspacesService } from '@blank/core/modules/workspace';
 import {
   FrameworkScope,
-  LiveData,
-  useLiveData,
   useServices,
 } from '@toeverything/infra';
 import {
   type PropsWithChildren,
   useEffect,
   useLayoutEffect,
-  useMemo,
   useState,
 } from 'react';
-import { map } from 'rxjs';
 
-import { AppFallback } from '../../components/app-fallback';
 import { WorkspaceDialogs } from '../../dialogs';
+import {
+  persistFastBootRoute,
+  scheduleRemoveBootSplash,
+} from '@blank/core/utils/blank-fast-boot';
+import { ensureInstantWorkspace } from '@blank/core/utils/blank-instant-workspace';
 
 // TODO(@forehalo): reuse the global context with [core/electron]
 declare global {
@@ -44,7 +44,7 @@ declare global {
   // oxlint-disable-next-line no-var
   var importWorkspaceSnapshot: () => Promise<void>;
   interface WindowEventMap {
-    'affine:workspace:change': CustomEvent<{ id: string }>;
+    'blank:workspace:change': CustomEvent<{ id: string }>;
   }
 }
 
@@ -73,16 +73,23 @@ export const WorkspaceLayout = ({
 
   useEffect(() => {
     if (workspace) {
+      scheduleRemoveBootSplash();
+      void ensureInstantWorkspace(workspacesService, workspace);
+    }
+  }, [workspace, workspacesService]);
+
+  useEffect(() => {
+    if (workspace) {
       // for debug purpose
       window.currentWorkspace = workspace ?? undefined;
       window.dispatchEvent(
-        new CustomEvent('affine:workspace:change', {
+        new CustomEvent('blank:workspace:change', {
           detail: {
             id: workspace.id,
           },
         })
       );
-      localStorage.setItem('last_workspace_id', workspace.id);
+      persistFastBootRoute(workspace.id, undefined, workspace.flavour);
       globalContextService.globalContext.workspaceId.set(workspace.id);
       if (workspaceServer) {
         globalContextService.globalContext.serverId.set(workspaceServer.id);
@@ -109,32 +116,14 @@ export const WorkspaceLayout = ({
     workspaceServer,
   ]);
 
-  const rootDocReady$ = useMemo(
-    () =>
-      workspace
-        ? LiveData.from(
-            workspace.engine.doc
-              .docState$(workspace.id)
-              .pipe(map(v => v.ready)),
-            false
-          )
-        : null,
-    [workspace]
-  );
-  const isRootDocReady = useLiveData(rootDocReady$) ?? false;
-
   if (!workspace) {
     return null; // skip this, workspace will be set in layout effect
-  }
-
-  if (!isRootDocReady) {
-    return <AppFallback />;
   }
 
   return (
     <FrameworkScope scope={workspaceServer?.scope}>
       <FrameworkScope scope={workspace.scope}>
-        <AffineErrorBoundary height="100dvh">
+        <BlankErrorBoundary height="100dvh">
           <SWRConfigProvider>
             <WorkspaceDialogs />
 
@@ -145,7 +134,7 @@ export const WorkspaceLayout = ({
             <WorkspaceSideEffects />
             {children}
           </SWRConfigProvider>
-        </AffineErrorBoundary>
+        </BlankErrorBoundary>
       </FrameworkScope>
     </FrameworkScope>
   );

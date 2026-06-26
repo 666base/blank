@@ -1,5 +1,5 @@
-import { IconButton } from '@affine/component';
-import { EditorService } from '@affine/core/modules/editor';
+import { IconButton } from '@blank/component';
+import { EditorService } from '@blank/core/modules/editor';
 import { PresentationIcon } from '@blocksuite/icons/rc';
 import { useService } from '@toeverything/infra';
 

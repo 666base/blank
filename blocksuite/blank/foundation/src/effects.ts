@@ -1,0 +1,70 @@
+import { BlockSelection } from '@blocksuite/blank-components/block-selection';
+import { BlockZeroWidth } from '@blocksuite/blank-components/block-zero-width';
+import { effects as componentCaptionEffects } from '@blocksuite/blank-components/caption';
+import { effects as componentCardStyleDropdownMenuEffects } from '@blocksuite/blank-components/card-style-dropdown-menu';
+import { effects as componentCitationEffects } from '@blocksuite/blank-components/citation';
+import { effects as componentColorPickerEffects } from '@blocksuite/blank-components/color-picker';
+import { effects as componentContextMenuEffects } from '@blocksuite/blank-components/context-menu';
+import { effects as componentDatePickerEffects } from '@blocksuite/blank-components/date-picker';
+import { effects as componentDropIndicatorEffects } from '@blocksuite/blank-components/drop-indicator';
+import { effects as componentEdgelessLineStylesEffects } from '@blocksuite/blank-components/edgeless-line-styles-panel';
+import { effects as componentEdgelessLineWidthEffects } from '@blocksuite/blank-components/edgeless-line-width-panel';
+import { effects as componentEdgelessShapeColorPickerEffects } from '@blocksuite/blank-components/edgeless-shape-color-picker';
+import { effects as componentEmbedCardModalEffects } from '@blocksuite/blank-components/embed-card-modal';
+import { FilterableListComponent } from '@blocksuite/blank-components/filterable-list';
+import { effects as componentHighlightDropdownMenuEffects } from '@blocksuite/blank-components/highlight-dropdown-menu';
+import { IconButton } from '@blocksuite/blank-components/icon-button';
+import { effects as componentLinkPreviewEffects } from '@blocksuite/blank-components/link-preview';
+import { effects as componentLinkedDocTitleEffects } from '@blocksuite/blank-components/linked-doc-title';
+import { effects as componentOpenDocDropdownMenuEffects } from '@blocksuite/blank-components/open-doc-dropdown-menu';
+import { effects as componentPortalEffects } from '@blocksuite/blank-components/portal';
+import { effects as componentResourceEffects } from '@blocksuite/blank-components/resource';
+import { effects as componentSizeDropdownMenuEffects } from '@blocksuite/blank-components/size-dropdown-menu';
+import { effects as componentSliderEffects } from '@blocksuite/blank-components/slider';
+import { SmoothCorner } from '@blocksuite/blank-components/smooth-corner';
+import { effects as componentToggleButtonEffects } from '@blocksuite/blank-components/toggle-button';
+import { ToggleSwitch } from '@blocksuite/blank-components/toggle-switch';
+import { effects as componentToolbarEffects } from '@blocksuite/blank-components/toolbar';
+import { effects as componentTooltipContentWithShortcutEffects } from '@blocksuite/blank-components/tooltip-content-with-shortcut';
+import { effects as componentViewDropdownMenuEffects } from '@blocksuite/blank-components/view-dropdown-menu';
+import { effects as richTextEffects } from '@blocksuite/blank-rich-text/effects';
+import { effects as dataViewEffects } from '@blocksuite/data-view/effects';
+import { effects as stdEffects } from '@blocksuite/std/effects';
+
+export function effects() {
+  stdEffects();
+
+  dataViewEffects();
+  richTextEffects();
+
+  componentCaptionEffects();
+  componentContextMenuEffects();
+  componentDatePickerEffects();
+  componentPortalEffects();
+  componentToolbarEffects();
+  componentDropIndicatorEffects();
+  componentToggleButtonEffects();
+  componentColorPickerEffects();
+  componentEmbedCardModalEffects();
+  componentLinkPreviewEffects();
+  componentLinkedDocTitleEffects();
+  componentCardStyleDropdownMenuEffects();
+  componentCitationEffects();
+  componentHighlightDropdownMenuEffects();
+  componentViewDropdownMenuEffects();
+  componentTooltipContentWithShortcutEffects();
+  componentSizeDropdownMenuEffects();
+  componentSliderEffects();
+  componentEdgelessLineWidthEffects();
+  componentEdgelessLineStylesEffects();
+  componentEdgelessShapeColorPickerEffects();
+  componentOpenDocDropdownMenuEffects();
+  componentResourceEffects();
+
+  customElements.define('icon-button', IconButton);
+  customElements.define('smooth-corner', SmoothCorner);
+  customElements.define('toggle-switch', ToggleSwitch);
+  customElements.define('blank-filterable-list', FilterableListComponent);
+  customElements.define('block-zero-width', BlockZeroWidth);
+  customElements.define('blank-block-selection', BlockSelection);
+}

@@ -21,27 +21,27 @@ const editorSettingService = {
   },
 };
 
-vi.mock('@affine/i18n', () => {
+vi.mock('@blank/i18n', () => {
   const translations: Record<string, string> = {
-    'com.affine.settings.editorSettings.general.auto-date-title.title':
+    'com.blank.settings.editorSettings.general.auto-date-title.title':
       'Auto-title new docs with current date',
-    'com.affine.settings.editorSettings.general.auto-date-title.description':
+    'com.blank.settings.editorSettings.general.auto-date-title.description':
       "Automatically title blank new docs with today's date.",
-    'com.affine.settings.editorSettings.general.auto-date-title.format.title':
+    'com.blank.settings.editorSettings.general.auto-date-title.format.title':
       'New doc date format',
-    'com.affine.settings.editorSettings.general.auto-date-title.format.description':
+    'com.blank.settings.editorSettings.general.auto-date-title.format.description':
       'Choose the date format used for automatic new doc titles.',
-    'com.affine.settings.editorSettings.general.auto-date-title.format.dd-mm-yyyy':
+    'com.blank.settings.editorSettings.general.auto-date-title.format.dd-mm-yyyy':
       'DD-MM-YYYY',
-    'com.affine.settings.editorSettings.general.auto-date-title.format.mm-dd-yyyy':
+    'com.blank.settings.editorSettings.general.auto-date-title.format.mm-dd-yyyy':
       'MM-DD-YYYY',
-    'com.affine.settings.editorSettings.general.auto-date-title.format.yyyy-mm-dd':
+    'com.blank.settings.editorSettings.general.auto-date-title.format.yyyy-mm-dd':
       'YYYY-MM-DD',
-    'com.affine.settings.editorSettings.general.auto-date-title.format.journal':
+    'com.blank.settings.editorSettings.general.auto-date-title.format.journal':
       'Journal style (localized)',
-    'com.affine.settings.editorSettings.general.add-icon-option.title':
+    'com.blank.settings.editorSettings.general.add-icon-option.title':
       'Display add icon option',
-    'com.affine.settings.editorSettings.general.add-icon-option.description':
+    'com.blank.settings.editorSettings.general.add-icon-option.description':
       'Show or hide the add icon option for docs without an icon.',
   };
 

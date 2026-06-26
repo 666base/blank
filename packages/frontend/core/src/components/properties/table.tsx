@@ -7,20 +7,20 @@ import {
   PropertyRoot,
   useDraggable,
   useDropTarget,
-} from '@affine/component';
-import type { DocCustomPropertyInfo } from '@affine/core/modules/db';
-import { DocService } from '@affine/core/modules/doc';
-import { DocDatabaseBacklinkInfo } from '@affine/core/modules/doc-info';
+} from '@blank/component';
+import type { DocCustomPropertyInfo } from '@blank/core/modules/db';
+import { DocService } from '@blank/core/modules/doc';
+import { DocDatabaseBacklinkInfo } from '@blank/core/modules/doc-info';
 import type {
   DatabaseRow,
   DatabaseValueCell,
-} from '@affine/core/modules/doc-info/types';
-import { DocIntegrationPropertiesTable } from '@affine/core/modules/integration';
-import { ViewService, WorkbenchService } from '@affine/core/modules/workbench';
-import { WorkspacePropertyService } from '@affine/core/modules/workspace-property';
-import type { AffineDNDData } from '@affine/core/types/dnd';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+} from '@blank/core/modules/doc-info/types';
+import { DocIntegrationPropertiesTable } from '@blank/core/modules/integration';
+import { ViewService, WorkbenchService } from '@blank/core/modules/workbench';
+import { WorkspacePropertyService } from '@blank/core/modules/workspace-property';
+import type { BlankDNDData } from '@blank/core/types/dnd';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
 import { PlusIcon, PropertyIcon, ToggleDownIcon } from '@blocksuite/icons/rc';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import {
@@ -95,7 +95,7 @@ export const WorkspacePropertiesTableHeader = ({
     <Collapsible.Trigger style={style} role="button" onClick={handleCollapse}>
       <div className={clsx(styles.tableHeader, className)}>
         <div className={clsx(!open ? styles.pageInfoDimmed : null)}>
-          {t['com.affine.page-properties.page-info']()}
+          {t['com.blank.page-properties.page-info']()}
         </div>
         <div
           className={styles.tableHeaderCollapseButtonWrapper}
@@ -164,7 +164,7 @@ export const WorkspacePropertyRow = ({
   );
 
   const docId = docService.doc.id;
-  const { dragRef } = useDraggable<AffineDNDData>(
+  const { dragRef } = useDraggable<BlankDNDData>(
     () => ({
       canDrag: !propertyInfoReadonly,
       data: {
@@ -180,7 +180,7 @@ export const WorkspacePropertyRow = ({
     }),
     [docId, propertyInfo.id, propertyInfoReadonly]
   );
-  const { dropTargetRef, closestEdge } = useDropTarget<AffineDNDData>(
+  const { dropTargetRef, closestEdge } = useDropTarget<BlankDNDData>(
     () => ({
       closestEdge: {
         allowedEdges: ['bottom', 'top'],
@@ -316,7 +316,7 @@ const WorkspaceWorkspacePropertiesTableBody = forwardRef<
         ref={ref}
         className={clsx(styles.tableBodyRoot, className)}
         style={style}
-        title={t.t('com.affine.workspace.properties')}
+        title={t.t('com.blank.workspace.properties')}
         defaultCollapsed={!defaultOpen}
         onCollapseChange={handleCollapseChange}
         {...props}
@@ -329,17 +329,17 @@ const WorkspaceWorkspacePropertiesTableBody = forwardRef<
           collapseButtonText={({ hide, isCollapsed }) =>
             isCollapsed
               ? hide === 1
-                ? t['com.affine.page-properties.more-property.one']({
+                ? t['com.blank.page-properties.more-property.one']({
                     count: hide.toString(),
                   })
-                : t['com.affine.page-properties.more-property.more']({
+                : t['com.blank.page-properties.more-property.more']({
                     count: hide.toString(),
                   })
               : hide === 1
-                ? t['com.affine.page-properties.hide-property.one']({
+                ? t['com.blank.page-properties.hide-property.one']({
                     count: hide.toString(),
                   })
-                : t['com.affine.page-properties.hide-property.more']({
+                : t['com.blank.page-properties.hide-property.more']({
                     count: hide.toString(),
                   })
           }
@@ -366,7 +366,7 @@ const WorkspaceWorkspacePropertiesTableBody = forwardRef<
                 data-testid="add-property-button"
                 disabled={!canEditPropertyInfo}
               >
-                {t['com.affine.page-properties.add-property']()}
+                {t['com.blank.page-properties.add-property']()}
               </Button>
             ) : (
               <Menu
@@ -388,7 +388,7 @@ const WorkspaceWorkspacePropertiesTableBody = forwardRef<
                   className={styles.propertyActionButton}
                   data-testid="add-property-button"
                 >
-                  {t['com.affine.page-properties.add-property']()}
+                  {t['com.blank.page-properties.add-property']()}
                 </Button>
               </Menu>
             )}
@@ -405,7 +405,7 @@ const WorkspaceWorkspacePropertiesTableBody = forwardRef<
                   workbenchService.workbench.openSidebar();
                 }}
               >
-                {t['com.affine.page-properties.config-properties']()}
+                {t['com.blank.page-properties.config-properties']()}
               </Button>
             ) : null}
           </div>

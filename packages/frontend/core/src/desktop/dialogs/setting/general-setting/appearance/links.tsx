@@ -1,9 +1,9 @@
-import { Menu, MenuItem, MenuTrigger } from '@affine/component';
+import { Menu, MenuItem, MenuTrigger } from '@blank/component';
 import {
   OpenInAppService,
   OpenLinkMode,
-} from '@affine/core/modules/open-in-app';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/open-in-app';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useMemo } from 'react';
 
@@ -18,8 +18,8 @@ export const OpenInAppLinksMenu = () => {
     () =>
       Object.values(OpenLinkMode).map(mode => ({
         label:
-          t.t(`com.affine.setting.appearance.open-in-app.${mode}`) ||
-          `com.affine.setting.appearance.open-in-app.${mode}`,
+          t.t(`com.blank.setting.appearance.open-in-app.${mode}`) ||
+          `com.blank.setting.appearance.open-in-app.${mode}`,
         value: mode,
       })),
     [t]

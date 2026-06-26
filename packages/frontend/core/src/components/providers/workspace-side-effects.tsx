@@ -1,23 +1,19 @@
-import { toast } from '@affine/component';
+import { toast } from '@blank/component';
 import {
   pushGlobalLoadingEventAtom,
   resolveGlobalLoadingEventAtom,
-} from '@affine/component/global-loading';
-import { useRegisterFindInPageCommands } from '@affine/core/components/hooks/affine/use-register-find-in-page-commands';
-import { useRegisterWorkspaceCommands } from '@affine/core/components/hooks/use-register-workspace-commands';
-import { OverCapacityNotification } from '@affine/core/components/over-capacity';
-import { DocsService } from '@affine/core/modules/doc';
-import { EditorSettingService } from '@affine/core/modules/editor-setting';
-import { useRegisterNavigationCommands } from '@affine/core/modules/navigation/view/use-register-navigation-commands';
-import { QuickSearchContainer } from '@affine/core/modules/quicksearch';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import {
-  getAFFiNEWorkspaceSchema,
-  WorkspaceService,
-} from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import type { DocMode } from '@blocksuite/affine/model';
-import { ZipTransformer } from '@blocksuite/affine/widgets/linked-doc';
+} from '@blank/component/global-loading';
+import { useRegisterFindInPageCommands } from '@blank/core/components/hooks/blank/use-register-find-in-page-commands';
+import { useRegisterWorkspaceCommands } from '@blank/core/components/hooks/use-register-workspace-commands';
+import { OverCapacityNotification } from '@blank/core/components/over-capacity';
+import { DocsService } from '@blank/core/modules/doc';
+import { EditorSettingService } from '@blank/core/modules/editor-setting';
+import { useRegisterNavigationCommands } from '@blank/core/modules/navigation/view/use-register-navigation-commands';
+import { QuickSearchContainer } from '@blank/core/modules/quicksearch';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import type { DocMode } from '@blocksuite/blank/model';
 import {
   effect,
   fromPromise,
@@ -50,12 +46,18 @@ export const WorkspaceSideEffects = () => {
     const insertTemplate = effect(
       switchMap(({ template, mode }: { template: string; mode: string }) => {
         return fromPromise(async abort => {
+          const [{ ZipTransformer }, { ensureBlankWorkspaceSchema }] =
+            await Promise.all([
+              import('@blocksuite/blank/widgets/linked-doc'),
+              import('@blank/core/modules/workspace/global-schema'),
+            ]);
           const templateZip = await fetch(template, { signal: abort });
           const templateBlob = await templateZip.blob();
           throwIfAborted(abort);
+          const schema = await ensureBlankWorkspaceSchema();
           const [doc] = await ZipTransformer.importDocs(
             currentWorkspace.docCollection,
-            getAFFiNEWorkspaceSchema(),
+            schema,
             templateBlob
           );
           if (doc) {
@@ -78,7 +80,7 @@ export const WorkspaceSideEffects = () => {
           }),
           catchError(err => {
             console.error(err);
-            toast(t['com.affine.ai.template-insert.failed']());
+            toast(t['com.blank.ai.template-insert.failed']());
             return EMPTY;
           }),
           finalize(() => {

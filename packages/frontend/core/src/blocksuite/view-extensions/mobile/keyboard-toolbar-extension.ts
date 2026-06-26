@@ -1,20 +1,20 @@
-import { VirtualKeyboardProvider } from '@affine/core/mobile/modules/virtual-keyboard';
-import { globalVars } from '@affine/core/mobile/styles/variables.css';
-import type { Container } from '@blocksuite/affine/global/di';
-import { DisposableGroup } from '@blocksuite/affine/global/disposable';
+import { VirtualKeyboardProvider } from '@blank/core/mobile/modules/virtual-keyboard';
+import { globalVars } from '@blank/core/mobile/styles/variables.css';
+import type { Container } from '@blocksuite/blank/global/di';
+import { DisposableGroup } from '@blocksuite/blank/global/disposable';
 import {
   VirtualKeyboardProvider as BSVirtualKeyboardProvider,
   type VirtualKeyboardProviderWithAction,
-} from '@blocksuite/affine/shared/services';
-import { LifeCycleWatcher } from '@blocksuite/affine/std';
-import type { ExtensionType } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/shared/services';
+import { LifeCycleWatcher } from '@blocksuite/blank/std';
+import type { ExtensionType } from '@blocksuite/blank/store';
 import { batch, signal } from '@preact/signals-core';
 import type { FrameworkProvider } from '@toeverything/infra';
 
 export function KeyboardToolbarExtension(
   framework: FrameworkProvider
 ): ExtensionType {
-  const affineVirtualKeyboardProvider = framework.get(VirtualKeyboardProvider);
+  const blankVirtualKeyboardProvider = framework.get(VirtualKeyboardProvider);
 
   class BSVirtualKeyboardService
     extends LifeCycleWatcher
@@ -45,7 +45,7 @@ export function KeyboardToolbarExtension(
 
     override mounted() {
       this._disposables.add(
-        affineVirtualKeyboardProvider.onChange(({ visible, height }) => {
+        blankVirtualKeyboardProvider.onChange(({ visible, height }) => {
           batch(() => {
             if (visible && this.staticHeight$.peek() !== height) {
               this.staticHeight$.value = height;
@@ -67,14 +67,14 @@ export function KeyboardToolbarExtension(
     implements VirtualKeyboardProviderWithAction
   {
     show() {
-      if ('show' in affineVirtualKeyboardProvider) {
-        affineVirtualKeyboardProvider.show();
+      if ('show' in blankVirtualKeyboardProvider) {
+        blankVirtualKeyboardProvider.show();
       }
     }
 
     hide() {
-      if ('hide' in affineVirtualKeyboardProvider) {
-        affineVirtualKeyboardProvider.hide();
+      if ('hide' in blankVirtualKeyboardProvider) {
+        blankVirtualKeyboardProvider.hide();
       }
     }
   }

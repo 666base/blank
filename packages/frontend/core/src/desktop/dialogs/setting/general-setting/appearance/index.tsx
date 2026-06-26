@@ -1,19 +1,19 @@
-import type { RadioItem } from '@affine/component';
-import { RadioGroup, Switch } from '@affine/component';
+import type { RadioItem } from '@blank/component';
+import { RadioGroup, Switch } from '@blank/component';
 import {
   SettingHeader,
   SettingRow,
   SettingWrapper,
-} from '@affine/component/setting-components';
-import { LanguageMenu } from '@affine/core/components/affine/language-menu';
-import { TraySettingService } from '@affine/core/modules/editor-setting/services/tray-settings';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { useI18n } from '@affine/i18n';
+} from '@blank/component/setting-components';
+import { LanguageMenu } from '@blank/core/components/blank/language-menu';
+import { TraySettingService } from '@blank/core/modules/editor-setting/services/tray-settings';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useTheme } from 'next-themes';
 import { useCallback, useMemo } from 'react';
 
-import { useAppSettingHelper } from '../../../../../components/hooks/affine/use-app-setting-helper';
+import { useAppSettingHelper } from '../../../../../components/hooks/blank/use-app-setting-helper';
 import { OpenInAppLinksMenu } from './links';
 import { settingWrapper } from './style.css';
 import { ThemeEditorSetting } from './theme-editor-setting';
@@ -22,17 +22,17 @@ export const getThemeOptions = (t: ReturnType<typeof useI18n>) =>
   [
     {
       value: 'system',
-      label: t['com.affine.themeSettings.system'](),
+      label: t['com.blank.themeSettings.system'](),
       testId: 'system-theme-trigger',
     },
     {
       value: 'light',
-      label: t['com.affine.themeSettings.light'](),
+      label: t['com.blank.themeSettings.light'](),
       testId: 'light-theme-trigger',
     },
     {
       value: 'dark',
-      label: t['com.affine.themeSettings.dark'](),
+      label: t['com.blank.themeSettings.dark'](),
       testId: 'dark-theme-trigger',
     },
   ] satisfies RadioItem[];
@@ -68,11 +68,11 @@ const MenubarSetting = () => {
     <>
       <SettingWrapper
         id="menubar"
-        title={t['com.affine.appearanceSettings.menubar.title']()}
+        title={t['com.blank.appearanceSettings.menubar.title']()}
       >
         <SettingRow
-          name={t['com.affine.appearanceSettings.menubar.toggle']()}
-          desc={t['com.affine.appearanceSettings.menubar.description']()}
+          name={t['com.blank.appearanceSettings.menubar.toggle']()}
+          desc={t['com.blank.appearanceSettings.menubar.description']()}
         >
           <Switch
             checked={traySetting.enabled}
@@ -84,15 +84,15 @@ const MenubarSetting = () => {
         <SettingWrapper
           id="windowBehavior"
           title={t[
-            'com.affine.appearanceSettings.menubar.windowBehavior.title'
+            'com.blank.appearanceSettings.menubar.windowBehavior.title'
           ]()}
         >
           <SettingRow
             name={t[
-              'com.affine.appearanceSettings.menubar.windowBehavior.openOnLeftClick.toggle'
+              'com.blank.appearanceSettings.menubar.windowBehavior.openOnLeftClick.toggle'
             ]()}
             desc={t[
-              'com.affine.appearanceSettings.menubar.windowBehavior.openOnLeftClick.description'
+              'com.blank.appearanceSettings.menubar.windowBehavior.openOnLeftClick.description'
             ]()}
           >
             <Switch
@@ -104,10 +104,10 @@ const MenubarSetting = () => {
           </SettingRow>
           <SettingRow
             name={t[
-              'com.affine.appearanceSettings.menubar.windowBehavior.minimizeToTray.toggle'
+              'com.blank.appearanceSettings.menubar.windowBehavior.minimizeToTray.toggle'
             ]()}
             desc={t[
-              'com.affine.appearanceSettings.menubar.windowBehavior.minimizeToTray.description'
+              'com.blank.appearanceSettings.menubar.windowBehavior.minimizeToTray.description'
             ]()}
           >
             <Switch
@@ -119,10 +119,10 @@ const MenubarSetting = () => {
           </SettingRow>
           <SettingRow
             name={t[
-              'com.affine.appearanceSettings.menubar.windowBehavior.closeToTray.toggle'
+              'com.blank.appearanceSettings.menubar.windowBehavior.closeToTray.toggle'
             ]()}
             desc={t[
-              'com.affine.appearanceSettings.menubar.windowBehavior.closeToTray.description'
+              'com.blank.appearanceSettings.menubar.windowBehavior.closeToTray.description'
             ]()}
           >
             <Switch
@@ -132,10 +132,10 @@ const MenubarSetting = () => {
           </SettingRow>
           <SettingRow
             name={t[
-              'com.affine.appearanceSettings.menubar.windowBehavior.startMinimized.toggle'
+              'com.blank.appearanceSettings.menubar.windowBehavior.startMinimized.toggle'
             ]()}
             desc={t[
-              'com.affine.appearanceSettings.menubar.windowBehavior.startMinimized.description'
+              'com.blank.appearanceSettings.menubar.windowBehavior.startMinimized.description'
             ]()}
           >
             <Switch
@@ -163,20 +163,20 @@ export const AppearanceSettings = () => {
   return (
     <>
       <SettingHeader
-        title={t['com.affine.appearanceSettings.title']()}
-        subtitle={t['com.affine.appearanceSettings.subtitle']()}
+        title={t['com.blank.appearanceSettings.title']()}
+        subtitle={t['com.blank.appearanceSettings.subtitle']()}
       />
 
-      <SettingWrapper title={t['com.affine.appearanceSettings.theme.title']()}>
+      <SettingWrapper title={t['com.blank.appearanceSettings.theme.title']()}>
         <SettingRow
-          name={t['com.affine.appearanceSettings.color.title']()}
-          desc={t['com.affine.appearanceSettings.color.description']()}
+          name={t['com.blank.appearanceSettings.color.title']()}
+          desc={t['com.blank.appearanceSettings.color.description']()}
         >
           <ThemeSettings />
         </SettingRow>
         <SettingRow
-          name={t['com.affine.appearanceSettings.language.title']()}
-          desc={t['com.affine.appearanceSettings.language.description']()}
+          name={t['com.blank.appearanceSettings.language.title']()}
+          desc={t['com.blank.appearanceSettings.language.description']()}
         >
           <div className={settingWrapper}>
             <LanguageMenu />
@@ -184,8 +184,8 @@ export const AppearanceSettings = () => {
         </SettingRow>
         {BUILD_CONFIG.isElectron ? (
           <SettingRow
-            name={t['com.affine.appearanceSettings.clientBorder.title']()}
-            desc={t['com.affine.appearanceSettings.clientBorder.description']()}
+            name={t['com.blank.appearanceSettings.clientBorder.title']()}
+            desc={t['com.blank.appearanceSettings.clientBorder.description']()}
             data-testid="client-border-style-trigger"
           >
             <Switch
@@ -197,11 +197,11 @@ export const AppearanceSettings = () => {
         {enableThemeEditor ? <ThemeEditorSetting /> : null}
       </SettingWrapper>
 
-      <SettingWrapper title={t['com.affine.appearanceSettings.images.title']()}>
+      <SettingWrapper title={t['com.blank.appearanceSettings.images.title']()}>
         <SettingRow
-          name={t['com.affine.appearanceSettings.images.antialiasing.title']()}
+          name={t['com.blank.appearanceSettings.images.antialiasing.title']()}
           desc={t[
-            'com.affine.appearanceSettings.images.antialiasing.description'
+            'com.blank.appearanceSettings.images.antialiasing.description'
           ]()}
           data-testid="image-antialiasing-trigger"
         >
@@ -215,10 +215,10 @@ export const AppearanceSettings = () => {
       </SettingWrapper>
 
       {BUILD_CONFIG.isWeb && !environment.isMobile ? (
-        <SettingWrapper title={t['com.affine.setting.appearance.links']()}>
+        <SettingWrapper title={t['com.blank.setting.appearance.links']()}>
           <SettingRow
-            name={t['com.affine.setting.appearance.open-in-app']()}
-            desc={t['com.affine.setting.appearance.open-in-app.hint']()}
+            name={t['com.blank.setting.appearance.open-in-app']()}
+            desc={t['com.blank.setting.appearance.open-in-app.hint']()}
             data-testid="open-in-app-links-trigger"
           >
             <OpenInAppLinksMenu />
@@ -227,13 +227,13 @@ export const AppearanceSettings = () => {
       ) : null}
 
       <SettingWrapper
-        title={t['com.affine.appearanceSettings.sidebar.title']()}
+        title={t['com.blank.appearanceSettings.sidebar.title']()}
       >
         {BUILD_CONFIG.isElectron ? (
           <SettingRow
-            name={t['com.affine.appearanceSettings.noisyBackground.title']()}
+            name={t['com.blank.appearanceSettings.noisyBackground.title']()}
             desc={t[
-              'com.affine.appearanceSettings.noisyBackground.description'
+              'com.blank.appearanceSettings.noisyBackground.description'
             ]()}
           >
             <Switch
@@ -246,9 +246,9 @@ export const AppearanceSettings = () => {
         ) : null}
         {BUILD_CONFIG.isElectron && environment.isMacOs && (
           <SettingRow
-            name={t['com.affine.appearanceSettings.translucentUI.title']()}
+            name={t['com.blank.appearanceSettings.translucentUI.title']()}
             desc={t[
-              'com.affine.appearanceSettings.translucentUI.description'
+              'com.blank.appearanceSettings.translucentUI.description'
             ]()}
           >
             <Switch
@@ -261,10 +261,10 @@ export const AppearanceSettings = () => {
         )}
         <SettingRow
           name={t[
-            'com.affine.appearanceSettings.showLinkedDocInSidebar.title'
+            'com.blank.appearanceSettings.showLinkedDocInSidebar.title'
           ]()}
           desc={t[
-            'com.affine.appearanceSettings.showLinkedDocInSidebar.description'
+            'com.blank.appearanceSettings.showLinkedDocInSidebar.description'
           ]()}
         >
           <Switch

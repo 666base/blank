@@ -1,13 +1,13 @@
-import { SettingRow } from '@affine/component/setting-components';
-import { Button } from '@affine/component/ui/button';
-import { useEnableCloud } from '@affine/core/components/hooks/affine/use-enable-cloud';
+import { SettingRow } from '@blank/component/setting-components';
+import { Button } from '@blank/component/ui/button';
+import { useEnableCloud } from '@blank/core/components/hooks/blank/use-enable-cloud';
 import {
   type Workspace,
   WorkspaceService,
-} from '@affine/core/modules/workspace';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
-import { UNTITLED_WORKSPACE_NAME } from '@affine/env/constant';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/workspace';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
+import { UNTITLED_WORKSPACE_NAME } from '@blank/env/constant';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 
@@ -49,17 +49,17 @@ export const EnableCloudPanel = ({
       spreadCol={false}
       style={{
         padding: '10px',
-        background: 'var(--affine-background-secondary-color)',
+        background: 'var(--blank-background-secondary-color)',
         marginTop: '24px',
       }}
     >
       <Button
-        data-testid="publish-enable-affine-cloud-button"
+        data-testid="publish-enable-blank-cloud-button"
         variant="primary"
         onClick={confirmEnableCloudAndClose}
         style={{ marginTop: '12px' }}
       >
-        {t['Enable AFFiNE Cloud']()}
+        {t['Enable Blank Cloud']()}
       </Button>
     </SettingRow>
   );

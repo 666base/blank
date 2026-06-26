@@ -1,10 +1,10 @@
 import {
-  type AffineCommand,
-  AffineCommandRegistry,
+  type BlankCommand,
+  BlankCommandRegistry,
   type CommandCategory,
   PreconditionStrategy,
-} from '@affine/core/commands';
-import type { DocMode } from '@blocksuite/affine/model';
+} from '@blank/core/commands';
+import type { DocMode } from '@blocksuite/blank/model';
 import { Entity, LiveData } from '@toeverything/infra';
 import Fuse from 'fuse.js';
 
@@ -15,83 +15,83 @@ import type { QuickSearchItem } from '../types/item';
 import { highlighter } from '../utils/highlighter';
 
 const categories = {
-  'affine:recent': {
-    id: 'command:affine:recent',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.recent' },
+  'blank:recent': {
+    id: 'command:blank:recent',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.recent' },
     score: 10,
   },
-  'affine:navigation': {
-    id: 'command:affine:navigation',
+  'blank:navigation': {
+    id: 'command:blank:navigation',
     label: {
-      i18nKey: 'com.affine.cmdk.affine.category.affine.navigation',
+      i18nKey: 'com.blank.cmdk.blank.category.blank.navigation',
     },
     score: 10,
   },
-  'affine:creation': {
-    id: 'command:affine:creation',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.creation' },
+  'blank:creation': {
+    id: 'command:blank:creation',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.creation' },
     score: 10,
   },
-  'affine:general': {
-    id: 'command:affine:general',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.general' },
+  'blank:general': {
+    id: 'command:blank:general',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.general' },
     score: 10,
   },
-  'affine:layout': {
-    id: 'command:affine:layout',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.layout' },
+  'blank:layout': {
+    id: 'command:blank:layout',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.layout' },
     score: 10,
   },
-  'affine:pages': {
-    id: 'command:affine:pages',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.pages' },
+  'blank:pages': {
+    id: 'command:blank:pages',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.pages' },
     score: 10,
   },
-  'affine:edgeless': {
-    id: 'command:affine:edgeless',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.edgeless' },
+  'blank:edgeless': {
+    id: 'command:blank:edgeless',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.edgeless' },
     score: 10,
   },
-  'affine:collections': {
-    id: 'command:affine:collections',
+  'blank:collections': {
+    id: 'command:blank:collections',
     label: {
-      i18nKey: 'com.affine.cmdk.affine.category.affine.collections',
+      i18nKey: 'com.blank.cmdk.blank.category.blank.collections',
     },
     score: 10,
   },
-  'affine:settings': {
-    id: 'command:affine:settings',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.settings' },
+  'blank:settings': {
+    id: 'command:blank:settings',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.settings' },
     score: 10,
   },
-  'affine:updates': {
-    id: 'command:affine:updates',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.updates' },
+  'blank:updates': {
+    id: 'command:blank:updates',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.updates' },
     score: 10,
   },
-  'affine:help': {
-    id: 'command:affine:help',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.affine.help' },
+  'blank:help': {
+    id: 'command:blank:help',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.blank.help' },
     score: 10,
   },
   'editor:edgeless': {
     id: 'command:editor:edgeless',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.editor.edgeless' },
+    label: { i18nKey: 'com.blank.cmdk.blank.category.editor.edgeless' },
     score: 10,
   },
   'editor:insert-object': {
     id: 'command:editor:insert-object',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.editor.insert-object' },
+    label: { i18nKey: 'com.blank.cmdk.blank.category.editor.insert-object' },
     score: 10,
   },
   'editor:page': {
     id: 'command:editor:page',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.editor.page' },
+    label: { i18nKey: 'com.blank.cmdk.blank.category.editor.page' },
     score: 10,
   },
-  'affine:results': {
-    id: 'command:affine:results',
-    label: { i18nKey: 'com.affine.cmdk.affine.category.results' },
+  'blank:results': {
+    id: 'command:blank:results',
+    label: { i18nKey: 'com.blank.cmdk.blank.category.results' },
     score: 10,
   },
 } satisfies Required<{
@@ -99,7 +99,7 @@ const categories = {
 }>;
 
 function filterCommandByContext(
-  command: AffineCommand,
+  command: BlankCommand,
   context: {
     docMode: DocMode | undefined;
   }
@@ -126,7 +126,7 @@ function filterCommandByContext(
 }
 
 function getAllCommand(context: { docMode: DocMode | undefined }) {
-  const commands = AffineCommandRegistry.getAll();
+  const commands = BlankCommandRegistry.getAll();
   return commands.filter(command => {
     return filterCommandByContext(command, context);
   });
@@ -134,7 +134,7 @@ function getAllCommand(context: { docMode: DocMode | undefined }) {
 
 export class CommandsQuickSearchSession
   extends Entity
-  implements QuickSearchSession<'commands', AffineCommand>
+  implements QuickSearchSession<'commands', BlankCommand>
 {
   constructor(private readonly contextService: GlobalContextService) {
     super();
@@ -160,7 +160,7 @@ export class CommandsQuickSearchSession
       ? fuse.search(query)
       : commands.map(item => ({ item, matches: [], score: 0 }));
 
-    return result.map<QuickSearchItem<'commands', AffineCommand>>(
+    return result.map<QuickSearchItem<'commands', BlankCommand>>(
       ({ item, matches, score = 1 }) => {
         const normalizedRange = ([start, end]: [number, number]) =>
           [

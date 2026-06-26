@@ -1,6 +1,6 @@
-import { Input, PropertyValue } from '@affine/component';
-import type { FilterParams } from '@affine/core/modules/collection-rules';
-import { useI18n } from '@affine/i18n';
+import { Input, PropertyValue } from '@blank/component';
+import type { FilterParams } from '@blank/core/modules/collection-rules';
+import { useI18n } from '@blank/i18n';
 import { NumberIcon } from '@blocksuite/icons/rc';
 import { cssVar } from '@toeverything/theme';
 import { cssVarV2 } from '@toeverything/theme/v2';
@@ -56,7 +56,7 @@ export const NumberValue = ({
         onBlur={handleBlur}
         data-empty={!tempValue}
         placeholder={t[
-          'com.affine.page-properties.property-value-placeholder'
+          'com.blank.page-properties.property-value-placeholder'
         ]()}
         disabled={readonly}
       />
@@ -151,7 +151,7 @@ export const NumberFilterValue = ({
         <span>{filter.value}</span>
       ) : (
         <span style={{ color: cssVarV2('text/placeholder') }}>
-          {t['com.affine.filter.empty']()}
+          {t['com.blank.filter.empty']()}
         </span>
       )}
     </FilterValueMenu>
@@ -168,7 +168,7 @@ export const NumberDocListProperty = ({ value }: { value: number }) => {
 
 export const NumberGroupHeader = ({ groupId, docCount }: GroupHeaderProps) => {
   const t = useI18n();
-  const number = groupId || t['com.affine.filter.empty']();
+  const number = groupId || t['com.blank.filter.empty']();
   return (
     <PlainTextDocGroupHeader groupId={groupId} docCount={docCount}>
       {number}

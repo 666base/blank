@@ -1,0 +1,35 @@
+{
+  "name": "@blocksuite/blank-foundation",
+  "description": "Foundation extensions for blank.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "sideEffects": false,
+  "keywords": [],
+  "author": "toeverything",
+  "license": "MIT",
+  "dependencies": {
+    "@blocksuite/blank-components": "workspace:*",
+    "@blocksuite/blank-ext-loader": "workspace:*",
+    "@blocksuite/blank-rich-text": "workspace:*",
+    "@blocksuite/blank-shared": "workspace:*",
+    "@blocksuite/data-view": "workspace:*",
+    "@blocksuite/std": "workspace:*",
+    "@blocksuite/store": "workspace:*",
+    "zod": "^3.25.76"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./clipboard": "./src/clipboard.ts",
+    "./store": "./src/store.ts",
+    "./view": "./src/view.ts"
+  },
+  "files": [
+    "src",
+    "dist",
+    "!src/__tests__",
+    "!dist/__tests__"
+  ],
+  "version": "0.27.0"
+}

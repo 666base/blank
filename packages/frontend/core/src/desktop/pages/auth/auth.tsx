@@ -1,4 +1,4 @@
-import { notify } from '@affine/component';
+import { notify } from '@blank/component';
 import {
   ChangeEmailPage,
   ChangePasswordPage,
@@ -6,12 +6,12 @@ import {
   SetPasswordPage,
   SignInSuccessPage,
   SignUpPage,
-} from '@affine/component/auth-components';
+} from '@blank/component/auth-components';
 import {
   changePasswordMutation,
   sendVerifyChangeEmailMutation,
-} from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
+} from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 import type { LoaderFunction } from 'react-router-dom';
@@ -73,11 +73,11 @@ export const Component = () => {
       // FIXME: There is not notification
       if (res?.sendVerifyChangeEmail) {
         notify.success({
-          title: t['com.affine.auth.sent.verify.email.hint'](),
+          title: t['com.blank.auth.sent.verify.email.hint'](),
         });
       } else {
         notify.error({
-          title: t['com.affine.auth.sent.change.email.fail'](),
+          title: t['com.blank.auth.sent.change.email.fail'](),
         });
       }
 
@@ -96,7 +96,7 @@ export const Component = () => {
     },
     [changePassword, searchParams]
   );
-  const onOpenAffine = useCallback(() => {
+  const onOpenBlank = useCallback(() => {
     jumpToIndex(RouteLogic.REPLACE);
   }, [jumpToIndex]);
 
@@ -107,7 +107,7 @@ export const Component = () => {
   switch (authType) {
     case 'onboarding':
       return (
-        account && <OnboardingPage user={account} onOpenAffine={onOpenAffine} />
+        account && <OnboardingPage user={account} onOpenBlank={onOpenBlank} />
       );
     case 'signUp': {
       return (
@@ -116,20 +116,20 @@ export const Component = () => {
             user={account}
             passwordLimits={passwordLimits}
             onSetPassword={onSetPassword}
-            onOpenAffine={onOpenAffine}
+            onOpenBlank={onOpenBlank}
           />
         )
       );
     }
     case 'signIn': {
-      return <SignInSuccessPage onOpenAffine={onOpenAffine} />;
+      return <SignInSuccessPage onOpenBlank={onOpenBlank} />;
     }
     case 'changePassword': {
       return (
         <ChangePasswordPage
           passwordLimits={passwordLimits}
           onSetPassword={onSetPassword}
-          onOpenAffine={onOpenAffine}
+          onOpenBlank={onOpenBlank}
         />
       );
     }
@@ -138,7 +138,7 @@ export const Component = () => {
         <SetPasswordPage
           passwordLimits={passwordLimits}
           onSetPassword={onSetPassword}
-          onOpenAffine={onOpenAffine}
+          onOpenBlank={onOpenBlank}
         />
       );
     }
@@ -146,15 +146,15 @@ export const Component = () => {
       return (
         <ChangeEmailPage
           onChangeEmail={onSendVerifyChangeEmail}
-          onOpenAffine={onOpenAffine}
+          onOpenBlank={onOpenBlank}
         />
       );
     }
     case 'confirm-change-email': {
-      return <ConfirmChangeEmail onOpenAffine={onOpenAffine} />;
+      return <ConfirmChangeEmail onOpenBlank={onOpenBlank} />;
     }
     case 'verify-email': {
-      return <ConfirmVerifiedEmail onOpenAffine={onOpenAffine} />;
+      return <ConfirmVerifiedEmail onOpenBlank={onOpenBlank} />;
     }
   }
   return null;

@@ -1,7 +1,7 @@
-import { Checkbox, MenuItem, PropertyValue } from '@affine/component';
-import type { FilterParams } from '@affine/core/modules/collection-rules';
-import { type DocRecord, DocService } from '@affine/core/modules/doc';
-import { useI18n } from '@affine/i18n';
+import { Checkbox, MenuItem, PropertyValue } from '@blank/component';
+import type { FilterParams } from '@blank/core/modules/collection-rules';
+import { type DocRecord, DocService } from '@blank/core/modules/doc';
+import { useI18n } from '@blank/i18n';
 import { TemplateIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { type ChangeEvent, useCallback } from 'react';
@@ -67,9 +67,9 @@ export const TemplateGroupHeader = ({
   const t = useI18n();
   const text =
     groupId === 'true'
-      ? t['com.affine.all-docs.group.is-template']()
+      ? t['com.blank.all-docs.group.is-template']()
       : groupId === 'false'
-        ? t['com.affine.all-docs.group.is-not-template']()
+        ? t['com.blank.all-docs.group.is-not-template']()
         : 'Default';
 
   return (

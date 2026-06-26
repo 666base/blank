@@ -8,7 +8,7 @@ function normalizeNamespace(namespace: string) {
     typeof BUILD_CONFIG !== 'undefined' &&
     BUILD_CONFIG.githubUrl?.includes('666base/blank')
   ) {
-    return namespace.replace(/^affine:/, 'blank:');
+    return namespace.replace(/^blank:/, 'blank:');
   }
   return namespace;
 }

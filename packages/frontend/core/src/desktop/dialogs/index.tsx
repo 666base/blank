@@ -3,53 +3,98 @@ import {
   type GLOBAL_DIALOG_SCHEMA,
   GlobalDialogService,
   WorkspaceDialogService,
-} from '@affine/core/modules/dialogs';
-import type { WORKSPACE_DIALOG_SCHEMA } from '@affine/core/modules/dialogs/constant';
+} from '@blank/core/modules/dialogs';
+import type { WORKSPACE_DIALOG_SCHEMA } from '@blank/core/modules/dialogs/constant';
 import { useLiveData, useService } from '@toeverything/infra';
+import {
+  lazy,
+  Suspense,
+  type ComponentType,
+  type FC,
+} from 'react';
 
-import { ChangePasswordDialog } from './change-password';
-import { CollectionEditorDialog } from './collection-editor';
-import { CreateWorkspaceDialog } from './create-workspace';
-import { DeletedAccountDialog } from './deleted-account';
-import { DocInfoDialog } from './doc-info';
-import { EnableCloudDialog } from './enable-cloud';
-import { ImportDialog } from './import';
-import { ImportTemplateDialog } from './import-template';
-import { ImportWorkspaceDialog } from './import-workspace';
-import { CollectionSelectorDialog } from './selectors/collection';
-import { DateSelectorDialog } from './selectors/date';
-import { DocSelectorDialog } from './selectors/doc';
-import { TagSelectorDialog } from './selectors/tag';
-import { SettingDialog } from './setting';
-import { SignInDialog } from './sign-in';
-import { VerifyEmailDialog } from './verify-email';
+function lazyDialog<P extends object>(
+  load: () => Promise<{ default: ComponentType<P> }>
+): FC<P> {
+  const LazyDialog = lazy(load);
+  const Dialog = (props: P) => (
+    <Suspense fallback={null}>
+      <LazyDialog {...props} />
+    </Suspense>
+  );
+  return Dialog;
+}
 
 const GLOBAL_DIALOGS = {
-  'create-workspace': CreateWorkspaceDialog,
-  'import-workspace': ImportWorkspaceDialog,
-  'import-template': ImportTemplateDialog,
-  'sign-in': SignInDialog,
-  'change-password': ChangePasswordDialog,
-  'verify-email': VerifyEmailDialog,
-  'enable-cloud': EnableCloudDialog,
-  'deleted-account': DeletedAccountDialog,
+  'create-workspace': lazyDialog(() =>
+    import('./create-workspace').then(m => ({ default: m.CreateWorkspaceDialog }))
+  ),
+  'import-workspace': lazyDialog(() =>
+    import('./import-workspace').then(m => ({
+      default: m.ImportWorkspaceDialog,
+    }))
+  ),
+  'import-template': lazyDialog(() =>
+    import('./import-template').then(m => ({
+      default: m.ImportTemplateDialog,
+    }))
+  ),
+  'sign-in': lazyDialog(() =>
+    import('./sign-in').then(m => ({ default: m.SignInDialog }))
+  ),
+  'change-password': lazyDialog(() =>
+    import('./change-password').then(m => ({
+      default: m.ChangePasswordDialog,
+    }))
+  ),
+  'verify-email': lazyDialog(() =>
+    import('./verify-email').then(m => ({ default: m.VerifyEmailDialog }))
+  ),
+  'enable-cloud': lazyDialog(() =>
+    import('./enable-cloud').then(m => ({ default: m.EnableCloudDialog }))
+  ),
+  'deleted-account': lazyDialog(() =>
+    import('./deleted-account').then(m => ({
+      default: m.DeletedAccountDialog,
+    }))
+  ),
 } satisfies {
-  [key in keyof GLOBAL_DIALOG_SCHEMA]?: React.FC<
+  [key in keyof GLOBAL_DIALOG_SCHEMA]?: FC<
     DialogComponentProps<GLOBAL_DIALOG_SCHEMA[key]>
   >;
 };
 
 const WORKSPACE_DIALOGS = {
-  'doc-info': DocInfoDialog,
-  'collection-editor': CollectionEditorDialog,
-  'tag-selector': TagSelectorDialog,
-  'doc-selector': DocSelectorDialog,
-  'collection-selector': CollectionSelectorDialog,
-  'date-selector': DateSelectorDialog,
-  setting: SettingDialog,
-  import: ImportDialog,
+  'doc-info': lazyDialog(() =>
+    import('./doc-info').then(m => ({ default: m.DocInfoDialog }))
+  ),
+  'collection-editor': lazyDialog(() =>
+    import('./collection-editor').then(m => ({
+      default: m.CollectionEditorDialog,
+    }))
+  ),
+  'tag-selector': lazyDialog(() =>
+    import('./selectors/tag').then(m => ({ default: m.TagSelectorDialog }))
+  ),
+  'doc-selector': lazyDialog(() =>
+    import('./selectors/doc').then(m => ({ default: m.DocSelectorDialog }))
+  ),
+  'collection-selector': lazyDialog(() =>
+    import('./selectors/collection').then(m => ({
+      default: m.CollectionSelectorDialog,
+    }))
+  ),
+  'date-selector': lazyDialog(() =>
+    import('./selectors/date').then(m => ({ default: m.DateSelectorDialog }))
+  ),
+  setting: lazyDialog(() =>
+    import('./setting').then(m => ({ default: m.SettingDialog }))
+  ),
+  import: lazyDialog(() =>
+    import('./import').then(m => ({ default: m.ImportDialog }))
+  ),
 } satisfies {
-  [key in keyof WORKSPACE_DIALOG_SCHEMA]?: React.FC<
+  [key in keyof WORKSPACE_DIALOG_SCHEMA]?: FC<
     DialogComponentProps<WORKSPACE_DIALOG_SCHEMA[key]>
   >;
 };

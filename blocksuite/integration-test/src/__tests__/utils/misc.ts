@@ -1,5 +1,5 @@
-import { AffineSchemas } from '@blocksuite/affine/schemas';
-import { replaceIdMiddleware } from '@blocksuite/affine/shared/adapters';
+import { BlankSchemas } from '@blocksuite/blank/schemas';
+import { replaceIdMiddleware } from '@blocksuite/blank/shared/adapters';
 import {
   type DocSnapshot,
   Schema,
@@ -12,7 +12,7 @@ export async function importFromSnapshot(
   snapshot: DocSnapshot
 ) {
   const job = new Transformer({
-    schema: new Schema().register(AffineSchemas),
+    schema: new Schema().register(BlankSchemas),
     blobCRUD: collection.blobSync,
     docCRUD: {
       create: (id: string) => collection.createDoc(id).getStore({ id }),

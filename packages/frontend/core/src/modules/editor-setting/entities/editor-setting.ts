@@ -1,8 +1,8 @@
-import type { DeepPartial } from '@blocksuite/affine/global/utils';
+import type { DeepPartial } from '@blocksuite/blank/global/utils';
 import {
   createSignalFromObservable,
   type Signal,
-} from '@blocksuite/affine/shared/utils';
+} from '@blocksuite/blank/shared/utils';
 import { Entity, LiveData } from '@toeverything/infra';
 import { isObject, merge } from 'lodash-es';
 import type { Observable } from 'rxjs';
@@ -54,8 +54,12 @@ export class EditorSetting extends Entity {
 
   settingSignal: Signal<Partial<EditorSettingSchema>>;
 
-  get<K extends keyof EditorSettingSchema>(key: K) {
-    return this.settings$.value[key];
+  get<K extends keyof EditorSettingSchema>(key: K): EditorSettingSchema[K] {
+    const current = this.settings$.value;
+    if (current) {
+      return current[key];
+    }
+    return EditorSettingSchema.shape[key].parse(undefined) as EditorSettingSchema[K];
   }
 
   set<K extends keyof EditorSettingSchema>(

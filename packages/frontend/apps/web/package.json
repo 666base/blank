@@ -1,6 +1,6 @@
 {
-  "name": "@affine/web",
-  "version": "0.28.1",
+  "name": "@blank/web",
+  "version": "0.28.2",
   "description": "Blank Desktop Web application",
   "private": true,
   "browser": "src/index.tsx",
@@ -9,11 +9,11 @@
     "dev": "blank bundle --dev"
   },
   "dependencies": {
-    "@affine/component": "workspace:*",
-    "@affine/core": "workspace:*",
-    "@affine/env": "workspace:*",
-    "@affine/nbstore": "workspace:*",
-    "@affine/track": "workspace:*",
+    "@blank/component": "workspace:*",
+    "@blank/core": "workspace:*",
+    "@blank/env": "workspace:*",
+    "@blank/nbstore": "workspace:*",
+    "@blank/track": "workspace:*",
     "@emotion/react": "^11.14.0",
     "@toeverything/infra": "workspace:*",
     "react": "^19.2.1",

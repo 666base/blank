@@ -1,10 +1,10 @@
-import { Input } from '@affine/component';
-import type { ConfirmModalProps } from '@affine/component/ui/modal';
-import { ConfirmModal } from '@affine/component/ui/modal';
-import { useWorkspaceInfo } from '@affine/core/components/hooks/use-workspace-info';
-import type { WorkspaceMetadata } from '@affine/core/modules/workspace';
-import { UNTITLED_WORKSPACE_NAME } from '@affine/env/constant';
-import { Trans, useI18n } from '@affine/i18n';
+import { Input } from '@blank/component';
+import type { ConfirmModalProps } from '@blank/component/ui/modal';
+import { ConfirmModal } from '@blank/component/ui/modal';
+import { useWorkspaceInfo } from '@blank/core/components/hooks/use-workspace-info';
+import type { WorkspaceMetadata } from '@blank/core/modules/workspace';
+import { UNTITLED_WORKSPACE_NAME } from '@blank/env/constant';
+import { Trans, useI18n } from '@blank/i18n';
 import { useCallback, useState } from 'react';
 
 import * as styles from './style.css';
@@ -33,9 +33,9 @@ export const WorkspaceDeleteModal = ({
 
   return (
     <ConfirmModal
-      title={`${t['com.affine.workspaceDelete.title']()}?`}
-      cancelText={t['com.affine.workspaceDelete.button.cancel']()}
-      confirmText={t['com.affine.workspaceDelete.button.delete']()}
+      title={`${t['com.blank.workspaceDelete.title']()}?`}
+      cancelText={t['com.blank.workspaceDelete.button.cancel']()}
+      confirmText={t['com.blank.workspaceDelete.button.delete']()}
       confirmButtonOptions={{
         variant: 'error',
         disabled: !allowDelete,
@@ -44,7 +44,7 @@ export const WorkspaceDeleteModal = ({
       {...props}
     >
       {workspaceMetadata.flavour === 'local' ? (
-        <Trans i18nKey="com.affine.workspaceDelete.description">
+        <Trans i18nKey="com.blank.workspaceDelete.description">
           Deleting (
           <span className={styles.workspaceName}>
             {{ workspace: workspaceName } as any}
@@ -53,7 +53,7 @@ export const WorkspaceDeleteModal = ({
           lost.
         </Trans>
       ) : (
-        <Trans i18nKey="com.affine.workspaceDelete.description2">
+        <Trans i18nKey="com.blank.workspaceDelete.description2">
           Deleting (
           <span className={styles.workspaceName}>
             {{ workspace: workspaceName } as any}
@@ -68,7 +68,7 @@ export const WorkspaceDeleteModal = ({
           onChange={setDeleteStr}
           data-testid="delete-workspace-input"
           onEnter={handleOnEnter}
-          placeholder={t['com.affine.workspaceDelete.placeholder']()}
+          placeholder={t['com.blank.workspaceDelete.placeholder']()}
           size="large"
         />
       </div>

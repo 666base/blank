@@ -5,8 +5,8 @@ export const StyledTable = styled('table')<{ showBorder?: boolean }>(({
   showBorder,
 }) => {
   return {
-    fontSize: 'var(--affine-font-base)',
-    color: 'var(--affine-text-primary-color)',
+    fontSize: 'var(--blank-font-base)',
+    color: 'var(--blank-text-primary-color)',
     tableLayout: 'fixed',
     width: '100%',
     borderCollapse: 'collapse',
@@ -22,7 +22,7 @@ export const StyledTable = styled('table')<{ showBorder?: boolean }>(({
               width: '100%',
               height: '1px',
               left: 0,
-              background: 'var(--affine-border-color)',
+              background: 'var(--blank-border-color)',
               transition: 'opacity .15s',
               opacity: showBorder ? 1 : 0,
             },
@@ -60,8 +60,8 @@ export const StyledTableCell = styled('td')<
     verticalAlign: 'middle',
     whiteSpace: 'nowrap',
     userSelect: 'none',
-    fontSize: 'var(--affine-font-sm)',
-    ...(active ? { color: 'var(--affine-text-primary-color)' } : {}),
+    fontSize: 'var(--blank-font-sm)',
+    ...(active ? { color: 'var(--blank-text-primary-color)' } : {}),
     ...(ellipsis ? textEllipsis(1) : {}),
     ...(onClick ? { cursor: 'pointer' } : {}),
   };
@@ -70,7 +70,7 @@ export const StyledTableCell = styled('td')<
 export const StyledTableHead = styled('thead')(() => {
   return {
     fontWeight: 500,
-    color: 'var(--affine-text-secondary-color)',
+    color: 'var(--blank-text-secondary-color)',
   };
 });
 
@@ -81,7 +81,7 @@ export const StyledTHeadRow = styled('tr')({
     // see https://stackoverflow.com/questions/23989463/how-to-set-tbody-height-with-overflow-scroll
     position: 'sticky',
     top: 0,
-    background: 'var(--affine-background-primary-color)',
+    background: 'var(--blank-background-primary-color)',
   },
 });
 
@@ -103,7 +103,7 @@ export const StyledTBodyRow = styled('tr')(() => {
 
     ':hover': {
       td: {
-        background: 'var(--affine-hover-color)',
+        background: 'var(--blank-hover-color)',
       },
     },
   };

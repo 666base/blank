@@ -1,4 +1,4 @@
-globalThis.__AFFINE_FORCE_MOBILE__ = true;
+globalThis.__BLANK_FORCE_MOBILE__ = true;
 
 import { Capacitor } from '@capacitor/core';
 
@@ -6,11 +6,12 @@ if (Capacitor.isNativePlatform()) {
   globalThis.__CAPACITOR_NATIVE__ = true;
 }
 
-import '@affine/core/bootstrap/browser';
-import '@affine/core/bootstrap/cleanup';
-import '@affine/component/theme';
-import { globalVars } from '@affine/core/mobile/styles/variables.css';
-import '@affine/core/mobile/styles/mobile.css';
+import '@blank/core/bootstrap/browser';
+import '@blank/core/bootstrap/blank-main';
+import '@blank/core/bootstrap/cleanup';
+import '@blank/component/theme';
+import { globalVars } from '@blank/core/mobile/styles/variables.css';
+import '@blank/core/mobile/styles/mobile.css';
 
 function isIosMobileDevice() {
   if (BUILD_CONFIG.isIOS) {
@@ -37,7 +38,7 @@ function configureMobileRuntimeLayout() {
   root.style.setProperty(globalVars.appTabHeight, tabHeight);
   root.style.setProperty(globalVars.appTabSafeArea, tabSafeArea);
   root.style.setProperty(
-    '--affine-edgeless-zoom-toolbar-bottom',
+    '--blank-edgeless-zoom-toolbar-bottom',
     `calc(10px + ${tabSafeArea})`
   );
 }

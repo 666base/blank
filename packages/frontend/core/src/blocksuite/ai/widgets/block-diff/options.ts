@@ -1,6 +1,6 @@
-import track from '@affine/track';
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
+import track from '@blank/track';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
 import { CloseIcon, DoneIcon } from '@blocksuite/icons/lit';
 import { css, html, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';

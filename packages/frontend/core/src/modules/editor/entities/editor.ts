@@ -1,17 +1,17 @@
-import type { AffineEditorContainer } from '@affine/core/blocksuite/block-suite-editor';
-import type { DefaultOpenProperty } from '@affine/core/components/properties';
-import { PresentTool } from '@blocksuite/affine/blocks/frame';
-import { DefaultTool } from '@blocksuite/affine/blocks/surface';
-import type { DocTitle } from '@blocksuite/affine/fragments/doc-title';
-import { findCommentedTexts } from '@blocksuite/affine/inlines/comment';
-import type { DocMode, ReferenceParams } from '@blocksuite/affine/model';
-import { HighlightSelection } from '@blocksuite/affine/shared/selection';
+import type { BlankEditorContainer } from '@blank/core/blocksuite/block-suite-editor';
+import type { DefaultOpenProperty } from '@blank/core/components/properties';
+import { PresentTool } from '@blocksuite/blank/blocks/frame';
+import { DefaultTool } from '@blocksuite/blank/blocks/surface';
+import type { DocTitle } from '@blocksuite/blank/fragments/doc-title';
+import { findCommentedTexts } from '@blocksuite/blank/inlines/comment';
+import type { DocMode, ReferenceParams } from '@blocksuite/blank/model';
+import { HighlightSelection } from '@blocksuite/blank/shared/selection';
 import {
   DocModeProvider,
   findCommentedBlocks,
   findCommentedElements,
-} from '@blocksuite/affine/shared/services';
-import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
+} from '@blocksuite/blank/shared/services';
+import { GfxControllerIdentifier } from '@blocksuite/blank/std/gfx';
 import type { InlineEditor } from '@blocksuite/std/inline';
 import { effect } from '@preact/signals-core';
 import { Entity, LiveData } from '@toeverything/infra';
@@ -37,7 +37,7 @@ export class Editor extends Entity {
   readonly doc = this.docService.doc;
   readonly isSharedMode =
     this.workspaceService.workspace.openOptions.isSharedMode;
-  readonly editorContainer$ = new LiveData<AffineEditorContainer | null>(null);
+  readonly editorContainer$ = new LiveData<BlankEditorContainer | null>(null);
   readonly defaultOpenProperty$ = new LiveData<DefaultOpenProperty | undefined>(
     undefined
   );
@@ -269,7 +269,7 @@ export class Editor extends Entity {
   }
 
   bindEditorContainer(
-    editorContainer: AffineEditorContainer,
+    editorContainer: BlankEditorContainer,
     docTitle?: DocTitle | null,
     scrollViewport?: HTMLElement | null
   ) {

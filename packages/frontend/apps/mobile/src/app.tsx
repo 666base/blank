@@ -1,28 +1,28 @@
-import { AffineContext } from '@affine/core/components/context';
-import { AppFallback } from '@affine/core/mobile/components/app-fallback';
-import { configureMobileModules } from '@affine/core/mobile/modules';
-import { HapticProvider } from '@affine/core/mobile/modules/haptics';
-import { VirtualKeyboardProvider } from '@affine/core/mobile/modules/virtual-keyboard';
-import { router } from '@affine/core/mobile/router';
-import { configureCommonModules } from '@affine/core/modules';
-import { I18nProvider } from '@affine/core/modules/i18n';
-import { LifecycleService } from '@affine/core/modules/lifecycle';
+import { BlankContext } from '@blank/core/components/context';
+import { AppFallback } from '@blank/core/mobile/components/app-fallback';
+import { configureMobileModules } from '@blank/core/mobile/modules';
+import { HapticProvider } from '@blank/core/mobile/modules/haptics';
+import { VirtualKeyboardProvider } from '@blank/core/mobile/modules/virtual-keyboard';
+import { router } from '@blank/core/mobile/router';
+import { configureCommonModules } from '@blank/core/modules';
+import { I18nProvider } from '@blank/core/modules/i18n';
+import { LifecycleService } from '@blank/core/modules/lifecycle';
 import {
   configureLocalStorageStateStorageImpls,
   NbstoreProvider,
-} from '@affine/core/modules/storage';
-import { PopupWindowProvider } from '@affine/core/modules/url';
-import { configureBrowserWorkbenchModule } from '@affine/core/modules/workbench';
-import { configureBrowserWorkspaceFlavours } from '@affine/core/modules/workspace-engine';
-import createEmotionCache from '@affine/core/utils/create-emotion-cache';
+} from '@blank/core/modules/storage';
+import { PopupWindowProvider } from '@blank/core/modules/url';
+import { configureBrowserWorkbenchModule } from '@blank/core/modules/workbench';
+import { configureBrowserWorkspaceFlavours } from '@blank/core/modules/workspace-engine';
+import createEmotionCache from '@blank/core/utils/create-emotion-cache';
 import {
   isCapacitorNative,
   isElectronShell,
   isLocalOnlyMode,
-} from '@affine/core/utils/local-only';
-import { getWorkerUrl } from '@affine/env/worker';
-import { StoreManagerClient } from '@affine/nbstore/worker/client';
-import { setTelemetryTransport } from '@affine/track';
+} from '@blank/core/utils/local-only';
+import { getWorkerUrl } from '@blank/env/worker';
+import { StoreManagerClient } from '@blank/nbstore/worker/client';
+import { setTelemetryTransport } from '@blank/track';
 import { CacheProvider } from '@emotion/react';
 import { Framework, FrameworkRoot, getCurrentStore } from '@toeverything/infra';
 import { OpClient } from '@toeverything/infra/op';
@@ -42,7 +42,7 @@ if (
   localStorage.getItem('disableSharedWorker') !== 'true' &&
   !preferDedicatedWorker
 ) {
-  const worker = new SharedWorker(workerUrl, { name: 'affine-shared-worker' });
+  const worker = new SharedWorker(workerUrl, { name: 'blank-shared-worker' });
   storeManagerClient = new StoreManagerClient(new OpClient(worker.port));
 } else {
   const worker = new Worker(workerUrl);
@@ -166,13 +166,13 @@ export function App() {
       <FrameworkRoot framework={frameworkProvider}>
         <CacheProvider value={cache}>
           <I18nProvider>
-            <AffineContext store={getCurrentStore()}>
+            <BlankContext store={getCurrentStore()}>
               <RouterProvider
                 fallbackElement={<AppFallback />}
                 router={router}
                 future={future}
               />
-            </AffineContext>
+            </BlankContext>
           </I18nProvider>
         </CacheProvider>
       </FrameworkRoot>

@@ -1,10 +1,10 @@
-import type { MenuItemProps } from '@affine/component';
-import { Menu, MenuItem, usePromptModal } from '@affine/component';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+import type { MenuItemProps } from '@blank/component';
+import { Menu, MenuItem, usePromptModal } from '@blank/component';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { CompatibleFavoriteItemsAdapter } from '@blank/core/modules/favorite';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import {
   DeleteIcon,
   EditIcon,
@@ -53,13 +53,13 @@ export const CollectionOperations = ({
       return openRenameModal();
     }
     openPromptModal({
-      title: t['com.affine.editCollection.renameCollection'](),
-      label: t['com.affine.editCollectionName.name'](),
+      title: t['com.blank.editCollection.renameCollection'](),
+      label: t['com.blank.editCollectionName.name'](),
       inputOptions: {
-        placeholder: t['com.affine.editCollectionName.name.placeholder'](),
+        placeholder: t['com.blank.editCollectionName.name.placeholder'](),
       },
-      confirmText: t['com.affine.editCollection.save'](),
-      cancelText: t['com.affine.editCollection.button.cancel'](),
+      confirmText: t['com.blank.editCollection.save'](),
+      cancelText: t['com.blank.editCollection.button.cancel'](),
       confirmButtonOptions: {
         variant: 'primary',
       },
@@ -116,12 +116,12 @@ export const CollectionOperations = ({
     () => [
       {
         icon: <EditIcon />,
-        name: t['com.affine.collection.menu.rename'](),
+        name: t['com.blank.collection.menu.rename'](),
         click: showEditName,
       },
       {
         icon: <FilterIcon />,
-        name: t['com.affine.collection.menu.edit'](),
+        name: t['com.blank.collection.menu.edit'](),
         click: showEdit,
       },
       ...(onAddDocToCollection
@@ -136,20 +136,20 @@ export const CollectionOperations = ({
       {
         icon: <IsFavoriteIcon favorite={favorite} />,
         name: favorite
-          ? t['com.affine.favoritePageOperation.remove']()
-          : t['com.affine.favoritePageOperation.add'](),
+          ? t['com.blank.favoritePageOperation.remove']()
+          : t['com.blank.favoritePageOperation.add'](),
         click: onToggleFavoritePage,
       },
       {
         icon: <OpenInNewIcon />,
-        name: t['com.affine.workbench.tab.page-menu-open'](),
+        name: t['com.blank.workbench.tab.page-menu-open'](),
         click: openCollectionNewTab,
       },
       ...(BUILD_CONFIG.isElectron
         ? [
             {
               icon: <SplitViewIcon />,
-              name: t['com.affine.workbench.split-view.page-menu-open'](),
+              name: t['com.blank.workbench.split-view.page-menu-open'](),
               click: openCollectionSplitView,
             },
           ]

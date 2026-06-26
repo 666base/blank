@@ -1,5 +1,5 @@
-import { Button, Input } from '@affine/component';
-import { useI18n } from '@affine/i18n';
+import { Button, Input } from '@blank/component';
+import { useI18n } from '@blank/i18n';
 import { useCallback, useState } from 'react';
 
 import {

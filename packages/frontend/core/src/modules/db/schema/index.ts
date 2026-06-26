@@ -1,7 +1,7 @@
 export type { DocCustomPropertyInfo, DocProperties } from './schema';
 export {
-  AFFiNE_WORKSPACE_DB_SCHEMA,
-  AFFiNE_WORKSPACE_USERDATA_DB_SCHEMA,
-  type AFFiNEWorkspaceDbSchema,
-  type AFFiNEWorkspaceUserdataDbSchema,
+  Blank_WORKSPACE_DB_SCHEMA,
+  Blank_WORKSPACE_USERDATA_DB_SCHEMA,
+  type BlankWorkspaceDbSchema,
+  type BlankWorkspaceUserdataDbSchema,
 } from './schema';

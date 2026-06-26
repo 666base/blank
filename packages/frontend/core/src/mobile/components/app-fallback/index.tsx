@@ -1,4 +1,4 @@
-import { SafeArea, Skeleton } from '@affine/component';
+import { SafeArea, Skeleton } from '@blank/component';
 import { cssVarV2 } from '@toeverything/theme/v2';
 
 const SectionTitleFallback = () => {

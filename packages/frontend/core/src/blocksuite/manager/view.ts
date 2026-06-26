@@ -1,42 +1,42 @@
-import { isAiDisabled } from '@affine/core/utils/local-only';
-import { AIViewExtension } from '@affine/core/blocksuite/view-extensions/ai';
-import { CloudViewExtension } from '@affine/core/blocksuite/view-extensions/cloud';
-import { CodeBlockPreviewViewExtension } from '@affine/core/blocksuite/view-extensions/code-block-preview';
-import { CommentViewExtension } from '@affine/core/blocksuite/view-extensions/comment';
-import { AffineDatabaseViewExtension } from '@affine/core/blocksuite/view-extensions/database';
+import { isAiDisabled } from '@blank/core/utils/local-only';
+import { AIViewExtension } from '@blank/core/blocksuite/view-extensions/ai';
+import { CloudViewExtension } from '@blank/core/blocksuite/view-extensions/cloud';
+import { CodeBlockPreviewViewExtension } from '@blank/core/blocksuite/view-extensions/code-block-preview';
+import { CommentViewExtension } from '@blank/core/blocksuite/view-extensions/comment';
+import { BlankDatabaseViewExtension } from '@blank/core/blocksuite/view-extensions/database';
 import {
   EdgelessBlockHeaderConfigViewExtension,
   type EdgelessBlockHeaderViewOptions,
-} from '@affine/core/blocksuite/view-extensions/edgeless-block-header';
-import { AffineEditorConfigViewExtension } from '@affine/core/blocksuite/view-extensions/editor-config';
-import { createDatabaseOptionsConfig } from '@affine/core/blocksuite/view-extensions/editor-config/database';
-import { createLinkedWidgetConfig } from '@affine/core/blocksuite/view-extensions/editor-config/linked';
+} from '@blank/core/blocksuite/view-extensions/edgeless-block-header';
+import { BlankEditorConfigViewExtension } from '@blank/core/blocksuite/view-extensions/editor-config';
+import { createDatabaseOptionsConfig } from '@blank/core/blocksuite/view-extensions/editor-config/database';
+import { createLinkedWidgetConfig } from '@blank/core/blocksuite/view-extensions/editor-config/linked';
 import {
-  AffineEditorViewExtension,
-  type AffineEditorViewOptions,
-} from '@affine/core/blocksuite/view-extensions/editor-view/editor-view';
-import { ElectronViewExtension } from '@affine/core/blocksuite/view-extensions/electron';
-import { AffineIconPickerExtension } from '@affine/core/blocksuite/view-extensions/icon-picker';
-import { AffineLinkPreviewExtension } from '@affine/core/blocksuite/view-extensions/link-preview-service';
-import { MobileViewExtension } from '@affine/core/blocksuite/view-extensions/mobile';
-import { PdfViewExtension } from '@affine/core/blocksuite/view-extensions/pdf';
-import { AffineThemeViewExtension } from '@affine/core/blocksuite/view-extensions/theme';
-import { TurboRendererViewExtension } from '@affine/core/blocksuite/view-extensions/turbo-renderer';
-import { PeekViewService } from '@affine/core/modules/peek-view';
-import { DebugLogger } from '@affine/debug';
-import { tracker } from '@affine/track';
-import { DatabaseViewExtension } from '@blocksuite/affine/blocks/database/view';
-import { ParagraphViewExtension } from '@blocksuite/affine/blocks/paragraph/view';
+  BlankEditorViewExtension,
+  type BlankEditorViewOptions,
+} from '@blank/core/blocksuite/view-extensions/editor-view/editor-view';
+import { ElectronViewExtension } from '@blank/core/blocksuite/view-extensions/electron';
+import { BlankIconPickerExtension } from '@blank/core/blocksuite/view-extensions/icon-picker';
+import { BlankLinkPreviewExtension } from '@blank/core/blocksuite/view-extensions/link-preview-service';
+import { MobileViewExtension } from '@blank/core/blocksuite/view-extensions/mobile';
+import { PdfViewExtension } from '@blank/core/blocksuite/view-extensions/pdf';
+import { BlankThemeViewExtension } from '@blank/core/blocksuite/view-extensions/theme';
+import { TurboRendererViewExtension } from '@blank/core/blocksuite/view-extensions/turbo-renderer';
+import { PeekViewService } from '@blank/core/modules/peek-view';
+import { DebugLogger } from '@blank/debug';
+import { tracker } from '@blank/track';
+import { DatabaseViewExtension } from '@blocksuite/blank/blocks/database/view';
+import { ParagraphViewExtension } from '@blocksuite/blank/blocks/paragraph/view';
 import type {
   PeekOptions,
   PeekViewService as BSPeekViewService,
-} from '@blocksuite/affine/components/peek';
-import { ViewExtensionManager } from '@blocksuite/affine/ext-loader';
-import { getInternalViewExtensions } from '@blocksuite/affine/extensions/view';
-import { FoundationViewExtension } from '@blocksuite/affine/foundation/view';
-import { InlineCommentViewExtension } from '@blocksuite/affine/inlines/comment';
-import { AffineCanvasTextFonts } from '@blocksuite/affine/shared/services';
-import { LinkedDocViewExtension } from '@blocksuite/affine/widgets/linked-doc/view';
+} from '@blocksuite/blank/components/peek';
+import { ViewExtensionManager } from '@blocksuite/blank/ext-loader';
+import { getInternalViewExtensions } from '@blocksuite/blank/extensions/view';
+import { FoundationViewExtension } from '@blocksuite/blank/foundation/view';
+import { InlineCommentViewExtension } from '@blocksuite/blank/inlines/comment';
+import { BlankCanvasTextFonts } from '@blocksuite/blank/shared/services';
+import { LinkedDocViewExtension } from '@blocksuite/blank/widgets/linked-doc/view';
 import type { FrameworkProvider } from '@toeverything/infra';
 import type { TemplateResult } from 'lit';
 
@@ -44,7 +44,7 @@ type Configure = {
   init: () => Configure;
 
   foundation: (framework?: FrameworkProvider) => Configure;
-  editorView: (options?: AffineEditorViewOptions) => Configure;
+  editorView: (options?: BlankEditorViewOptions) => Configure;
   theme: (framework?: FrameworkProvider) => Configure;
   editorConfig: (framework?: FrameworkProvider) => Configure;
   edgelessBlockHeader: (options?: EdgelessBlockHeaderViewOptions) => Configure;
@@ -68,7 +68,7 @@ type Configure = {
   value: ViewExtensionManager;
 };
 
-const peekViewLogger = new DebugLogger('affine::patch-peek-view-service');
+const peekViewLogger = new DebugLogger('blank::patch-peek-view-service');
 
 class ViewProvider {
   static instance: ViewProvider | null = null;
@@ -85,10 +85,10 @@ class ViewProvider {
     this._manager = new ViewExtensionManager([
       ...getInternalViewExtensions(),
 
-      AffineThemeViewExtension,
-      AffineEditorViewExtension,
-      AffineEditorConfigViewExtension,
-      AffineIconPickerExtension,
+      BlankThemeViewExtension,
+      BlankEditorViewExtension,
+      BlankEditorConfigViewExtension,
+      BlankIconPickerExtension,
       CodeBlockPreviewViewExtension,
       EdgelessBlockHeaderConfigViewExtension,
       TurboRendererViewExtension,
@@ -97,8 +97,8 @@ class ViewProvider {
       MobileViewExtension,
       ...(isAiDisabled() ? [] : [AIViewExtension]),
       ElectronViewExtension,
-      AffineLinkPreviewExtension,
-      AffineDatabaseViewExtension,
+      BlankLinkPreviewExtension,
+      BlankDatabaseViewExtension,
       CommentViewExtension,
     ]);
   }
@@ -170,7 +170,7 @@ class ViewProvider {
           tracker.track(eventName, props);
         },
       },
-      fontConfig: AffineCanvasTextFonts.map(font => ({
+      fontConfig: BlankCanvasTextFonts.map(font => ({
         ...font,
         url: environment.publicPath + 'fonts/' + font.url.split('/').pop(),
       })),
@@ -205,19 +205,19 @@ class ViewProvider {
   };
 
   private readonly _configureEditorView = (
-    options?: AffineEditorViewOptions
+    options?: BlankEditorViewOptions
   ) => {
-    this._manager.configure(AffineEditorViewExtension, options);
+    this._manager.configure(BlankEditorViewExtension, options);
     return this.config;
   };
 
   private readonly _configureTheme = (framework?: FrameworkProvider) => {
-    this._manager.configure(AffineThemeViewExtension, { framework });
+    this._manager.configure(BlankThemeViewExtension, { framework });
     return this.config;
   };
 
   private readonly _configureEditorConfig = (framework?: FrameworkProvider) => {
-    this._manager.configure(AffineEditorConfigViewExtension, { framework });
+    this._manager.configure(BlankEditorConfigViewExtension, { framework });
     return this.config;
   };
 
@@ -229,7 +229,7 @@ class ViewProvider {
   };
 
   private readonly _configureDatabase = (framework?: FrameworkProvider) => {
-    this._manager.configure(AffineDatabaseViewExtension, { framework });
+    this._manager.configure(BlankDatabaseViewExtension, { framework });
     if (framework) {
       this._manager.configure(
         DatabaseViewExtension,
@@ -333,7 +333,7 @@ class ViewProvider {
   };
 
   private readonly _configureLinkPreview = (framework?: FrameworkProvider) => {
-    this._manager.configure(AffineLinkPreviewExtension, { framework });
+    this._manager.configure(BlankLinkPreviewExtension, { framework });
     return this.config;
   };
 
@@ -345,7 +345,7 @@ class ViewProvider {
   };
 
   private readonly _configureIconPicker = (framework?: FrameworkProvider) => {
-    this._manager.configure(AffineIconPickerExtension, { framework });
+    this._manager.configure(BlankIconPickerExtension, { framework });
     return this.config;
   };
 

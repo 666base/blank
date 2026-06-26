@@ -1,4 +1,4 @@
-import type { DocMode } from '@blocksuite/affine/model';
+import type { DocMode } from '@blocksuite/blank/model';
 import { Entity, LiveData, MemoryMemento } from '@toeverything/infra';
 
 import { DEFAULT_BUILTIN_SERVER_ID } from '../../cloud/constant';

@@ -1,15 +1,15 @@
-import { notify } from '@affine/component';
+import { notify } from '@blank/component';
 import {
   AcceptInvitePage,
   ExpiredPage,
   JoinFailedPage,
   RequestToJoinPage,
   SentRequestPage,
-} from '@affine/component/member-components';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { WorkspacesService } from '@affine/core/modules/workspace';
-import { UserFriendlyError } from '@affine/error';
-import { WorkspaceMemberStatus } from '@affine/graphql';
+} from '@blank/component/member-components';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { WorkspacesService } from '@blank/core/modules/workspace';
+import { UserFriendlyError } from '@blank/error';
+import { WorkspaceMemberStatus } from '@blank/graphql';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
@@ -47,7 +47,7 @@ const AcceptInvite = ({ inviteId: targetInviteId }: { inviteId: string }) => {
     jumpToPage(inviteInfo.workspace.id, 'all', RouteLogic.REPLACE);
   }, [inviteInfo, workspacesService, jumpToPage]);
 
-  const onOpenAffine = useCallback(() => {
+  const onOpenBlank = useCallback(() => {
     navigateHelper.jumpToIndex();
   }, [navigateHelper]);
 
@@ -91,7 +91,7 @@ const AcceptInvite = ({ inviteId: targetInviteId }: { inviteId: string }) => {
   }
 
   if (!inviteInfo && !loading) {
-    return <ExpiredPage onOpenAffine={onOpenAffine} />;
+    return <ExpiredPage onOpenBlank={onOpenBlank} />;
   }
 
   if (error || acceptError) {

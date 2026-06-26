@@ -1,5 +1,5 @@
-import { ByokKeyStorage, ByokProvider } from '@affine/graphql';
-import type { I18nInstance } from '@affine/i18n';
+import { ByokKeyStorage, ByokProvider } from '@blank/graphql';
+import type { I18nInstance } from '@blank/i18n';
 
 import type { ByokKey, ByokStorage } from './types';
 
@@ -8,7 +8,7 @@ export function byokT(
   key: string,
   options?: Record<string, unknown>
 ) {
-  return t.t('com.affine.settings.workspace.byok.' + key, options);
+  return t.t('com.blank.settings.workspace.byok.' + key, options);
 }
 
 export const providerLabels: Record<ByokProvider, string> = {

@@ -4,14 +4,14 @@ import {
   IconButton,
   Menu,
   type MenuProps,
-} from '@affine/component';
+} from '@blank/component';
 import {
   type AuthAccountInfo,
   AuthService,
   ServerService,
-} from '@affine/core/modules/cloud';
-import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
+} from '@blank/core/modules/cloud';
+import { GlobalDialogService } from '@blank/core/modules/dialogs';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 

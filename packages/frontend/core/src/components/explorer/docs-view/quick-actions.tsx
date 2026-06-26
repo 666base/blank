@@ -4,14 +4,14 @@ import {
   type IconButtonProps,
   toast,
   useConfirmModal,
-} from '@affine/component';
-import type { DocRecord } from '@affine/core/modules/doc';
-import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
-import { GuardService } from '@affine/core/modules/permissions';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { UserFriendlyError } from '@affine/error';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+} from '@blank/component';
+import type { DocRecord } from '@blank/core/modules/doc';
+import { CompatibleFavoriteItemsAdapter } from '@blank/core/modules/favorite';
+import { GuardService } from '@blank/core/modules/permissions';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { UserFriendlyError } from '@blank/error';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import {
   DeleteIcon,
   OpenInNewIcon,
@@ -21,7 +21,7 @@ import {
 import { useLiveData, useService } from '@toeverything/infra';
 import { memo, useCallback, useContext } from 'react';
 
-import { useBlockSuiteMetaHelper } from '../../hooks/affine/use-block-suite-meta-helper';
+import { useBlockSuiteMetaHelper } from '../../hooks/blank/use-block-suite-meta-helper';
 import { IsFavoriteIcon } from '../../pure/icons';
 import { DocExplorerContext } from '../context';
 
@@ -154,11 +154,11 @@ export const QuickDelete = memo(function QuickDelete({
 
       track.allDocs.list.docMenu.deleteDoc();
       openConfirmModal({
-        title: t['com.affine.moveToTrash.confirmModal.title'](),
-        description: t['com.affine.moveToTrash.confirmModal.description']({
+        title: t['com.blank.moveToTrash.confirmModal.title'](),
+        description: t['com.blank.moveToTrash.confirmModal.description']({
           title: doc.title$.value || t['Untitled'](),
         }),
-        cancelText: t['com.affine.confirmModal.button.cancel'](),
+        cancelText: t['com.blank.confirmModal.button.cancel'](),
         confirmText: t.Delete(),
         confirmButtonOptions: {
           variant: 'error',
@@ -167,7 +167,7 @@ export const QuickDelete = memo(function QuickDelete({
           try {
             const canTrash = await guardService.can('Doc_Trash', doc.id);
             if (!canTrash) {
-              toast(t['com.affine.no-permission']());
+              toast(t['com.blank.no-permission']());
               return;
             }
             doc.moveToTrash();
@@ -257,9 +257,9 @@ export const QuickDeletePermanently = memo(function QuickDeletePermanently({
       .then(can => {
         if (can) {
           permanentlyDeletePage(doc.id);
-          toast(t['com.affine.toastMessage.permanentlyDeleted']());
+          toast(t['com.blank.toastMessage.permanentlyDeleted']());
         } else {
-          toast(t['com.affine.no-permission']());
+          toast(t['com.blank.no-permission']());
         }
       })
       .catch(e => {
@@ -273,10 +273,10 @@ export const QuickDeletePermanently = memo(function QuickDeletePermanently({
       e.stopPropagation();
       e.preventDefault();
       openConfirmModal({
-        title: `${t['com.affine.trashOperation.deletePermanently']()}?`,
-        description: t['com.affine.trashOperation.deleteDescription'](),
+        title: `${t['com.blank.trashOperation.deletePermanently']()}?`,
+        description: t['com.blank.trashOperation.deleteDescription'](),
         cancelText: t['Cancel'](),
-        confirmText: t['com.affine.trashOperation.delete'](),
+        confirmText: t['com.blank.trashOperation.delete'](),
         confirmButtonOptions: {
           variant: 'error',
         },
@@ -323,12 +323,12 @@ export const QuickRestore = memo(function QuickRestore({
           if (can) {
             restoreFromTrash(doc.id);
             toast(
-              t['com.affine.toastMessage.restored']({
+              t['com.blank.toastMessage.restored']({
                 title: doc.title$.value || 'Untitled',
               })
             );
           } else {
-            toast(t['com.affine.no-permission']());
+            toast(t['com.blank.no-permission']());
           }
         })
         .catch(e => {

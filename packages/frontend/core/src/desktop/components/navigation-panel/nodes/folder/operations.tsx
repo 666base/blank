@@ -1,7 +1,7 @@
-import { MenuItem } from '@affine/component';
-import { IsFavoriteIcon } from '@affine/core/components/pure/icons';
-import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
-import { useI18n } from '@affine/i18n';
+import { MenuItem } from '@blank/component';
+import { IsFavoriteIcon } from '@blank/core/components/pure/icons';
+import { CompatibleFavoriteItemsAdapter } from '@blank/core/modules/favorite';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useMemo } from 'react';
 
@@ -23,8 +23,8 @@ export const FavoriteFolderOperation = ({ id }: { id: string }) => {
       onClick={() => compatibleFavoriteItemsAdapter.toggle(id, 'folder')}
     >
       {favorite
-        ? t['com.affine.rootAppSidebar.organize.folder-rm-favorite']()
-        : t['com.affine.rootAppSidebar.organize.folder-add-favorite']()}
+        ? t['com.blank.rootAppSidebar.organize.folder-rm-favorite']()
+        : t['com.blank.rootAppSidebar.organize.folder-add-favorite']()}
     </MenuItem>
   );
 };

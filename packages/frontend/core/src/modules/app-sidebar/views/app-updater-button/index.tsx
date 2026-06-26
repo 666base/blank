@@ -1,10 +1,10 @@
-import { Tooltip } from '@affine/component';
-import { useCatchEventCallback } from '@affine/core/components/hooks/use-catch-event-hook';
-import { UrlService } from '@affine/core/modules/url';
-import { getBlankGithubUrl } from '@affine/core/utils/blank-links';
-import { isBlankBranding } from '@affine/core/utils/blank-branding';
-import { Unreachable } from '@affine/env/constant';
-import { useI18n } from '@affine/i18n';
+import { Tooltip } from '@blank/component';
+import { useCatchEventCallback } from '@blank/core/components/hooks/use-catch-event-hook';
+import { UrlService } from '@blank/core/modules/url';
+import { getBlankGithubUrl } from '@blank/core/utils/blank-links';
+import { isBlankBranding } from '@blank/core/utils/blank-branding';
+import { Unreachable } from '@blank/env/constant';
+import { useI18n } from '@blank/i18n';
 import {
   CloseIcon,
   DownloadIcon,
@@ -55,7 +55,7 @@ function DownloadUpdate({ updateAvailable }: ButtonContentProps) {
       <div className={styles.installLabelNormal}>
         <DownloadIcon className={styles.icon} />
         <span className={styles.ellipsisTextOverflow}>
-          {t['com.affine.appUpdater.downloadUpdate']()}
+          {t['com.blank.appUpdater.downloadUpdate']()}
         </span>
         <span className={styles.versionLabel}>{updateAvailable?.version}</span>
       </div>
@@ -63,7 +63,7 @@ function DownloadUpdate({ updateAvailable }: ButtonContentProps) {
       <div className={styles.installLabelHover}>
         <DownloadIcon className={styles.icon} />
         <span className={styles.ellipsisTextOverflow}>
-          {t['com.affine.appUpdater.downloadUpdate']()}
+          {t['com.blank.appUpdater.downloadUpdate']()}
         </span>
       </div>
     </div>
@@ -77,7 +77,7 @@ function UpdateReady({ updateAvailable, appQuitting }: ButtonContentProps) {
       <div className={styles.installLabelNormal}>
         <ResetIcon className={styles.icon} />
         <span className={styles.ellipsisTextOverflow}>
-          {t['com.affine.appUpdater.updateAvailable']()}
+          {t['com.blank.appUpdater.updateAvailable']()}
         </span>
         <span className={styles.versionLabel}>{updateAvailable?.version}</span>
       </div>
@@ -85,7 +85,7 @@ function UpdateReady({ updateAvailable, appQuitting }: ButtonContentProps) {
       <div className={styles.installLabelHover}>
         <ResetIcon className={styles.icon} />
         <span className={styles.ellipsisTextOverflow}>
-          {t[appQuitting ? 'Loading' : 'com.affine.appUpdater.installUpdate']()}
+          {t[appQuitting ? 'Loading' : 'com.blank.appUpdater.installUpdate']()}
         </span>
       </div>
     </div>
@@ -101,7 +101,7 @@ function DownloadingUpdate({
     <div className={clsx([styles.updateAvailableWrapper])}>
       <div className={clsx([styles.installLabelNormal])}>
         <span className={styles.ellipsisTextOverflow}>
-          {t['com.affine.appUpdater.downloading']()}
+          {t['com.blank.appUpdater.downloading']()}
         </span>
         <span className={styles.versionLabel}>{updateAvailable?.version}</span>
       </div>
@@ -123,7 +123,7 @@ function OpenDownloadPage({ updateAvailable }: ButtonContentProps) {
       <div className={styles.installLabelNormal}>
         <DownloadIcon className={styles.icon} />
         <span className={styles.ellipsisTextOverflow}>
-          {t['com.affine.appUpdater.updateAvailable']()}
+          {t['com.blank.appUpdater.updateAvailable']()}
         </span>
         <span className={styles.versionLabel}>{updateAvailable?.version}</span>
       </div>
@@ -131,7 +131,7 @@ function OpenDownloadPage({ updateAvailable }: ButtonContentProps) {
       <div className={styles.installLabelHover}>
         <DownloadIcon className={styles.icon} />
         <span className={styles.ellipsisTextOverflow}>
-          {t['com.affine.appUpdater.openDownloadPage']()}
+          {t['com.blank.appUpdater.openDownloadPage']()}
         </span>
       </div>
     </>
@@ -148,7 +148,7 @@ function WhatsNew({ onDismissChangelog }: ButtonContentProps) {
       <div className={clsx([styles.whatsNewLabel])}>
         <NewIcon className={styles.icon} />
         <span className={styles.ellipsisTextOverflow}>
-          {t['com.affine.appUpdater.whatsNew']()}
+          {t['com.blank.appUpdater.whatsNew']()}
         </span>
       </div>
       <div className={styles.closeIcon} onClick={onClickClose}>
@@ -204,7 +204,7 @@ export function AppUpdaterButton({
         urlService.openPopupWindow(
           isBlankBranding()
             ? `${getBlankGithubUrl()}/releases/tag/v${updateAvailable.version}`
-            : `https://github.com/toeverything/AFFiNE/releases/tag/v${updateAvailable.version}`
+            : `https://github.com/666base/blank/releases/tag/v${updateAvailable.version}`
         );
       }
     } else if (changelogUnread) {

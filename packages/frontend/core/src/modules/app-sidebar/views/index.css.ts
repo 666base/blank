@@ -25,7 +25,7 @@ export const hoverNavWrapperStyle = style({
       height: 'calc(100% - 60px)',
       marginTop: '52px',
       marginLeft: '4px',
-      boxShadow: cssVar('--affine-popover-shadow'),
+      boxShadow: cssVar('--blank-popover-shadow'),
       borderRadius: '6px',
     },
     '&[data-is-floating="true"][data-is-electron="true"]': {
@@ -39,7 +39,7 @@ export const hoverNavWrapperStyle = style({
       content: '""',
       position: 'absolute',
       inset: 0,
-      opacity: `var(--affine-noise-opacity, 0)`,
+      opacity: `var(--blank-noise-opacity, 0)`,
       backgroundRepeat: 'repeat',
       backgroundSize: '50px',
       // TODO(@Peng): figure out how to use vanilla-extract webpack plugin to inject img url
@@ -75,10 +75,15 @@ export const navHeaderStyle = style({
 
 export const navBodyStyle = style({
   flex: '1 1 auto',
-  height: 'calc(100% - 52px)',
+  height: '100%',
   display: 'flex',
   flexDirection: 'column',
   rowGap: '4px',
+  selectors: {
+    [`${navStyle}[data-has-nav-header="true"] &`]: {
+      height: 'calc(100% - 52px)',
+    },
+  },
 });
 export const sidebarFloatMaskStyle = style({
   transition: 'opacity .15s',

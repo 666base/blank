@@ -1,8 +1,8 @@
 import './action-wrapper';
 
-import { WithDisposable } from '@blocksuite/affine/global/lit';
-import type { EditorHost } from '@blocksuite/affine/std';
-import { ShadowlessElement } from '@blocksuite/affine/std';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
+import type { EditorHost } from '@blocksuite/blank/std';
+import { ShadowlessElement } from '@blocksuite/blank/std';
 import { html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';

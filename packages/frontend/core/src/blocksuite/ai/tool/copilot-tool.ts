@@ -1,23 +1,23 @@
 /* oxlint-disable @typescript-eslint/no-non-null-assertion */
-import { DefaultTool } from '@blocksuite/affine/blocks/surface';
-import { IS_MAC } from '@blocksuite/affine/global/env';
+import { DefaultTool } from '@blocksuite/blank/blocks/surface';
+import { IS_MAC } from '@blocksuite/blank/global/env';
 import {
   Bound,
   getCommonBoundWithRotation,
-} from '@blocksuite/affine/global/gfx';
-import type { PointerEventState } from '@blocksuite/affine/std';
+} from '@blocksuite/blank/global/gfx';
+import type { PointerEventState } from '@blocksuite/blank/std';
 import {
   BaseTool,
   type GfxModel,
   MouseButton,
-} from '@blocksuite/affine/std/gfx';
-import { on } from '@blocksuite/affine-shared/utils';
+} from '@blocksuite/blank/std/gfx';
+import { on } from '@blocksuite/blank-shared/utils';
 import { isEqual } from 'lodash-es';
 import { Subject } from 'rxjs';
 
 import {
-  AFFINE_AI_PANEL_WIDGET,
-  type AffineAIPanelWidget,
+  BLANK_AI_PANEL_WIDGET,
+  type BlankAIPanelWidget,
 } from '../widgets/ai-panel/ai-panel.js';
 
 export class CopilotTool extends BaseTool {
@@ -51,9 +51,9 @@ export class CopilotTool extends BaseTool {
   // AI processing
   get processing() {
     const aiPanel = this.gfx.std.view.getWidget(
-      AFFINE_AI_PANEL_WIDGET,
+      BLANK_AI_PANEL_WIDGET,
       this.doc.root!.id
-    ) as AffineAIPanelWidget;
+    ) as BlankAIPanelWidget;
     return aiPanel && aiPanel.state !== 'hidden';
   }
 

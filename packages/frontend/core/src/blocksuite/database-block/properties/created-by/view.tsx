@@ -1,14 +1,14 @@
-import { Avatar, uniReactRoot } from '@affine/component';
+import { Avatar, uniReactRoot } from '@blank/component';
 import {
   type CellRenderProps,
   createIcon,
   type DataViewCellLifeCycle,
   EditorHostKey,
-} from '@blocksuite/affine/blocks/database';
+} from '@blocksuite/blank/blocks/database';
 import {
   UserProvider,
   type UserService,
-} from '@blocksuite/affine/shared/services';
+} from '@blocksuite/blank/shared/services';
 import { css } from '@emotion/css';
 import {
   forwardRef,

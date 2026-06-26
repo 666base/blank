@@ -1,14 +1,14 @@
 import type {
   TranscriptionQualityInput,
   TranscriptionSourceAudioInput,
-} from '@affine/graphql';
+} from '@blank/graphql';
 import {
   BlockModel,
   BlockSchemaExtension,
   defineBlockSchema,
-} from '@blocksuite/affine/store';
+} from '@blocksuite/blank/store';
 
-export const TranscriptionBlockFlavour = 'affine:transcription';
+export const TranscriptionBlockFlavour = 'blank:transcription';
 
 const defaultProps: TranscriptionBlockProps = {
   transcription: {},
@@ -22,8 +22,8 @@ export const TranscriptionBlockSchema = defineBlockSchema({
   metadata: {
     version: 1,
     role: 'attachment-viewer',
-    parent: ['affine:attachment'],
-    children: ['affine:callout'],
+    parent: ['blank:attachment'],
+    children: ['blank:callout'],
   },
   toModel: () => new TranscriptionBlockModel(),
 });

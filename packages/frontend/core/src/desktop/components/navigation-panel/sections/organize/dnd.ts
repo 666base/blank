@@ -1,6 +1,6 @@
-import type { DropTargetOptions } from '@affine/component';
-import { isOrganizeSupportType } from '@affine/core/modules/organize/constants';
-import type { AffineDNDData } from '@affine/core/types/dnd';
+import type { DropTargetOptions } from '@blank/component';
+import { isOrganizeSupportType } from '@blank/core/modules/organize/constants';
+import type { BlankDNDData } from '@blank/core/types/dnd';
 
 import type { NavigationPanelTreeNodeDropEffect } from '../../tree';
 
@@ -31,7 +31,7 @@ export const organizeEmptyDropEffect: NavigationPanelTreeNodeDropEffect =
 /**
  * Check whether the data can be dropped on the empty state of the organize section
  */
-export const organizeEmptyRootCanDrop: DropTargetOptions<AffineDNDData>['canDrop'] =
+export const organizeEmptyRootCanDrop: DropTargetOptions<BlankDNDData>['canDrop'] =
   data => {
     const type = data.source.data.entity?.type;
     return !!type && isOrganizeSupportType(type);

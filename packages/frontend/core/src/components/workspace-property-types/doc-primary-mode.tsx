@@ -3,11 +3,11 @@ import {
   notify,
   PropertyValue,
   type RadioItem,
-} from '@affine/component';
-import type { FilterParams } from '@affine/core/modules/collection-rules';
-import { DocService } from '@affine/core/modules/doc';
-import { useI18n } from '@affine/i18n';
-import type { DocMode } from '@blocksuite/affine/model';
+} from '@blank/component';
+import type { FilterParams } from '@blank/core/modules/collection-rules';
+import { DocService } from '@blank/core/modules/doc';
+import { useI18n } from '@blank/i18n';
+import type { DocMode } from '@blocksuite/blank/model';
 import { EdgelessIcon, PageIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useMemo } from 'react';
@@ -49,12 +49,12 @@ export const DocPrimaryModeValue = ({
       notify.success({
         title:
           mode === 'page'
-            ? t['com.affine.toastMessage.defaultMode.page.title']()
-            : t['com.affine.toastMessage.defaultMode.edgeless.title'](),
+            ? t['com.blank.toastMessage.defaultMode.page.title']()
+            : t['com.blank.toastMessage.defaultMode.edgeless.title'](),
         message:
           mode === 'page'
-            ? t['com.affine.toastMessage.defaultMode.page.message']()
-            : t['com.affine.toastMessage.defaultMode.edgeless.message'](),
+            ? t['com.blank.toastMessage.defaultMode.page.message']()
+            : t['com.blank.toastMessage.defaultMode.edgeless.message'](),
       });
       onChange?.(mode, true);
     },
@@ -147,9 +147,9 @@ export const DocPrimaryModeGroupHeader = ({
   const t = useI18n();
   const text =
     groupId === 'edgeless'
-      ? t['com.affine.edgelessMode']()
+      ? t['com.blank.edgelessMode']()
       : groupId === 'page'
-        ? t['com.affine.pageMode']()
+        ? t['com.blank.pageMode']()
         : 'Default';
 
   return (

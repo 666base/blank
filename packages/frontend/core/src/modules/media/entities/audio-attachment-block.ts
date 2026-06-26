@@ -1,14 +1,14 @@
 import {
   TranscriptionBlockFlavour,
   type TranscriptionBlockModel,
-} from '@affine/core/blocksuite/ai/blocks/transcription-block/model';
-import { insertFromMarkdown } from '@affine/core/blocksuite/utils';
-import { preprocessAudioBlobForTranscription } from '@affine/core/utils/opus-encoding';
-import { DebugLogger } from '@affine/debug';
-import track from '@affine/track';
-import type { AttachmentBlockModel } from '@blocksuite/affine/model';
-import type { AffineTextAttributes } from '@blocksuite/affine/shared/types';
-import { type DeltaInsert, Text } from '@blocksuite/affine/store';
+} from '@blank/core/blocksuite/ai/blocks/transcription-block/model';
+import { insertFromMarkdown } from '@blank/core/blocksuite/utils';
+import { preprocessAudioBlobForTranscription } from '@blank/core/utils/opus-encoding';
+import { DebugLogger } from '@blank/debug';
+import track from '@blank/track';
+import type { AttachmentBlockModel } from '@blocksuite/blank/model';
+import type { BlankTextAttributes } from '@blocksuite/blank/shared/types';
+import { type DeltaInsert, Text } from '@blocksuite/blank/store';
 import { computed } from '@preact/signals-core';
 import { Entity, LiveData } from '@toeverything/infra';
 import { cssVarV2 } from '@toeverything/theme/v2';
@@ -123,7 +123,7 @@ export class AudioAttachmentBlock extends Entity<AttachmentBlockModel> {
     if (!transcriptionBlockProps) {
       // transcription block is not created yet, we need to create it
       this.props.store.addBlock(
-        'affine:transcription',
+        'blank:transcription',
         {
           transcription: {},
         },
@@ -198,14 +198,14 @@ export class AudioAttachmentBlock extends Entity<AttachmentBlockModel> {
       collapsed: boolean = false
     ) => {
       const calloutId = this.props.store.addBlock(
-        'affine:callout',
+        'blank:callout',
         {
           emoji,
         },
         this.transcriptionBlock$.value?.id
       );
       this.props.store.addBlock(
-        'affine:paragraph',
+        'blank:paragraph',
         {
           type: 'h6',
           collapsed,
@@ -229,7 +229,7 @@ export class AudioAttachmentBlock extends Entity<AttachmentBlockModel> {
           color = colorOptions[speakerToColors.size % colorOptions.length];
           speakerToColors.set(segment.speaker, color);
         }
-        const deltaInserts: DeltaInsert<AffineTextAttributes>[] = [
+        const deltaInserts: DeltaInsert<BlankTextAttributes>[] = [
           {
             insert: sanitizeText(segment.start + ' ' + segment.speaker),
             attributes: {
@@ -242,7 +242,7 @@ export class AudioAttachmentBlock extends Entity<AttachmentBlockModel> {
           },
         ];
         this.props.store.addBlock(
-          'affine:paragraph',
+          'blank:paragraph',
           {
             text: new Text(deltaInserts),
           },

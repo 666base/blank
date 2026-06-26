@@ -2,7 +2,7 @@ import {
   OAuthProviderType,
   ServerDeploymentType,
   ServerFeature,
-} from '@affine/graphql';
+} from '@blank/graphql';
 
 import { isLocalOnlyMode } from '../../utils/local-only';
 import { isBlankBuild } from '../../utils/blank-links';
@@ -16,7 +16,7 @@ const BLANK_SYNC_SERVER_FEATURES = [
   ServerFeature.OAuth,
 ];
 
-const AFFINE_CLOUD_SERVER_FEATURES = [
+const BLANK_CLOUD_SERVER_FEATURES = [
   ServerFeature.Indexer,
   ServerFeature.Copilot,
   ServerFeature.CopilotEmbedding,
@@ -32,10 +32,10 @@ const serverCredentials = {
   },
 };
 
-/** Built-in server id: `app` in local-only fork, `affine-cloud` in cloud builds. */
+/** Built-in server id: `app` in local-only fork, `blank-cloud` in cloud builds. */
 export const DEFAULT_BUILTIN_SERVER_ID = isLocalOnlyMode()
   ? ('app' as const)
-  : ('affine-cloud' as const);
+  : ('blank-cloud' as const);
 
 function getLocalBuiltinBaseUrl() {
   if (typeof location !== 'undefined' && location.origin) {
@@ -52,7 +52,7 @@ function localBuiltinServer(baseUrl: string) {
       serverName: 'Local',
       features: LOCAL_ONLY_SERVER_FEATURES,
       oauthProviders: [],
-      type: ServerDeploymentType.Affine,
+      type: ServerDeploymentType.Blank,
       credentialsRequirement: serverCredentials,
     },
   };
@@ -60,7 +60,7 @@ function localBuiltinServer(baseUrl: string) {
 
 function blankSyncServer(baseUrl: string) {
   return {
-    id: 'affine-cloud' as const,
+    id: 'blank-cloud' as const,
     baseUrl,
     config: {
       serverName: 'Blank Sync',
@@ -72,15 +72,15 @@ function blankSyncServer(baseUrl: string) {
   };
 }
 
-function affineCloudServer(baseUrl: string) {
+function blankCloudServer(baseUrl: string) {
   return {
-    id: 'affine-cloud' as const,
+    id: 'blank-cloud' as const,
     baseUrl,
     config: {
-      serverName: 'Affine Cloud',
-      features: AFFINE_CLOUD_SERVER_FEATURES,
+      serverName: 'Blank Cloud',
+      features: BLANK_CLOUD_SERVER_FEATURES,
       oauthProviders: [OAuthProviderType.Google, OAuthProviderType.Apple],
-      type: ServerDeploymentType.Affine,
+      type: ServerDeploymentType.Blank,
       credentialsRequirement: serverCredentials,
     },
   };
@@ -94,10 +94,10 @@ function buildCloudServers(): (ServerMetadata & { config: ServerConfig })[] {
   if (environment.isSelfHosted) {
     return [
       {
-        id: 'affine-cloud',
+        id: 'blank-cloud',
         baseUrl: location.origin,
         config: {
-          serverName: 'Affine Selfhost',
+          serverName: 'Blank Selfhost',
           features: [],
           oauthProviders: [],
           type: ServerDeploymentType.Selfhosted,
@@ -109,7 +109,7 @@ function buildCloudServers(): (ServerMetadata & { config: ServerConfig })[] {
 
   if (BUILD_CONFIG.debug) {
     return [
-      affineCloudServer(
+      blankCloudServer(
         BUILD_CONFIG.isElectron ? 'http://localhost:8080' : location.origin
       ),
     ];
@@ -117,11 +117,11 @@ function buildCloudServers(): (ServerMetadata & { config: ServerConfig })[] {
 
   if (BUILD_CONFIG.appBuildType === 'stable') {
     return [
-      affineCloudServer(
+      blankCloudServer(
         BUILD_CONFIG.isNative
           ? BUILD_CONFIG.isIOS
-            ? 'https://apple.getaffineapp.com'
-            : 'https://app.affine.pro'
+            ? 'https://apple.getblankapp.com'
+            : 'https://app.blank.pro'
           : location.origin
       ),
     ];
@@ -129,24 +129,24 @@ function buildCloudServers(): (ServerMetadata & { config: ServerConfig })[] {
 
   if (BUILD_CONFIG.appBuildType === 'beta') {
     return [
-      affineCloudServer(
+      blankCloudServer(
         BUILD_CONFIG.isNative
           ? BUILD_CONFIG.isIOS
-            ? 'https://apple.getaffineapp.com'
-            : 'https://insider.affine.pro'
+            ? 'https://apple.getblankapp.com'
+            : 'https://insider.blank.pro'
           : location.origin
       ),
     ];
   }
 
   if (BUILD_CONFIG.appBuildType === 'internal') {
-    return [affineCloudServer('https://insider.affine.pro')];
+    return [blankCloudServer('https://insider.blank.pro')];
   }
 
   if (BUILD_CONFIG.appBuildType === 'canary') {
     return [
-      affineCloudServer(
-        BUILD_CONFIG.isNative ? 'https://affine.fail' : location.origin
+      blankCloudServer(
+        BUILD_CONFIG.isNative ? 'https://blank.fail' : location.origin
       ),
     ];
   }
@@ -174,17 +174,17 @@ export type TelemetryChannel =
   | 'local';
 
 const OFFICIAL_TELEMETRY_ENDPOINTS: Record<TelemetryChannel, string> = {
-  stable: 'https://app.affine.pro',
-  beta: 'https://insider.affine.pro',
-  internal: 'https://insider.affine.pro',
-  canary: 'https://affine.fail',
+  stable: 'https://app.blank.pro',
+  beta: 'https://insider.blank.pro',
+  internal: 'https://insider.blank.pro',
+  canary: 'https://blank.fail',
   local: 'http://localhost:8080',
 };
 
 export function getOfficialTelemetryEndpoint(
   channel = BUILD_CONFIG.appBuildType
 ): string {
-  if (isLocalOnlyMode()) {
+  if (isBlankBuild() || isLocalOnlyMode()) {
     return getLocalBuiltinBaseUrl();
   }
 

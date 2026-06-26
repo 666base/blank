@@ -1,18 +1,18 @@
-import { notify } from '@affine/component';
+import { notify } from '@blank/component';
 import {
   generateUrl,
   type UseSharingUrl,
-} from '@affine/core/components/hooks/affine/use-share-url';
-import { ServerService } from '@affine/core/modules/cloud';
-import { EditorService } from '@affine/core/modules/editor';
-import { copyLinkToBlockStdScopeClipboard } from '@affine/core/utils/clipboard';
-import { I18n } from '@affine/i18n';
-import { track } from '@affine/track';
+} from '@blank/core/components/hooks/blank/use-share-url';
+import { ServerService } from '@blank/core/modules/cloud';
+import { EditorService } from '@blank/core/modules/editor';
+import { copyLinkToBlockStdScopeClipboard } from '@blank/core/utils/clipboard';
+import { I18n } from '@blank/i18n';
+import { track } from '@blank/track';
 import {
   menu,
   type MenuOptions,
-} from '@blocksuite/affine/components/context-menu';
-import type { DatabaseBlockModel } from '@blocksuite/affine/model';
+} from '@blocksuite/blank/components/context-menu';
+import type { DatabaseBlockModel } from '@blocksuite/blank/model';
 import { LinkIcon } from '@blocksuite/icons/lit';
 import type { FrameworkProvider } from '@toeverything/infra';
 

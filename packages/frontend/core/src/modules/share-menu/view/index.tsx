@@ -1,9 +1,9 @@
-import { useEnableCloud } from '@affine/core/components/hooks/affine/use-enable-cloud';
-import { WorkspaceShareSettingService } from '@affine/core/modules/share-setting';
-import type { Workspace } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
-import type { Store } from '@blocksuite/affine/store';
+import { useEnableCloud } from '@blank/core/components/hooks/blank/use-enable-cloud';
+import { WorkspaceShareSettingService } from '@blank/core/modules/share-setting';
+import type { Workspace } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
+import type { Store } from '@blocksuite/blank/store';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect } from 'react';
 
@@ -57,14 +57,14 @@ const SharePageButtonInner = ({
 
   const sharingDisabled = enableSharing === false;
   const disabledReason = sharingDisabled
-    ? t['com.affine.share-menu.workspace-sharing.disabled.tooltip']()
+    ? t['com.blank.share-menu.workspace-sharing.disabled.tooltip']()
     : undefined;
 
   return (
     <ShareMenu
       workspaceMetadata={workspace.meta}
       currentPage={page}
-      onEnableAffineCloud={() =>
+      onEnableBlankCloud={() =>
         confirmEnableCloud(workspace, {
           openPageId: page.id,
         })

@@ -1,15 +1,15 @@
-# AFFiNE Monorepo Cli
+# Blank Monorepo Cli
 
 ## Start
 
 ```bash
-yarn affine -h
+yarn blank -h
 ```
 
 ### Run build command defined in package.json
 
 ```bash
-yarn affine i18n build
+yarn blank i18n build
 # or
 yarn build -p i18n
 ```
@@ -17,7 +17,7 @@ yarn build -p i18n
 ### Run dev command defined in package.json
 
 ```bash
-yarn affine web dev
+yarn blank web dev
 # or
 yarn dev -p i18n
 ```
@@ -25,9 +25,9 @@ yarn dev -p i18n
 ### Clean
 
 ```bash
-yarn affine clean --dist --rust
+yarn blank clean --dist --rust
 # clean node_modules
-yarn affine clean --node-modules
+yarn blank clean --node-modules
 ```
 
 ### Init
@@ -35,18 +35,18 @@ yarn affine clean --node-modules
 > Generate files that make the monorepo work properly, the per project codegen will not be included anymore
 
 ```bash
-yarn affine init
+yarn blank init
 ```
 
 ## Tricks
 
 ### Define scripts to run a .ts files without manually wiring a TypeScript loader
 
-`affine run` will automatically inject `tsx` for your scripts
+`blank run` will automatically inject `tsx` for your scripts
 
 ```json
 {
-  "name": "@affine/demo",
+  "name": "@blank/demo",
   "scripts": {
     "dev": "node ./dev.ts"
   }
@@ -54,19 +54,19 @@ yarn affine init
 ```
 
 ```bash
-affine @affine/demo dev
+blank @blank/demo dev
 ```
 
 or
 
 ```json
 {
-  "name": "@affine/demo",
+  "name": "@blank/demo",
   "scripts": {
     "dev": "r ./src/index.ts"
   },
   "devDependencies": {
-    "@affine-tools/cli": "workspace:*"
+    "@blank-tools/cli": "workspace:*"
   }
 }
 ```
@@ -82,17 +82,17 @@ yarn af web build
 
 > personally, I use 'af'
 
-create file `af` in the root of AFFiNE project with the following content
+create file `af` in the root of Blank project with the following content
 
 ```bash
 #!/usr/bin/env sh
-./tools/scripts/bin/runner.js affine.ts $@
+./tools/scripts/bin/runner.js blank.ts $@
 ```
 
 or on windows:
 
 ```cmd
-node "./tools/cli/bin/runner.js" affine.ts %*
+node "./tools/cli/bin/runner.js" blank.ts %*
 ```
 
 and give it executable permission

@@ -1,9 +1,14 @@
-import { DebugLogger } from '@affine/debug';
+import { DebugLogger } from '@blank/debug';
 import type { BackendModule, i18n } from 'i18next';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import type { useAFFiNEI18N } from './i18n.gen';
+import type { useBlankI18N } from './i18n.gen';
+import {
+  applyBlankBranding,
+  applyBlankBrandingDeep,
+  isBlankProduct,
+} from './blank-branding';
 import type { Language } from './resources';
 import { SUPPORTED_LANGUAGES } from './resources';
 
@@ -26,14 +31,15 @@ export const getOrCreateI18n = (): i18n => {
             resource()
               .then(data => {
                 logger.info(`Loaded i18n ${lng} resource`);
-                callback(null, data.default);
+                const bundle = applyBlankBrandingDeep(data.default);
+                callback(null, bundle);
               })
               .catch(err => {
                 logger.error(`Failed to load i18n ${lng} resource`, err);
                 callback(null, null);
               });
           } else {
-            callback(null, resource);
+            callback(null, applyBlankBrandingDeep(resource));
           }
         },
       } as BackendModule)
@@ -55,7 +61,9 @@ export const getOrCreateI18n = (): i18n => {
         partialBundledLanguages: true,
         resources: {
           [defaultLng]: {
-            translation: SUPPORTED_LANGUAGES[defaultLng].resource,
+            translation: applyBlankBrandingDeep(
+              SUPPORTED_LANGUAGES[defaultLng].resource
+            ),
           },
         },
         interpolation: {
@@ -84,7 +92,7 @@ declare module 'i18next' {
   }
 }
 
-export type I18nFuncs = ReturnType<typeof useAFFiNEI18N>;
+export type I18nFuncs = ReturnType<typeof useBlankI18N>;
 type KnownI18nKey = keyof I18nFuncs;
 
 export type I18nString =
@@ -114,11 +122,13 @@ export function createI18nWrapper(getI18nFn: () => i18n) {
 
       const i18n = getI18nFn();
       if (i18n.exists(key)) {
-        return i18n.t(key, options);
-      } else {
-        // unknown translate key 'xxx.xxx' returns itself
-        return key;
+        return applyBlankBranding(i18n.t(key, options));
       }
+      if (isBlankProduct()) {
+        return applyBlankBranding(String(key));
+      }
+      // unknown translate key 'xxx.xxx' returns itself
+      return key;
     },
     get language() {
       const i18n = getI18nFn();
@@ -154,11 +164,11 @@ export function createI18nWrapper(getI18nFn: () => i18n) {
       return false;
     },
   }) as typeof I18nMethod &
-    ReturnType<typeof useAFFiNEI18N> & { [unknownKey: string]: () => string };
+    ReturnType<typeof useBlankI18N> & { [unknownKey: string]: () => string };
 }
 
 /**
- * I18n['com.affine.xxx']({ arg1: 'hello' }) -> '中文 hello'
+ * I18n['com.blank.xxx']({ arg1: 'hello' }) -> '中文 hello'
  */
 export const I18n = createI18nWrapper(getOrCreateI18n);
 export type I18nInstance = typeof I18n;

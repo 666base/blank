@@ -1,0 +1,62 @@
+{
+  "product": "Blank Server",
+  "principle": "Zero Blank GraphQL, zero ghcr.io/666base/blank",
+  "stack": {
+    "deploy": "Supabase cloud (free tier) + optional Docker config proxy",
+    "auth": "Supabase Auth (email/password, magic link)",
+    "database": "Supabase Postgres + RLS",
+    "realtime": "Supabase Realtime on blank_doc_updates (phase 5c)",
+    "blobs": "Supabase Storage bucket blank-blobs",
+    "api": "Client uses @supabase/supabase-js; Docker api optional for /v1/config"
+  },
+  "phases": [
+    {
+      "id": "5a-scaffold",
+      "status": "done",
+      "deliverables": [
+        "services/blank-server/ HTTP stub (/health, /v1/config)",
+        "Postgres schema supabase/migrations/20260101000000_blank_core.sql",
+        "docker-compose api:3020 + postgres:5433 (npm run blank:server:up)"
+      ]
+    },
+    {
+      "id": "5b-auth-workspaces",
+      "status": "done",
+      "deliverables": [
+        "supabase/migrations pushed to cloud project",
+        "Auth signup → blank_profiles + default workspace",
+        "Blank app login with supabase-js (phase 5d UI)"
+      ]
+    },
+    {
+      "id": "5c-doc-sync",
+      "status": "in_progress",
+      "deliverables": [
+        "POST push doc updates (Yjs binary) — blank_push_doc_update RPC",
+        "GET pull updates since seq — BlankDocStorage + polling",
+        "packages/common/nbstore/src/impls/blank-cloud/ client adapter",
+        "Workspace list Blank Sync section + mobile open-sync button",
+        "onWorkspaceInitialized bootstrap + remote doc guard — done"
+      ]
+    },
+    {
+      "id": "5d-client-wire",
+      "status": "in_progress",
+      "deliverables": [
+        "Blank Settings > Account & sync login UI — done",
+        "Cloud workspace flavour blank-cloud — done",
+        "Desktop + Android E2E sync test — pending"
+      ]
+    },
+    {
+      "id": "5e-production",
+      "status": "pending",
+      "deliverables": [
+        "Supabase hosted or VPS + HTTPS",
+        "Blob storage + backup",
+        "Rate limits + RLS audit"
+      ]
+    }
+  ],
+  "estimate": "5a–5c MVP: several weeks full-time; 5d–5e: additional weeks"
+}

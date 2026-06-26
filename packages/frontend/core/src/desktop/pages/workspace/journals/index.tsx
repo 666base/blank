@@ -2,12 +2,12 @@ import {
   Button,
   WeekDatePicker,
   type WeekDatePickerHandle,
-} from '@affine/component';
-import { BlocksuiteEditorJournalDocTitleUI } from '@affine/core/blocksuite/block-suite-editor/journal-doc-title';
+} from '@blank/component';
+import { BlocksuiteEditorJournalDocTitleUI } from '@blank/core/blocksuite/block-suite-editor/journal-doc-title';
 import {
   JOURNAL_DATE_FORMAT,
   JournalService,
-} from '@affine/core/modules/journal';
+} from '@blank/core/modules/journal';
 import {
   ViewBody,
   ViewHeader,
@@ -15,8 +15,8 @@ import {
   ViewService,
   ViewTitle,
   WorkbenchService,
-} from '@affine/core/modules/workbench';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/workbench';
+import { useI18n } from '@blank/i18n';
 import { TodayIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import dayjs from 'dayjs';
@@ -62,14 +62,14 @@ export const JournalPlaceholder = ({ dateString }: { dateString: string }) => {
             <TodayIcon />
           </div>
           <div className={styles.placeholderText}>
-            {t['com.affine.journal.placeholder.title']()}
+            {t['com.blank.journal.placeholder.title']()}
           </div>
           <Button
             variant="primary"
             onClick={createJournal}
             data-testid="confirm-create-journal-button"
           >
-            {t['com.affine.journal.placeholder.create']()}
+            {t['com.blank.journal.placeholder.create']()}
           </Button>
         </div>
       </div>
@@ -137,7 +137,7 @@ export const JournalsPageWithConfirmation = () => {
               className={styles.todayButton}
               onClick={() => openJournal(todayString)}
             >
-              {t['com.affine.today']()}
+              {t['com.blank.today']()}
             </Button>
           ) : null}
         </div>

@@ -1,5 +1,5 @@
 {
-  "name": "@affine/component",
+  "name": "@blank/component",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -14,18 +14,18 @@
     "build:storybook": "storybook build"
   },
   "peerDependencies": {
-    "@blocksuite/affine": "*",
+    "@blocksuite/blank": "*",
     "@swc/core": "^1.0.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"
   },
   "dependencies": {
-    "@affine/debug": "workspace:*",
-    "@affine/error": "workspace:*",
-    "@affine/graphql": "workspace:*",
-    "@affine/i18n": "workspace:*",
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.1.0",
+    "@blank/debug": "workspace:*",
+    "@blank/error": "workspace:*",
+    "@blank/graphql": "workspace:*",
+    "@blank/i18n": "workspace:*",
     "@blocksuite/icons": "^2.2.17",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -69,7 +69,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@affine-tools/utils": "workspace:*",
+    "@blank-tools/utils": "workspace:*",
     "@storybook/react": "^10.2.14",
     "@storybook/react-vite": "^10.2.14",
     "@testing-library/dom": "^10.4.0",

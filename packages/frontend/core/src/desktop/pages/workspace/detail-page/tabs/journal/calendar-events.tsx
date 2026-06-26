@@ -1,16 +1,16 @@
-import { Loading, toast, Tooltip } from '@affine/component';
-import { usePageHelper } from '@affine/core/blocksuite/block-suite-page-list/utils';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { DocsService } from '@affine/core/modules/doc';
+import { Loading, toast, Tooltip } from '@blank/component';
+import { usePageHelper } from '@blank/core/blocksuite/block-suite-page-list/utils';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { DocsService } from '@blank/core/modules/doc';
 import {
   type CalendarEvent,
   IntegrationService,
-} from '@affine/core/modules/integration';
-import { JournalService } from '@affine/core/modules/journal';
-import { GuardService } from '@affine/core/modules/permissions';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+} from '@blank/core/modules/integration';
+import { JournalService } from '@blank/core/modules/journal';
+import { GuardService } from '@blank/core/modules/permissions';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import { FullDayIcon, PeriodIcon, PlusIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVarV2 } from '@toeverything/theme/v2';
@@ -65,7 +65,7 @@ const CalendarEventRenderer = ({ event }: { event: CalendarEvent }) => {
     ).value;
     if (docs.length === 0) {
       toast(
-        t['com.affine.integration.calendar.no-journal']({
+        t['com.blank.integration.calendar.no-journal']({
           date: date.format('YYYY-MM-DD'),
         })
       );
@@ -78,7 +78,7 @@ const CalendarEventRenderer = ({ event }: { event: CalendarEvent }) => {
       for (const doc of docs) {
         const canEdit = await guardService.can('Doc_Update', doc.id);
         if (!canEdit) {
-          toast(t['com.affine.no-permission']());
+          toast(t['com.blank.no-permission']());
           continue;
         }
 
@@ -136,12 +136,12 @@ const CalendarEventRenderer = ({ event }: { event: CalendarEvent }) => {
         <div className={styles.eventCaption}>
           <span className={styles.eventTime}>
             {allDay
-              ? t['com.affine.integration.calendar.all-day']()
+              ? t['com.blank.integration.calendar.all-day']()
               : formatTime(startAt, endAt)}
           </span>
           <span className={styles.eventNewDoc}>
             <PlusIcon style={{ fontSize: 18 }} />
-            {t['com.affine.integration.calendar.new-doc']()}
+            {t['com.blank.integration.calendar.new-doc']()}
           </span>
         </div>
       )}

@@ -1,10 +1,9 @@
 {
-  "name": "@affine-tools/cli",
+  "name": "@blank-tools/cli",
   "version": "0.27.0",
   "type": "module",
   "private": true,
   "bin": {
-    "affine": "./bin/cli.js",
     "blank": "./bin/cli.js",
     "r": "./bin/runner.js"
   },
@@ -13,11 +12,11 @@
     "./bundle": "./src/bundle.ts"
   },
   "scripts": {
-    "affine": "r ./src/affine.ts"
+    "blank": "r ./src/blank.ts"
   },
   "dependencies": {
-    "@affine-tools/utils": "workspace:*",
-    "@affine/s3-compat": "workspace:*",
+    "@blank-tools/utils": "workspace:*",
+    "@blank/s3-compat": "workspace:*",
     "@napi-rs/simple-git": "^0.1.22",
     "@rspack/core": "^2.0.8",
     "@rspack/dev-server": "^2.1.0",

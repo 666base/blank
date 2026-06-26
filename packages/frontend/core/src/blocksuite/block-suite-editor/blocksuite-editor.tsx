@@ -1,30 +1,30 @@
-import { EditorLoading } from '@affine/component/page-detail-skeleton';
+import { CachedDetailPageLoading } from '@blank/core/components/cached-detail-page-loading';
 import type {
   EdgelessEditor,
   PageEditor,
-} from '@affine/core/blocksuite/editors';
-import { ServerService } from '@affine/core/modules/cloud';
+} from '@blank/core/blocksuite/editors';
+import { ServerService } from '@blank/core/modules/cloud';
 import {
   EditorSettingService,
   fontStyleOptions,
-} from '@affine/core/modules/editor-setting';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
-import track from '@affine/track';
-import { appendParagraphCommand } from '@blocksuite/affine/blocks/paragraph';
-import type { DocTitle } from '@blocksuite/affine/fragments/doc-title';
-import { DisposableGroup } from '@blocksuite/affine/global/disposable';
-import { IS_LINUX } from '@blocksuite/affine/global/env';
-import type { DocMode, RootBlockModel } from '@blocksuite/affine/model';
+} from '@blank/core/modules/editor-setting';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
+import track from '@blank/track';
+import { appendParagraphCommand } from '@blocksuite/blank/blocks/paragraph';
+import type { DocTitle } from '@blocksuite/blank/fragments/doc-title';
+import { DisposableGroup } from '@blocksuite/blank/global/disposable';
+import { IS_LINUX } from '@blocksuite/blank/global/env';
+import type { DocMode, RootBlockModel } from '@blocksuite/blank/model';
 import {
   customImageProxyMiddleware,
   ImageProxyService,
-} from '@blocksuite/affine/shared/adapters';
-import { focusBlockEnd } from '@blocksuite/affine/shared/commands';
-import { getLastNoteBlock } from '@blocksuite/affine/shared/utils';
-import type { BlockStdScope, EditorHost } from '@blocksuite/affine/std';
-import type { Store } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/shared/adapters';
+import { focusBlockEnd } from '@blocksuite/blank/shared/commands';
+import { getLastNoteBlock } from '@blocksuite/blank/shared/utils';
+import type { BlockStdScope, EditorHost } from '@blocksuite/blank/std';
+import type { Store } from '@blocksuite/blank/store';
 import { Slot } from '@radix-ui/react-slot';
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVar } from '@toeverything/theme';
@@ -33,10 +33,11 @@ import type { CSSProperties, HTMLAttributes } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { DefaultOpenProperty } from '../../components/properties';
+import { ensureBlockSuiteEditorEffects } from './ensure-effects';
 import { BlocksuiteDocEditor, BlocksuiteEdgelessEditor } from './lit-adaper';
 import * as styles from './styles.css';
 
-export interface AffineEditorContainer extends HTMLElement {
+export interface BlankEditorContainer extends HTMLElement {
   page: Store;
   doc: Store;
   docTitle: DocTitle;
@@ -55,7 +56,7 @@ export interface EditorProps extends HTMLAttributes<HTMLDivElement> {
   readonly?: boolean;
   defaultOpenProperty?: DefaultOpenProperty;
   // on Editor ready
-  onEditorReady?: (editor: AffineEditorContainer) => (() => void) | void;
+  onEditorReady?: (editor: BlankEditorContainer) => (() => void) | void;
 }
 
 const BlockSuiteEditorImpl = ({
@@ -85,9 +86,9 @@ const BlockSuiteEditorImpl = ({
   );
 
   /**
-   * mimic an AffineEditorContainer using proxy
+   * mimic an BlankEditorContainer using proxy
    */
-  const affineEditorContainerProxy = useMemo(() => {
+  const blankEditorContainerProxy = useMemo(() => {
     const api = {
       get page() {
         return page;
@@ -145,14 +146,14 @@ const BlockSuiteEditorImpl = ({
         }
         return undefined;
       },
-    }) as AffineEditorContainer;
+    }) as BlankEditorContainer;
 
     return proxy;
   }, [mode, page]);
 
   const handleClickPageModeBlank = useCallback(() => {
     if (shared || readonly || page.readonly) return;
-    const std = affineEditorContainerProxy.host?.std;
+    const std = blankEditorContainerProxy.host?.std;
     if (!std) {
       return;
     }
@@ -161,7 +162,7 @@ const BlockSuiteEditorImpl = ({
       const lastBlock = note.lastChild();
       if (
         lastBlock &&
-        lastBlock.flavour === 'affine:paragraph' &&
+        lastBlock.flavour === 'blank:paragraph' &&
         lastBlock.text?.length === 0
       ) {
         const focusBlock = std.view.getBlock(lastBlock.id) ?? undefined;
@@ -174,7 +175,7 @@ const BlockSuiteEditorImpl = ({
     }
 
     std.command.exec(appendParagraphCommand);
-  }, [affineEditorContainerProxy.host?.std, page, readonly, shared]);
+  }, [blankEditorContainerProxy.host?.std, page, readonly, shared]);
 
   useEffect(() => {
     const editorContainer = rootRef.current;
@@ -182,8 +183,8 @@ const BlockSuiteEditorImpl = ({
       const handleMiddleClick = (e: MouseEvent) => {
         if (
           e.target instanceof HTMLElement &&
-          (e.target.closest('affine-reference') ||
-            e.target.closest('affine-link'))
+          (e.target.closest('blank-reference') ||
+            e.target.closest('blank-link'))
         ) {
           return;
         }
@@ -210,7 +211,7 @@ const BlockSuiteEditorImpl = ({
   }, [enableMiddleClickPaste]);
 
   useEffect(() => {
-    const editor = affineEditorContainerProxy;
+    const editor = blankEditorContainerProxy;
     globalThis.currentEditor = editor;
     const disposableGroup = new DisposableGroup();
     let canceled = false;
@@ -241,7 +242,7 @@ const BlockSuiteEditorImpl = ({
       canceled = true;
       disposableGroup.dispose();
     };
-  }, [affineEditorContainerProxy, onEditorReady, page, server]);
+  }, [blankEditorContainerProxy, onEditorReady, page, server]);
 
   return (
     <div
@@ -260,7 +261,7 @@ const BlockSuiteEditorImpl = ({
         className
       )}
       style={style}
-      data-affine-editor-container
+      data-blank-editor-container
       ref={rootRef}
     >
       {mode === 'page' ? (
@@ -285,8 +286,8 @@ const BlockSuiteEditorImpl = ({
 };
 
 export const BlockSuiteEditor = (props: EditorProps) => {
+  ensureBlockSuiteEditorEffects();
   const [isLoading, setIsLoading] = useState(true);
-  const [longerLoading, setLongerLoading] = useState(false);
   // eslint-disable-next-line react-hooks/purity
   const [loadStartTime] = useState(Date.now());
   const workspaceService = useService(WorkspaceService);
@@ -322,7 +323,6 @@ export const BlockSuiteEditor = (props: EditorProps) => {
     const disposable = props.page.slots.rootAdded.subscribe(() => {
       disposable.unsubscribe();
       setIsLoading(false);
-      setLongerLoading(false);
     });
     return () => {
       disposable.unsubscribe();
@@ -330,11 +330,6 @@ export const BlockSuiteEditor = (props: EditorProps) => {
   }, [loadStartTime, props.page]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isLoading) {
-        setLongerLoading(true);
-      }
-    }, 20 * 1000);
     const reportErrorTimer = setTimeout(() => {
       if (isLoading) {
         track.doc.$.$.loadDoc({
@@ -346,7 +341,6 @@ export const BlockSuiteEditor = (props: EditorProps) => {
       }
     }, 60 * 1000);
     return () => {
-      clearTimeout(timer);
       clearTimeout(reportErrorTimer);
     };
   }, [isLoading, loadStartTime, props.page]);
@@ -373,9 +367,9 @@ export const BlockSuiteEditor = (props: EditorProps) => {
   }, [loadStartTime, props.page, workspaceService]);
 
   return (
-    <Slot style={{ '--affine-font-family': fontFamily } as CSSProperties}>
+    <Slot style={{ '--blank-font-family': fontFamily } as CSSProperties}>
       {isLoading ? (
-        <EditorLoading longerLoading={longerLoading} />
+        <CachedDetailPageLoading pageId={props.page.id} />
       ) : (
         <BlockSuiteEditorImpl key={props.page.id} {...props} />
       )}

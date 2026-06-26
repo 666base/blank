@@ -32,5 +32,11 @@
     "oneClick": false,
     "allowToChangeInstallationDirectory": true,
     "artifactName": "Blank-Setup-${version}.${ext}"
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "666base",
+    "repo": "blank",
+    "releaseType": "release"
   }
 }

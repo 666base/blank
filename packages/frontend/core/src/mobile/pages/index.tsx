@@ -1,4 +1,4 @@
-import { Component as IndexBootstrap } from '@affine/core/desktop/pages/index';
+import { Component as IndexBootstrap } from '@blank/core/desktop/pages/index';
 
 import { AppFallback } from '../components/app-fallback';
 

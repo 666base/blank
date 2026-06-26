@@ -1,4 +1,4 @@
-import type { SubscriptionRecurring } from '@affine/graphql';
+import type { SubscriptionRecurring } from '@blank/graphql';
 import {
   cancelSubscriptionMutation,
   getWorkspaceSubscriptionQuery,
@@ -7,7 +7,7 @@ import {
   SubscriptionPlan,
   subscriptionQuery,
   updateSubscriptionMutation,
-} from '@affine/graphql';
+} from '@blank/graphql';
 import { Store } from '@toeverything/infra';
 
 import type { GlobalCache } from '../../storage';

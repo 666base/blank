@@ -1,6 +1,6 @@
 {
-  "name": "@affine/mobile",
-  "version": "0.28.1",
+  "name": "@blank/mobile",
+  "version": "0.28.2",
   "description": "Blank Mobile Web application",
   "private": true,
   "browser": "src/index.tsx",
@@ -9,12 +9,12 @@
     "dev": "blank bundle --dev"
   },
   "dependencies": {
-    "@affine/component": "workspace:*",
-    "@affine/core": "workspace:*",
-    "@affine/env": "workspace:*",
-    "@affine/nbstore": "workspace:*",
-    "@affine/track": "workspace:*",
-    "@blocksuite/affine": "workspace:*",
+    "@blank/component": "workspace:*",
+    "@blank/core": "workspace:*",
+    "@blank/env": "workspace:*",
+    "@blank/nbstore": "workspace:*",
+    "@blank/track": "workspace:*",
+    "@blocksuite/blank": "workspace:*",
     "@capacitor/android": "^7.6.5",
     "@capacitor/core": "^7.6.5",
     "@emotion/react": "^11.14.0",

@@ -1,7 +1,7 @@
-import { ErrorMessage, Skeleton } from '@affine/component';
-import { SettingRow } from '@affine/component/setting-components';
-import { WorkspaceQuotaService } from '@affine/core/modules/quota';
-import { useI18n } from '@affine/i18n';
+import { ErrorMessage, Skeleton } from '@blank/component';
+import { SettingRow } from '@blank/component/setting-components';
+import { WorkspaceQuotaService } from '@blank/core/modules/quota';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { useEffect } from 'react';
@@ -13,7 +13,7 @@ export const WorkspaceQuotaPanel = () => {
 
   return (
     <SettingRow
-      name={t['com.affine.workspace.storage']()}
+      name={t['com.blank.workspace.storage']()}
       desc=""
       spreadCol={false}
     >
@@ -51,7 +51,7 @@ export const StorageProgress = () => {
     <div className={styles.storageProgressContainer}>
       <div className={styles.storageProgressWrapper}>
         <div className="storage-progress-desc">
-          <span>{t['com.affine.storage.used.hint']()}</span>
+          <span>{t['com.blank.storage.used.hint']()}</span>
           <span>
             {usedFormatted}/{maxFormatted}
           </span>

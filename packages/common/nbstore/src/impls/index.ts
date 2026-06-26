@@ -1,5 +1,6 @@
 import type { Storage } from '../storage';
 import type { broadcastChannelStorages } from './broadcast-channel';
+import type { blankCloudStorages } from './blank-cloud';
 import type { cloudStorages } from './cloud';
 import type { idbStorages } from './idb';
 import type { idbV1Storages } from './idb/v1';
@@ -12,6 +13,7 @@ export type StorageConstructor = {
 };
 
 type Storages =
+  | typeof blankCloudStorages
   | typeof cloudStorages
   | typeof idbV1Storages
   | typeof idbStorages

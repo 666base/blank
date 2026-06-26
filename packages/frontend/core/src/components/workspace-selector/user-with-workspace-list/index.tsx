@@ -1,19 +1,19 @@
-import { ScrollableContainer } from '@affine/component';
-import { MenuItem } from '@affine/component/ui/menu';
-import { AuthService, DefaultServerService } from '@affine/core/modules/cloud';
-import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import { type WorkspaceMetadata } from '@affine/core/modules/workspace';
-import { ServerFeature } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
-import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
+import { ScrollableContainer } from '@blank/component';
+import { MenuItem } from '@blank/component/ui/menu';
+import { AuthService, DefaultServerService } from '@blank/core/modules/cloud';
+import { GlobalDialogService } from '@blank/core/modules/dialogs';
+import { type WorkspaceMetadata } from '@blank/core/modules/workspace';
+import { ServerFeature } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
+import { BlankAppLogo, isBlankBranding } from '@blank/core/utils/blank-branding';
 import { Logo1Icon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 
 import { AddWorkspace } from './add-workspace';
 import * as styles from './index.css';
-import { AFFiNEWorkspaceList } from './workspace-list';
+import { BlankWorkspaceList } from './workspace-list';
 
 export const SignInItem = () => {
   const globalDialogService = useService(GlobalDialogService);
@@ -38,10 +38,10 @@ export const SignInItem = () => {
 
         <div className={styles.signInTextContainer}>
           <div className={styles.signInTextPrimary}>
-            {t['com.affine.workspace.cloud.auth']()}
+            {t['com.blank.workspace.cloud.auth']()}
           </div>
           <div className={styles.signInTextSecondary}>
-            {t['com.affine.workspace.cloud.description']()}
+            {t['com.blank.workspace.cloud.description']()}
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@ export const UserWithWorkspaceList = ({
         scrollBarClassName={styles.scrollbar}
         scrollThumbClassName={styles.scrollbarThumb}
       >
-        <AFFiNEWorkspaceList
+        <BlankWorkspaceList
           onEventEnd={onEventEnd}
           onClickWorkspace={onClickWorkspace}
           showEnableCloudButton={showEnableCloudButton}

@@ -1,5 +1,5 @@
-import { IconButton, observeResize, RowInput } from '@affine/component';
-import { FindInPageService } from '@affine/core/modules/find-in-page';
+import { IconButton, observeResize, RowInput } from '@blank/component';
+import { FindInPageService } from '@blank/core/modules/find-in-page';
 import {
   ArrowDownSmallIcon,
   ArrowUpSmallIcon,
@@ -43,7 +43,7 @@ const drawText = (
 
   const rootStyles = getComputedStyle(document.documentElement);
   const textColor = rootStyles
-    .getPropertyValue('--affine-text-primary-color')
+    .getPropertyValue('--blank-text-primary-color')
     .trim();
 
   ctx.scale(dpr, dpr);

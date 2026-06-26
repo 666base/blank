@@ -1,8 +1,8 @@
-import { DocRole, Permission, WorkspaceMemberStatus } from '@affine/graphql';
+import { DocRole, Permission, WorkspaceMemberStatus } from '@blank/graphql';
 import type {
   DocGrantedUserSnapshot,
   WorkspaceMemberSnapshot,
-} from '@affine/realtime';
+} from '@blank/realtime';
 
 import { mapRealtimeEnum } from '../../cloud/realtime/enum';
 

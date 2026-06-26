@@ -1,0 +1,14 @@
+{
+  "name": "@blank/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Blank native sync server — no Blank GraphQL",
+  "scripts": {
+    "dev": "node --watch src/server.mjs",
+    "start": "node src/server.mjs"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

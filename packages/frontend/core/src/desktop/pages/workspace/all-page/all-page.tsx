@@ -1,19 +1,19 @@
-import { Button, usePromptModal } from '@affine/component';
+import { Button, usePromptModal } from '@blank/component';
 import {
   createDocExplorerContext,
   DocExplorerContext,
-} from '@affine/core/components/explorer/context';
-import { DocsExplorer } from '@affine/core/components/explorer/docs-view/docs-list';
-import type { ExplorerDisplayPreference } from '@affine/core/components/explorer/types';
-import { Filters } from '@affine/core/components/filter';
+} from '@blank/core/components/explorer/context';
+import { DocsExplorer } from '@blank/core/components/explorer/docs-view/docs-list';
+import type { ExplorerDisplayPreference } from '@blank/core/components/explorer/types';
+import { Filters } from '@blank/core/components/filter';
 import {
   CollectionService,
   PinnedCollectionService,
-} from '@affine/core/modules/collection';
-import { CollectionRulesService } from '@affine/core/modules/collection-rules';
-import type { FilterParams } from '@affine/core/modules/collection-rules/types';
-import { WorkspaceLocalState } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/collection';
+import { CollectionRulesService } from '@blank/core/modules/collection-rules';
+import type { FilterParams } from '@blank/core/modules/collection-rules/types';
+import { WorkspaceLocalState } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -298,14 +298,14 @@ export const AllPage = () => {
       setTempFilters(null);
     } else {
       openPromptModal({
-        title: t['com.affine.editCollection.saveCollection'](),
-        label: t['com.affine.editCollectionName.name'](),
+        title: t['com.blank.editCollection.saveCollection'](),
+        label: t['com.blank.editCollectionName.name'](),
         inputOptions: {
-          placeholder: t['com.affine.editCollectionName.name.placeholder'](),
+          placeholder: t['com.blank.editCollectionName.name.placeholder'](),
         },
-        children: t['com.affine.editCollectionName.createTips'](),
-        confirmText: t['com.affine.editCollection.save'](),
-        cancelText: t['com.affine.editCollection.button.cancel'](),
+        children: t['com.blank.editCollectionName.createTips'](),
+        confirmText: t['com.blank.editCollection.save'](),
+        cancelText: t['com.blank.editCollection.button.cancel'](),
         confirmButtonOptions: {
           variant: 'primary',
         },

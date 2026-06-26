@@ -1,5 +1,5 @@
 {
-  "name": "@affine/realtime",
+  "name": "@blank/realtime",
   "type": "module",
   "version": "0.27.0",
   "private": true,
@@ -8,6 +8,6 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@affine/graphql": "workspace:*"
+    "@blank/graphql": "workspace:*"
   }
 }

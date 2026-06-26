@@ -7,18 +7,18 @@ import {
   QuickSearchInput,
   SidebarContainer,
   SidebarScrollableContainer,
-} from '@affine/core/modules/app-sidebar/views';
-import { ExternalMenuLinkItem } from '@affine/core/modules/app-sidebar/views/menu-item/external-menu-link-item';
-import { AuthService, ServerService } from '@affine/core/modules/cloud';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { CMDKQuickSearchService } from '@affine/core/modules/quicksearch/services/cmdk';
-import type { Workspace } from '@affine/core/modules/workspace';
-import { getBlankChangelogUrl } from '@affine/core/utils/blank-links';
-import { isDesktopApp, isAiDisabled, isLocalOnlyMode } from '@affine/core/utils/local-only';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
-import type { Store } from '@blocksuite/affine/store';
+} from '@blank/core/modules/app-sidebar/views';
+import { ExternalMenuLinkItem } from '@blank/core/modules/app-sidebar/views/menu-item/external-menu-link-item';
+import { AuthService, ServerService } from '@blank/core/modules/cloud';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { CMDKQuickSearchService } from '@blank/core/modules/quicksearch/services/cmdk';
+import type { Workspace } from '@blank/core/modules/workspace';
+import { getBlankChangelogUrl } from '@blank/core/utils/blank-links';
+import { isDesktopApp, isAiDisabled, isLocalOnlyMode } from '@blank/core/utils/local-only';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
+import type { Store } from '@blocksuite/blank/store';
 import {
   AiOutlineIcon,
   AllDocsIcon,
@@ -83,7 +83,7 @@ const AllDocsButton = () => {
   return (
     <MenuLinkItem icon={<AllDocsIcon />} active={allPageActive} to={'/all'}>
       <span data-testid="all-pages">
-        {t['com.affine.workspaceSubPath.all']()}
+        {t['com.blank.workspaceSubPath.all']()}
       </span>
     </MenuLinkItem>
   );
@@ -111,15 +111,15 @@ const AIChatButton = () => {
   return (
     <MenuLinkItem icon={<AiOutlineIcon />} active={aiChatActive} to={'/chat'}>
       <span data-testid="ai-chat">
-        {t['com.affine.workspaceSubPath.chat']()}
+        {t['com.blank.workspaceSubPath.chat']()}
       </span>
     </MenuLinkItem>
   );
 };
 
 /**
- * This is for the whole affine app sidebar.
- * This component wraps the app sidebar in `@affine/component` with logic and data.
+ * This is for the whole blank app sidebar.
+ * This component wraps the app sidebar in `@blank/component` with logic and data.
  *
  */
 export const RootAppSidebar = memo((): ReactElement => {
@@ -222,7 +222,7 @@ export const RootAppSidebar = memo((): ReactElement => {
           onClick={onOpenSettingModal}
         >
           <span data-testid="settings-modal-trigger">
-            {t['com.affine.settingSidebar.title']()}
+            {t['com.blank.settingSidebar.title']()}
           </span>
         </MenuItem>
       </SidebarContainer>
@@ -234,7 +234,7 @@ export const RootAppSidebar = memo((): ReactElement => {
         <NavigationPanelCollections />
         <CollapsibleSection
           path={['others']}
-          title={t['com.affine.rootAppSidebar.others']()}
+          title={t['com.blank.rootAppSidebar.others']()}
           contentStyle={{ padding: '6px 8px 0 8px' }}
         >
           <TrashButton />
@@ -251,14 +251,14 @@ export const RootAppSidebar = memo((): ReactElement => {
             <ExternalMenuLinkItem
               href={getBlankChangelogUrl()}
               icon={<JournalIcon />}
-              label={t['com.affine.app-sidebar.learn-more']()}
+              label={t['com.blank.app-sidebar.learn-more']()}
             />
           ) : null}
         </CollapsibleSection>
       </SidebarScrollableContainer>
       <SidebarContainer className={bottomContainer}>
         <SidebarAudioPlayer />
-        {BUILD_CONFIG.isElectron ? <UpdaterButton /> : null}
+        {isDesktopApp() ? <UpdaterButton /> : null}
         {!isLocalOnlyMode() && !isDesktopApp() ? <AppDownloadButton /> : null}
       </SidebarContainer>
     </AppSidebar>

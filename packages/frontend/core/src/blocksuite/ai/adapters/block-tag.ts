@@ -1,15 +1,15 @@
 import {
   BlockMarkdownAdapterExtension,
   type BlockMarkdownAdapterMatcher,
-} from '@blocksuite/affine-shared/adapters';
+} from '@blocksuite/blank-shared/adapters';
 
 export const blockTagMarkdownAdapterMatcher: BlockMarkdownAdapterMatcher = {
-  flavour: 'affine:page/affine:note/*',
+  flavour: 'blank:page/blank:note/*',
   toMatch: () => false,
   fromMatch: o => {
     const block = o.node;
     const parent = o.parent;
-    if (block.type === 'block' && parent?.node.flavour === 'affine:note') {
+    if (block.type === 'block' && parent?.node.flavour === 'blank:note') {
       return true;
     }
     return false;

@@ -1,6 +1,6 @@
-import type { MindmapElementModel } from '@blocksuite/affine/model';
-import type { EditorHost } from '@blocksuite/affine/std';
-import { ThemeProvider } from '@blocksuite/affine-shared/services';
+import type { MindmapElementModel } from '@blocksuite/blank/model';
+import type { EditorHost } from '@blocksuite/blank/std';
+import { ThemeProvider } from '@blocksuite/blank-shared/services';
 
 import { createAIScrollableTextRenderer } from '../components/ai-scrollable-text-renderer';
 import {
@@ -11,12 +11,12 @@ import { createSlidesRenderer } from '../messages/slides-renderer';
 import { createIframeRenderer, createImageRenderer } from '../messages/wrapper';
 import type { AIContext } from '../utils/context';
 import { isMindmapChild, isMindMapRoot } from '../utils/edgeless';
-import type { AffineAIPanelWidget } from '../widgets/ai-panel/ai-panel';
+import type { BlankAIPanelWidget } from '../widgets/ai-panel/ai-panel';
 import { IMAGE_ACTIONS } from './consts';
 import { responseToExpandMindmap } from './edgeless-response';
 
 type AnswerRenderer = NonNullable<
-  AffineAIPanelWidget['config']
+  BlankAIPanelWidget['config']
 >['answerRenderer'];
 
 export function actionToAnswerRenderer<

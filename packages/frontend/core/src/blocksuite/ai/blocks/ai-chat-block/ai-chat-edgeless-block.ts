@@ -1,5 +1,5 @@
-import { Bound, clamp } from '@blocksuite/affine/global/gfx';
-import { toGfxBlockComponent } from '@blocksuite/affine/std';
+import { Bound, clamp } from '@blocksuite/blank/global/gfx';
+import { toGfxBlockComponent } from '@blocksuite/blank/std';
 import { GfxViewInteractionExtension } from '@blocksuite/std/gfx';
 import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -20,8 +20,8 @@ export class EdgelessAIChatBlockComponent extends toGfxBlockComponent(
       height: `${height}px`,
       borderRadius: '8px',
       transformOrigin: '0 0',
-      boxShadow: 'var(--affine-shadow-1)',
-      border: '1px solid var(--affine-border-color)',
+      boxShadow: 'var(--blank-shadow-1)',
+      border: '1px solid var(--blank-border-color)',
       transform: `scale(${scale})`,
     };
 
@@ -98,6 +98,6 @@ export const EdgelessAIChatBlockInteraction =
 
 declare global {
   interface HTMLElementTagNameMap {
-    'affine-edgeless-ai-chat': EdgelessAIChatBlockComponent;
+    'blank-edgeless-ai-chat': EdgelessAIChatBlockComponent;
   }
 }

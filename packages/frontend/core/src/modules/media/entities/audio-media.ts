@@ -1,5 +1,5 @@
-import { toArrayBuffer } from '@affine/core/utils/array-buffer';
-import { DebugLogger } from '@affine/debug';
+import { toArrayBuffer } from '@blank/core/utils/array-buffer';
+import { DebugLogger } from '@blank/debug';
 import {
   catchErrorInto,
   effect,

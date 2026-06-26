@@ -1,4 +1,4 @@
-import { apis } from '@affine/electron-api';
+import { apis } from '@blank/electron-api';
 
 import { renderClassicMermaidSvg } from './classic-mermaid';
 import { isMermaidWasmNativeRendererEnabled } from './runtime-config';

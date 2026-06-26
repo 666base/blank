@@ -1,20 +1,20 @@
-import { WorkspaceImpl } from '@affine/core/modules/workspace/impls/workspace.js';
-import type { SurfaceBlockModel } from '@blocksuite/affine/blocks/surface';
+import { WorkspaceImpl } from '@blank/core/modules/workspace/impls/workspace.js';
+import type { SurfaceBlockModel } from '@blocksuite/blank/blocks/surface';
 import {
   MindmapStyleFour,
   MindmapStyleOne,
   MindmapStyleThree,
   MindmapStyleTwo,
-} from '@blocksuite/affine/gfx/mindmap';
-import type { ServiceProvider } from '@blocksuite/affine/global/di';
-import { WithDisposable } from '@blocksuite/affine/global/lit';
+} from '@blocksuite/blank/gfx/mindmap';
+import type { ServiceProvider } from '@blocksuite/blank/global/di';
+import { WithDisposable } from '@blocksuite/blank/global/lit';
 import {
   type MindmapElementModel,
   MindmapStyle,
-} from '@blocksuite/affine/model';
-import { MarkdownAdapter } from '@blocksuite/affine/shared/adapters';
-import { BlockStdScope, type EditorHost } from '@blocksuite/affine/std';
-import { Schema, type Store } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/model';
+import { MarkdownAdapter } from '@blocksuite/blank/shared/adapters';
+import { BlockStdScope, type EditorHost } from '@blocksuite/blank/std';
+import { Schema, type Store } from '@blocksuite/blank/store';
 import { css, html, LitElement, nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
@@ -67,14 +67,14 @@ export class MiniMindmapPreview extends WithDisposable(LitElement) {
 
     .template-item {
       box-sizing: border-box;
-      border: 2px solid var(--affine-border-color);
+      border: 2px solid var(--blank-border-color);
       border-radius: 4px;
       padding: 4px 6px;
     }
 
     .template-item.active,
     .template-item:hover {
-      border-color: var(--affine-brand-color);
+      border-color: var(--blank-brand-color);
     }
 
     .template-item > svg {
@@ -107,8 +107,8 @@ export class MiniMindmapPreview extends WithDisposable(LitElement) {
     collection.meta.initialize();
     const doc = collection.createDoc('doc:home').getStore();
     doc.load();
-    const rootId = doc.addBlock('affine:page', {});
-    const surfaceId = doc.addBlock('affine:surface', {}, rootId);
+    const rootId = doc.addBlock('blank:page', {});
+    const surfaceId = doc.addBlock('blank:surface', {}, rootId);
     const surface = doc.getModelById(surfaceId) as SurfaceBlockModel;
     doc.resetHistory();
 
@@ -174,7 +174,7 @@ export class MiniMindmapPreview extends WithDisposable(LitElement) {
       <div
         style=${styleMap({
           height: this.height + 'px',
-          border: '1px solid var(--affine-border-color)',
+          border: '1px solid var(--blank-border-color)',
           borderRadius: '4px',
         })}
       >

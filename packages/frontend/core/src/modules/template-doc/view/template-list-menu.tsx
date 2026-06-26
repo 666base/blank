@@ -4,10 +4,10 @@ import {
   MenuItem,
   type MenuProps,
   Scrollable,
-} from '@affine/component';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { inferOpenMode } from '@affine/core/utils';
-import { useI18n } from '@affine/i18n';
+} from '@blank/component';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { inferOpenMode } from '@blank/core/utils';
+import { useI18n } from '@blank/i18n';
 import {
   DualLinkIcon,
   InformationIcon,
@@ -61,11 +61,11 @@ const Empty = () => {
     <div className={styles.empty}>
       <InformationIcon className={styles.emptyIcon} />
       <span className={styles.emptyText}>
-        {t['com.affine.template-list.empty']()}
+        {t['com.blank.template-list.empty']()}
       </span>
       <div className={styles.space} />
       <a
-        href="https://affine.pro/blog/how-to-use-template"
+        href="https://blank.pro/blog/how-to-use-template"
         target="_blank"
         rel="noopener noreferrer"
         className={styles.link}
@@ -168,7 +168,7 @@ export const TemplateListMenuAdd = () => {
       onClick={createNewTemplate}
       onAuxClick={createNewTemplate}
     >
-      {t['com.affine.template-list.create-new']()}
+      {t['com.blank.template-list.create-new']()}
     </MenuItem>
   );
 };

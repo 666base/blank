@@ -4,20 +4,20 @@ import {
   MenuSeparator,
   toast,
   useConfirmModal,
-} from '@affine/component';
-import { usePageHelper } from '@affine/core/blocksuite/block-suite-page-list/utils';
-import { Guard } from '@affine/core/components/guard';
-import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
-import { useBlockSuiteMetaHelper } from '@affine/core/components/hooks/affine/use-block-suite-meta-helper';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { IsFavoriteIcon } from '@affine/core/components/pure/icons';
-import { DocsService } from '@affine/core/modules/doc';
-import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
-import { GuardService } from '@affine/core/modules/permissions';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+} from '@blank/component';
+import { usePageHelper } from '@blank/core/blocksuite/block-suite-page-list/utils';
+import { Guard } from '@blank/core/components/guard';
+import { useAppSettingHelper } from '@blank/core/components/hooks/blank/use-app-setting-helper';
+import { useBlockSuiteMetaHelper } from '@blank/core/components/hooks/blank/use-block-suite-meta-helper';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { IsFavoriteIcon } from '@blank/core/components/pure/icons';
+import { DocsService } from '@blank/core/modules/doc';
+import { CompatibleFavoriteItemsAdapter } from '@blank/core/modules/favorite';
+import { GuardService } from '@blank/core/modules/permissions';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
 import {
   DeleteIcon,
   DuplicateIcon,
@@ -84,12 +84,12 @@ export const useNavigationPanelDocNodeOperations = (
       return;
     }
     openConfirmModal({
-      title: t['com.affine.moveToTrash.title'](),
-      description: t['com.affine.moveToTrash.confirmModal.description']({
+      title: t['com.blank.moveToTrash.title'](),
+      description: t['com.blank.moveToTrash.confirmModal.description']({
         title: docRecord.title$.value,
       }),
-      confirmText: t['com.affine.moveToTrash.confirmModal.confirm'](),
-      cancelText: t['com.affine.moveToTrash.confirmModal.cancel'](),
+      confirmText: t['com.blank.moveToTrash.confirmModal.confirm'](),
+      cancelText: t['com.blank.moveToTrash.confirmModal.cancel'](),
       confirmButtonOptions: {
         variant: 'error',
       },
@@ -98,7 +98,7 @@ export const useNavigationPanelDocNodeOperations = (
         track.$.navigationPanel.docs.deleteDoc({
           control: 'button',
         });
-        toast(t['com.affine.toastMessage.movedTrash']());
+        toast(t['com.blank.toastMessage.movedTrash']());
       },
     });
   }, [docRecord, openConfirmModal, t]);
@@ -128,7 +128,7 @@ export const useNavigationPanelDocNodeOperations = (
     try {
       const canEdit = await guardService.can('Doc_Update', docId);
       if (!canEdit) {
-        toast(t['com.affine.no-permission']());
+        toast(t['com.blank.no-permission']());
         return;
       }
       const newDoc = createPage();
@@ -161,7 +161,7 @@ export const useNavigationPanelDocNodeOperations = (
                   size="16"
                   icon={<PlusIcon />}
                   tooltip={t[
-                    'com.affine.rootAppSidebar.explorer.doc-add-tooltip'
+                    'com.blank.rootAppSidebar.explorer.doc-add-tooltip'
                   ]()}
                   onClick={handleAddLinkedPage}
                   loading={addLinkedPageLoading}
@@ -178,7 +178,7 @@ export const useNavigationPanelDocNodeOperations = (
             prefixIcon={<InformationIcon />}
             onClick={handleOpenInfoModal}
           >
-            {t['com.affine.page-properties.page-info.view']()}
+            {t['com.blank.page-properties.page-info.view']()}
           </MenuItem>
         ),
       },
@@ -192,7 +192,7 @@ export const useNavigationPanelDocNodeOperations = (
                 onClick={handleAddLinkedPage}
                 disabled={!canEdit}
               >
-                {t['com.affine.page-operation.add-linked-page']()}
+                {t['com.blank.page-operation.add-linked-page']()}
               </MenuItem>
             )}
           </Guard>
@@ -202,7 +202,7 @@ export const useNavigationPanelDocNodeOperations = (
         index: 99,
         view: (
           <MenuItem prefixIcon={<DuplicateIcon />} onClick={handleDuplicate}>
-            {t['com.affine.header.option.duplicate']()}
+            {t['com.blank.header.option.duplicate']()}
           </MenuItem>
         ),
       },
@@ -210,7 +210,7 @@ export const useNavigationPanelDocNodeOperations = (
         index: 99,
         view: (
           <MenuItem prefixIcon={<OpenInNewIcon />} onClick={handleOpenInNewTab}>
-            {t['com.affine.workbench.tab.page-menu-open']()}
+            {t['com.blank.workbench.tab.page-menu-open']()}
           </MenuItem>
         ),
       },
@@ -223,7 +223,7 @@ export const useNavigationPanelDocNodeOperations = (
                   prefixIcon={<SplitViewIcon />}
                   onClick={handleOpenInSplitView}
                 >
-                  {t['com.affine.workbench.split-view.page-menu-open']()}
+                  {t['com.blank.workbench.split-view.page-menu-open']()}
                 </MenuItem>
               ),
             },
@@ -237,8 +237,8 @@ export const useNavigationPanelDocNodeOperations = (
             onClick={handleToggleFavoriteDoc}
           >
             {favorite
-              ? t['com.affine.favoritePageOperation.remove']()
-              : t['com.affine.favoritePageOperation.add']()}
+              ? t['com.blank.favoritePageOperation.remove']()
+              : t['com.blank.favoritePageOperation.add']()}
           </MenuItem>
         ),
       },
@@ -257,7 +257,7 @@ export const useNavigationPanelDocNodeOperations = (
                 onClick={handleMoveToTrash}
                 disabled={!canMoveToTrash}
               >
-                {t['com.affine.moveToTrash.title']()}
+                {t['com.blank.moveToTrash.title']()}
               </MenuItem>
             )}
           </Guard>

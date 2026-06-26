@@ -15,33 +15,33 @@ const workspaceInfoState = vi.hoisted(() => ({
 }));
 const workspaceState = vi.hoisted(() => ({
   id: 'workspace-1',
-  flavour: 'affine',
+  flavour: 'blank',
 }));
 
 const WorkspaceServiceToken = vi.hoisted(() => class WorkspaceService {});
 
-vi.mock('@affine/component/setting-components', () => ({
+vi.mock('@blank/component/setting-components', () => ({
   SettingHeader: ({ title }: { title: string }) => <h1>{title}</h1>,
 }));
 
-vi.mock('@affine/core/components/hooks/use-workspace-info', () => ({
+vi.mock('@blank/core/components/hooks/use-workspace-info', () => ({
   useWorkspaceInfo: () => workspaceInfoState.info,
 }));
 
-vi.mock('@affine/core/modules/integration', () => ({
+vi.mock('@blank/core/modules/integration', () => ({
   IntegrationTypeIcon: () => null,
 }));
 
-vi.mock('@affine/core/modules/workspace', () => ({
+vi.mock('@blank/core/modules/workspace', () => ({
   WorkspaceService: WorkspaceServiceToken,
 }));
 
-vi.mock('@affine/i18n', () => {
+vi.mock('@blank/i18n', () => {
   const messages: Record<string, string> = {
-    'com.affine.integration.integrations': 'Integrations',
-    'com.affine.integration.setting.description': 'Integration settings',
-    'com.affine.settings.workspace.byok.title': 'AI BYOK',
-    'com.affine.settings.workspace.byok.subtitle':
+    'com.blank.integration.integrations': 'Integrations',
+    'com.blank.integration.setting.description': 'Integration settings',
+    'com.blank.settings.workspace.byok.title': 'AI BYOK',
+    'com.blank.settings.workspace.byok.subtitle':
       'Use your own provider keys for this workspace.',
   };
   const translate = (key: string) => messages[key] ?? key;
@@ -110,7 +110,7 @@ describe('IntegrationSetting', () => {
       isAdmin: false,
       isTeam: false,
     };
-    workspaceState.flavour = 'affine';
+    workspaceState.flavour = 'blank';
   });
 
   afterEach(() => {

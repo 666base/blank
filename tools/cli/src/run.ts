@@ -1,6 +1,6 @@
-import { Path } from '@affine-tools/utils/path';
-import { execAsync } from '@affine-tools/utils/process';
-import type { Package, PackageName } from '@affine-tools/utils/workspace';
+import { Path } from '@blank-tools/utils/path';
+import { execAsync } from '@blank-tools/utils/process';
+import type { Package, PackageName } from '@blank-tools/utils/workspace';
 
 import { Option, PackageCommand } from './command';
 
@@ -53,16 +53,16 @@ export class RunCommand extends PackageCommand {
     examples: [
       [`See detail of each command`, '$0 -h'],
       [
-        `Run custom 'xxx' script defined in @affine/web's package.json`,
+        `Run custom 'xxx' script defined in @blank/web's package.json`,
         '$0 web xxx',
       ],
       [`Run 'init' for workspace`, '$0 init'],
       [`Clean dist of each package`, '$0 clean --dist'],
       [`Clean node_modules under each package`, '$0 clean --node-modules'],
       [`Clean everything`, '$0 clean --all'],
-      [`Run 'build' script for @affine/web`, '$0 build -p web'],
+      [`Run 'build' script for @blank/web`, '$0 build -p web'],
       [
-        `Run 'build' script for @affine/web with all deps prebuild before`,
+        `Run 'build' script for @blank/web with all deps prebuild before`,
         '$0 build -p web --deps',
       ],
     ],
@@ -148,9 +148,9 @@ export class RunCommand extends PackageCommand {
       }
     }
 
-    const isBlankCommand = args[0] === 'blank' || args[0] === 'affine';
+    const isBlankCommand = args[0] === 'blank' || args[0] === 'blank';
     if (isBlankCommand) {
-      // remove 'blank' / legacy 'affine' from 'blank xxx' command
+      // remove 'blank' / legacy 'blank' from 'blank xxx' command
       args.shift();
       args.push('-p', pkg.name);
 
@@ -170,7 +170,7 @@ export class RunCommand extends PackageCommand {
 
     const bin = args[0] === 'yarn' ? args[1] : args[0];
     const loader =
-      pkg.name === '@affine/server' ? serverRuntimeLoader : tsxRuntimeLoader;
+      pkg.name === '@blank/server' ? serverRuntimeLoader : tsxRuntimeLoader;
     const hasKnownLoader =
       process.env.NODE_OPTIONS?.includes('tsx') ||
       process.env.NODE_OPTIONS?.includes(tsxRuntimeLoader) ||

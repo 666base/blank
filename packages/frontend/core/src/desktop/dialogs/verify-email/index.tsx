@@ -1,25 +1,25 @@
-import { Button, Modal, notify } from '@affine/component';
+import { Button, Modal, notify } from '@blank/component';
 import {
   AuthContent,
   AuthHeader,
   AuthInput,
-} from '@affine/component/auth-components';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
+} from '@blank/component/auth-components';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
 import {
   AuthService,
   DefaultServerService,
   ServersService,
-} from '@affine/core/modules/cloud';
+} from '@blank/core/modules/cloud';
 import type {
   DialogComponentProps,
   GLOBAL_DIALOG_SCHEMA,
-} from '@affine/core/modules/dialogs';
-import { Unreachable } from '@affine/env/constant';
+} from '@blank/core/modules/dialogs';
+import { Unreachable } from '@blank/env/constant';
 import {
   sendChangeEmailMutation,
   sendVerifyEmailMutation,
-} from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
+} from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useState } from 'react';
 
@@ -77,13 +77,13 @@ export const VerifyEmailDialog = ({
       }
 
       notify.success({
-        title: t['com.affine.auth.send.verify.email.hint'](),
+        title: t['com.blank.auth.send.verify.email.hint'](),
       });
       setHasSentEmail(true);
     } catch (err) {
       console.error(err);
       notify.error({
-        title: t['com.affine.auth.sent.change.email.fail'](),
+        title: t['com.blank.auth.sent.change.email.fail'](),
       });
     } finally {
       setLoading(false);
@@ -110,18 +110,18 @@ export const VerifyEmailDialog = ({
         title={serverName}
         subTitle={
           changeEmail
-            ? t['com.affine.settings.email.action.change']()
-            : t['com.affine.settings.email.action.verify']()
+            ? t['com.blank.settings.email.action.change']()
+            : t['com.blank.settings.email.action.verify']()
         }
       />
       <AuthContent>
         <p>
           {changeEmail
-            ? t['com.affine.auth.change.email.message']({ email })
-            : t['com.affine.auth.verify.email.message']({ email })}
+            ? t['com.blank.auth.change.email.message']({ email })
+            : t['com.blank.auth.verify.email.message']({ email })}
         </p>
         <AuthInput
-          label={t['com.affine.settings.email']()}
+          label={t['com.blank.settings.email']()}
           disabled={true}
           value={email}
         />
@@ -134,8 +134,8 @@ export const VerifyEmailDialog = ({
           onClick={onSendEmail}
         >
           {hasSentEmail
-            ? t['com.affine.auth.sent']()
-            : t['com.affine.auth.send.verify.email.hint']()}
+            ? t['com.blank.auth.sent']()
+            : t['com.blank.auth.send.verify.email.hint']()}
         </Button>
       </AuthContent>
     </Modal>

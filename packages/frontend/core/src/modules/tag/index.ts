@@ -1,7 +1,7 @@
 export { Tag } from './entities/tag';
 export {
-  affineLabelToDatabaseTagColor,
-  databaseTagColorToAffineLabel,
+  blankLabelToDatabaseTagColor,
+  databaseTagColorToBlankLabel,
 } from './entities/utils';
 export { TagService } from './service/tag';
 export { useDeleteTagConfirmModal } from './view/delete-tag-modal';

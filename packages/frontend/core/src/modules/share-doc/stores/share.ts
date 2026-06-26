@@ -3,7 +3,7 @@ import {
   PublicDocMode,
   publishPageMutation,
   revokePublicPageMutation,
-} from '@affine/graphql';
+} from '@blank/graphql';
 import { Store } from '@toeverything/infra';
 
 import type { WorkspaceServerService } from '../../cloud';

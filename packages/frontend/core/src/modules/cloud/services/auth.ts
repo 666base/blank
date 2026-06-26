@@ -1,6 +1,6 @@
-import { UserFriendlyError } from '@affine/error';
-import type { OAuthProviderType } from '@affine/graphql';
-import { track } from '@affine/track';
+import { UserFriendlyError } from '@blank/error';
+import type { OAuthProviderType } from '@blank/graphql';
+import { track } from '@blank/track';
 import { OnEvent, Service } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import { distinctUntilChanged, map, skip, type Subscription } from 'rxjs';

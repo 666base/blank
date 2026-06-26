@@ -12,616 +12,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@affine-tools/cli@workspace:*, @affine-tools/cli@workspace:tools/cli":
-  version: 0.0.0-use.local
-  resolution: "@affine-tools/cli@workspace:tools/cli"
-  dependencies:
-    "@affine-tools/utils": "workspace:*"
-    "@affine/s3-compat": "workspace:*"
-    "@napi-rs/simple-git": "npm:^0.1.22"
-    "@rspack/core": "npm:^2.0.8"
-    "@rspack/dev-server": "npm:^2.1.0"
-    "@sentry/webpack-plugin": "npm:^5.3.0"
-    "@swc/core": "npm:^1.10.1"
-    "@tailwindcss/postcss": "npm:^4.3.0"
-    "@types/lodash-es": "npm:^4.17.12"
-    "@types/mime-types": "npm:^3.0.0"
-    "@types/node": "npm:^22.0.0"
-    "@vanilla-extract/webpack-plugin": "npm:^2.3.15"
-    autoprefixer: "npm:^10.4.20"
-    clipanion: "npm:^3.2.1"
-    css-loader: "npm:^7.1.4"
-    cssnano: "npm:^7.0.6"
-    inquirer: "npm:^12.3.0"
-    jsonc-parser: "npm:^3.3.1"
-    lodash-es: "npm:^4.17.23"
-    mime-types: "npm:^3.0.0"
-    postcss: "npm:^8.4.49"
-    postcss-loader: "npm:^8.2.1"
-    postcss-selector-parser: "npm:^7.1.0"
-    prettier: "npm:^3.7.4"
-    source-map-loader: "npm:^5.0.0"
-    style-loader: "npm:^4.0.0"
-    swc-loader: "npm:^0.2.6"
-    tailwindcss: "npm:^4.1.17"
-    tsx: "npm:^4.21.0"
-    typanion: "npm:^3.14.0"
-    typescript: "npm:^5.9.3"
-  bin:
-    affine: ./bin/cli.js
-    blank: ./bin/cli.js
-    r: ./bin/runner.js
-  languageName: unknown
-  linkType: soft
-
-"@affine-tools/utils@workspace:*, @affine-tools/utils@workspace:tools/utils":
-  version: 0.0.0-use.local
-  resolution: "@affine-tools/utils@workspace:tools/utils"
-  dependencies:
-    "@types/lodash-es": "npm:^4.17.12"
-    "@types/node": "npm:^22.0.0"
-    chalk: "npm:^5.3.0"
-    lodash-es: "npm:^4.17.23"
-    prettier: "npm:^3.7.4"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
-
-"@affine/changelog@workspace:tools/changelog":
-  version: 0.0.0-use.local
-  resolution: "@affine/changelog@workspace:tools/changelog"
-  dependencies:
-    "@napi-rs/simple-git": "npm:^0.1.22"
-    "@slack/web-api": "npm:^7.15.1"
-    "@types/node": "npm:^22.0.0"
-    changelogithub: "npm:^13.0.0"
-    jsx-slack: "npm:^6.1.2"
-    marked: "npm:^15.0.12"
-  languageName: unknown
-  linkType: soft
-
-"@affine/commitlint-config@workspace:tools/commitlint":
-  version: 0.0.0-use.local
-  resolution: "@affine/commitlint-config@workspace:tools/commitlint"
-  dependencies:
-    "@commitlint/cli": "npm:^19.8.1"
-    "@commitlint/config-conventional": "npm:^19.8.1"
-    commitlint: "npm:^19.6.0"
-  languageName: unknown
-  linkType: soft
-
-"@affine/component@workspace:*, @affine/component@workspace:packages/frontend/component":
-  version: 0.0.0-use.local
-  resolution: "@affine/component@workspace:packages/frontend/component"
-  dependencies:
-    "@affine-tools/utils": "workspace:*"
-    "@affine/debug": "workspace:*"
-    "@affine/error": "workspace:*"
-    "@affine/graphql": "workspace:*"
-    "@affine/i18n": "workspace:*"
-    "@atlaskit/pragmatic-drag-and-drop": "npm:^1.7.7"
-    "@atlaskit/pragmatic-drag-and-drop-hitbox": "npm:^1.1.0"
-    "@blocksuite/icons": "npm:^2.2.17"
-    "@emotion/react": "npm:^11.14.0"
-    "@emotion/styled": "npm:^11.14.0"
-    "@radix-ui/react-avatar": "npm:^1.1.11"
-    "@radix-ui/react-collapsible": "npm:^1.1.12"
-    "@radix-ui/react-context-menu": "npm:^2.2.16"
-    "@radix-ui/react-dialog": "npm:^1.1.15"
-    "@radix-ui/react-dropdown-menu": "npm:^2.1.16"
-    "@radix-ui/react-popover": "npm:^1.1.15"
-    "@radix-ui/react-progress": "npm:^1.1.8"
-    "@radix-ui/react-radio-group": "npm:^1.2.4"
-    "@radix-ui/react-scroll-area": "npm:^1.2.10"
-    "@radix-ui/react-slider": "npm:^1.2.4"
-    "@radix-ui/react-slot": "npm:^1.1.2"
-    "@radix-ui/react-tabs": "npm:^1.1.13"
-    "@radix-ui/react-toast": "npm:^1.2.15"
-    "@radix-ui/react-tooltip": "npm:^1.1.8"
-    "@radix-ui/react-visually-hidden": "npm:^1.1.3"
-    "@storybook/react": "npm:^10.2.14"
-    "@storybook/react-vite": "npm:^10.2.14"
-    "@testing-library/dom": "npm:^10.4.0"
-    "@testing-library/react": "npm:^16.1.0"
-    "@toeverything/theme": "npm:^1.1.23"
-    "@types/bytes": "npm:^3.1.5"
-    "@types/react": "npm:^19.0.1"
-    "@types/react-dom": "npm:^19.0.2"
-    "@vanilla-extract/css": "npm:^1.17.0"
-    "@vanilla-extract/dynamic": "npm:^2.1.2"
-    bytes: "npm:^3.1.2"
-    check-password-strength: "npm:^3.0.0"
-    clsx: "npm:^2.1.1"
-    dayjs: "npm:^1.11.13"
-    emojibase-data: "npm:^16.0.3"
-    foxact: "npm:^0.2.49"
-    jotai: "npm:^2.10.3"
-    lit: "npm:^3.2.1"
-    lodash-es: "npm:^4.17.23"
-    lottie-react: "npm:^2.4.0"
-    lottie-web: "npm:^5.12.2"
-    nanoid: "npm:^5.1.6"
-    next-themes: "npm:^0.4.4"
-    react: "npm:^19.2.1"
-    react-dom: "npm:19.2.1"
-    react-paginate: "npm:^8.3.0"
-    react-router-dom: "npm:^6.30.4"
-    react-transition-state: "npm:^2.2.0"
-    sonner: "npm:^2.0.7"
-    storybook: "npm:^10.2.14"
-    swr: "npm:^2.3.7"
-    typescript: "npm:^5.9.3"
-    unplugin-swc: "npm:^1.5.9"
-    vite: "npm:^7.3.5"
-    vitest: "npm:^4.1.8"
-    zod: "npm:^3.25.76"
-  peerDependencies:
-    "@blocksuite/affine": "*"
-    "@swc/core": ^1.0.0
-    react: ^19.2.1
-    react-dom: ^19.2.1
-  languageName: unknown
-  linkType: soft
-
-"@affine/copilot-result@workspace:tools/copilot-result":
-  version: 0.0.0-use.local
-  resolution: "@affine/copilot-result@workspace:tools/copilot-result"
-  dependencies:
-    "@slack/web-api": "npm:^7.15.1"
-    "@types/node": "npm:^22.0.0"
-    jsx-slack: "npm:^6.1.2"
-    marked: "npm:^15.0.12"
-  languageName: unknown
-  linkType: soft
-
-"@affine/core@workspace:*, @affine/core@workspace:packages/frontend/core":
-  version: 0.0.0-use.local
-  resolution: "@affine/core@workspace:packages/frontend/core"
-  dependencies:
-    "@affine/component": "workspace:*"
-    "@affine/debug": "workspace:*"
-    "@affine/electron-api": "workspace:*"
-    "@affine/env": "workspace:*"
-    "@affine/error": "workspace:*"
-    "@affine/graphql": "workspace:*"
-    "@affine/i18n": "workspace:*"
-    "@affine/nbstore": "workspace:*"
-    "@affine/reader": "workspace:*"
-    "@affine/templates": "workspace:*"
-    "@affine/track": "workspace:*"
-    "@atlaskit/pragmatic-drag-and-drop": "npm:^1.7.7"
-    "@blocksuite/affine": "workspace:*"
-    "@blocksuite/affine-block-root": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/data-view": "workspace:*"
-    "@blocksuite/global": "workspace:*"
-    "@blocksuite/icons": "npm:^2.2.17"
-    "@blocksuite/std": "workspace:*"
-    "@emotion/cache": "npm:^11.14.0"
-    "@emotion/css": "npm:^11.13.5"
-    "@floating-ui/dom": "npm:^1.6.13"
-    "@juggle/resize-observer": "npm:^3.4.0"
-    "@lottiefiles/dotlottie-wc": "npm:^0.9.4"
-    "@marsidev/react-turnstile": "npm:^1.1.0"
-    "@myriaddreamin/typst-ts-renderer": "npm:^0.7.0-rc2"
-    "@myriaddreamin/typst-ts-web-compiler": "npm:^0.7.0-rc2"
-    "@myriaddreamin/typst.ts": "npm:^0.7.0-rc2"
-    "@playwright/test": "npm:=1.58.2"
-    "@preact/signals-core": "npm:^1.8.0"
-    "@radix-ui/react-collapsible": "npm:^1.1.2"
-    "@radix-ui/react-dialog": "npm:^1.1.3"
-    "@radix-ui/react-popover": "npm:^1.1.3"
-    "@radix-ui/react-scroll-area": "npm:^1.2.2"
-    "@radix-ui/react-slot": "npm:^1.1.1"
-    "@radix-ui/react-toolbar": "npm:^1.1.1"
-    "@sentry/react": "npm:^10.53.1"
-    "@testing-library/dom": "npm:^10.4.0"
-    "@testing-library/react": "npm:^16.1.0"
-    "@toeverything/infra": "workspace:*"
-    "@toeverything/mermaid-wasm": "npm:^0.1.0"
-    "@toeverything/pdf-viewer": "npm:^0.1.1"
-    "@toeverything/theme": "npm:^1.1.23"
-    "@types/bytes": "npm:^3.1.5"
-    "@types/image-blob-reduce": "npm:^4.1.4"
-    "@types/lodash-es": "npm:^4.17.12"
-    "@types/semver": "npm:^7"
-    "@vanilla-extract/css": "npm:^1.17.0"
-    "@vanilla-extract/dynamic": "npm:^2.1.2"
-    animejs: "npm:^4.0.0"
-    bytes: "npm:^3.1.2"
-    clsx: "npm:^2.1.1"
-    cmdk: "npm:^1.0.4"
-    core-js: "npm:^3.39.0"
-    dayjs: "npm:^1.11.13"
-    dompurify: "npm:^3.4.11"
-    eventemitter2: "npm:^6.4.9"
-    fake-indexeddb: "npm:^6.0.0"
-    file-type: "npm:^21.0.0"
-    filesize: "npm:^10.1.6"
-    foxact: "npm:^0.2.49"
-    fuse.js: "npm:^7.0.0"
-    graphemer: "npm:^1.4.0"
-    graphql: "npm:^16.9.0"
-    happy-dom: "npm:^20.3.0"
-    history: "npm:^5.3.0"
-    idb: "npm:^8.0.0"
-    image-blob-reduce: "npm:^4.1.0"
-    is-svg: "npm:^6.1.0"
-    jotai: "npm:^2.10.3"
-    jotai-scope: "npm:^0.7.2"
-    katex: "npm:^0.16.27"
-    lit: "npm:^3.2.1"
-    lodash-es: "npm:^4.17.23"
-    lottie-react: "npm:^2.4.0"
-    mermaid: "npm:^11.15.0"
-    mp4-muxer: "npm:^5.2.2"
-    nanoid: "npm:^5.1.6"
-    next-themes: "npm:^0.4.4"
-    query-string: "npm:^9.1.1"
-    react: "npm:^19.2.1"
-    react-dom: "npm:^19.2.1"
-    react-error-boundary: "npm:^6.0.0"
-    react-router-dom: "npm:^6.30.4"
-    react-transition-state: "npm:^2.2.0"
-    react-virtuoso: "npm:^4.12.3"
-    recharts: "npm:^2.15.4"
-    rxjs: "npm:^7.8.2"
-    semver: "npm:^7.7.3"
-    shiki: "npm:^3.19.0"
-    socket.io-client: "npm:^4.8.3"
-    swr: "npm:^2.3.7"
-    tinykeys: "patch:tinykeys@npm%3A2.1.0#~/.yarn/patches/tinykeys-npm-2.1.0-819feeaed0.patch"
-    vite: "npm:^7.3.5"
-    vitest: "npm:^4.1.8"
-    y-protocols: "npm:^1.0.6"
-    yjs: "npm:^13.6.27"
-    zod: "npm:^3.25.76"
-  languageName: unknown
-  linkType: soft
-
-"@affine/debug@workspace:*, @affine/debug@workspace:packages/common/debug":
-  version: 0.0.0-use.local
-  resolution: "@affine/debug@workspace:packages/common/debug"
-  dependencies:
-    "@types/debug": "npm:^4.1.12"
-    debug: "npm:^4.4.0"
-    vitest: "npm:^4.1.8"
-  languageName: unknown
-  linkType: soft
-
-"@affine/doc-diff@workspace:tools/doc-diff":
-  version: 0.0.0-use.local
-  resolution: "@affine/doc-diff@workspace:tools/doc-diff"
-  dependencies:
-    "@affine-tools/cli": "workspace:*"
-    "@types/node": "npm:^22.0.0"
-    typescript: "npm:^5.9.3"
-    yjs: "npm:^13.6.27"
-  languageName: unknown
-  linkType: soft
-
-"@affine/electron-api@workspace:*, @affine/electron-api@workspace:packages/frontend/electron-api":
-  version: 0.0.0-use.local
-  resolution: "@affine/electron-api@workspace:packages/frontend/electron-api"
-  languageName: unknown
-  linkType: soft
-
-"@affine/env@workspace:*, @affine/env@workspace:packages/common/env":
-  version: 0.0.0-use.local
-  resolution: "@affine/env@workspace:packages/common/env"
-  dependencies:
-    vitest: "npm:^4.1.8"
-    zod: "npm:^3.25.76"
-  peerDependencies:
-    "@affine/templates": "workspace:*"
-    "@blocksuite/affine": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@affine/error@workspace:*, @affine/error@workspace:packages/common/error":
-  version: 0.0.0-use.local
-  resolution: "@affine/error@workspace:packages/common/error"
-  dependencies:
-    vitest: "npm:^4.1.8"
-  peerDependencies:
-    "@affine/graphql": "workspace:*"
-    graphql: ^16.9.0
-  languageName: unknown
-  linkType: soft
-
-"@affine/graphql@workspace:*, @affine/graphql@workspace:packages/common/graphql":
-  version: 0.0.0-use.local
-  resolution: "@affine/graphql@workspace:packages/common/graphql"
-  dependencies:
-    "@affine/debug": "workspace:*"
-    "@affine/error": "workspace:*"
-    "@graphql-codegen/cli": "npm:^6.2.1"
-    "@graphql-codegen/typescript": "npm:^5.0.9"
-    "@graphql-codegen/typescript-operations": "npm:^5.0.9"
-    "@types/lodash-es": "npm:^4.17.12"
-    graphql: "npm:^16.9.0"
-    lodash: "npm:^4.18.1"
-    lodash-es: "npm:^4.17.23"
-    prettier: "npm:^3.7.4"
-    vitest: "npm:^4.1.8"
-  languageName: unknown
-  linkType: soft
-
-"@affine/i18n@workspace:*, @affine/i18n@workspace:packages/frontend/i18n":
-  version: 0.0.0-use.local
-  resolution: "@affine/i18n@workspace:packages/frontend/i18n"
-  dependencies:
-    "@affine-tools/cli": "workspace:*"
-    "@affine-tools/utils": "workspace:*"
-    "@affine/debug": "workspace:*"
-    "@magic-works/i18n-codegen": "npm:^0.6.1"
-    dayjs: "npm:^1.11.13"
-    glob: "npm:^11.0.0"
-    i18next: "npm:^25.0.0"
-    react: "npm:^19.2.1"
-    react-i18next: "npm:^15.2.0"
-    vitest: "npm:^4.1.8"
-  languageName: unknown
-  linkType: soft
-
-"@affine/media-capture-playground@workspace:packages/frontend/media-capture-playground":
-  version: 0.0.0-use.local
-  resolution: "@affine/media-capture-playground@workspace:packages/frontend/media-capture-playground"
-  dependencies:
-    "@affine/native": "workspace:*"
-    "@google/generative-ai": "npm:^0.24.0"
-    "@types/express": "npm:^5.0.0"
-    "@types/fs-extra": "npm:^11"
-    "@types/lodash-es": "npm:^4.17.12"
-    "@types/multer": "npm:^2.0.0"
-    "@types/react": "npm:^19.0.1"
-    "@types/react-dom": "npm:^19.0.2"
-    chokidar: "npm:^4.0.3"
-    express: "npm:^5.0.0"
-    express-rate-limit: "npm:^7.1.5"
-    fs-extra: "npm:^11.3.0"
-    lodash-es: "npm:^4.17.23"
-    multer: "npm:^2.2.0"
-    react: "npm:^19.2.1"
-    react-dom: "npm:^19.2.1"
-    react-markdown: "npm:^10.1.0"
-    socket.io: "npm:^4.8.3"
-    socket.io-client: "npm:^4.8.3"
-    swr: "npm:^2.3.7"
-    tailwindcss: "npm:^4.1.17"
-  languageName: unknown
-  linkType: soft
-
-"@affine/mobile@workspace:packages/frontend/apps/mobile":
-  version: 0.0.0-use.local
-  resolution: "@affine/mobile@workspace:packages/frontend/apps/mobile"
-  dependencies:
-    "@affine/component": "workspace:*"
-    "@affine/core": "workspace:*"
-    "@affine/env": "workspace:*"
-    "@affine/nbstore": "workspace:*"
-    "@affine/track": "workspace:*"
-    "@blocksuite/affine": "workspace:*"
-    "@capacitor/android": "npm:^7.6.5"
-    "@capacitor/core": "npm:^7.6.5"
-    "@emotion/react": "npm:^11.14.0"
-    "@toeverything/infra": "workspace:*"
-    "@types/react": "npm:^19.0.1"
-    "@types/react-dom": "npm:^19.0.2"
-    react: "npm:^19.2.1"
-    react-dom: "npm:^19.2.1"
-    react-router-dom: "npm:^6.30.4"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
-
-"@affine/monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@affine/monorepo@workspace:."
-  dependencies:
-    "@affine-tools/cli": "workspace:*"
-    "@capacitor/cli": "npm:^7.6.5"
-    "@eslint/js": "npm:^9.39.2"
-    "@faker-js/faker": "npm:^10.1.0"
-    "@istanbuljs/schema": "npm:^0.1.3"
-    "@magic-works/i18n-codegen": "npm:^0.6.1"
-    "@playwright/test": "npm:=1.58.2"
-    "@smarttools/eslint-plugin-rxjs": "npm:^1.0.8"
-    "@taplo/cli": "npm:^0.7.0"
-    "@toeverything/infra": "workspace:*"
-    "@types/eslint": "npm:^9.6.1"
-    "@types/node": "npm:^22.0.0"
-    "@typescript-eslint/parser": "npm:^8.55.0"
-    "@vanilla-extract/vite-plugin": "npm:^5.0.0"
-    "@vitest/browser": "npm:^4.1.8"
-    "@vitest/coverage-istanbul": "npm:^4.1.8"
-    "@vitest/ui": "npm:^4.1.8"
-    cross-env: "npm:^10.1.0"
-    electron: "npm:^39.0.0"
-    electron-builder: "npm:^26.0.12"
-    eslint: "npm:^9.39.2"
-    eslint-config-prettier: "npm:^10.1.8"
-    eslint-import-resolver-typescript: "npm:^4.4.4"
-    eslint-plugin-import-x: "npm:^4.16.1"
-    eslint-plugin-lit: "npm:^2.2.1"
-    eslint-plugin-oxlint: "npm:1.68.0"
-    eslint-plugin-react: "npm:^7.37.5"
-    eslint-plugin-react-hooks: "npm:^7.0.1"
-    eslint-plugin-simple-import-sort: "npm:^12.1.1"
-    eslint-plugin-sonarjs: "npm:^4.0.2"
-    happy-dom: "npm:^20.0.0"
-    husky: "npm:^9.1.7"
-    lint-staged: "npm:^16.0.0"
-    msw: "npm:^2.13.2"
-    oxlint: "npm:1.68.0"
-    oxlint-tsgolint: "npm:^0.23.0"
-    prettier: "npm:^3.7.4"
-    semver: "npm:^7.7.3"
-    typescript: "npm:^5.9.3"
-    typescript-eslint: "npm:^8.55.0"
-    unplugin-swc: "npm:^1.5.9"
-    vite: "npm:^7.3.5"
-    vitest: "npm:^4.1.8"
-  languageName: unknown
-  linkType: soft
-
-"@affine/native@workspace:*, @affine/native@workspace:packages/frontend/native":
-  version: 0.0.0-use.local
-  resolution: "@affine/native@workspace:packages/frontend/native"
-  dependencies:
-    "@napi-rs/cli": "npm:3.5.0"
-    "@napi-rs/whisper": "npm:^0.0.4"
-    "@types/node": "npm:^22.0.0"
-    ava: "npm:^7.0.0"
-    rxjs: "npm:^7.8.2"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
-
-"@affine/nbstore@workspace:*, @affine/nbstore@workspace:packages/common/nbstore":
-  version: 0.0.0-use.local
-  resolution: "@affine/nbstore@workspace:packages/common/nbstore"
-  dependencies:
-    "@affine/error": "workspace:*"
-    "@affine/graphql": "workspace:*"
-    "@affine/reader": "workspace:*"
-    "@affine/realtime": "workspace:*"
-    "@blocksuite/affine": "workspace:*"
-    "@toeverything/infra": "workspace:*"
-    eventemitter2: "npm:^6.4.9"
-    fake-indexeddb: "npm:^6.0.0"
-    graphemer: "npm:^1.4.0"
-    idb: "npm:^8.0.0"
-    lodash-es: "npm:^4.17.23"
-    nanoid: "npm:^5.1.6"
-    rxjs: "npm:^7.8.2"
-    socket.io-client: "npm:^4.8.3"
-    uuid: "npm:^14.0.0"
-    vitest: "npm:^4.1.8"
-    y-protocols: "npm:^1.0.6"
-    yjs: "npm:^13.6.27"
-  peerDependencies:
-    "@affine/error": "workspace:*"
-    "@affine/graphql": "workspace:*"
-    "@affine/realtime": "workspace:*"
-    "@blocksuite/affine": "workspace:*"
-    idb: ^8.0.0
-    socket.io-client: ^4.8.3
-  languageName: unknown
-  linkType: soft
-
-"@affine/playstore-auto-bump@workspace:tools/playstore-auto-bump":
-  version: 0.0.0-use.local
-  resolution: "@affine/playstore-auto-bump@workspace:tools/playstore-auto-bump"
-  dependencies:
-    "@affine-tools/cli": "workspace:*"
-    "@affine-tools/utils": "workspace:*"
-    "@googleapis/androidpublisher": "npm:^36.0.0"
-    "@types/node": "npm:^22.0.0"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
-
-"@affine/reader@workspace:*, @affine/reader@workspace:packages/common/reader":
-  version: 0.0.0-use.local
-  resolution: "@affine/reader@workspace:packages/common/reader"
-  dependencies:
-    "@blocksuite/affine": "workspace:*"
-    lodash-es: "npm:^4.17.23"
-    vitest: "npm:^4.1.8"
-    yjs: "npm:^13.6.27"
-  peerDependencies:
-    "@blocksuite/affine": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@affine/realtime@workspace:*, @affine/realtime@workspace:packages/common/realtime":
-  version: 0.0.0-use.local
-  resolution: "@affine/realtime@workspace:packages/common/realtime"
-  dependencies:
-    "@affine/graphql": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@affine/revert-update@workspace:tools/revert-update":
-  version: 0.0.0-use.local
-  resolution: "@affine/revert-update@workspace:tools/revert-update"
-  dependencies:
-    "@affine-tools/cli": "workspace:*"
-    "@types/node": "npm:^22.0.0"
-    typescript: "npm:^5.9.3"
-    yjs: "npm:^13.6.27"
-  languageName: unknown
-  linkType: soft
-
-"@affine/routes@workspace:packages/frontend/routes":
-  version: 0.0.0-use.local
-  resolution: "@affine/routes@workspace:packages/frontend/routes"
-  dependencies:
-    "@affine-tools/cli": "workspace:*"
-    "@affine-tools/utils": "workspace:*"
-    path-to-regexp: "npm:^8.4.2"
-    vitest: "npm:^4.1.8"
-  peerDependencies:
-    react: ^19.2.1
-    react-router-dom: ^7.18.0
-  languageName: unknown
-  linkType: soft
-
-"@affine/s3-compat@workspace:*, @affine/s3-compat@workspace:packages/common/s3-compat":
-  version: 0.0.0-use.local
-  resolution: "@affine/s3-compat@workspace:packages/common/s3-compat"
-  dependencies:
-    "@types/aws4": "npm:^1.11.6"
-    aws4: "npm:^1.13.2"
-    fast-xml-parser: "npm:^5.8.0"
-    s3mini: "npm:^0.9.1"
-  languageName: unknown
-  linkType: soft
-
-"@affine/templates@workspace:*, @affine/templates@workspace:packages/frontend/templates":
-  version: 0.0.0-use.local
-  resolution: "@affine/templates@workspace:packages/frontend/templates"
-  dependencies:
-    jszip: "npm:^3.10.1"
-  languageName: unknown
-  linkType: soft
-
-"@affine/track@workspace:*, @affine/track@workspace:packages/frontend/track":
-  version: 0.0.0-use.local
-  resolution: "@affine/track@workspace:packages/frontend/track"
-  dependencies:
-    "@affine/debug": "workspace:*"
-    "@sentry/react": "npm:^10.53.1"
-    "@types/react": "npm:^19.0.1"
-    nanoid: "npm:^5.1.6"
-    react-router-dom: "npm:^6.30.4"
-    vitest: "npm:^4.1.8"
-  languageName: unknown
-  linkType: soft
-
-"@affine/web@workspace:packages/frontend/apps/web":
-  version: 0.0.0-use.local
-  resolution: "@affine/web@workspace:packages/frontend/apps/web"
-  dependencies:
-    "@affine/component": "workspace:*"
-    "@affine/core": "workspace:*"
-    "@affine/env": "workspace:*"
-    "@affine/nbstore": "workspace:*"
-    "@affine/track": "workspace:*"
-    "@emotion/react": "npm:^11.14.0"
-    "@toeverything/infra": "workspace:*"
-    "@types/react": "npm:^19.0.1"
-    "@types/react-dom": "npm:^19.0.2"
-    react: "npm:^19.2.1"
-    react-dom: "npm:^19.2.1"
-    react-router-dom: "npm:^6.30.4"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
-
 "@algolia/abtesting@npm:1.17.0":
   version: 1.17.0
   resolution: "@algolia/abtesting@npm:1.17.0"
@@ -1124,6 +514,619 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@blank-tools/cli@workspace:*, @blank-tools/cli@workspace:tools/cli":
+  version: 0.0.0-use.local
+  resolution: "@blank-tools/cli@workspace:tools/cli"
+  dependencies:
+    "@blank-tools/utils": "workspace:*"
+    "@blank/s3-compat": "workspace:*"
+    "@napi-rs/simple-git": "npm:^0.1.22"
+    "@rspack/core": "npm:^2.0.8"
+    "@rspack/dev-server": "npm:^2.1.0"
+    "@sentry/webpack-plugin": "npm:^5.3.0"
+    "@swc/core": "npm:^1.10.1"
+    "@tailwindcss/postcss": "npm:^4.3.0"
+    "@types/lodash-es": "npm:^4.17.12"
+    "@types/mime-types": "npm:^3.0.0"
+    "@types/node": "npm:^22.0.0"
+    "@vanilla-extract/webpack-plugin": "npm:^2.3.15"
+    autoprefixer: "npm:^10.4.20"
+    clipanion: "npm:^3.2.1"
+    css-loader: "npm:^7.1.4"
+    cssnano: "npm:^7.0.6"
+    inquirer: "npm:^12.3.0"
+    jsonc-parser: "npm:^3.3.1"
+    lodash-es: "npm:^4.17.23"
+    mime-types: "npm:^3.0.0"
+    postcss: "npm:^8.4.49"
+    postcss-loader: "npm:^8.2.1"
+    postcss-selector-parser: "npm:^7.1.0"
+    prettier: "npm:^3.7.4"
+    source-map-loader: "npm:^5.0.0"
+    style-loader: "npm:^4.0.0"
+    swc-loader: "npm:^0.2.6"
+    tailwindcss: "npm:^4.1.17"
+    tsx: "npm:^4.21.0"
+    typanion: "npm:^3.14.0"
+    typescript: "npm:^5.9.3"
+  bin:
+    blank: ./bin/cli.js
+    r: ./bin/runner.js
+  languageName: unknown
+  linkType: soft
+
+"@blank-tools/utils@workspace:*, @blank-tools/utils@workspace:tools/utils":
+  version: 0.0.0-use.local
+  resolution: "@blank-tools/utils@workspace:tools/utils"
+  dependencies:
+    "@types/lodash-es": "npm:^4.17.12"
+    "@types/node": "npm:^22.0.0"
+    chalk: "npm:^5.3.0"
+    lodash-es: "npm:^4.17.23"
+    prettier: "npm:^3.7.4"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@blank/changelog@workspace:tools/changelog":
+  version: 0.0.0-use.local
+  resolution: "@blank/changelog@workspace:tools/changelog"
+  dependencies:
+    "@napi-rs/simple-git": "npm:^0.1.22"
+    "@slack/web-api": "npm:^7.15.1"
+    "@types/node": "npm:^22.0.0"
+    changelogithub: "npm:^13.0.0"
+    jsx-slack: "npm:^6.1.2"
+    marked: "npm:^15.0.12"
+  languageName: unknown
+  linkType: soft
+
+"@blank/commitlint-config@workspace:tools/commitlint":
+  version: 0.0.0-use.local
+  resolution: "@blank/commitlint-config@workspace:tools/commitlint"
+  dependencies:
+    "@commitlint/cli": "npm:^19.8.1"
+    "@commitlint/config-conventional": "npm:^19.8.1"
+    commitlint: "npm:^19.6.0"
+  languageName: unknown
+  linkType: soft
+
+"@blank/component@workspace:*, @blank/component@workspace:packages/frontend/component":
+  version: 0.0.0-use.local
+  resolution: "@blank/component@workspace:packages/frontend/component"
+  dependencies:
+    "@atlaskit/pragmatic-drag-and-drop": "npm:^1.7.7"
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": "npm:^1.1.0"
+    "@blank-tools/utils": "workspace:*"
+    "@blank/debug": "workspace:*"
+    "@blank/error": "workspace:*"
+    "@blank/graphql": "workspace:*"
+    "@blank/i18n": "workspace:*"
+    "@blocksuite/icons": "npm:^2.2.17"
+    "@emotion/react": "npm:^11.14.0"
+    "@emotion/styled": "npm:^11.14.0"
+    "@radix-ui/react-avatar": "npm:^1.1.11"
+    "@radix-ui/react-collapsible": "npm:^1.1.12"
+    "@radix-ui/react-context-menu": "npm:^2.2.16"
+    "@radix-ui/react-dialog": "npm:^1.1.15"
+    "@radix-ui/react-dropdown-menu": "npm:^2.1.16"
+    "@radix-ui/react-popover": "npm:^1.1.15"
+    "@radix-ui/react-progress": "npm:^1.1.8"
+    "@radix-ui/react-radio-group": "npm:^1.2.4"
+    "@radix-ui/react-scroll-area": "npm:^1.2.10"
+    "@radix-ui/react-slider": "npm:^1.2.4"
+    "@radix-ui/react-slot": "npm:^1.1.2"
+    "@radix-ui/react-tabs": "npm:^1.1.13"
+    "@radix-ui/react-toast": "npm:^1.2.15"
+    "@radix-ui/react-tooltip": "npm:^1.1.8"
+    "@radix-ui/react-visually-hidden": "npm:^1.1.3"
+    "@storybook/react": "npm:^10.2.14"
+    "@storybook/react-vite": "npm:^10.2.14"
+    "@testing-library/dom": "npm:^10.4.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@toeverything/theme": "npm:^1.1.23"
+    "@types/bytes": "npm:^3.1.5"
+    "@types/react": "npm:^19.0.1"
+    "@types/react-dom": "npm:^19.0.2"
+    "@vanilla-extract/css": "npm:^1.17.0"
+    "@vanilla-extract/dynamic": "npm:^2.1.2"
+    bytes: "npm:^3.1.2"
+    check-password-strength: "npm:^3.0.0"
+    clsx: "npm:^2.1.1"
+    dayjs: "npm:^1.11.13"
+    emojibase-data: "npm:^16.0.3"
+    foxact: "npm:^0.2.49"
+    jotai: "npm:^2.10.3"
+    lit: "npm:^3.2.1"
+    lodash-es: "npm:^4.17.23"
+    lottie-react: "npm:^2.4.0"
+    lottie-web: "npm:^5.12.2"
+    nanoid: "npm:^5.1.6"
+    next-themes: "npm:^0.4.4"
+    react: "npm:^19.2.1"
+    react-dom: "npm:19.2.1"
+    react-paginate: "npm:^8.3.0"
+    react-router-dom: "npm:^6.30.4"
+    react-transition-state: "npm:^2.2.0"
+    sonner: "npm:^2.0.7"
+    storybook: "npm:^10.2.14"
+    swr: "npm:^2.3.7"
+    typescript: "npm:^5.9.3"
+    unplugin-swc: "npm:^1.5.9"
+    vite: "npm:^7.3.5"
+    vitest: "npm:^4.1.8"
+    zod: "npm:^3.25.76"
+  peerDependencies:
+    "@blocksuite/blank": "*"
+    "@swc/core": ^1.0.0
+    react: ^19.2.1
+    react-dom: ^19.2.1
+  languageName: unknown
+  linkType: soft
+
+"@blank/copilot-result@workspace:tools/copilot-result":
+  version: 0.0.0-use.local
+  resolution: "@blank/copilot-result@workspace:tools/copilot-result"
+  dependencies:
+    "@slack/web-api": "npm:^7.15.1"
+    "@types/node": "npm:^22.0.0"
+    jsx-slack: "npm:^6.1.2"
+    marked: "npm:^15.0.12"
+  languageName: unknown
+  linkType: soft
+
+"@blank/core@workspace:*, @blank/core@workspace:packages/frontend/core":
+  version: 0.0.0-use.local
+  resolution: "@blank/core@workspace:packages/frontend/core"
+  dependencies:
+    "@atlaskit/pragmatic-drag-and-drop": "npm:^1.7.7"
+    "@blank/component": "workspace:*"
+    "@blank/debug": "workspace:*"
+    "@blank/electron-api": "workspace:*"
+    "@blank/env": "workspace:*"
+    "@blank/error": "workspace:*"
+    "@blank/graphql": "workspace:*"
+    "@blank/i18n": "workspace:*"
+    "@blank/nbstore": "workspace:*"
+    "@blank/reader": "workspace:*"
+    "@blank/templates": "workspace:*"
+    "@blank/track": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
+    "@blocksuite/blank-block-root": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/data-view": "workspace:*"
+    "@blocksuite/global": "workspace:*"
+    "@blocksuite/icons": "npm:^2.2.17"
+    "@blocksuite/std": "workspace:*"
+    "@emotion/cache": "npm:^11.14.0"
+    "@emotion/css": "npm:^11.13.5"
+    "@floating-ui/dom": "npm:^1.6.13"
+    "@juggle/resize-observer": "npm:^3.4.0"
+    "@lottiefiles/dotlottie-wc": "npm:^0.9.4"
+    "@marsidev/react-turnstile": "npm:^1.1.0"
+    "@myriaddreamin/typst-ts-renderer": "npm:^0.7.0-rc2"
+    "@myriaddreamin/typst-ts-web-compiler": "npm:^0.7.0-rc2"
+    "@myriaddreamin/typst.ts": "npm:^0.7.0-rc2"
+    "@playwright/test": "npm:=1.58.2"
+    "@preact/signals-core": "npm:^1.8.0"
+    "@radix-ui/react-collapsible": "npm:^1.1.2"
+    "@radix-ui/react-dialog": "npm:^1.1.3"
+    "@radix-ui/react-popover": "npm:^1.1.3"
+    "@radix-ui/react-scroll-area": "npm:^1.2.2"
+    "@radix-ui/react-slot": "npm:^1.1.1"
+    "@radix-ui/react-toolbar": "npm:^1.1.1"
+    "@sentry/react": "npm:^10.53.1"
+    "@supabase/supabase-js": "npm:^2.49.1"
+    "@testing-library/dom": "npm:^10.4.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@toeverything/infra": "workspace:*"
+    "@toeverything/mermaid-wasm": "npm:^0.1.0"
+    "@toeverything/pdf-viewer": "npm:^0.1.1"
+    "@toeverything/theme": "npm:^1.1.23"
+    "@types/bytes": "npm:^3.1.5"
+    "@types/image-blob-reduce": "npm:^4.1.4"
+    "@types/lodash-es": "npm:^4.17.12"
+    "@types/semver": "npm:^7"
+    "@vanilla-extract/css": "npm:^1.17.0"
+    "@vanilla-extract/dynamic": "npm:^2.1.2"
+    animejs: "npm:^4.0.0"
+    bytes: "npm:^3.1.2"
+    clsx: "npm:^2.1.1"
+    cmdk: "npm:^1.0.4"
+    core-js: "npm:^3.39.0"
+    dayjs: "npm:^1.11.13"
+    dompurify: "npm:^3.4.11"
+    eventemitter2: "npm:^6.4.9"
+    fake-indexeddb: "npm:^6.0.0"
+    file-type: "npm:^21.0.0"
+    filesize: "npm:^10.1.6"
+    foxact: "npm:^0.2.49"
+    fuse.js: "npm:^7.0.0"
+    graphemer: "npm:^1.4.0"
+    graphql: "npm:^16.9.0"
+    happy-dom: "npm:^20.3.0"
+    history: "npm:^5.3.0"
+    idb: "npm:^8.0.0"
+    image-blob-reduce: "npm:^4.1.0"
+    is-svg: "npm:^6.1.0"
+    jotai: "npm:^2.10.3"
+    jotai-scope: "npm:^0.7.2"
+    katex: "npm:^0.16.27"
+    lit: "npm:^3.2.1"
+    lodash-es: "npm:^4.17.23"
+    lottie-react: "npm:^2.4.0"
+    mermaid: "npm:^11.15.0"
+    mp4-muxer: "npm:^5.2.2"
+    nanoid: "npm:^5.1.6"
+    next-themes: "npm:^0.4.4"
+    query-string: "npm:^9.1.1"
+    react: "npm:^19.2.1"
+    react-dom: "npm:^19.2.1"
+    react-error-boundary: "npm:^6.0.0"
+    react-router-dom: "npm:^6.30.4"
+    react-transition-state: "npm:^2.2.0"
+    react-virtuoso: "npm:^4.12.3"
+    recharts: "npm:^2.15.4"
+    rxjs: "npm:^7.8.2"
+    semver: "npm:^7.7.3"
+    shiki: "npm:^3.19.0"
+    socket.io-client: "npm:^4.8.3"
+    swr: "npm:^2.3.7"
+    tinykeys: "patch:tinykeys@npm%3A2.1.0#~/.yarn/patches/tinykeys-npm-2.1.0-819feeaed0.patch"
+    vite: "npm:^7.3.5"
+    vitest: "npm:^4.1.8"
+    y-protocols: "npm:^1.0.6"
+    yjs: "npm:^13.6.27"
+    zod: "npm:^3.25.76"
+  languageName: unknown
+  linkType: soft
+
+"@blank/debug@workspace:*, @blank/debug@workspace:packages/common/debug":
+  version: 0.0.0-use.local
+  resolution: "@blank/debug@workspace:packages/common/debug"
+  dependencies:
+    "@types/debug": "npm:^4.1.12"
+    debug: "npm:^4.4.0"
+    vitest: "npm:^4.1.8"
+  languageName: unknown
+  linkType: soft
+
+"@blank/doc-diff@workspace:tools/doc-diff":
+  version: 0.0.0-use.local
+  resolution: "@blank/doc-diff@workspace:tools/doc-diff"
+  dependencies:
+    "@blank-tools/cli": "workspace:*"
+    "@types/node": "npm:^22.0.0"
+    typescript: "npm:^5.9.3"
+    yjs: "npm:^13.6.27"
+  languageName: unknown
+  linkType: soft
+
+"@blank/electron-api@workspace:*, @blank/electron-api@workspace:packages/frontend/electron-api":
+  version: 0.0.0-use.local
+  resolution: "@blank/electron-api@workspace:packages/frontend/electron-api"
+  languageName: unknown
+  linkType: soft
+
+"@blank/env@workspace:*, @blank/env@workspace:packages/common/env":
+  version: 0.0.0-use.local
+  resolution: "@blank/env@workspace:packages/common/env"
+  dependencies:
+    vitest: "npm:^4.1.8"
+    zod: "npm:^3.25.76"
+  peerDependencies:
+    "@blank/templates": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@blank/error@workspace:*, @blank/error@workspace:packages/common/error":
+  version: 0.0.0-use.local
+  resolution: "@blank/error@workspace:packages/common/error"
+  dependencies:
+    vitest: "npm:^4.1.8"
+  peerDependencies:
+    "@blank/graphql": "workspace:*"
+    graphql: ^16.9.0
+  languageName: unknown
+  linkType: soft
+
+"@blank/graphql@workspace:*, @blank/graphql@workspace:packages/common/graphql":
+  version: 0.0.0-use.local
+  resolution: "@blank/graphql@workspace:packages/common/graphql"
+  dependencies:
+    "@blank/debug": "workspace:*"
+    "@blank/error": "workspace:*"
+    "@graphql-codegen/cli": "npm:^6.2.1"
+    "@graphql-codegen/typescript": "npm:^5.0.9"
+    "@graphql-codegen/typescript-operations": "npm:^5.0.9"
+    "@types/lodash-es": "npm:^4.17.12"
+    graphql: "npm:^16.9.0"
+    lodash: "npm:^4.18.1"
+    lodash-es: "npm:^4.17.23"
+    prettier: "npm:^3.7.4"
+    vitest: "npm:^4.1.8"
+  languageName: unknown
+  linkType: soft
+
+"@blank/i18n@workspace:*, @blank/i18n@workspace:packages/frontend/i18n":
+  version: 0.0.0-use.local
+  resolution: "@blank/i18n@workspace:packages/frontend/i18n"
+  dependencies:
+    "@blank-tools/cli": "workspace:*"
+    "@blank-tools/utils": "workspace:*"
+    "@blank/debug": "workspace:*"
+    "@magic-works/i18n-codegen": "npm:^0.6.1"
+    dayjs: "npm:^1.11.13"
+    glob: "npm:^11.0.0"
+    i18next: "npm:^25.0.0"
+    react: "npm:^19.2.1"
+    react-i18next: "npm:^15.2.0"
+    vitest: "npm:^4.1.8"
+  languageName: unknown
+  linkType: soft
+
+"@blank/media-capture-playground@workspace:packages/frontend/media-capture-playground":
+  version: 0.0.0-use.local
+  resolution: "@blank/media-capture-playground@workspace:packages/frontend/media-capture-playground"
+  dependencies:
+    "@blank/native": "workspace:*"
+    "@google/generative-ai": "npm:^0.24.0"
+    "@types/express": "npm:^5.0.0"
+    "@types/fs-extra": "npm:^11"
+    "@types/lodash-es": "npm:^4.17.12"
+    "@types/multer": "npm:^2.0.0"
+    "@types/react": "npm:^19.0.1"
+    "@types/react-dom": "npm:^19.0.2"
+    chokidar: "npm:^4.0.3"
+    express: "npm:^5.0.0"
+    express-rate-limit: "npm:^7.1.5"
+    fs-extra: "npm:^11.3.0"
+    lodash-es: "npm:^4.17.23"
+    multer: "npm:^2.2.0"
+    react: "npm:^19.2.1"
+    react-dom: "npm:^19.2.1"
+    react-markdown: "npm:^10.1.0"
+    socket.io: "npm:^4.8.3"
+    socket.io-client: "npm:^4.8.3"
+    swr: "npm:^2.3.7"
+    tailwindcss: "npm:^4.1.17"
+  languageName: unknown
+  linkType: soft
+
+"@blank/mobile@workspace:packages/frontend/apps/mobile":
+  version: 0.0.0-use.local
+  resolution: "@blank/mobile@workspace:packages/frontend/apps/mobile"
+  dependencies:
+    "@blank/component": "workspace:*"
+    "@blank/core": "workspace:*"
+    "@blank/env": "workspace:*"
+    "@blank/nbstore": "workspace:*"
+    "@blank/track": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
+    "@capacitor/android": "npm:^7.6.5"
+    "@capacitor/cli": "npm:^7.6.5"
+    "@capacitor/core": "npm:^7.6.5"
+    "@emotion/react": "npm:^11.14.0"
+    "@toeverything/infra": "workspace:*"
+    "@types/react": "npm:^19.0.1"
+    "@types/react-dom": "npm:^19.0.2"
+    react: "npm:^19.2.1"
+    react-dom: "npm:^19.2.1"
+    react-router-dom: "npm:^6.30.4"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@blank/monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@blank/monorepo@workspace:."
+  dependencies:
+    "@blank-tools/cli": "workspace:*"
+    "@blank-tools/utils": "workspace:*"
+    "@capacitor/cli": "npm:^7.6.5"
+    "@eslint/js": "npm:^9.39.2"
+    "@faker-js/faker": "npm:^10.1.0"
+    "@istanbuljs/schema": "npm:^0.1.3"
+    "@magic-works/i18n-codegen": "npm:^0.6.1"
+    "@playwright/test": "npm:=1.58.2"
+    "@smarttools/eslint-plugin-rxjs": "npm:^1.0.8"
+    "@taplo/cli": "npm:^0.7.0"
+    "@toeverything/infra": "workspace:*"
+    "@types/eslint": "npm:^9.6.1"
+    "@types/node": "npm:^22.0.0"
+    "@typescript-eslint/parser": "npm:^8.55.0"
+    "@vanilla-extract/vite-plugin": "npm:^5.0.0"
+    "@vitest/browser": "npm:^4.1.8"
+    "@vitest/coverage-istanbul": "npm:^4.1.8"
+    "@vitest/ui": "npm:^4.1.8"
+    cross-env: "npm:^10.1.0"
+    electron: "npm:^39.0.0"
+    electron-builder: "npm:^26.0.12"
+    electron-updater: "npm:^6.6.2"
+    eslint: "npm:^9.39.2"
+    eslint-config-prettier: "npm:^10.1.8"
+    eslint-import-resolver-typescript: "npm:^4.4.4"
+    eslint-plugin-import-x: "npm:^4.16.1"
+    eslint-plugin-lit: "npm:^2.2.1"
+    eslint-plugin-oxlint: "npm:1.68.0"
+    eslint-plugin-react: "npm:^7.37.5"
+    eslint-plugin-react-hooks: "npm:^7.0.1"
+    eslint-plugin-simple-import-sort: "npm:^12.1.1"
+    eslint-plugin-sonarjs: "npm:^4.0.2"
+    happy-dom: "npm:^20.0.0"
+    husky: "npm:^9.1.7"
+    lint-staged: "npm:^16.0.0"
+    msw: "npm:^2.13.2"
+    oxlint: "npm:1.68.0"
+    oxlint-tsgolint: "npm:^0.23.0"
+    prettier: "npm:^3.7.4"
+    semver: "npm:^7.7.3"
+    typescript: "npm:^5.9.3"
+    typescript-eslint: "npm:^8.55.0"
+    unplugin-swc: "npm:^1.5.9"
+    vite: "npm:^7.3.5"
+    vitest: "npm:^4.1.8"
+  languageName: unknown
+  linkType: soft
+
+"@blank/native@workspace:*, @blank/native@workspace:packages/frontend/native":
+  version: 0.0.0-use.local
+  resolution: "@blank/native@workspace:packages/frontend/native"
+  dependencies:
+    "@napi-rs/cli": "npm:3.5.0"
+    "@napi-rs/whisper": "npm:^0.0.4"
+    "@types/node": "npm:^22.0.0"
+    ava: "npm:^7.0.0"
+    rxjs: "npm:^7.8.2"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@blank/nbstore@workspace:*, @blank/nbstore@workspace:packages/common/nbstore":
+  version: 0.0.0-use.local
+  resolution: "@blank/nbstore@workspace:packages/common/nbstore"
+  dependencies:
+    "@blank/error": "workspace:*"
+    "@blank/graphql": "workspace:*"
+    "@blank/reader": "workspace:*"
+    "@blank/realtime": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
+    "@toeverything/infra": "workspace:*"
+    eventemitter2: "npm:^6.4.9"
+    fake-indexeddb: "npm:^6.0.0"
+    graphemer: "npm:^1.4.0"
+    idb: "npm:^8.0.0"
+    lodash-es: "npm:^4.17.23"
+    nanoid: "npm:^5.1.6"
+    rxjs: "npm:^7.8.2"
+    socket.io-client: "npm:^4.8.3"
+    uuid: "npm:^14.0.0"
+    vitest: "npm:^4.1.8"
+    y-protocols: "npm:^1.0.6"
+    yjs: "npm:^13.6.27"
+  peerDependencies:
+    "@blank/error": "workspace:*"
+    "@blank/graphql": "workspace:*"
+    "@blank/realtime": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
+    idb: ^8.0.0
+    socket.io-client: ^4.8.3
+  languageName: unknown
+  linkType: soft
+
+"@blank/playstore-auto-bump@workspace:tools/playstore-auto-bump":
+  version: 0.0.0-use.local
+  resolution: "@blank/playstore-auto-bump@workspace:tools/playstore-auto-bump"
+  dependencies:
+    "@blank-tools/cli": "workspace:*"
+    "@blank-tools/utils": "workspace:*"
+    "@googleapis/androidpublisher": "npm:^36.0.0"
+    "@types/node": "npm:^22.0.0"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@blank/reader@workspace:*, @blank/reader@workspace:packages/common/reader":
+  version: 0.0.0-use.local
+  resolution: "@blank/reader@workspace:packages/common/reader"
+  dependencies:
+    "@blocksuite/blank": "workspace:*"
+    lodash-es: "npm:^4.17.23"
+    vitest: "npm:^4.1.8"
+    yjs: "npm:^13.6.27"
+  peerDependencies:
+    "@blocksuite/blank": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@blank/realtime@workspace:*, @blank/realtime@workspace:packages/common/realtime":
+  version: 0.0.0-use.local
+  resolution: "@blank/realtime@workspace:packages/common/realtime"
+  dependencies:
+    "@blank/graphql": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@blank/revert-update@workspace:tools/revert-update":
+  version: 0.0.0-use.local
+  resolution: "@blank/revert-update@workspace:tools/revert-update"
+  dependencies:
+    "@blank-tools/cli": "workspace:*"
+    "@types/node": "npm:^22.0.0"
+    typescript: "npm:^5.9.3"
+    yjs: "npm:^13.6.27"
+  languageName: unknown
+  linkType: soft
+
+"@blank/routes@workspace:packages/frontend/routes":
+  version: 0.0.0-use.local
+  resolution: "@blank/routes@workspace:packages/frontend/routes"
+  dependencies:
+    "@blank-tools/cli": "workspace:*"
+    "@blank-tools/utils": "workspace:*"
+    path-to-regexp: "npm:^8.4.2"
+    vitest: "npm:^4.1.8"
+  peerDependencies:
+    react: ^19.2.1
+    react-router-dom: ^7.18.0
+  languageName: unknown
+  linkType: soft
+
+"@blank/s3-compat@workspace:*, @blank/s3-compat@workspace:packages/common/s3-compat":
+  version: 0.0.0-use.local
+  resolution: "@blank/s3-compat@workspace:packages/common/s3-compat"
+  dependencies:
+    "@types/aws4": "npm:^1.11.6"
+    aws4: "npm:^1.13.2"
+    fast-xml-parser: "npm:^5.8.0"
+    s3mini: "npm:^0.9.1"
+  languageName: unknown
+  linkType: soft
+
+"@blank/templates@workspace:*, @blank/templates@workspace:packages/frontend/templates":
+  version: 0.0.0-use.local
+  resolution: "@blank/templates@workspace:packages/frontend/templates"
+  dependencies:
+    jszip: "npm:^3.10.1"
+  languageName: unknown
+  linkType: soft
+
+"@blank/track@workspace:*, @blank/track@workspace:packages/frontend/track":
+  version: 0.0.0-use.local
+  resolution: "@blank/track@workspace:packages/frontend/track"
+  dependencies:
+    "@blank/debug": "workspace:*"
+    "@sentry/react": "npm:^10.53.1"
+    "@types/react": "npm:^19.0.1"
+    nanoid: "npm:^5.1.6"
+    react-router-dom: "npm:^6.30.4"
+    vitest: "npm:^4.1.8"
+  languageName: unknown
+  linkType: soft
+
+"@blank/web@workspace:packages/frontend/apps/web":
+  version: 0.0.0-use.local
+  resolution: "@blank/web@workspace:packages/frontend/apps/web"
+  dependencies:
+    "@blank/component": "workspace:*"
+    "@blank/core": "workspace:*"
+    "@blank/env": "workspace:*"
+    "@blank/nbstore": "workspace:*"
+    "@blank/track": "workspace:*"
+    "@emotion/react": "npm:^11.14.0"
+    "@toeverything/infra": "workspace:*"
+    "@types/react": "npm:^19.0.1"
+    "@types/react-dom": "npm:^19.0.2"
+    react: "npm:^19.2.1"
+    react-dom: "npm:^19.2.1"
+    react-router-dom: "npm:^6.30.4"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@blazediff/core@npm:1.9.1":
   version: 1.9.1
   resolution: "@blazediff/core@npm:1.9.1"
@@ -1131,16 +1134,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blocksuite/affine-block-attachment@workspace:*, @blocksuite/affine-block-attachment@workspace:blocksuite/affine/blocks/attachment":
+"@blocksuite/blank-block-attachment@workspace:*, @blocksuite/blank-block-attachment@workspace:blocksuite/blank/blocks/attachment":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-attachment@workspace:blocksuite/affine/blocks/attachment"
+  resolution: "@blocksuite/blank-block-attachment@workspace:blocksuite/blank/blocks/attachment"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1153,18 +1156,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-bookmark@workspace:*, @blocksuite/affine-block-bookmark@workspace:blocksuite/affine/blocks/bookmark":
+"@blocksuite/blank-block-bookmark@workspace:*, @blocksuite/blank-block-bookmark@workspace:blocksuite/blank/blocks/bookmark":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-bookmark@workspace:blocksuite/affine/blocks/bookmark"
+  resolution: "@blocksuite/blank-block-bookmark@workspace:blocksuite/blank/blocks/bookmark"
   dependencies:
-    "@blocksuite/affine-block-embed": "workspace:*"
-    "@blocksuite/affine-block-embed-doc": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-embed": "workspace:*"
+    "@blocksuite/blank-block-embed-doc": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1180,17 +1183,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-callout@workspace:*, @blocksuite/affine-block-callout@workspace:blocksuite/affine/blocks/callout":
+"@blocksuite/blank-block-callout@workspace:*, @blocksuite/blank-block-callout@workspace:blocksuite/blank/blocks/callout":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-callout@workspace:blocksuite/affine/blocks/callout"
+  resolution: "@blocksuite/blank-block-callout@workspace:blocksuite/blank/blocks/callout"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1201,21 +1204,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-code@workspace:*, @blocksuite/affine-block-code@workspace:blocksuite/affine/blocks/code":
+"@blocksuite/blank-block-code@workspace:*, @blocksuite/blank-block-code@workspace:blocksuite/blank/blocks/code":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-code@workspace:blocksuite/affine/blocks/code"
+  resolution: "@blocksuite/blank-block-code@workspace:blocksuite/blank/blocks/code"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-turbo-renderer": "workspace:*"
-    "@blocksuite/affine-inline-comment": "workspace:*"
-    "@blocksuite/affine-inline-latex": "workspace:*"
-    "@blocksuite/affine-inline-link": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-turbo-renderer": "workspace:*"
+    "@blocksuite/blank-inline-comment": "workspace:*"
+    "@blocksuite/blank-inline-latex": "workspace:*"
+    "@blocksuite/blank-inline-link": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1229,16 +1232,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-data-view@workspace:*, @blocksuite/affine-block-data-view@workspace:blocksuite/affine/blocks/data-view":
+"@blocksuite/blank-block-data-view@workspace:*, @blocksuite/blank-block-data-view@workspace:blocksuite/blank/blocks/data-view":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-data-view@workspace:blocksuite/affine/blocks/data-view"
+  resolution: "@blocksuite/blank-block-data-view@workspace:blocksuite/blank/blocks/data-view"
   dependencies:
-    "@blocksuite/affine-block-database": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-database": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/data-view": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
@@ -1250,19 +1253,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-database@workspace:*, @blocksuite/affine-block-database@workspace:blocksuite/affine/blocks/database":
+"@blocksuite/blank-block-database@workspace:*, @blocksuite/blank-block-database@workspace:blocksuite/blank/blocks/database":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-database@workspace:blocksuite/affine/blocks/database"
+  resolution: "@blocksuite/blank-block-database@workspace:blocksuite/blank/blocks/database"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-inline-reference": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-drag-handle": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-inline-reference": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-drag-handle": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/data-view": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
@@ -1280,15 +1283,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-divider@workspace:*, @blocksuite/affine-block-divider@workspace:blocksuite/affine/blocks/divider":
+"@blocksuite/blank-block-divider@workspace:*, @blocksuite/blank-block-divider@workspace:blocksuite/blank/blocks/divider":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-divider@workspace:blocksuite/affine/blocks/divider"
+  resolution: "@blocksuite/blank-block-divider@workspace:blocksuite/blank/blocks/divider"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
     "@types/mdast": "npm:^4.0.4"
@@ -1296,17 +1299,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-edgeless-text@workspace:*, @blocksuite/affine-block-edgeless-text@workspace:blocksuite/affine/blocks/edgeless-text":
+"@blocksuite/blank-block-edgeless-text@workspace:*, @blocksuite/blank-block-edgeless-text@workspace:blocksuite/blank/blocks/edgeless-text":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-edgeless-text@workspace:blocksuite/affine/blocks/edgeless-text"
+  resolution: "@blocksuite/blank-block-edgeless-text@workspace:blocksuite/blank/blocks/edgeless-text"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-text": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-text": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1315,19 +1318,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-embed-doc@workspace:*, @blocksuite/affine-block-embed-doc@workspace:blocksuite/affine/blocks/embed-doc":
+"@blocksuite/blank-block-embed-doc@workspace:*, @blocksuite/blank-block-embed-doc@workspace:blocksuite/blank/blocks/embed-doc":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-embed-doc@workspace:blocksuite/affine/blocks/embed-doc"
+  resolution: "@blocksuite/blank-block-embed-doc@workspace:blocksuite/blank/blocks/embed-doc"
   dependencies:
-    "@blocksuite/affine-block-embed": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-reference": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-embed": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-reference": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1341,16 +1344,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-embed@workspace:*, @blocksuite/affine-block-embed@workspace:blocksuite/affine/blocks/embed":
+"@blocksuite/blank-block-embed@workspace:*, @blocksuite/blank-block-embed@workspace:blocksuite/blank/blocks/embed":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-embed@workspace:blocksuite/affine/blocks/embed"
+  resolution: "@blocksuite/blank-block-embed@workspace:blocksuite/blank/blocks/embed"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1363,18 +1366,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-frame@workspace:*, @blocksuite/affine-block-frame@workspace:blocksuite/affine/blocks/frame":
+"@blocksuite/blank-block-frame@workspace:*, @blocksuite/blank-block-frame@workspace:blocksuite/blank/blocks/frame":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-frame@workspace:blocksuite/affine/blocks/frame"
+  resolution: "@blocksuite/blank-block-frame@workspace:blocksuite/blank/blocks/frame"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-pointer": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
-    "@blocksuite/affine-widget-frame-title": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-pointer": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-widget-frame-title": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1386,18 +1389,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-image@workspace:*, @blocksuite/affine-block-image@workspace:blocksuite/affine/blocks/image":
+"@blocksuite/blank-block-image@workspace:*, @blocksuite/blank-block-image@workspace:blocksuite/blank/blocks/image":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-image@workspace:blocksuite/affine/blocks/image"
+  resolution: "@blocksuite/blank-block-image@workspace:blocksuite/blank/blocks/image"
   dependencies:
-    "@blocksuite/affine-block-note": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-turbo-renderer": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-note": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-turbo-renderer": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1409,17 +1412,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-latex@workspace:*, @blocksuite/affine-block-latex@workspace:blocksuite/affine/blocks/latex":
+"@blocksuite/blank-block-latex@workspace:*, @blocksuite/blank-block-latex@workspace:blocksuite/blank/blocks/latex":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-latex@workspace:blocksuite/affine/blocks/latex"
+  resolution: "@blocksuite/blank-block-latex@workspace:blocksuite/blank/blocks/latex"
   dependencies:
-    "@blocksuite/affine-block-note": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-latex": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-note": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-latex": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1431,17 +1434,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-list@workspace:*, @blocksuite/affine-block-list@workspace:blocksuite/affine/blocks/list":
+"@blocksuite/blank-block-list@workspace:*, @blocksuite/blank-block-list@workspace:blocksuite/blank/blocks/list":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-list@workspace:blocksuite/affine/blocks/list"
+  resolution: "@blocksuite/blank-block-list@workspace:blocksuite/blank/blocks/list"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-turbo-renderer": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-turbo-renderer": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1452,21 +1455,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-note@workspace:*, @blocksuite/affine-block-note@workspace:blocksuite/affine/blocks/note":
+"@blocksuite/blank-block-note@workspace:*, @blocksuite/blank-block-note@workspace:blocksuite/blank/blocks/note":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-note@workspace:blocksuite/affine/blocks/note"
+  resolution: "@blocksuite/blank-block-note@workspace:blocksuite/blank/blocks/note"
   dependencies:
-    "@blocksuite/affine-block-embed": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-fragment-doc-title": "workspace:*"
-    "@blocksuite/affine-gfx-turbo-renderer": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-embed": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-fragment-doc-title": "workspace:*"
+    "@blocksuite/blank-gfx-turbo-renderer": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1483,17 +1486,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-paragraph@workspace:*, @blocksuite/affine-block-paragraph@workspace:blocksuite/affine/blocks/paragraph":
+"@blocksuite/blank-block-paragraph@workspace:*, @blocksuite/blank-block-paragraph@workspace:blocksuite/blank/blocks/paragraph":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-paragraph@workspace:blocksuite/affine/blocks/paragraph"
+  resolution: "@blocksuite/blank-block-paragraph@workspace:blocksuite/blank/blocks/paragraph"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-turbo-renderer": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-turbo-renderer": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1505,36 +1508,36 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-root@workspace:*, @blocksuite/affine-block-root@workspace:blocksuite/affine/blocks/root":
+"@blocksuite/blank-block-root@workspace:*, @blocksuite/blank-block-root@workspace:blocksuite/blank/blocks/root":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-root@workspace:blocksuite/affine/blocks/root"
+  resolution: "@blocksuite/blank-block-root@workspace:blocksuite/blank/blocks/root"
   dependencies:
-    "@blocksuite/affine-block-attachment": "workspace:*"
-    "@blocksuite/affine-block-bookmark": "workspace:*"
-    "@blocksuite/affine-block-database": "workspace:*"
-    "@blocksuite/affine-block-edgeless-text": "workspace:*"
-    "@blocksuite/affine-block-embed": "workspace:*"
-    "@blocksuite/affine-block-frame": "workspace:*"
-    "@blocksuite/affine-block-image": "workspace:*"
-    "@blocksuite/affine-block-note": "workspace:*"
-    "@blocksuite/affine-block-paragraph": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-brush": "workspace:*"
-    "@blocksuite/affine-gfx-connector": "workspace:*"
-    "@blocksuite/affine-gfx-group": "workspace:*"
-    "@blocksuite/affine-gfx-mindmap": "workspace:*"
-    "@blocksuite/affine-gfx-note": "workspace:*"
-    "@blocksuite/affine-gfx-pointer": "workspace:*"
-    "@blocksuite/affine-gfx-shape": "workspace:*"
-    "@blocksuite/affine-gfx-text": "workspace:*"
-    "@blocksuite/affine-inline-latex": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-attachment": "workspace:*"
+    "@blocksuite/blank-block-bookmark": "workspace:*"
+    "@blocksuite/blank-block-database": "workspace:*"
+    "@blocksuite/blank-block-edgeless-text": "workspace:*"
+    "@blocksuite/blank-block-embed": "workspace:*"
+    "@blocksuite/blank-block-frame": "workspace:*"
+    "@blocksuite/blank-block-image": "workspace:*"
+    "@blocksuite/blank-block-note": "workspace:*"
+    "@blocksuite/blank-block-paragraph": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-brush": "workspace:*"
+    "@blocksuite/blank-gfx-connector": "workspace:*"
+    "@blocksuite/blank-gfx-group": "workspace:*"
+    "@blocksuite/blank-gfx-mindmap": "workspace:*"
+    "@blocksuite/blank-gfx-note": "workspace:*"
+    "@blocksuite/blank-gfx-pointer": "workspace:*"
+    "@blocksuite/blank-gfx-shape": "workspace:*"
+    "@blocksuite/blank-gfx-text": "workspace:*"
+    "@blocksuite/blank-inline-latex": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/data-view": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
@@ -1550,18 +1553,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-surface-ref@workspace:*, @blocksuite/affine-block-surface-ref@workspace:blocksuite/affine/blocks/surface-ref":
+"@blocksuite/blank-block-surface-ref@workspace:*, @blocksuite/blank-block-surface-ref@workspace:blocksuite/blank/blocks/surface-ref":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-surface-ref@workspace:blocksuite/affine/blocks/surface-ref"
+  resolution: "@blocksuite/blank-block-surface-ref@workspace:blocksuite/blank/blocks/surface-ref"
   dependencies:
-    "@blocksuite/affine-block-frame": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-reference": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-block-frame": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-reference": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1571,13 +1574,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-surface@workspace:*, @blocksuite/affine-block-surface@workspace:blocksuite/affine/blocks/surface":
+"@blocksuite/blank-block-surface@workspace:*, @blocksuite/blank-block-surface@workspace:blocksuite/blank/blocks/surface":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-surface@workspace:blocksuite/affine/blocks/surface"
+  resolution: "@blocksuite/blank-block-surface@workspace:blocksuite/blank/blocks/surface"
   dependencies:
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1595,17 +1598,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-block-table@workspace:*, @blocksuite/affine-block-table@workspace:blocksuite/affine/blocks/table":
+"@blocksuite/blank-block-table@workspace:*, @blocksuite/blank-block-table@workspace:blocksuite/blank/blocks/table":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-block-table@workspace:blocksuite/affine/blocks/table"
+  resolution: "@blocksuite/blank-block-table@workspace:blocksuite/blank/blocks/table"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1618,12 +1621,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-components@workspace:*, @blocksuite/affine-components@workspace:blocksuite/affine/components":
+"@blocksuite/blank-components@workspace:*, @blocksuite/blank-components@workspace:blocksuite/blank/components":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-components@workspace:blocksuite/affine/components"
+  resolution: "@blocksuite/blank-components@workspace:blocksuite/blank/components"
   dependencies:
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1644,9 +1647,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-ext-loader@workspace:*, @blocksuite/affine-ext-loader@workspace:blocksuite/affine/ext-loader":
+"@blocksuite/blank-ext-loader@workspace:*, @blocksuite/blank-ext-loader@workspace:blocksuite/blank/ext-loader":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-ext-loader@workspace:blocksuite/affine/ext-loader"
+  resolution: "@blocksuite/blank-ext-loader@workspace:blocksuite/blank/ext-loader"
   dependencies:
     "@blocksuite/global": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1655,14 +1658,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-foundation@workspace:*, @blocksuite/affine-foundation@workspace:blocksuite/affine/foundation":
+"@blocksuite/blank-foundation@workspace:*, @blocksuite/blank-foundation@workspace:blocksuite/blank/foundation":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-foundation@workspace:blocksuite/affine/foundation"
+  resolution: "@blocksuite/blank-foundation@workspace:blocksuite/blank/foundation"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/data-view": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1670,13 +1673,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-fragment-adapter-panel@workspace:*, @blocksuite/affine-fragment-adapter-panel@workspace:blocksuite/affine/fragments/adapter-panel":
+"@blocksuite/blank-fragment-adapter-panel@workspace:*, @blocksuite/blank-fragment-adapter-panel@workspace:blocksuite/blank/fragments/adapter-panel":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-fragment-adapter-panel@workspace:blocksuite/affine/fragments/adapter-panel"
+  resolution: "@blocksuite/blank-fragment-adapter-panel@workspace:blocksuite/blank/fragments/adapter-panel"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/store": "workspace:*"
@@ -1688,14 +1691,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-fragment-doc-title@workspace:*, @blocksuite/affine-fragment-doc-title@workspace:blocksuite/affine/fragments/doc-title":
+"@blocksuite/blank-fragment-doc-title@workspace:*, @blocksuite/blank-fragment-doc-title@workspace:blocksuite/blank/fragments/doc-title":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-fragment-doc-title@workspace:blocksuite/affine/fragments/doc-title"
+  resolution: "@blocksuite/blank-fragment-doc-title@workspace:blocksuite/blank/fragments/doc-title"
   dependencies:
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1704,16 +1707,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-fragment-frame-panel@workspace:*, @blocksuite/affine-fragment-frame-panel@workspace:blocksuite/affine/fragments/frame-panel":
+"@blocksuite/blank-fragment-frame-panel@workspace:*, @blocksuite/blank-fragment-frame-panel@workspace:blocksuite/blank/fragments/frame-panel":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-fragment-frame-panel@workspace:blocksuite/affine/fragments/frame-panel"
+  resolution: "@blocksuite/blank-fragment-frame-panel@workspace:blocksuite/blank/fragments/frame-panel"
   dependencies:
-    "@blocksuite/affine-block-frame": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-frame": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1725,15 +1728,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-fragment-outline@workspace:*, @blocksuite/affine-fragment-outline@workspace:blocksuite/affine/fragments/outline":
+"@blocksuite/blank-fragment-outline@workspace:*, @blocksuite/blank-fragment-outline@workspace:blocksuite/blank/fragments/outline":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-fragment-outline@workspace:blocksuite/affine/fragments/outline"
+  resolution: "@blocksuite/blank-fragment-outline@workspace:blocksuite/blank/fragments/outline"
   dependencies:
-    "@blocksuite/affine-block-note": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-fragment-doc-title": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-note": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-fragment-doc-title": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1746,16 +1749,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-brush@workspace:*, @blocksuite/affine-gfx-brush@workspace:blocksuite/affine/gfx/brush":
+"@blocksuite/blank-gfx-brush@workspace:*, @blocksuite/blank-gfx-brush@workspace:blocksuite/blank/gfx/brush":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-brush@workspace:blocksuite/affine/gfx/brush"
+  resolution: "@blocksuite/blank-gfx-brush@workspace:blocksuite/blank/gfx/brush"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@preact/signals-core": "npm:^1.8.0"
@@ -1763,18 +1766,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-connector@workspace:*, @blocksuite/affine-gfx-connector@workspace:blocksuite/affine/gfx/connector":
+"@blocksuite/blank-gfx-connector@workspace:*, @blocksuite/blank-gfx-connector@workspace:blocksuite/blank/gfx/connector":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-connector@workspace:blocksuite/affine/gfx/connector"
+  resolution: "@blocksuite/blank-gfx-connector@workspace:blocksuite/blank/gfx/connector"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-text": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-text": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1788,18 +1791,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-group@workspace:*, @blocksuite/affine-gfx-group@workspace:blocksuite/affine/gfx/group":
+"@blocksuite/blank-gfx-group@workspace:*, @blocksuite/blank-gfx-group@workspace:blocksuite/blank/gfx/group":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-group@workspace:blocksuite/affine/gfx/group"
+  resolution: "@blocksuite/blank-gfx-group@workspace:blocksuite/blank/gfx/group"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-text": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-text": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1810,38 +1813,38 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-link@workspace:*, @blocksuite/affine-gfx-link@workspace:blocksuite/affine/gfx/link":
+"@blocksuite/blank-gfx-link@workspace:*, @blocksuite/blank-gfx-link@workspace:blocksuite/blank/gfx/link":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-link@workspace:blocksuite/affine/gfx/link"
+  resolution: "@blocksuite/blank-gfx-link@workspace:blocksuite/blank/gfx/link"
   dependencies:
-    "@blocksuite/affine-block-bookmark": "workspace:*"
-    "@blocksuite/affine-block-embed": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-bookmark": "workspace:*"
+    "@blocksuite/blank-block-embed": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/std": "workspace:*"
     lit: "npm:^3.2.0"
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-mindmap@workspace:*, @blocksuite/affine-gfx-mindmap@workspace:blocksuite/affine/gfx/mindmap":
+"@blocksuite/blank-gfx-mindmap@workspace:*, @blocksuite/blank-gfx-mindmap@workspace:blocksuite/blank/gfx/mindmap":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-mindmap@workspace:blocksuite/affine/gfx/mindmap"
+  resolution: "@blocksuite/blank-gfx-mindmap@workspace:blocksuite/blank/gfx/mindmap"
   dependencies:
-    "@blocksuite/affine-block-attachment": "workspace:*"
-    "@blocksuite/affine-block-image": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-connector": "workspace:*"
-    "@blocksuite/affine-gfx-pointer": "workspace:*"
-    "@blocksuite/affine-gfx-shape": "workspace:*"
-    "@blocksuite/affine-gfx-text": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-attachment": "workspace:*"
+    "@blocksuite/blank-block-image": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-connector": "workspace:*"
+    "@blocksuite/blank-gfx-pointer": "workspace:*"
+    "@blocksuite/blank-gfx-shape": "workspace:*"
+    "@blocksuite/blank-gfx-text": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1856,20 +1859,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-note@workspace:*, @blocksuite/affine-gfx-note@workspace:blocksuite/affine/gfx/note":
+"@blocksuite/blank-gfx-note@workspace:*, @blocksuite/blank-gfx-note@workspace:blocksuite/blank/gfx/note":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-note@workspace:blocksuite/affine/gfx/note"
+  resolution: "@blocksuite/blank-gfx-note@workspace:blocksuite/blank/gfx/note"
   dependencies:
-    "@blocksuite/affine-block-attachment": "workspace:*"
-    "@blocksuite/affine-block-bookmark": "workspace:*"
-    "@blocksuite/affine-block-image": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-attachment": "workspace:*"
+    "@blocksuite/blank-block-bookmark": "workspace:*"
+    "@blocksuite/blank-block-image": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1879,15 +1882,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-pointer@workspace:*, @blocksuite/affine-gfx-pointer@workspace:blocksuite/affine/gfx/pointer":
+"@blocksuite/blank-gfx-pointer@workspace:*, @blocksuite/blank-gfx-pointer@workspace:blocksuite/blank/gfx/pointer":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-pointer@workspace:blocksuite/affine/gfx/pointer"
+  resolution: "@blocksuite/blank-gfx-pointer@workspace:blocksuite/blank/gfx/pointer"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1897,18 +1900,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-shape@workspace:*, @blocksuite/affine-gfx-shape@workspace:blocksuite/affine/gfx/shape":
+"@blocksuite/blank-gfx-shape@workspace:*, @blocksuite/blank-gfx-shape@workspace:blocksuite/blank/gfx/shape":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-shape@workspace:blocksuite/affine/gfx/shape"
+  resolution: "@blocksuite/blank-gfx-shape@workspace:blocksuite/blank/gfx/shape"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-text": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-text": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1923,16 +1926,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-template@workspace:*, @blocksuite/affine-gfx-template@workspace:blocksuite/affine/gfx/template":
+"@blocksuite/blank-gfx-template@workspace:*, @blocksuite/blank-gfx-template@workspace:blocksuite/blank/gfx/template":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-template@workspace:blocksuite/affine/gfx/template"
+  resolution: "@blocksuite/blank-gfx-template@workspace:blocksuite/blank/gfx/template"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1944,17 +1947,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-text@workspace:*, @blocksuite/affine-gfx-text@workspace:blocksuite/affine/gfx/text":
+"@blocksuite/blank-gfx-text@workspace:*, @blocksuite/blank-gfx-text@workspace:blocksuite/blank/gfx/text":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-text@workspace:blocksuite/affine/gfx/text"
+  resolution: "@blocksuite/blank-gfx-text@workspace:blocksuite/blank/gfx/text"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -1965,11 +1968,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-gfx-turbo-renderer@workspace:*, @blocksuite/affine-gfx-turbo-renderer@workspace:blocksuite/affine/gfx/turbo-renderer":
+"@blocksuite/blank-gfx-turbo-renderer@workspace:*, @blocksuite/blank-gfx-turbo-renderer@workspace:blocksuite/blank/gfx/turbo-renderer":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-gfx-turbo-renderer@workspace:blocksuite/affine/gfx/turbo-renderer"
+  resolution: "@blocksuite/blank-gfx-turbo-renderer@workspace:blocksuite/blank/gfx/turbo-renderer"
   dependencies:
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1977,13 +1980,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-inline-comment@workspace:*, @blocksuite/affine-inline-comment@workspace:blocksuite/affine/inlines/comment":
+"@blocksuite/blank-inline-comment@workspace:*, @blocksuite/blank-inline-comment@workspace:blocksuite/blank/inlines/comment":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-inline-comment@workspace:blocksuite/affine/inlines/comment"
+  resolution: "@blocksuite/blank-inline-comment@workspace:blocksuite/blank/inlines/comment"
   dependencies:
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -1997,14 +2000,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-inline-footnote@workspace:*, @blocksuite/affine-inline-footnote@workspace:blocksuite/affine/inlines/footnote":
+"@blocksuite/blank-inline-footnote@workspace:*, @blocksuite/blank-inline-footnote@workspace:blocksuite/blank/inlines/footnote":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-inline-footnote@workspace:blocksuite/affine/inlines/footnote"
+  resolution: "@blocksuite/blank-inline-footnote@workspace:blocksuite/blank/inlines/footnote"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -2020,15 +2023,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-inline-latex@workspace:*, @blocksuite/affine-inline-latex@workspace:blocksuite/affine/inlines/latex":
+"@blocksuite/blank-inline-latex@workspace:*, @blocksuite/blank-inline-latex@workspace:blocksuite/blank/inlines/latex":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-inline-latex@workspace:blocksuite/affine/inlines/latex"
+  resolution: "@blocksuite/blank-inline-latex@workspace:blocksuite/blank/inlines/latex"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2043,15 +2046,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-inline-link@workspace:*, @blocksuite/affine-inline-link@workspace:blocksuite/affine/inlines/link":
+"@blocksuite/blank-inline-link@workspace:*, @blocksuite/blank-inline-link@workspace:blocksuite/blank/inlines/link":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-inline-link@workspace:blocksuite/affine/inlines/link"
+  resolution: "@blocksuite/blank-inline-link@workspace:blocksuite/blank/inlines/link"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-reference": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-reference": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2064,12 +2067,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-inline-mention@workspace:*, @blocksuite/affine-inline-mention@workspace:blocksuite/affine/inlines/mention":
+"@blocksuite/blank-inline-mention@workspace:*, @blocksuite/blank-inline-mention@workspace:blocksuite/blank/inlines/mention":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-inline-mention@workspace:blocksuite/affine/inlines/mention"
+  resolution: "@blocksuite/blank-inline-mention@workspace:blocksuite/blank/inlines/mention"
   dependencies:
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
@@ -2078,21 +2081,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-inline-preset@workspace:*, @blocksuite/affine-inline-preset@workspace:blocksuite/affine/inlines/preset":
+"@blocksuite/blank-inline-preset@workspace:*, @blocksuite/blank-inline-preset@workspace:blocksuite/blank/inlines/preset":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-inline-preset@workspace:blocksuite/affine/inlines/preset"
+  resolution: "@blocksuite/blank-inline-preset@workspace:blocksuite/blank/inlines/preset"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-comment": "workspace:*"
-    "@blocksuite/affine-inline-footnote": "workspace:*"
-    "@blocksuite/affine-inline-latex": "workspace:*"
-    "@blocksuite/affine-inline-link": "workspace:*"
-    "@blocksuite/affine-inline-mention": "workspace:*"
-    "@blocksuite/affine-inline-reference": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-comment": "workspace:*"
+    "@blocksuite/blank-inline-footnote": "workspace:*"
+    "@blocksuite/blank-inline-latex": "workspace:*"
+    "@blocksuite/blank-inline-link": "workspace:*"
+    "@blocksuite/blank-inline-mention": "workspace:*"
+    "@blocksuite/blank-inline-reference": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@blocksuite/store": "workspace:*"
     "@toeverything/theme": "npm:^1.1.23"
@@ -2103,14 +2106,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-inline-reference@workspace:*, @blocksuite/affine-inline-reference@workspace:blocksuite/affine/inlines/reference":
+"@blocksuite/blank-inline-reference@workspace:*, @blocksuite/blank-inline-reference@workspace:blocksuite/blank/inlines/reference":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-inline-reference@workspace:blocksuite/affine/inlines/reference"
+  resolution: "@blocksuite/blank-inline-reference@workspace:blocksuite/blank/inlines/reference"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2124,9 +2127,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-model@workspace:*, @blocksuite/affine-model@workspace:blocksuite/affine/model":
+"@blocksuite/blank-model@workspace:*, @blocksuite/blank-model@workspace:blocksuite/blank/model":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-model@workspace:blocksuite/affine/model"
+  resolution: "@blocksuite/blank-model@workspace:blocksuite/blank/model"
   dependencies:
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
@@ -2140,13 +2143,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-rich-text@workspace:*, @blocksuite/affine-rich-text@workspace:blocksuite/affine/rich-text":
+"@blocksuite/blank-rich-text@workspace:*, @blocksuite/blank-rich-text@workspace:blocksuite/blank/rich-text":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-rich-text@workspace:blocksuite/affine/rich-text"
+  resolution: "@blocksuite/blank-rich-text@workspace:blocksuite/blank/rich-text"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2158,11 +2161,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-shared@workspace:*, @blocksuite/affine-shared@workspace:blocksuite/affine/shared":
+"@blocksuite/blank-shared@workspace:*, @blocksuite/blank-shared@workspace:blocksuite/blank/shared":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-shared@workspace:blocksuite/affine/shared"
+  resolution: "@blocksuite/blank-shared@workspace:blocksuite/blank/shared"
   dependencies:
-    "@blocksuite/affine-model": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2209,21 +2212,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-drag-handle@workspace:*, @blocksuite/affine-widget-drag-handle@workspace:blocksuite/affine/widgets/drag-handle":
+"@blocksuite/blank-widget-drag-handle@workspace:*, @blocksuite/blank-widget-drag-handle@workspace:blocksuite/blank/widgets/drag-handle":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-drag-handle@workspace:blocksuite/affine/widgets/drag-handle"
+  resolution: "@blocksuite/blank-widget-drag-handle@workspace:blocksuite/blank/widgets/drag-handle"
   dependencies:
-    "@blocksuite/affine-block-callout": "workspace:*"
-    "@blocksuite/affine-block-embed": "workspace:*"
-    "@blocksuite/affine-block-list": "workspace:*"
-    "@blocksuite/affine-block-note": "workspace:*"
-    "@blocksuite/affine-block-paragraph": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-callout": "workspace:*"
+    "@blocksuite/blank-block-embed": "workspace:*"
+    "@blocksuite/blank-block-list": "workspace:*"
+    "@blocksuite/blank-block-note": "workspace:*"
+    "@blocksuite/blank-block-paragraph": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2235,15 +2238,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-edgeless-auto-connect@workspace:*, @blocksuite/affine-widget-edgeless-auto-connect@workspace:blocksuite/affine/widgets/edgeless-auto-connect":
+"@blocksuite/blank-widget-edgeless-auto-connect@workspace:*, @blocksuite/blank-widget-edgeless-auto-connect@workspace:blocksuite/blank/widgets/edgeless-auto-connect":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-edgeless-auto-connect@workspace:blocksuite/affine/widgets/edgeless-auto-connect"
+  resolution: "@blocksuite/blank-widget-edgeless-auto-connect@workspace:blocksuite/blank/widgets/edgeless-auto-connect"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2251,32 +2254,32 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-edgeless-dragging-area@workspace:*, @blocksuite/affine-widget-edgeless-dragging-area@workspace:blocksuite/affine/widgets/edgeless-dragging-area":
+"@blocksuite/blank-widget-edgeless-dragging-area@workspace:*, @blocksuite/blank-widget-edgeless-dragging-area@workspace:blocksuite/blank/widgets/edgeless-dragging-area":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-edgeless-dragging-area@workspace:blocksuite/affine/widgets/edgeless-dragging-area"
+  resolution: "@blocksuite/blank-widget-edgeless-dragging-area@workspace:blocksuite/blank/widgets/edgeless-dragging-area"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@toeverything/theme": "npm:^1.1.23"
     lit: "npm:^3.2.0"
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-edgeless-selected-rect@workspace:*, @blocksuite/affine-widget-edgeless-selected-rect@workspace:blocksuite/affine/widgets/edgeless-selected-rect":
+"@blocksuite/blank-widget-edgeless-selected-rect@workspace:*, @blocksuite/blank-widget-edgeless-selected-rect@workspace:blocksuite/blank/widgets/edgeless-selected-rect":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-edgeless-selected-rect@workspace:blocksuite/affine/widgets/edgeless-selected-rect"
+  resolution: "@blocksuite/blank-widget-edgeless-selected-rect@workspace:blocksuite/blank/widgets/edgeless-selected-rect"
   dependencies:
-    "@blocksuite/affine-block-frame": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-gfx-connector": "workspace:*"
-    "@blocksuite/affine-gfx-shape": "workspace:*"
-    "@blocksuite/affine-gfx-text": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-frame": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-gfx-connector": "workspace:*"
+    "@blocksuite/blank-gfx-shape": "workspace:*"
+    "@blocksuite/blank-gfx-text": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2287,15 +2290,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-edgeless-toolbar@workspace:*, @blocksuite/affine-widget-edgeless-toolbar@workspace:blocksuite/affine/widgets/edgeless-toolbar":
+"@blocksuite/blank-widget-edgeless-toolbar@workspace:*, @blocksuite/blank-widget-edgeless-toolbar@workspace:blocksuite/blank/widgets/edgeless-toolbar":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-edgeless-toolbar@workspace:blocksuite/affine/widgets/edgeless-toolbar"
+  resolution: "@blocksuite/blank-widget-edgeless-toolbar@workspace:blocksuite/blank/widgets/edgeless-toolbar"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2310,15 +2313,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-edgeless-zoom-toolbar@workspace:*, @blocksuite/affine-widget-edgeless-zoom-toolbar@workspace:blocksuite/affine/widgets/edgeless-zoom-toolbar":
+"@blocksuite/blank-widget-edgeless-zoom-toolbar@workspace:*, @blocksuite/blank-widget-edgeless-zoom-toolbar@workspace:blocksuite/blank/widgets/edgeless-zoom-toolbar":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-edgeless-zoom-toolbar@workspace:blocksuite/affine/widgets/edgeless-zoom-toolbar"
+  resolution: "@blocksuite/blank-widget-edgeless-zoom-toolbar@workspace:blocksuite/blank/widgets/edgeless-zoom-toolbar"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2331,16 +2334,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-frame-title@workspace:*, @blocksuite/affine-widget-frame-title@workspace:blocksuite/affine/widgets/frame-title":
+"@blocksuite/blank-widget-frame-title@workspace:*, @blocksuite/blank-widget-frame-title@workspace:blocksuite/blank/widgets/frame-title":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-frame-title@workspace:blocksuite/affine/widgets/frame-title"
+  resolution: "@blocksuite/blank-widget-frame-title@workspace:blocksuite/blank/widgets/frame-title"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@lit/context": "npm:^1.1.2"
@@ -2349,30 +2352,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-keyboard-toolbar@workspace:*, @blocksuite/affine-widget-keyboard-toolbar@workspace:blocksuite/affine/widgets/keyboard-toolbar":
+"@blocksuite/blank-widget-keyboard-toolbar@workspace:*, @blocksuite/blank-widget-keyboard-toolbar@workspace:blocksuite/blank/widgets/keyboard-toolbar":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-keyboard-toolbar@workspace:blocksuite/affine/widgets/keyboard-toolbar"
+  resolution: "@blocksuite/blank-widget-keyboard-toolbar@workspace:blocksuite/blank/widgets/keyboard-toolbar"
   dependencies:
-    "@blocksuite/affine-block-attachment": "workspace:*"
-    "@blocksuite/affine-block-database": "workspace:*"
-    "@blocksuite/affine-block-embed": "workspace:*"
-    "@blocksuite/affine-block-image": "workspace:*"
-    "@blocksuite/affine-block-latex": "workspace:*"
-    "@blocksuite/affine-block-list": "workspace:*"
-    "@blocksuite/affine-block-note": "workspace:*"
-    "@blocksuite/affine-block-paragraph": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-block-surface-ref": "workspace:*"
-    "@blocksuite/affine-block-table": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-fragment-doc-title": "workspace:*"
-    "@blocksuite/affine-inline-latex": "workspace:*"
-    "@blocksuite/affine-inline-link": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-attachment": "workspace:*"
+    "@blocksuite/blank-block-database": "workspace:*"
+    "@blocksuite/blank-block-embed": "workspace:*"
+    "@blocksuite/blank-block-image": "workspace:*"
+    "@blocksuite/blank-block-latex": "workspace:*"
+    "@blocksuite/blank-block-list": "workspace:*"
+    "@blocksuite/blank-block-note": "workspace:*"
+    "@blocksuite/blank-block-paragraph": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-block-surface-ref": "workspace:*"
+    "@blocksuite/blank-block-table": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-fragment-doc-title": "workspace:*"
+    "@blocksuite/blank-inline-latex": "workspace:*"
+    "@blocksuite/blank-inline-link": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/data-view": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
@@ -2383,16 +2386,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-linked-doc@workspace:*, @blocksuite/affine-widget-linked-doc@workspace:blocksuite/affine/widgets/linked-doc":
+"@blocksuite/blank-widget-linked-doc@workspace:*, @blocksuite/blank-widget-linked-doc@workspace:blocksuite/blank/widgets/linked-doc":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-linked-doc@workspace:blocksuite/affine/widgets/linked-doc"
+  resolution: "@blocksuite/blank-widget-linked-doc@workspace:blocksuite/blank/widgets/linked-doc"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-inline-reference": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-inline-reference": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2411,16 +2414,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-note-slicer@workspace:*, @blocksuite/affine-widget-note-slicer@workspace:blocksuite/affine/widgets/note-slicer":
+"@blocksuite/blank-widget-note-slicer@workspace:*, @blocksuite/blank-widget-note-slicer@workspace:blocksuite/blank/widgets/note-slicer":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-note-slicer@workspace:blocksuite/affine/widgets/note-slicer"
+  resolution: "@blocksuite/blank-widget-note-slicer@workspace:blocksuite/blank/widgets/note-slicer"
   dependencies:
-    "@blocksuite/affine-block-note": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-selected-rect": "workspace:*"
+    "@blocksuite/blank-block-note": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-selected-rect": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2428,26 +2431,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-page-dragging-area@workspace:*, @blocksuite/affine-widget-page-dragging-area@workspace:blocksuite/affine/widgets/page-dragging-area":
+"@blocksuite/blank-widget-page-dragging-area@workspace:*, @blocksuite/blank-widget-page-dragging-area@workspace:blocksuite/blank/widgets/page-dragging-area":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-page-dragging-area@workspace:blocksuite/affine/widgets/page-dragging-area"
+  resolution: "@blocksuite/blank-widget-page-dragging-area@workspace:blocksuite/blank/widgets/page-dragging-area"
   dependencies:
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/std": "workspace:*"
     lit: "npm:^3.2.0"
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-remote-selection@workspace:*, @blocksuite/affine-widget-remote-selection@workspace:blocksuite/affine/widgets/remote-selection":
+"@blocksuite/blank-widget-remote-selection@workspace:*, @blocksuite/blank-widget-remote-selection@workspace:blocksuite/blank/widgets/remote-selection":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-remote-selection@workspace:blocksuite/affine/widgets/remote-selection"
+  resolution: "@blocksuite/blank-widget-remote-selection@workspace:blocksuite/blank/widgets/remote-selection"
   dependencies:
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
     "@preact/signals-core": "npm:^1.8.0"
@@ -2457,13 +2460,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-scroll-anchoring@workspace:*, @blocksuite/affine-widget-scroll-anchoring@workspace:blocksuite/affine/widgets/scroll-anchoring":
+"@blocksuite/blank-widget-scroll-anchoring@workspace:*, @blocksuite/blank-widget-scroll-anchoring@workspace:blocksuite/blank/widgets/scroll-anchoring":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-scroll-anchoring@workspace:blocksuite/affine/widgets/scroll-anchoring"
+  resolution: "@blocksuite/blank-widget-scroll-anchoring@workspace:blocksuite/blank/widgets/scroll-anchoring"
   dependencies:
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
     "@preact/signals-core": "npm:^1.8.0"
@@ -2472,14 +2475,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-slash-menu@workspace:*, @blocksuite/affine-widget-slash-menu@workspace:blocksuite/affine/widgets/slash-menu":
+"@blocksuite/blank-widget-slash-menu@workspace:*, @blocksuite/blank-widget-slash-menu@workspace:blocksuite/blank/widgets/slash-menu":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-slash-menu@workspace:blocksuite/affine/widgets/slash-menu"
+  resolution: "@blocksuite/blank-widget-slash-menu@workspace:blocksuite/blank/widgets/slash-menu"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2492,17 +2495,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-toolbar@workspace:*, @blocksuite/affine-widget-toolbar@workspace:blocksuite/affine/widgets/toolbar":
+"@blocksuite/blank-widget-toolbar@workspace:*, @blocksuite/blank-widget-toolbar@workspace:blocksuite/blank/widgets/toolbar":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-toolbar@workspace:blocksuite/affine/widgets/toolbar"
+  resolution: "@blocksuite/blank-widget-toolbar@workspace:blocksuite/blank/widgets/toolbar"
   dependencies:
-    "@blocksuite/affine-block-database": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-block-table": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-block-database": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-block-table": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2514,85 +2517,85 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine-widget-viewport-overlay@workspace:*, @blocksuite/affine-widget-viewport-overlay@workspace:blocksuite/affine/widgets/viewport-overlay":
+"@blocksuite/blank-widget-viewport-overlay@workspace:*, @blocksuite/blank-widget-viewport-overlay@workspace:blocksuite/blank/widgets/viewport-overlay":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine-widget-viewport-overlay@workspace:blocksuite/affine/widgets/viewport-overlay"
+  resolution: "@blocksuite/blank-widget-viewport-overlay@workspace:blocksuite/blank/widgets/viewport-overlay"
   dependencies:
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
     "@blocksuite/std": "workspace:*"
     lit: "npm:^3.2.0"
   languageName: unknown
   linkType: soft
 
-"@blocksuite/affine@workspace:*, @blocksuite/affine@workspace:blocksuite/affine/all":
+"@blocksuite/blank@workspace:*, @blocksuite/blank@workspace:blocksuite/blank/all":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/affine@workspace:blocksuite/affine/all"
+  resolution: "@blocksuite/blank@workspace:blocksuite/blank/all"
   dependencies:
-    "@blocksuite/affine-block-attachment": "workspace:*"
-    "@blocksuite/affine-block-bookmark": "workspace:*"
-    "@blocksuite/affine-block-callout": "workspace:*"
-    "@blocksuite/affine-block-code": "workspace:*"
-    "@blocksuite/affine-block-data-view": "workspace:*"
-    "@blocksuite/affine-block-database": "workspace:*"
-    "@blocksuite/affine-block-divider": "workspace:*"
-    "@blocksuite/affine-block-edgeless-text": "workspace:*"
-    "@blocksuite/affine-block-embed": "workspace:*"
-    "@blocksuite/affine-block-embed-doc": "workspace:*"
-    "@blocksuite/affine-block-frame": "workspace:*"
-    "@blocksuite/affine-block-image": "workspace:*"
-    "@blocksuite/affine-block-latex": "workspace:*"
-    "@blocksuite/affine-block-list": "workspace:*"
-    "@blocksuite/affine-block-note": "workspace:*"
-    "@blocksuite/affine-block-paragraph": "workspace:*"
-    "@blocksuite/affine-block-root": "workspace:*"
-    "@blocksuite/affine-block-surface": "workspace:*"
-    "@blocksuite/affine-block-surface-ref": "workspace:*"
-    "@blocksuite/affine-block-table": "workspace:*"
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-ext-loader": "workspace:*"
-    "@blocksuite/affine-foundation": "workspace:*"
-    "@blocksuite/affine-fragment-adapter-panel": "workspace:*"
-    "@blocksuite/affine-fragment-doc-title": "workspace:*"
-    "@blocksuite/affine-fragment-frame-panel": "workspace:*"
-    "@blocksuite/affine-fragment-outline": "workspace:*"
-    "@blocksuite/affine-gfx-brush": "workspace:*"
-    "@blocksuite/affine-gfx-connector": "workspace:*"
-    "@blocksuite/affine-gfx-group": "workspace:*"
-    "@blocksuite/affine-gfx-link": "workspace:*"
-    "@blocksuite/affine-gfx-mindmap": "workspace:*"
-    "@blocksuite/affine-gfx-note": "workspace:*"
-    "@blocksuite/affine-gfx-pointer": "workspace:*"
-    "@blocksuite/affine-gfx-shape": "workspace:*"
-    "@blocksuite/affine-gfx-template": "workspace:*"
-    "@blocksuite/affine-gfx-text": "workspace:*"
-    "@blocksuite/affine-gfx-turbo-renderer": "workspace:*"
-    "@blocksuite/affine-inline-comment": "workspace:*"
-    "@blocksuite/affine-inline-footnote": "workspace:*"
-    "@blocksuite/affine-inline-latex": "workspace:*"
-    "@blocksuite/affine-inline-link": "workspace:*"
-    "@blocksuite/affine-inline-mention": "workspace:*"
-    "@blocksuite/affine-inline-preset": "workspace:*"
-    "@blocksuite/affine-inline-reference": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-rich-text": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
-    "@blocksuite/affine-widget-drag-handle": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-auto-connect": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-dragging-area": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-selected-rect": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-toolbar": "workspace:*"
-    "@blocksuite/affine-widget-edgeless-zoom-toolbar": "workspace:*"
-    "@blocksuite/affine-widget-frame-title": "workspace:*"
-    "@blocksuite/affine-widget-keyboard-toolbar": "workspace:*"
-    "@blocksuite/affine-widget-linked-doc": "workspace:*"
-    "@blocksuite/affine-widget-note-slicer": "workspace:*"
-    "@blocksuite/affine-widget-page-dragging-area": "workspace:*"
-    "@blocksuite/affine-widget-remote-selection": "workspace:*"
-    "@blocksuite/affine-widget-scroll-anchoring": "workspace:*"
-    "@blocksuite/affine-widget-slash-menu": "workspace:*"
-    "@blocksuite/affine-widget-toolbar": "workspace:*"
-    "@blocksuite/affine-widget-viewport-overlay": "workspace:*"
+    "@blocksuite/blank-block-attachment": "workspace:*"
+    "@blocksuite/blank-block-bookmark": "workspace:*"
+    "@blocksuite/blank-block-callout": "workspace:*"
+    "@blocksuite/blank-block-code": "workspace:*"
+    "@blocksuite/blank-block-data-view": "workspace:*"
+    "@blocksuite/blank-block-database": "workspace:*"
+    "@blocksuite/blank-block-divider": "workspace:*"
+    "@blocksuite/blank-block-edgeless-text": "workspace:*"
+    "@blocksuite/blank-block-embed": "workspace:*"
+    "@blocksuite/blank-block-embed-doc": "workspace:*"
+    "@blocksuite/blank-block-frame": "workspace:*"
+    "@blocksuite/blank-block-image": "workspace:*"
+    "@blocksuite/blank-block-latex": "workspace:*"
+    "@blocksuite/blank-block-list": "workspace:*"
+    "@blocksuite/blank-block-note": "workspace:*"
+    "@blocksuite/blank-block-paragraph": "workspace:*"
+    "@blocksuite/blank-block-root": "workspace:*"
+    "@blocksuite/blank-block-surface": "workspace:*"
+    "@blocksuite/blank-block-surface-ref": "workspace:*"
+    "@blocksuite/blank-block-table": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-ext-loader": "workspace:*"
+    "@blocksuite/blank-foundation": "workspace:*"
+    "@blocksuite/blank-fragment-adapter-panel": "workspace:*"
+    "@blocksuite/blank-fragment-doc-title": "workspace:*"
+    "@blocksuite/blank-fragment-frame-panel": "workspace:*"
+    "@blocksuite/blank-fragment-outline": "workspace:*"
+    "@blocksuite/blank-gfx-brush": "workspace:*"
+    "@blocksuite/blank-gfx-connector": "workspace:*"
+    "@blocksuite/blank-gfx-group": "workspace:*"
+    "@blocksuite/blank-gfx-link": "workspace:*"
+    "@blocksuite/blank-gfx-mindmap": "workspace:*"
+    "@blocksuite/blank-gfx-note": "workspace:*"
+    "@blocksuite/blank-gfx-pointer": "workspace:*"
+    "@blocksuite/blank-gfx-shape": "workspace:*"
+    "@blocksuite/blank-gfx-template": "workspace:*"
+    "@blocksuite/blank-gfx-text": "workspace:*"
+    "@blocksuite/blank-gfx-turbo-renderer": "workspace:*"
+    "@blocksuite/blank-inline-comment": "workspace:*"
+    "@blocksuite/blank-inline-footnote": "workspace:*"
+    "@blocksuite/blank-inline-latex": "workspace:*"
+    "@blocksuite/blank-inline-link": "workspace:*"
+    "@blocksuite/blank-inline-mention": "workspace:*"
+    "@blocksuite/blank-inline-preset": "workspace:*"
+    "@blocksuite/blank-inline-reference": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-rich-text": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
+    "@blocksuite/blank-widget-drag-handle": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-auto-connect": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-dragging-area": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-selected-rect": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*"
+    "@blocksuite/blank-widget-edgeless-zoom-toolbar": "workspace:*"
+    "@blocksuite/blank-widget-frame-title": "workspace:*"
+    "@blocksuite/blank-widget-keyboard-toolbar": "workspace:*"
+    "@blocksuite/blank-widget-linked-doc": "workspace:*"
+    "@blocksuite/blank-widget-note-slicer": "workspace:*"
+    "@blocksuite/blank-widget-page-dragging-area": "workspace:*"
+    "@blocksuite/blank-widget-remote-selection": "workspace:*"
+    "@blocksuite/blank-widget-scroll-anchoring": "workspace:*"
+    "@blocksuite/blank-widget-slash-menu": "workspace:*"
+    "@blocksuite/blank-widget-toolbar": "workspace:*"
+    "@blocksuite/blank-widget-viewport-overlay": "workspace:*"
     "@blocksuite/data-view": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/std": "workspace:*"
@@ -2613,12 +2616,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@blocksuite/data-view@workspace:*, @blocksuite/data-view@workspace:blocksuite/affine/data-view":
+"@blocksuite/data-view@workspace:*, @blocksuite/data-view@workspace:blocksuite/blank/data-view":
   version: 0.0.0-use.local
-  resolution: "@blocksuite/data-view@workspace:blocksuite/affine/data-view"
+  resolution: "@blocksuite/data-view@workspace:blocksuite/blank/data-view"
   dependencies:
-    "@blocksuite/affine-components": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank-components": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/global": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/std": "workspace:*"
@@ -2643,7 +2646,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@blocksuite/docs@workspace:blocksuite/docs-site"
   dependencies:
-    "@blocksuite/affine": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
     "@types/markdown-it-container": "npm:^4.0.0"
     date-fns: "npm:^4.4.0"
     markdown-it-container: "npm:^4.0.0"
@@ -2689,7 +2692,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@blocksuite/integration-test@workspace:blocksuite/integration-test"
   dependencies:
-    "@blocksuite/affine": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
     "@preact/signals-core": "npm:^1.8.0"
     "@toeverything/theme": "npm:^1.1.23"
     "@vanilla-extract/vite-plugin": "npm:^5.0.0"
@@ -2708,9 +2711,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@blocksuite/playground@workspace:blocksuite/playground"
   dependencies:
-    "@blocksuite/affine": "workspace:*"
-    "@blocksuite/affine-model": "workspace:*"
-    "@blocksuite/affine-shared": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
+    "@blocksuite/blank-model": "workspace:*"
+    "@blocksuite/blank-shared": "workspace:*"
     "@blocksuite/data-view": "workspace:*"
     "@blocksuite/icons": "npm:^2.2.17"
     "@blocksuite/integration-test": "workspace:*"
@@ -9180,6 +9183,73 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@supabase/auth-js@npm:2.108.2":
+  version: 2.108.2
+  resolution: "@supabase/auth-js@npm:2.108.2"
+  dependencies:
+    tslib: "npm:2.8.1"
+  checksum: 10/1b6c9748f655d4f9ef78a840de2c04d2c4fe7022ae2c3b7bdec160fc4569689f2ef00c5463d9dd58faf6eb89cbb5fe0da681741812d531f99c5af29547a3bd5b
+  languageName: node
+  linkType: hard
+
+"@supabase/functions-js@npm:2.108.2":
+  version: 2.108.2
+  resolution: "@supabase/functions-js@npm:2.108.2"
+  dependencies:
+    tslib: "npm:2.8.1"
+  checksum: 10/851bf7e79603a5028314a214a552fd30e23d26a990e71fe3e9ed790ac1bc7a88ef2136b4ff6e6fa0bed4988edb960330fdfd2b68078095740eeac1fbd39b6d84
+  languageName: node
+  linkType: hard
+
+"@supabase/phoenix@npm:^0.4.2":
+  version: 0.4.4
+  resolution: "@supabase/phoenix@npm:0.4.4"
+  checksum: 10/498d08eb0e6c2f25bdd33a36a275a6060b928b8d47dcc4f44781067d7cda44eb6f8b6ad09d28e00e118843ecc74b6df4baf145f67be5c534f35d7d5b5a247ed6
+  languageName: node
+  linkType: hard
+
+"@supabase/postgrest-js@npm:2.108.2":
+  version: 2.108.2
+  resolution: "@supabase/postgrest-js@npm:2.108.2"
+  dependencies:
+    tslib: "npm:2.8.1"
+  checksum: 10/4b95b175e64b8ac1a6c1a830c91f8210e3396b2743a312aaa8ac2f670fc71bca397138e41b74558d3f17002d821e51be11cceb2bbbc2b5aaacd61281bbe31a0c
+  languageName: node
+  linkType: hard
+
+"@supabase/realtime-js@npm:2.108.2":
+  version: 2.108.2
+  resolution: "@supabase/realtime-js@npm:2.108.2"
+  dependencies:
+    "@supabase/phoenix": "npm:^0.4.2"
+    tslib: "npm:2.8.1"
+  checksum: 10/94d21badab2a0213b0c57438079cca827800439b7407151ab1cb69fe6e4b4f6185d4e893a7b676a951d34999c63319901c4ff6ba9d0d3dde4ec1bd7e41188616
+  languageName: node
+  linkType: hard
+
+"@supabase/storage-js@npm:2.108.2":
+  version: 2.108.2
+  resolution: "@supabase/storage-js@npm:2.108.2"
+  dependencies:
+    iceberg-js: "npm:^0.8.1"
+    tslib: "npm:2.8.1"
+  checksum: 10/be2c6984ef5699dfa5b9d8d6001ce4ffb08e172427c5120b768f9aac63f3a21e1b3a8c966fc80c09a5e4d3a66b124e643a0db03204a3c4dccdfc644c0782e895
+  languageName: node
+  linkType: hard
+
+"@supabase/supabase-js@npm:^2.49.1":
+  version: 2.108.2
+  resolution: "@supabase/supabase-js@npm:2.108.2"
+  dependencies:
+    "@supabase/auth-js": "npm:2.108.2"
+    "@supabase/functions-js": "npm:2.108.2"
+    "@supabase/postgrest-js": "npm:2.108.2"
+    "@supabase/realtime-js": "npm:2.108.2"
+    "@supabase/storage-js": "npm:2.108.2"
+  checksum: 10/8297eea91876dd96a0b976cc076e8232b37a1f0ac266ef4c7b29665f2ea05c664034ff1fbf2e4f2d20bf705e40641d1a18947c81f68567b18b2cc8426c0bba9b
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-arm64@npm:1.15.24":
   version: 1.15.24
   resolution: "@swc/core-darwin-arm64@npm:1.15.24"
@@ -9578,10 +9648,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@toeverything/infra@workspace:packages/common/infra"
   dependencies:
-    "@affine/debug": "workspace:*"
-    "@affine/env": "workspace:*"
-    "@affine/error": "workspace:*"
-    "@affine/templates": "workspace:*"
+    "@blank/debug": "workspace:*"
+    "@blank/env": "workspace:*"
+    "@blank/error": "workspace:*"
+    "@blank/templates": "workspace:*"
     "@preact/signals-core": "npm:^1.8.0"
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/react": "npm:^16.1.0"
@@ -9674,15 +9744,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/affine__env@workspace:tools/@types/env":
-  version: 0.0.0-use.local
-  resolution: "@types/affine__env@workspace:tools/@types/env"
-  dependencies:
-    "@affine/env": "workspace:*"
-    "@blocksuite/affine": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
 "@types/aria-query@npm:^5.0.1":
   version: 5.0.4
   resolution: "@types/aria-query@npm:5.0.4"
@@ -9748,6 +9809,15 @@ __metadata:
   checksum: 10/371c5e1b40399ef17570e630b2943617b84fafde2860a56f0ebc113d8edb1d0534ade0175af89eda1ae35160903c33057ed42457e165d4aa287fedab2c82abcf
   languageName: node
   linkType: hard
+
+"@types/blank__env@workspace:tools/@types/env":
+  version: 0.0.0-use.local
+  resolution: "@types/blank__env@workspace:tools/@types/env"
+  dependencies:
+    "@blank/env": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
+  languageName: unknown
+  linkType: soft
 
 "@types/body-parser@npm:*":
   version: 1.19.5
@@ -14636,6 +14706,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"electron-updater@npm:^6.6.2":
+  version: 6.8.9
+  resolution: "electron-updater@npm:6.8.9"
+  dependencies:
+    builder-util-runtime: "npm:9.7.0"
+    fs-extra: "npm:^10.1.0"
+    js-yaml: "npm:^4.1.0"
+    lazy-val: "npm:^1.0.5"
+    lodash.escaperegexp: "npm:^4.1.2"
+    lodash.isequal: "npm:^4.5.0"
+    semver: "npm:~7.7.3"
+    tiny-typed-emitter: "npm:^2.1.0"
+  checksum: 10/656b7a276e2f2df48736de3df55b817f40f8252f10d94d594c98a880287ab495718d2db67f8ee3a84ea178e90283f1e0c0d2a199b3f282bafd020cff1bd67999
+  languageName: node
+  linkType: hard
+
 "electron@npm:^39.0.0":
   version: 39.8.6
   resolution: "electron@npm:39.8.6"
@@ -16877,6 +16963,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"iceberg-js@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "iceberg-js@npm:0.8.1"
+  checksum: 10/9be7b4fe966f33341695e3506ae810bf8fb8800a47819570a0c6930b834c15424b9bbd315c191f3bf5c137b623e144e10630ba898059262dc8244abdbeb0a338
+  languageName: node
+  linkType: hard
+
 "iconv-lite@npm:0.6, iconv-lite@npm:^0.6.2, iconv-lite@npm:^0.6.3":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
@@ -18237,6 +18330,20 @@ __metadata:
   version: 4.3.0
   resolution: "lodash.camelcase@npm:4.3.0"
   checksum: 10/c301cc379310441dc73cd6cebeb91fb254bea74e6ad3027f9346fc43b4174385153df420ffa521654e502fd34c40ef69ca4e7d40ee7129a99e06f306032bfc65
+  languageName: node
+  linkType: hard
+
+"lodash.escaperegexp@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "lodash.escaperegexp@npm:4.1.2"
+  checksum: 10/6d99452b1cfd6073175a9b741a9b09ece159eac463f86f02ea3bee2e2092923fce812c8d2bf446309cc52d1d61bf9af51c8118b0d7421388e6cead7bd3798f0f
+  languageName: node
+  linkType: hard
+
+"lodash.isequal@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.isequal@npm:4.5.0"
+  checksum: 10/82fc58a83a1555f8df34ca9a2cd300995ff94018ac12cc47c349655f0ae1d4d92ba346db4c19bbfc90510764e0c00ddcc985a358bdcd4b3b965abf8f2a48a214
   languageName: node
   linkType: hard
 
@@ -23601,6 +23708,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tiny-typed-emitter@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "tiny-typed-emitter@npm:2.1.0"
+  checksum: 10/709bca410054e08df4dc29d5ea0916328bb2900d60245c6a743068ea223887d9fd2c945b6070eb20336275a557a36c2808e5c87d2ed4b60633458632be4a3e10
+  languageName: node
+  linkType: hard
+
 "tinybench@npm:^2.9.0":
   version: 2.9.0
   resolution: "tinybench@npm:2.9.0"
@@ -23833,17 +23947,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:2.8.1, tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:^2.6.2, tslib@npm:^2.6.3, tslib@npm:^2.8.1":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.11.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 10/7dbf34e6f55c6492637adb81b555af5e3b4f9cc6b998fb440dac82d3b42bdc91560a35a5fb75e20e24a076c651438234da6743d139e4feabf0783f3cdfe1dddb
-  languageName: node
-  linkType: hard
-
-"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:^2.6.2, tslib@npm:^2.6.3, tslib@npm:^2.8.1":
-  version: 2.8.1
-  resolution: "tslib@npm:2.8.1"
-  checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
   languageName: node
   linkType: hard
 

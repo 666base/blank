@@ -1,7 +1,7 @@
-import { Button } from '@affine/component';
-import { AuthPageContainer } from '@affine/component/auth-components';
-import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-helper';
-import { Trans, useI18n } from '@affine/i18n';
+import { Button } from '@blank/component';
+import { AuthPageContainer } from '@blank/component/auth-components';
+import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { Trans, useI18n } from '@blank/i18n';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ export const Component = () => {
   const [params] = useSearchParams();
   const { jumpToIndex, jumpToOpenInApp } = useNavigateHelper();
 
-  const openAFFiNE = useCallback(() => {
+  const openBlank = useCallback(() => {
     if (params.get('client')) {
       return jumpToOpenInApp('bring-to-front');
     } else {
@@ -27,10 +27,10 @@ export const Component = () => {
 
   const subtitle = (
     <div className={styles.leftContentText}>
-      {t['com.affine.payment.upgrade-success-page.text']()}
+      {t['com.blank.payment.upgrade-success-page.text']()}
       <div>
         <Trans
-          i18nKey={'com.affine.payment.upgrade-success-page.support'}
+          i18nKey={'com.blank.payment.upgrade-success-page.support'}
           components={{
             1: (
               <a
@@ -46,11 +46,11 @@ export const Component = () => {
 
   return (
     <AuthPageContainer
-      title={t['com.affine.payment.upgrade-success-page.title']()}
+      title={t['com.blank.payment.upgrade-success-page.title']()}
       subtitle={subtitle}
     >
-      <Button variant="primary" size="extraLarge" onClick={openAFFiNE}>
-        {t['com.affine.other-page.nav.open-affine']()}
+      <Button variant="primary" size="extraLarge" onClick={openBlank}>
+        {t['com.blank.other-page.nav.open-blank']()}
       </Button>
     </AuthPageContainer>
   );

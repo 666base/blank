@@ -69,8 +69,8 @@ export const editorContainer = style({
   flex: 1,
   zIndex: 0,
 });
-// brings styles of .affine-page-viewport from blocksuite
-export const affineDocViewport = style({
+// brings styles of .blank-page-viewport from blocksuite
+export const blankDocViewport = style({
   display: 'flex',
   flexDirection: 'column',
   containerName: 'viewport',
@@ -113,7 +113,7 @@ globalStyle('[data-peek-view-wrapper] .doc-title-container', {
   fontSize: cssVar('fontH6'),
 });
 
-globalStyle('.affine-page-root-block-container', {
+globalStyle('.blank-page-root-block-container', {
   '@container': {
     [`viewport (width <= 640px)`]: {
       paddingLeft: 16,
@@ -154,6 +154,6 @@ globalStyle('body:has([data-lock-document-scroll="true"]):has(>#app-tabs)', {
 });
 
 // Prevent native touch handling on edgeless viewport so canvas handles all gestures
-globalStyle('[data-mode="edgeless"] .affine-edgeless-viewport', {
+globalStyle('[data-mode="edgeless"] .blank-edgeless-viewport', {
   touchAction: 'none',
 });

@@ -1,6 +1,6 @@
-import { getStoreManager } from '@affine/core/blocksuite/manager/store';
-import { Container } from '@blocksuite/affine/global/di';
-import { TestWorkspace } from '@blocksuite/affine/store/test';
+import { getStoreManager } from '@blank/core/blocksuite/manager/store';
+import { Container } from '@blocksuite/blank/global/di';
+import { TestWorkspace } from '@blocksuite/blank/store/test';
 import { describe, expect, test } from 'vitest';
 
 import { markdownToMindmap } from '../mindmap-preview.js';

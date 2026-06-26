@@ -1,14 +1,11 @@
-import { toArrayBuffer } from '@affine/core/utils/array-buffer';
-import type { DocMode } from '@blocksuite/affine/model';
-import { ZipTransformer } from '@blocksuite/affine/widgets/linked-doc';
+import { toArrayBuffer } from '@blank/core/utils/array-buffer';
+import type { DocMode } from '@blocksuite/blank/model';
+import { ZipTransformer } from '@blocksuite/blank/widgets/linked-doc';
 import { Service } from '@toeverything/infra';
 
 import { DocsService } from '../../doc';
-import {
-  getAFFiNEWorkspaceSchema,
-  type WorkspaceMetadata,
-  type WorkspacesService,
-} from '../../workspace';
+import { ensureBlankWorkspaceSchema } from '../../workspace/global-schema';
+import type { WorkspaceMetadata, WorkspacesService } from '../../workspace';
 
 export class ImportTemplateService extends Service {
   constructor(private readonly workspacesService: WorkspacesService) {
@@ -25,9 +22,10 @@ export class ImportTemplateService extends Service {
         metadata: workspaceMetadata,
       });
     await workspace.engine.doc.waitForDocReady(workspace.id); // wait for root doc ready
+    const schema = await ensureBlankWorkspaceSchema();
     const [importedDoc] = await ZipTransformer.importDocs(
       workspace.docCollection,
-      getAFFiNEWorkspaceSchema(),
+      schema,
       new Blob([toArrayBuffer(docBinary)], {
         type: 'application/zip',
       })

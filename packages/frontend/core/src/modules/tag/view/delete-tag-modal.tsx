@@ -1,5 +1,5 @@
-import { toast, useConfirmModal } from '@affine/component';
-import { Trans, useI18n } from '@affine/i18n';
+import { toast, useConfirmModal } from '@blank/component';
+import { Trans, useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 
@@ -32,25 +32,25 @@ export const useDeleteTagConfirmModal = () => {
             });
             toast(
               tagIdsToDelete.length > 1
-                ? t['com.affine.delete-tags.count']({
+                ? t['com.blank.delete-tags.count']({
                     count: tagIdsToDelete.length,
                   })
-                : t['com.affine.tags.delete-tags.toast']()
+                : t['com.blank.tags.delete-tags.toast']()
             );
           }
         }
       };
       openConfirmModal({
-        title: t['com.affine.delete-tags.confirm.title'](),
+        title: t['com.blank.delete-tags.confirm.title'](),
         description:
           tagIdsToDelete.length === 1 ? (
             <Trans
-              i18nKey={'com.affine.delete-tags.confirm.description'}
+              i18nKey={'com.blank.delete-tags.confirm.description'}
               values={{ tag: tagName }}
               components={{ 1: <strong /> }}
             />
           ) : (
-            t['com.affine.delete-tags.confirm.multi-tag-description']({
+            t['com.blank.delete-tags.confirm.multi-tag-description']({
               count: tagIdsToDelete.length.toString(),
             })
           ),

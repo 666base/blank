@@ -1,5 +1,6 @@
-import { IconButton } from '@affine/component';
-import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
+import { IconButton } from '@blank/component';
+import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
+import { isDesktopApp } from '@blank/core/utils/local-only';
 import { RightSidebarIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { Suspense, useCallback } from 'react';
@@ -53,7 +54,7 @@ export const RouteContainer = () => {
     workbench.toggleSidebar();
   }, [workbench]);
 
-  const showSwitch = !BUILD_CONFIG.isElectron && viewPosition.isFirst;
+  const showSwitch = !isDesktopApp() && viewPosition.isFirst;
 
   return (
     <div className={styles.root}>
@@ -71,7 +72,7 @@ export const RouteContainer = () => {
           viewId={view.id}
           className={styles.viewHeaderContainer}
         />
-        {!BUILD_CONFIG.isElectron && viewPosition.isLast && (
+        {!isDesktopApp() && viewPosition.isLast && (
           <ToggleButton
             show={!sidebarOpen}
             className={styles.rightSidebarButton}
@@ -80,11 +81,11 @@ export const RouteContainer = () => {
         )}
       </div>
 
-      <AffineErrorBoundary>
+      <BlankErrorBoundary>
         <Suspense>
           <Outlet />
         </Suspense>
-      </AffineErrorBoundary>
+      </BlankErrorBoundary>
       <ViewBodyTarget viewId={view.id} className={styles.viewBodyContainer} />
     </div>
   );

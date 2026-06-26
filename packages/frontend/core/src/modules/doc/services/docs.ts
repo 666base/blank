@@ -1,14 +1,14 @@
-import { DebugLogger } from '@affine/debug';
-import { Unreachable } from '@affine/env/constant';
-import { replaceIdMiddleware } from '@blocksuite/affine/shared/adapters';
-import type { AffineTextAttributes } from '@blocksuite/affine/shared/types';
-import type { DeltaInsert } from '@blocksuite/affine/store';
-import { Slice, Text, Transformer } from '@blocksuite/affine/store';
+import { DebugLogger } from '@blank/debug';
+import { Unreachable } from '@blank/env/constant';
+import { replaceIdMiddleware } from '@blocksuite/blank/shared/adapters';
+import type { BlankTextAttributes } from '@blocksuite/blank/shared/types';
+import type { DeltaInsert } from '@blocksuite/blank/store';
+import { Slice, Text, Transformer } from '@blocksuite/blank/store';
 import { ObjectPool, Service } from '@toeverything/infra';
 import { combineLatest, map } from 'rxjs';
 
 import { initDocFromProps } from '../../../blocksuite/initialization';
-import { getAFFiNEWorkspaceSchema } from '../../workspace/global-schema';
+import { ensureBlankWorkspaceSchema } from '../../workspace/global-schema';
 import type { Doc } from '../entities/doc';
 import { DocRecordList } from '../entities/record-list';
 import { DocCreated, DocInitialized } from '../events';
@@ -192,11 +192,11 @@ export class DocsService extends Service {
           },
         },
       },
-    ] as DeltaInsert<AffineTextAttributes>[]);
-    const [frame] = doc.blockSuiteDoc.getBlocksByFlavour('affine:note');
+    ] as DeltaInsert<BlankTextAttributes>[]);
+    const [frame] = doc.blockSuiteDoc.getBlocksByFlavour('blank:note');
     frame &&
       doc.blockSuiteDoc.addBlock(
-        'affine:paragraph' as never, // TODO(eyhn): fix type
+        'blank:paragraph' as never, // TODO(eyhn): fix type
         { text },
         frame.id
       );
@@ -240,8 +240,9 @@ export class DocsService extends Service {
       );
 
       const collection = this.store.getBlocksuiteCollection();
+      const schema = await ensureBlankWorkspaceSchema();
       const transformer = new Transformer({
-        schema: getAFFiNEWorkspaceSchema(),
+        schema,
         blobCRUD: collection.blobSync,
         docCRUD: {
           create: (id: string) => {
@@ -334,8 +335,9 @@ export class DocsService extends Service {
       );
 
       const collection = this.store.getBlocksuiteCollection();
+      const schema = await ensureBlankWorkspaceSchema();
       const transformer = new Transformer({
-        schema: getAFFiNEWorkspaceSchema(),
+        schema,
         blobCRUD: collection.blobSync,
         docCRUD: {
           create: (id: string) => {

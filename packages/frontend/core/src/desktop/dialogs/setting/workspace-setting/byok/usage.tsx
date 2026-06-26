@@ -1,5 +1,5 @@
-import { Button } from '@affine/component';
-import { useI18n } from '@affine/i18n';
+import { Button } from '@blank/component';
+import { useI18n } from '@blank/i18n';
 import { useMemo } from 'react';
 
 import * as styles from './index.css';

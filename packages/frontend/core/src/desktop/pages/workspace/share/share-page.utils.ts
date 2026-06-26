@@ -1,5 +1,5 @@
-import { UserFriendlyError } from '@affine/error';
-import { type DocMode, DocModes } from '@blocksuite/affine/model';
+import { UserFriendlyError } from '@blank/error';
+import { type DocMode, DocModes } from '@blocksuite/blank/model';
 import { TimeoutError } from 'rxjs';
 
 export const getResolvedPublishMode = (

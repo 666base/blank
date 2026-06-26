@@ -4,19 +4,19 @@ import {
   MenuSeparator,
   toast,
   useConfirmModal,
-} from '@affine/component';
-import { usePageHelper } from '@affine/core/blocksuite/block-suite-page-list/utils';
-import { IsFavoriteIcon } from '@affine/core/components/pure/icons';
-import type { NodeOperation } from '@affine/core/desktop/components/navigation-panel';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { DocsService } from '@affine/core/modules/doc';
-import { FavoriteService } from '@affine/core/modules/favorite';
-import { GlobalCacheService } from '@affine/core/modules/storage';
-import { TagService } from '@affine/core/modules/tag';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+} from '@blank/component';
+import { usePageHelper } from '@blank/core/blocksuite/block-suite-page-list/utils';
+import { IsFavoriteIcon } from '@blank/core/components/pure/icons';
+import type { NodeOperation } from '@blank/core/desktop/components/navigation-panel';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { DocsService } from '@blank/core/modules/doc';
+import { FavoriteService } from '@blank/core/modules/favorite';
+import { GlobalCacheService } from '@blank/core/modules/storage';
+import { TagService } from '@blank/core/modules/tag';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
 import {
   DeleteIcon,
   FolderIcon,
@@ -76,7 +76,7 @@ export const useNavigationPanelTagNodeOperations = (
   const handleMoveToTrash = useCallback(() => {
     tagService.tagList.deleteTag(tagId);
     track.$.navigationPanel.organize.deleteOrganizeItem({ type: 'tag' });
-    toast(t['com.affine.tags.delete-tags.toast']());
+    toast(t['com.blank.tags.delete-tags.toast']());
   }, [t, tagId, tagService.tagList]);
 
   const handleOpenInSplitView = useCallback(() => {
@@ -145,13 +145,13 @@ export const useNavigationPanelTagNodeOperations = (
             ) !== true
           ) {
             openConfirmModal({
-              title: t['com.affine.m.selector.remove-warning.title'](),
-              description: t['com.affine.m.selector.remove-warning.message']({
-                type: t['com.affine.m.selector.type-doc'](),
-                where: t['com.affine.m.selector.where-tag'](),
+              title: t['com.blank.m.selector.remove-warning.title'](),
+              description: t['com.blank.m.selector.remove-warning.message']({
+                type: t['com.blank.m.selector.type-doc'](),
+                where: t['com.blank.m.selector.where-tag'](),
               }),
-              cancelText: t['com.affine.m.selector.remove-warning.cancel'](),
-              confirmText: t['com.affine.m.selector.remove-warning.confirm'](),
+              cancelText: t['com.blank.m.selector.remove-warning.cancel'](),
+              confirmText: t['com.blank.m.selector.remove-warning.confirm'](),
               reverseFooter: true,
               onConfirm: () => {
                 globalCacheService.globalCache.set(
@@ -257,7 +257,7 @@ export const useNavigationPanelTagNodeOperationsMenu = (
         index: 12,
         view: (
           <MenuItem prefixIcon={<FolderIcon />} onClick={handleOpenDocSelector}>
-            {t['com.affine.m.explorer.tag.manage-docs']()}
+            {t['com.blank.m.explorer.tag.manage-docs']()}
           </MenuItem>
         ),
       },
@@ -270,7 +270,7 @@ export const useNavigationPanelTagNodeOperationsMenu = (
                   prefixIcon={<SplitViewIcon />}
                   onClick={handleOpenInSplitView}
                 >
-                  {t['com.affine.workbench.split-view.page-menu-open']()}
+                  {t['com.blank.workbench.split-view.page-menu-open']()}
                 </MenuItem>
               ),
             },
@@ -284,8 +284,8 @@ export const useNavigationPanelTagNodeOperationsMenu = (
             onClick={handleToggleFavoriteTag}
           >
             {favorite
-              ? t['com.affine.favoritePageOperation.remove']()
-              : t['com.affine.favoritePageOperation.add']()}
+              ? t['com.blank.favoritePageOperation.remove']()
+              : t['com.blank.favoritePageOperation.add']()}
           </MenuItem>
         ),
       },

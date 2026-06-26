@@ -1,0 +1,28 @@
+import { Button } from '@blank/component';
+
+import * as styles from './animate-in-tooltip.css';
+
+interface AnimateInTooltipProps {
+  onNext: () => void;
+  visible?: boolean;
+}
+
+export const AnimateInTooltip = ({
+  onNext,
+  visible,
+}: AnimateInTooltipProps) => {
+  return (
+    <>
+      <div className={styles.tooltip}>
+        Blank is your notes workspace — docs, boards, and lists in one place.
+      </div>
+      <div className={styles.next}>
+        {visible ? (
+          <Button variant="primary" size="extraLarge" onClick={onNext}>
+            Next
+          </Button>
+        ) : null}
+      </div>
+    </>
+  );
+};

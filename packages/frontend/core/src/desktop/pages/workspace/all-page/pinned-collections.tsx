@@ -4,17 +4,17 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-} from '@affine/component';
-import { AddFilterMenu } from '@affine/core/components/filter/add-filter';
+} from '@blank/component';
+import { AddFilterMenu } from '@blank/core/components/filter/add-filter';
 import {
   CollectionService,
   type PinnedCollectionRecord,
   PinnedCollectionService,
-} from '@affine/core/modules/collection';
-import type { FilterParams } from '@affine/core/modules/collection-rules';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+} from '@blank/core/modules/collection';
+import type { FilterParams } from '@blank/core/modules/collection-rules';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import {
   CloseIcon,
   CollectionsIcon,
@@ -114,7 +114,7 @@ export const PinnedCollections = ({
         }}
         role="button"
       >
-        {t['com.affine.all-docs.pinned-collection.all']()}
+        {t['com.blank.all-docs.pinned-collection.all']()}
       </div>
       {pinnedCollections.map((record, index) => (
         <PinnedCollectionItem
@@ -149,7 +149,7 @@ export const PinnedCollections = ({
       )}
       <div style={{ flex: 1 }}></div>
       {activeCollectionId && (
-        <Tooltip content={t['com.affine.all-docs.pinned-collection.edit']()}>
+        <Tooltip content={t['com.blank.all-docs.pinned-collection.edit']()}>
           <IconButton
             size="16"
             className={styles.editIconButton}
@@ -229,7 +229,7 @@ export const AddPinnedCollectionMenuContent = ({
           setAddingFilter(true);
         }}
       >
-        {t['com.affine.filter']()}
+        {t['com.blank.filter']()}
       </MenuItem>
       {unpinnedCollectionMetas.length > 0 && <Divider />}
       {unpinnedCollectionMetas.map(meta => (

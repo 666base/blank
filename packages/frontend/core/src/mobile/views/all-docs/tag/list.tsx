@@ -1,5 +1,5 @@
-import { EmptyTags } from '@affine/core/components/affine/empty';
-import { TagService } from '@affine/core/modules/tag';
+import { EmptyTags } from '@blank/core/components/blank/empty';
+import { TagService } from '@blank/core/modules/tag';
 import { useLiveData, useService } from '@toeverything/infra';
 
 import { TagItem } from './item';

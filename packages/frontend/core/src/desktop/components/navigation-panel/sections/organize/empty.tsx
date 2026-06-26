@@ -3,9 +3,9 @@ import {
   type DropTargetDropEvent,
   Skeleton,
   useDropTarget,
-} from '@affine/component';
-import type { AffineDNDData } from '@affine/core/types/dnd';
-import { useI18n } from '@affine/i18n';
+} from '@blank/component';
+import type { BlankDNDData } from '@blank/core/types/dnd';
+import { useI18n } from '@blank/i18n';
 
 import { NavigationPanelEmptySection } from '../../layouts/empty-section';
 import { DropEffect } from '../../tree';
@@ -14,7 +14,7 @@ import { organizeEmptyDropEffect, organizeEmptyRootCanDrop } from './dnd';
 interface RootEmptyProps {
   onClickCreate?: () => void;
   isLoading?: boolean;
-  onDrop?: (data: DropTargetDropEvent<AffineDNDData>) => void;
+  onDrop?: (data: DropTargetDropEvent<BlankDNDData>) => void;
 }
 
 export const RootEmptyLoading = () => {
@@ -28,7 +28,7 @@ export const RootEmptyReady = ({
   const t = useI18n();
 
   const { dropTargetRef, draggedOverDraggable, draggedOverPosition } =
-    useDropTarget<AffineDNDData>(
+    useDropTarget<BlankDNDData>(
       () => ({
         data: { at: 'navigation-panel:organize:root' },
         onDrop,
@@ -41,10 +41,10 @@ export const RootEmptyReady = ({
     <NavigationPanelEmptySection
       ref={dropTargetRef}
       icon={<AnimatedFolderIcon open={!!draggedOverDraggable} />}
-      message={t['com.affine.rootAppSidebar.organize.empty']()}
+      message={t['com.blank.rootAppSidebar.organize.empty']()}
       messageTestId="slider-bar-organize-empty-message"
       actionText={t[
-        'com.affine.rootAppSidebar.organize.empty.new-folders-button'
+        'com.blank.rootAppSidebar.organize.empty.new-folders-button'
       ]()}
       onActionClick={onClickCreate}
     >

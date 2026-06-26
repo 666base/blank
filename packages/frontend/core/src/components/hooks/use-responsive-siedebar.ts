@@ -1,6 +1,7 @@
-import { observeResize } from '@affine/component';
-import { AppSidebarService } from '@affine/core/modules/app-sidebar';
-import { WorkbenchService } from '@affine/core/modules/workbench';
+import { observeResize } from '@blank/component';
+import { AppSidebarService } from '@blank/core/modules/app-sidebar';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { isDesktopApp } from '@blank/core/utils/local-only';
 import { useService } from '@toeverything/infra';
 import { useCallback, useEffect, useRef } from 'react';
 
@@ -54,7 +55,7 @@ export const useResponsiveSidebar = (
         handleHideSidebar();
       }
 
-      if (!BUILD_CONFIG.isElectron) {
+      if (!isDesktopApp()) {
         if (width >= floatThreshold && previousWidth < floatThreshold) {
           handleFloatSidebar(false);
         }

@@ -1,29 +1,32 @@
 import { z } from 'zod';
 
 export const appSchemes = z.enum([
-  'affine',
-  'affine-canary',
-  'affine-beta',
-  'affine-internal',
-  'affine-dev',
+  'blank',
+  'blank-canary',
+  'blank-beta',
+  'blank-internal',
+  'blank-dev',
 ]);
 
 export type Scheme = z.infer<typeof appSchemes>;
 export type Channel = 'stable' | 'canary' | 'beta' | 'internal';
 
 export const schemeToChannel = {
-  affine: 'stable',
-  'affine-canary': 'canary',
-  'affine-beta': 'beta',
-  'affine-internal': 'internal',
-  'affine-dev': 'canary', // dev does not have a dedicated app. use canary as the placeholder.
+  blank: 'stable',
+  'blank-canary': 'canary',
+  'blank-beta': 'beta',
+  'blank-internal': 'internal',
+  'blank-dev': 'canary', // dev does not have a dedicated app. use canary as the placeholder.
 } as Record<Scheme, Channel>;
 
 export const channelToScheme = {
-  stable: 'affine',
-  canary: BUILD_CONFIG.debug ? 'affine-dev' : 'affine-canary',
-  beta: 'affine-beta',
-  internal: 'affine-internal',
+  stable: 'blank',
+  canary:
+    typeof BUILD_CONFIG !== 'undefined' && BUILD_CONFIG.debug
+      ? 'blank-dev'
+      : 'blank-canary',
+  beta: 'blank-beta',
+  internal: 'blank-internal',
 } as Record<Channel, Scheme>;
 
 export const appIconMap = {

@@ -1,11 +1,11 @@
-import { Modal } from '@affine/component';
+import { Modal } from '@blank/component';
 import {
   type CollectionInfo,
   CollectionService,
-} from '@affine/core/modules/collection';
-import type { DialogComponentProps } from '@affine/core/modules/dialogs';
-import type { WORKSPACE_DIALOG_SCHEMA } from '@affine/core/modules/dialogs/constant';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/collection';
+import type { DialogComponentProps } from '@blank/core/modules/dialogs';
+import type { WORKSPACE_DIALOG_SCHEMA } from '@blank/core/modules/dialogs/constant';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 
@@ -46,13 +46,13 @@ export const CollectionEditorDialog = ({
         style: {
           padding: 0,
           maxWidth: 944,
-          backgroundColor: 'var(--affine-background-primary-color)',
+          backgroundColor: 'var(--blank-background-primary-color)',
         },
       }}
       persistent
     >
       <EditCollection
-        onConfirmText={t['com.affine.editCollection.save']()}
+        onConfirmText={t['com.blank.editCollection.save']()}
         init={info}
         mode={mode}
         onCancel={onCancel}

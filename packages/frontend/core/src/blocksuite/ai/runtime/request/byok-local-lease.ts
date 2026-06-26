@@ -1,9 +1,9 @@
-import { apis, type ClientHandler } from '@affine/electron-api';
-import { UserFriendlyError } from '@affine/error';
+import { apis, type ClientHandler } from '@blank/electron-api';
+import { UserFriendlyError } from '@blank/error';
 import {
   ByokProvider,
   createWorkspaceByokLocalLeaseMutation,
-} from '@affine/graphql';
+} from '@blank/graphql';
 
 import type { CopilotClient } from './copilot-client';
 

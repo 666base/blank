@@ -1,7 +1,7 @@
-import { getAttachmentFileIcon } from '@blocksuite/affine/components/icons';
-import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
-import type { AttachmentBlockModel } from '@blocksuite/affine-model';
-import { formatSize } from '@blocksuite/affine-shared/utils';
+import { getAttachmentFileIcon } from '@blocksuite/blank/components/icons';
+import { SignalWatcher, WithDisposable } from '@blocksuite/blank/global/lit';
+import type { AttachmentBlockModel } from '@blocksuite/blank-model';
+import { formatSize } from '@blocksuite/blank-shared/utils';
 import {
   ArrowDownBigIcon,
   ArrowUpBigIcon,
@@ -32,10 +32,10 @@ export class AttachmentViewerPanel extends SignalWatcher(
       dialog {
         padding: 0;
         top: 50px;
-        border: 1px solid var(--affine-border-color);
+        border: 1px solid var(--blank-border-color);
         border-radius: 8px;
-        background: var(--affine-v2-dialog-background-primary);
-        box-shadow: var(--affine-overlay-shadow);
+        background: var(--blank-v2-dialog-background-primary);
+        box-shadow: var(--blank-overlay-shadow);
         outline: none;
       }
 
@@ -70,7 +70,7 @@ export class AttachmentViewerPanel extends SignalWatcher(
           justify-content: space-between;
           align-items: center;
           font-size: 12px;
-          color: var(--affine-text-secondary-color);
+          color: var(--blank-text-secondary-color);
         }
 
         h5 {

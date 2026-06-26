@@ -1,8 +1,8 @@
-import { Checkbox, notify, useDndMonitor } from '@affine/component';
-import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
-import type { AffineDNDData } from '@affine/core/types/dnd';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+import { Checkbox, notify, useDndMonitor } from '@blank/component';
+import { useAppSettingHelper } from '@blank/core/components/hooks/blank/use-app-setting-helper';
+import type { BlankDNDData } from '@blank/core/types/dnd';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import { useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import { useSetAtom } from 'jotai';
@@ -89,7 +89,7 @@ export const SplitView = ({
   const t = useI18n();
   const hideFolderWarningRef = useRef(false);
 
-  useDndMonitor<AffineDNDData>(() => {
+  useDndMonitor<BlankDNDData>(() => {
     return {
       canMonitor(data) {
         if (!BUILD_CONFIG.isElectron) {
@@ -130,7 +130,7 @@ export const SplitView = ({
                 message: (
                   <div className={styles.folderWarningMessage}>
                     <p>
-                      {t['com.affine.split-view-folder-warning.description']()}
+                      {t['com.blank.split-view-folder-warning.description']()}
                     </p>
                     <p>
                       <Checkbox
@@ -165,7 +165,7 @@ export const SplitView = ({
           return;
         }
 
-        const dropTarget = candidate.data as AffineDNDData['draggable']['from'];
+        const dropTarget = candidate.data as BlankDNDData['draggable']['from'];
         const entity = data.source.data.entity;
         const from = data.source.data.from;
 

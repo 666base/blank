@@ -1,12 +1,12 @@
-import type { ElementOrFactory } from '@affine/component';
+import type { ElementOrFactory } from '@blank/component';
 import {
   patchForEdgelessNoteConfig,
   patchForEmbedSyncedDocConfig,
-} from '@affine/core/blocksuite/view-extensions/edgeless-block-header/patch';
+} from '@blank/core/blocksuite/view-extensions/edgeless-block-header/patch';
 import {
   type ViewExtensionContext,
   ViewExtensionProvider,
-} from '@blocksuite/affine/ext-loader';
+} from '@blocksuite/blank/ext-loader';
 import { FrameworkProvider } from '@toeverything/infra';
 import type { TemplateResult } from 'lit';
 import { z } from 'zod';

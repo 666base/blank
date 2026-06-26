@@ -1,9 +1,9 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-import { getBuildConfig } from '@affine-tools/utils/build-config';
-import { Path, ProjectRoot } from '@affine-tools/utils/path';
-import { Package } from '@affine-tools/utils/workspace';
+import { getBuildConfig } from '@blank-tools/utils/build-config';
+import { Path, ProjectRoot } from '@blank-tools/utils/path';
+import { Package } from '@blank-tools/utils/workspace';
 import rspack, {
   type Configuration as RspackConfiguration,
 } from '@rspack/core';
@@ -36,18 +36,26 @@ function createBlankAiIgnorePlugin() {
     '/modules/workspace/global-schema',
   ];
 
+  const blockedPaths = [
+    '/blocksuite/ai/',
+    '/modules/ai-button/',
+    '/workspace-indexer-embedding/',
+    '/pages/workspace/chat/',
+    '/detail-page/tabs/chat',
+    '/ai-chat-block-peek-view/',
+    '/components/blank/ai-onboarding/',
+    // Redirect-only routes — never loaded in Blank builds
+    '/pages/upgrade-to-team/',
+    '/upgrade-to-team/',
+    '/pages/upgrade-success/',
+    '/pages/ai-upgrade-success/',
+    '/upgrade-success/',
+    '/ai-upgrade-success/',
+  ];
+
   return new rspack.IgnorePlugin({
     checkResource(resource) {
       const id = resource.replace(/\\/g, '/');
-      const blockedPaths = [
-        '/blocksuite/ai/',
-        '/modules/ai-button/',
-        '/workspace-indexer-embedding/',
-        '/pages/workspace/chat/',
-        '/detail-page/tabs/chat',
-        '/ai-chat-block-peek-view/',
-        '/components/affine/ai-onboarding/',
-      ];
       if (!blockedPaths.some(p => id.includes(p))) {
         return false;
       }
@@ -118,7 +126,7 @@ export function createHTMLTargetConfig(
   const tailwindConfigPath = pkg.join('tailwind.config.js');
   const hasTailwind =
     tailwindConfigPath.exists() ||
-    pkg.name === '@affine/media-capture-playground';
+    pkg.name === '@blank/media-capture-playground';
   const tailwindPlugin = tailwindConfigPath.exists()
     ? ['@tailwindcss/postcss', require(tailwindConfigPath.value)]
     : ['@tailwindcss/postcss'];
@@ -205,7 +213,7 @@ export function createHTMLTargetConfig(
           '@preact',
           'signals-core'
         ).value,
-        '@affine/core/modules/code-block-preview-renderer/platform-backend':
+        '@blank/core/modules/code-block-preview-renderer/platform-backend':
           codeBlockPreviewBackendAlias,
       },
     },
@@ -367,7 +375,7 @@ export function createHTMLTargetConfig(
           patterns: [
             {
               // copy the shared public assets into dist
-              from: new Package('@affine/core').join('public').value,
+              from: new Package('@blank/core').join('public').value,
               globOptions: {
                 ignore: [
                   '**/onboarding/**',

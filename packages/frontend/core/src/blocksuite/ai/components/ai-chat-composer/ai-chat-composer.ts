@@ -3,22 +3,22 @@ import './ai-chat-composer-tip';
 import type {
   AIDraftService,
   AIToolsConfigService,
-} from '@affine/core/modules/ai-button';
-import type { AIModelService } from '@affine/core/modules/ai-button/services/models';
+} from '@blank/core/modules/ai-button';
+import type { AIModelService } from '@blank/core/modules/ai-button/services/models';
 import type {
   ServerService,
   SubscriptionService,
-} from '@affine/core/modules/cloud';
-import type { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import type { CopilotChatHistoryFragment } from '@affine/graphql';
-import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
-import type { EditorHost } from '@blocksuite/affine/std';
-import { ShadowlessElement } from '@blocksuite/affine/std';
-import { uuidv4 } from '@blocksuite/affine/store';
+} from '@blank/core/modules/cloud';
+import type { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import type { CopilotChatHistoryFragment } from '@blank/graphql';
+import { SignalWatcher, WithDisposable } from '@blocksuite/blank/global/lit';
+import type { EditorHost } from '@blocksuite/blank/std';
+import { ShadowlessElement } from '@blocksuite/blank/std';
+import { uuidv4 } from '@blocksuite/blank/store';
 import type {
   FeatureFlagService,
   NotificationService,
-} from '@blocksuite/affine-shared/services';
+} from '@blocksuite/blank-shared/services';
 import { css, html, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
@@ -62,7 +62,7 @@ export class AIChatComposer extends SignalWatcher(
       display: flex;
       flex-direction: column;
       gap: 4px;
-      color: var(--affine-text-secondary-color);
+      color: var(--blank-text-secondary-color);
       font-size: 12px;
       user-select: none;
     }
@@ -117,7 +117,7 @@ export class AIChatComposer extends SignalWatcher(
   accessor serverService!: ServerService;
 
   @property({ attribute: false })
-  accessor affineWorkspaceDialogService!: WorkspaceDialogService;
+  accessor blankWorkspaceDialogService!: WorkspaceDialogService;
 
   @property({ attribute: false })
   accessor notificationService!: NotificationService;
@@ -129,7 +129,7 @@ export class AIChatComposer extends SignalWatcher(
   accessor aiToolsConfigService!: AIToolsConfigService;
 
   @property({ attribute: false })
-  accessor affineFeatureFlagService!: FeatureFlagService;
+  accessor blankFeatureFlagService!: FeatureFlagService;
 
   @property({ attribute: false })
   accessor subscriptionService!: SubscriptionService;
@@ -180,7 +180,7 @@ export class AIChatComposer extends SignalWatcher(
         .docDisplayConfig=${this.docDisplayConfig}
         .searchMenuConfig=${this.searchMenuConfig}
         .serverService=${this.serverService}
-        .affineFeatureFlagService=${this.affineFeatureFlagService}
+        .blankFeatureFlagService=${this.blankFeatureFlagService}
         .aiDraftService=${this.aiDraftService}
         .aiToolsConfigService=${this.aiToolsConfigService}
         .notificationService=${this.notificationService}

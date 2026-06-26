@@ -1,6 +1,6 @@
-import { ConfirmModalProvider, PromptModalProvider } from '@affine/component';
-import { ProviderComposer } from '@affine/component/provider-composer';
-import { ThemeProvider } from '@affine/core/components/theme-provider';
+import { ConfirmModalProvider, PromptModalProvider } from '@blank/component';
+import { ProviderComposer } from '@blank/component/provider-composer';
+import { ThemeProvider } from '@blank/core/components/theme-provider';
 import type { createStore } from 'jotai';
 import { Provider } from 'jotai';
 import type { PropsWithChildren } from 'react';
@@ -8,11 +8,11 @@ import { useMemo } from 'react';
 
 import { useImageAntialiasing } from '../hooks/use-image-antialiasing';
 
-export type AffineContextProps = PropsWithChildren<{
+export type BlankContextProps = PropsWithChildren<{
   store?: ReturnType<typeof createStore>;
 }>;
 
-export function AffineContext(props: AffineContextProps) {
+export function BlankContext(props: BlankContextProps) {
   useImageAntialiasing();
   return (
     <ProviderComposer

@@ -1,13 +1,13 @@
-import { MemberSearchService } from '@affine/core/modules/permissions';
-import { highlighter } from '@affine/core/modules/quicksearch/utils/highlighter';
-import { I18n } from '@affine/i18n';
-import track from '@affine/track';
-import type { AffineInlineEditor } from '@blocksuite/affine/shared/types';
+import { MemberSearchService } from '@blank/core/modules/permissions';
+import { highlighter } from '@blank/core/modules/quicksearch/utils/highlighter';
+import { I18n } from '@blank/i18n';
+import track from '@blank/track';
+import type { BlankInlineEditor } from '@blocksuite/blank/shared/types';
 import type {
   LinkedMenuItem,
   LinkedWidgetConfig,
-} from '@blocksuite/affine/widgets/linked-doc';
-import { unsafeHTML } from '@blocksuite/affine-shared/utils';
+} from '@blocksuite/blank/widgets/linked-doc';
+import { unsafeHTML } from '@blocksuite/blank-shared/utils';
 import { UserIcon } from '@blocksuite/icons/lit';
 import { BLOCK_ID_ATTR, type BlockComponent } from '@blocksuite/std';
 import { computed } from '@preact/signals-core';
@@ -23,7 +23,7 @@ export const createCommentLinkedWidgetConfig = (
   const memberGroup = (
     query: string,
     close: () => void,
-    inlineEditor: AffineInlineEditor
+    inlineEditor: BlankInlineEditor
   ) => {
     const memberSearchService = framework.get(MemberSearchService);
 
@@ -136,7 +136,7 @@ export const createCommentLinkedWidgetConfig = (
     });
 
     return {
-      name: I18n.t('com.affine.editor.at-menu.mention-members'),
+      name: I18n.t('com.blank.editor.at-menu.mention-members'),
       items,
       loading: memberSearchService.isLoading$.signal,
       hidden: computed(() => {
@@ -149,7 +149,7 @@ export const createCommentLinkedWidgetConfig = (
       overflowText: computed(() => {
         const totalCount = memberSearchService.result$.signal.value.length;
         const remainingCount = totalCount - 3;
-        return I18n.t('com.affine.editor.at-menu.more-members-hint', {
+        return I18n.t('com.blank.editor.at-menu.more-members-hint', {
           count: remainingCount,
         });
       }),

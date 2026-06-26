@@ -1,0 +1,36 @@
+{
+  "name": "@blocksuite/blank-widget-frame-title",
+  "description": "Blank frame title widget.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "sideEffects": false,
+  "keywords": [],
+  "author": "toeverything",
+  "license": "MIT",
+  "dependencies": {
+    "@blocksuite/blank-block-surface": "workspace:*",
+    "@blocksuite/blank-components": "workspace:*",
+    "@blocksuite/blank-ext-loader": "workspace:*",
+    "@blocksuite/blank-model": "workspace:*",
+    "@blocksuite/blank-rich-text": "workspace:*",
+    "@blocksuite/blank-shared": "workspace:*",
+    "@blocksuite/global": "workspace:*",
+    "@blocksuite/std": "workspace:*",
+    "@lit/context": "^1.1.2",
+    "@toeverything/theme": "^1.1.23",
+    "lit": "^3.2.0"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./view": "./src/view.ts"
+  },
+  "files": [
+    "src",
+    "dist",
+    "!src/__tests__",
+    "!dist/__tests__"
+  ],
+  "version": "0.27.0"
+}

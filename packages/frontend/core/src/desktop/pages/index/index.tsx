@@ -1,14 +1,15 @@
-import { DefaultServerService } from '@affine/core/modules/cloud';
-import { DesktopApiService } from '@affine/core/modules/desktop-api';
-import { WorkspacesService } from '@affine/core/modules/workspace';
+import { DefaultServerService } from '@blank/core/modules/cloud';
+import { DesktopApiService } from '@blank/core/modules/desktop-api';
+import { WorkspacesService } from '@blank/core/modules/workspace';
 import {
   buildShowcaseWorkspace,
   createFirstAppData,
-} from '@affine/core/utils/first-app-data';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
-import { isBlankSyncEnabled } from '@affine/core/utils/sync-config';
-import { DEFAULT_WORKSPACE_NAME } from '@affine/env/constant';
-import { ServerFeature } from '@affine/graphql';
+} from '@blank/core/utils/first-app-data';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
+import { isBlankSyncEnabled } from '@blank/core/utils/sync-config';
+import { getDefaultWorkspaceName } from '@blank/core/utils/blank-links';
+import { ServerFeature } from '@blank/graphql';
 import {
   useLiveData,
   useService,
@@ -87,7 +88,7 @@ export const Component = ({
     if (createOnceRef.current) return;
     createOnceRef.current = true;
     // TODO: support selfhosted
-    buildShowcaseWorkspace(workspacesService, 'affine-cloud', 'Blank Cloud')
+    buildShowcaseWorkspace(workspacesService, 'blank-cloud', 'Blank Cloud')
       .then(({ meta, defaultDocId }) => {
         if (defaultDocId) {
           jumpToPage(meta.id, defaultDocId);
@@ -126,14 +127,14 @@ export const Component = ({
     // check is user logged in && has cloud workspace
     if (!isLocalOnlyMode() && searchParams.get('initCloud') === 'true') {
       if (loggedIn) {
-        if (list.every(w => w.flavour !== 'affine-cloud')) {
+        if (list.every(w => w.flavour !== 'blank-cloud')) {
           createCloudWorkspace();
           return;
         }
 
         // open first cloud workspace
         const openWorkspace =
-          list.find(w => w.flavour === 'affine-cloud') ?? list[0];
+          list.find(w => w.flavour === 'blank-cloud') ?? list[0];
         openPage(openWorkspace.id, defaultIndexRoute);
       } else {
         return;
@@ -169,6 +170,9 @@ export const Component = ({
   }, [desktopApi]);
 
   useEffect(() => {
+    if (isBlankBuild()) {
+      return;
+    }
     if (listIsLoading || list.length > 0 || !enableLocalWorkspace) {
       if (
         isBlankSyncEnabled() &&
@@ -193,7 +197,7 @@ export const Component = ({
           const { meta, defaultDocId } = await buildShowcaseWorkspace(
             workspacesService,
             'local',
-            DEFAULT_WORKSPACE_NAME
+            getDefaultWorkspaceName()
           );
           createdWorkspace = {
             meta,

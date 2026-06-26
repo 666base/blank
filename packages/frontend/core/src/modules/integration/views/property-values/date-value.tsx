@@ -1,5 +1,5 @@
-import { PropertyValue, Tooltip } from '@affine/component';
-import { i18nTime } from '@affine/i18n';
+import { PropertyValue, Tooltip } from '@blank/component';
+import { i18nTime } from '@blank/i18n';
 import { useMemo } from 'react';
 
 import * as styles from './styles.css';

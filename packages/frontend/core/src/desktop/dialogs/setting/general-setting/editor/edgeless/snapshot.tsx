@@ -1,17 +1,17 @@
-import { Skeleton } from '@affine/component';
-import { getViewManager } from '@affine/core/blocksuite/manager/view';
-import type { EditorSettingSchema } from '@affine/core/modules/editor-setting';
-import { EditorSettingService } from '@affine/core/modules/editor-setting';
-import { EdgelessCRUDIdentifier } from '@blocksuite/affine/blocks/surface';
-import { Bound } from '@blocksuite/affine/global/gfx';
-import { ViewportElementExtension } from '@blocksuite/affine/shared/services';
-import type { EditorHost } from '@blocksuite/affine/std';
-import { BlockStdScope } from '@blocksuite/affine/std';
+import { Skeleton } from '@blank/component';
+import { getViewManager } from '@blank/core/blocksuite/manager/view';
+import type { EditorSettingSchema } from '@blank/core/modules/editor-setting';
+import { EditorSettingService } from '@blank/core/modules/editor-setting';
+import { EdgelessCRUDIdentifier } from '@blocksuite/blank/blocks/surface';
+import { Bound } from '@blocksuite/blank/global/gfx';
+import { ViewportElementExtension } from '@blocksuite/blank/shared/services';
+import type { EditorHost } from '@blocksuite/blank/std';
+import { BlockStdScope } from '@blocksuite/blank/std';
 import {
   GfxControllerIdentifier,
   type GfxPrimitiveElementModel,
-} from '@blocksuite/affine/std/gfx';
-import type { Block, Store } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/std/gfx';
+import type { Block, Store } from '@blocksuite/blank/store';
 import { useFramework } from '@toeverything/infra';
 import clsx from 'clsx';
 import { isEqual } from 'lodash-es';
@@ -108,7 +108,7 @@ export const EdgelessSnapshot = (props: Props) => {
       if (
         payload.type !== 'block' ||
         payload.method !== 'add' ||
-        payload.view.model.flavour !== 'affine:page'
+        payload.view.model.flavour !== 'blank:page'
       ) {
         return;
       }

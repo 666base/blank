@@ -89,10 +89,10 @@ export const ScrollableLayout = ({
 };
 
 export const OnboardingPage = ({
-  onOpenAffine,
+  onOpenBlank,
 }: {
   user: User;
-  onOpenAffine: () => void;
+  onOpenBlank: () => void;
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -217,14 +217,14 @@ export const OnboardingPage = ({
           you once again for your supports.
         </p>
         <Button
-          className={clsx(styles.button, styles.openAFFiNEButton)}
+          className={clsx(styles.button, styles.openBlankButton)}
           variant="primary"
           size="extraLarge"
           onClick={() => {
             if (callbackUrl) {
               navigate(callbackUrl);
             } else {
-              onOpenAffine();
+              onOpenBlank();
             }
           }}
           suffix={<ArrowRightSmallIcon />}

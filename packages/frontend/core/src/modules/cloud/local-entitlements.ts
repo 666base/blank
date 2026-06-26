@@ -3,7 +3,7 @@ import {
   type SubscriptionPrice,
   SubscriptionRecurring,
   SubscriptionStatus,
-} from '@affine/graphql';
+} from '@blank/graphql';
 
 import { isLocalOnlyMode } from '../../utils/local-only';
 import type { SubscriptionType } from './entities/subscription';

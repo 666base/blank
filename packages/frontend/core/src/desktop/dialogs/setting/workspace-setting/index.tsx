@@ -1,6 +1,8 @@
-import type { SettingTab } from '@affine/core/modules/dialogs/constant';
-import { EmbeddingSettings } from '@affine/core/modules/workspace-indexer-embedding';
-import { useI18n } from '@affine/i18n';
+import type { SettingTab } from '@blank/core/modules/dialogs/constant';
+import { EmbeddingSettings } from '@blank/core/modules/workspace-indexer-embedding';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
+import { isAiDisabled } from '@blank/core/utils/local-only';
+import { useI18n } from '@blank/i18n';
 import {
   AiEmbeddingIcon,
   CollaborationIcon,
@@ -53,13 +55,13 @@ export const useWorkspaceSettingList = (): SettingSidebarItem[] => {
     return [
       {
         key: 'workspace:preference',
-        title: t['com.affine.settings.workspace.preferences'](),
+        title: t['com.blank.settings.workspace.preferences'](),
         icon: <SettingsIcon />,
         testId: 'workspace-setting:preference',
       },
       {
         key: 'workspace:properties',
-        title: t['com.affine.settings.workspace.properties'](),
+        title: t['com.blank.settings.workspace.properties'](),
         icon: <PropertyIcon />,
         testId: 'workspace-setting:properties',
       },
@@ -79,12 +81,22 @@ export const useWorkspaceSettingList = (): SettingSidebarItem[] => {
         key: 'workspace:embedding',
         title:
           t[
-            'com.affine.settings.workspace.indexer-embedding.embedding.title'
+            'com.blank.settings.workspace.indexer-embedding.embedding.title'
           ](),
         icon: <AiEmbeddingIcon />,
         testId: 'workspace-setting:embedding',
       },
-    ].filter((item): item is SettingSidebarItem => !!item);
+    ].filter(item => {
+      if (isBlankBuild()) {
+        if (item.key === 'workspace:embedding' && isAiDisabled()) {
+          return false;
+        }
+        if (item.key === 'workspace:members') {
+          return false;
+        }
+      }
+      return true;
+    });
   }, [t]);
 
   return items;

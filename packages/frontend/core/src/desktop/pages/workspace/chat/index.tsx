@@ -1,38 +1,38 @@
-import { observeResize, useConfirmModal } from '@affine/component';
+import { observeResize, useConfirmModal } from '@blank/component';
 import {
   AIChatRuntime,
   createAIRequestService,
   useAIChatElement,
   useAIChatRuntime,
   WorkspaceAIChatSessionStrategy,
-} from '@affine/core/blocksuite/ai';
-import { AIChatContent } from '@affine/core/blocksuite/ai/components/ai-chat-content';
+} from '@blank/core/blocksuite/ai';
+import { AIChatContent } from '@blank/core/blocksuite/ai/components/ai-chat-content';
 import {
   AIChatTabs,
   AIChatToolbar,
   configureAIChatToolbar,
-} from '@affine/core/blocksuite/ai/components/ai-chat-toolbar';
-import { getViewManager } from '@affine/core/blocksuite/manager/view';
-import { NotificationServiceImpl } from '@affine/core/blocksuite/view-extensions/editor-view/notification-service';
-import { useAIChatConfig } from '@affine/core/components/hooks/affine/use-ai-chat-config';
-import { useAISpecs } from '@affine/core/components/hooks/affine/use-ai-specs';
-import { useAISubscribe } from '@affine/core/components/hooks/affine/use-ai-subscribe';
+} from '@blank/core/blocksuite/ai/components/ai-chat-toolbar';
+import { getViewManager } from '@blank/core/blocksuite/manager/view';
+import { NotificationServiceImpl } from '@blank/core/blocksuite/view-extensions/editor-view/notification-service';
+import { useAIChatConfig } from '@blank/core/components/hooks/blank/use-ai-chat-config';
+import { useAISpecs } from '@blank/core/components/hooks/blank/use-ai-specs';
+import { useAISubscribe } from '@blank/core/components/hooks/blank/use-ai-subscribe';
 import {
   AIDraftService,
   AIToolsConfigService,
-} from '@affine/core/modules/ai-button';
-import { AIModelService } from '@affine/core/modules/ai-button/services/models';
+} from '@blank/core/modules/ai-button';
+import { AIModelService } from '@blank/core/modules/ai-button/services/models';
 import {
   EventSourceService,
   GraphQLService,
   ServerService,
   SubscriptionService,
-} from '@affine/core/modules/cloud';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { PeekViewService } from '@affine/core/modules/peek-view';
-import { NbstoreService } from '@affine/core/modules/storage';
-import { AppThemeService } from '@affine/core/modules/theme';
+} from '@blank/core/modules/cloud';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { PeekViewService } from '@blank/core/modules/peek-view';
+import { NbstoreService } from '@blank/core/modules/storage';
+import { AppThemeService } from '@blank/core/modules/theme';
 import {
   ViewBody,
   ViewHeader,
@@ -40,12 +40,12 @@ import {
   ViewService,
   ViewTitle,
   WorkbenchService,
-} from '@affine/core/modules/workbench';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
-import { BlockStdScope } from '@blocksuite/affine/std';
-import type { Workspace } from '@blocksuite/affine/store';
+} from '@blank/core/modules/workbench';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import { RefNodeSlotsProvider } from '@blocksuite/blank/inlines/reference';
+import { BlockStdScope } from '@blocksuite/blank/std';
+import type { Workspace } from '@blocksuite/blank/store';
 import { type Signal, signal } from '@preact/signals-core';
 import { useFramework, useService } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
@@ -155,8 +155,8 @@ export const Component = () => {
   const deleteSession = useCallback(
     async (sessionToDelete: BlockSuitePresets.AIRecentSession) => {
       const confirm = await notificationService.confirm({
-        title: t['com.affine.ai.chat-panel.session.delete.confirm.title'](),
-        message: t['com.affine.ai.chat-panel.session.delete.confirm.message'](),
+        title: t['com.blank.ai.chat-panel.session.delete.confirm.title'](),
+        message: t['com.blank.ai.chat-panel.session.delete.confirm.message'](),
         confirmText: t['Delete'](),
         cancelText: t['Cancel'](),
       });
@@ -166,7 +166,7 @@ export const Component = () => {
         sessionId: sessionToDelete.sessionId,
       });
       notificationService.toast(
-        t['com.affine.ai.chat-panel.session.delete.toast.success'](),
+        t['com.blank.ai.chat-panel.session.delete.toast.success'](),
         {}
       );
     },
@@ -188,12 +188,12 @@ export const Component = () => {
       content.docDisplayConfig = docDisplayConfig;
       content.searchMenuConfig = searchMenuConfig;
       content.reasoningConfig = reasoningConfig;
-      content.affineFeatureFlagService = framework.get(FeatureFlagService);
-      content.affineWorkspaceDialogService = framework.get(
+      content.blankFeatureFlagService = framework.get(FeatureFlagService);
+      content.blankWorkspaceDialogService = framework.get(
         WorkspaceDialogService
       );
       content.peekViewService = framework.get(PeekViewService);
-      content.affineThemeService = framework.get(AppThemeService);
+      content.blankThemeService = framework.get(AppThemeService);
       content.notificationService = notificationService;
       content.aiDraftService = framework.get(AIDraftService);
       content.aiToolsConfigService = framework.get(AIToolsConfigService);
@@ -289,7 +289,7 @@ export const Component = () => {
 
   return (
     <>
-      <ViewTitle title={t['com.affine.workspaceSubPath.chat']()} />
+      <ViewTitle title={t['com.blank.workspaceSubPath.chat']()} />
       <ViewIcon icon="ai" />
       <ViewHeader>
         <div className={styles.chatHeader}>

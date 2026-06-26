@@ -1,5 +1,5 @@
-import { notify } from '@affine/component';
-import { I18n } from '@affine/i18n';
+import { notify } from '@blank/component';
+import { I18n } from '@blank/i18n';
 import { OnEvent, Service } from '@toeverything/infra';
 import type { To } from 'history';
 import { debounce } from 'lodash-es';
@@ -157,7 +157,7 @@ export class DesktopApiService extends Service {
         }
       })().catch(e => {
         notify.error({
-          title: I18n['com.affine.auth.toast.title.failed'](),
+          title: I18n['com.blank.auth.toast.title.failed'](),
           message: (e as any).message,
         });
       });

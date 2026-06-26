@@ -1,3 +1,3 @@
 # web
 
-AFFiNE Desktop Edition Web app.
+Blank Desktop Edition Web app.

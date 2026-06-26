@@ -1,17 +1,20 @@
-import { toast } from '@affine/component';
-import { getStoreManager } from '@affine/core/blocksuite/manager/store';
-import { AppSidebarService } from '@affine/core/modules/app-sidebar';
-import { DocsService } from '@affine/core/modules/doc';
+import { toast } from '@blank/component';
+import { AppSidebarService } from '@blank/core/modules/app-sidebar';
+import { DocsService } from '@blank/core/modules/doc';
 import {
   EditorSettingService,
   resolveNewDocTitle,
-} from '@affine/core/modules/editor-setting';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { getAFFiNEWorkspaceSchema } from '@affine/core/modules/workspace';
-import { type DocMode } from '@blocksuite/affine/model';
-import type { Workspace } from '@blocksuite/affine/store';
+} from '@blank/core/modules/editor-setting';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { type DocMode } from '@blocksuite/blank/model';
+import type { Workspace } from '@blocksuite/blank/store';
 import { LiveData, useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useMemo } from 'react';
+
+async function getStoreExtensions() {
+  const { getStoreManager } = await import('@blank/core/blocksuite/manager/store');
+  return getStoreManager().config.init().value.get('store');
+}
 
 export const usePageHelper = (docCollection: Workspace) => {
   const {
@@ -33,19 +36,23 @@ export const usePageHelper = (docCollection: Workspace) => {
     useMemo(() => LiveData.from(docsService.allDocTitle$(), []), [docsService])
   );
 
+  const autoTitleNewDocWithCurrentDate =
+    settings?.autoTitleNewDocWithCurrentDate ?? false;
+  const newDocDateTitleFormat = settings?.newDocDateTitleFormat ?? 'DD-MM-YYYY';
+
   const createBlankDoc = useCallback(() => {
     const title = resolveNewDocTitle({
-      autoTitleEnabled: settings.autoTitleNewDocWithCurrentDate,
+      autoTitleEnabled: autoTitleNewDocWithCurrentDate,
       existingTitles: allDocTitles.map(doc => doc.title).filter(Boolean),
-      format: settings.newDocDateTitleFormat,
+      format: newDocDateTitleFormat,
     });
 
     return docsService.createDoc(title ? { title } : undefined);
   }, [
     allDocTitles,
+    autoTitleNewDocWithCurrentDate,
     docsService,
-    settings.autoTitleNewDocWithCurrentDate,
-    settings.newDocDateTitleFormat,
+    newDocDateTitleFormat,
   ]);
 
   const createPageAndOpen = useCallback(
@@ -92,7 +99,7 @@ export const usePageHelper = (docCollection: Workspace) => {
   const importFileAndOpen = useMemo(
     () => async () => {
       const { showImportModal } =
-        await import('@blocksuite/affine/widgets/linked-doc');
+        await import('@blocksuite/blank/widgets/linked-doc');
       const { promise, resolve, reject } =
         Promise.withResolvers<
           Parameters<
@@ -120,10 +127,13 @@ export const usePageHelper = (docCollection: Workspace) => {
         const pageId = pageIds[0];
         workbench.openDoc(pageId);
       };
+      const { ensureBlankWorkspaceSchema } = await import(
+        '@blank/core/modules/workspace/global-schema'
+      );
       showImportModal({
         collection: docCollection,
-        schema: getAFFiNEWorkspaceSchema(),
-        extensions: getStoreManager().config.init().value.get('store'),
+        schema: await ensureBlankWorkspaceSchema(),
+        extensions: await getStoreExtensions(),
         onSuccess,
         onFail: message => {
           reject(new Error(message));

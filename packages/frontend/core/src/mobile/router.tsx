@@ -1,4 +1,5 @@
-import { NavigateContext } from '@affine/core/components/hooks/use-navigate-helper';
+import { NavigateContext } from '@blank/core/components/hooks/use-navigate-helper';
+import { getInstantBootPath } from '@blank/core/utils/blank-fast-boot';
 import { wrapCreateBrowserRouterV6 } from '@sentry/react';
 import type { RouteObject } from 'react-router-dom';
 import {
@@ -25,6 +26,18 @@ export const topLevelRoutes = [
     children: [
       {
         path: '/',
+        loader: ({ request }) => {
+          const { pathname } = new URL(request.url);
+          if (
+            pathname !== '/' &&
+            pathname !== '/index.html' &&
+            !pathname.endsWith('/index.html')
+          ) {
+            return null;
+          }
+          const fast = getInstantBootPath();
+          return fast ? redirect(fast) : null;
+        },
         lazy: () => import('./pages/index'),
       },
       {
@@ -53,30 +66,30 @@ export const topLevelRoutes = [
         path: '/magic-link',
         lazy: () =>
           import(
-            /* webpackChunkName: "auth" */ '@affine/core/desktop/pages/auth/magic-link'
+            /* webpackChunkName: "auth" */ '@blank/core/desktop/pages/auth/magic-link'
           ),
       },
       {
         path: '/oauth/login',
         lazy: () =>
           import(
-            /* webpackChunkName: "auth" */ '@affine/core/desktop/pages/auth/oauth-login'
+            /* webpackChunkName: "auth" */ '@blank/core/desktop/pages/auth/oauth-login'
           ),
       },
       {
         path: '/oauth/callback',
         lazy: () =>
           import(
-            /* webpackChunkName: "auth" */ '@affine/core/desktop/pages/auth/oauth-callback'
+            /* webpackChunkName: "auth" */ '@blank/core/desktop/pages/auth/oauth-callback'
           ),
       },
       {
         path: '/redirect-proxy',
-        lazy: () => import('@affine/core/desktop/pages/redirect'),
+        lazy: () => import('@blank/core/desktop/pages/redirect'),
       },
       {
         path: '/open-app/:action',
-        lazy: () => import('@affine/core/desktop/pages/open-app'),
+        lazy: () => import('@blank/core/desktop/pages/open-app'),
       },
       {
         path: '*',

@@ -1,19 +1,19 @@
-import { FlexWrapper, Input, notify } from '@affine/component';
+import { FlexWrapper, Input, notify } from '@blank/component';
 import {
   SettingHeader,
   SettingRow,
   SettingWrapper,
-} from '@affine/component/setting-components';
-import { Avatar } from '@affine/component/ui/avatar';
-import { Button } from '@affine/component/ui/button';
-import { useSignOut } from '@affine/core/components/hooks/affine/use-sign-out';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { useCatchEventCallback } from '@affine/core/components/hooks/use-catch-event-hook';
-import { Upload } from '@affine/core/components/pure/file-upload';
-import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import { SubscriptionPlan } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+} from '@blank/component/setting-components';
+import { Avatar } from '@blank/component/ui/avatar';
+import { Button } from '@blank/component/ui/button';
+import { useSignOut } from '@blank/core/components/hooks/blank/use-sign-out';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { useCatchEventCallback } from '@blank/core/components/hooks/use-catch-event-hook';
+import { Upload } from '@blank/core/components/pure/file-upload';
+import { GlobalDialogService } from '@blank/core/modules/dialogs';
+import { SubscriptionPlan } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
 import { ArrowRightSmallIcon, CameraIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
@@ -105,20 +105,20 @@ export const AvatarAndName = () => {
 
   return (
     <SettingRow
-      name={t['com.affine.settings.profile']()}
-      desc={t['com.affine.settings.profile.message']()}
+      name={t['com.blank.settings.profile']()}
+      desc={t['com.blank.settings.profile.message']()}
       spreadCol={false}
     >
       <FlexWrapper style={{ margin: '12px 0 24px 0' }} alignItems="center">
         <UserAvatar />
 
         <div className={styles.profileInputWrapper}>
-          <label>{t['com.affine.settings.profile.name']()}</label>
+          <label>{t['com.blank.settings.profile.name']()}</label>
           <FlexWrapper alignItems="center">
             <Input
               defaultValue={input}
               data-testid="user-name-input"
-              placeholder={t['com.affine.settings.profile.placeholder']()}
+              placeholder={t['com.blank.settings.profile.placeholder']()}
               maxLength={64}
               minLength={0}
               style={{ width: 280, height: 32 }}
@@ -133,7 +133,7 @@ export const AvatarAndName = () => {
                   marginLeft: '12px',
                 }}
               >
-                {t['com.affine.editCollection.save']()}
+                {t['com.blank.editCollection.save']()}
               </Button>
             ) : null}
           </FlexWrapper>
@@ -162,7 +162,7 @@ const StoragePanel = ({
 
   return (
     <SettingRow
-      name={t['com.affine.storage.title']()}
+      name={t['com.blank.storage.title']()}
       desc=""
       spreadCol={false}
     >
@@ -219,30 +219,30 @@ export const AccountSetting = ({
   return (
     <>
       <SettingHeader
-        title={t['com.affine.setting.account']()}
-        subtitle={t['com.affine.setting.account.message']()}
+        title={t['com.blank.setting.account']()}
+        subtitle={t['com.blank.setting.account.message']()}
         data-testid="account-title"
       />
       <AvatarAndName />
       <SettingWrapper>
         <SettingRow
-          name={t['com.affine.settings.email']()}
+          name={t['com.blank.settings.email']()}
           desc={account.email}
         >
           <Button onClick={onChangeEmail}>
             {account.info?.emailVerified
-              ? t['com.affine.settings.email.action.change']()
-              : t['com.affine.settings.email.action.verify']()}
+              ? t['com.blank.settings.email.action.change']()
+              : t['com.blank.settings.email.action.verify']()}
           </Button>
         </SettingRow>
         <SettingRow
-          name={t['com.affine.settings.password']()}
-          desc={t['com.affine.settings.password.message']()}
+          name={t['com.blank.settings.password']()}
+          desc={t['com.blank.settings.password.message']()}
         >
           <Button onClick={onPasswordButtonClick}>
             {hasPassword
-              ? t['com.affine.settings.password.action.change']()
-              : t['com.affine.settings.password.action.set']()}
+              ? t['com.blank.settings.password.action.change']()
+              : t['com.blank.settings.password.action.set']()}
           </Button>
         </SettingRow>
         <StoragePanel onChangeSettingState={onChangeSettingState} />
@@ -252,7 +252,7 @@ export const AccountSetting = ({
         <IntegrationsPanel onChangeSettingState={onChangeSettingState} />
         <SettingRow
           name={t[`Sign out`]()}
-          desc={t['com.affine.setting.sign.out.message']()}
+          desc={t['com.blank.setting.sign.out.message']()}
           style={{ cursor: 'pointer' }}
           data-testid="sign-out-button"
           onClick={openSignOutModal}

@@ -1,11 +1,11 @@
-import { Menu, MenuItem, MenuTrigger, notify } from '@affine/component';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { EditorService } from '@affine/core/modules/editor';
-import { ShareInfoService } from '@affine/core/modules/share-doc';
-import { UserFriendlyError } from '@affine/error';
-import { PublicDocMode } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+import { Menu, MenuItem, MenuTrigger, notify } from '@blank/component';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { EditorService } from '@blank/core/modules/editor';
+import { ShareInfoService } from '@blank/core/modules/share-doc';
+import { UserFriendlyError } from '@blank/error';
+import { PublicDocMode } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import {
   LockIcon,
   SingleSelectCheckSolidIcon,
@@ -38,22 +38,22 @@ export const PublicDoc = ({ disabled }: { disabled?: boolean }) => {
       notify.error({
         title:
           t[
-            'com.affine.share-menu.disable-publish-link.notification.success.title'
+            'com.blank.share-menu.disable-publish-link.notification.success.title'
           ](),
         message:
           t[
-            'com.affine.share-menu.disable-publish-link.notification.success.message'
+            'com.blank.share-menu.disable-publish-link.notification.success.message'
           ](),
       });
     } catch (err) {
       notify.error({
         title:
           t[
-            'com.affine.share-menu.disable-publish-link.notification.fail.title'
+            'com.blank.share-menu.disable-publish-link.notification.fail.title'
           ](),
         message:
           t[
-            'com.affine.share-menu.disable-publish-link.notification.fail.message'
+            'com.blank.share-menu.disable-publish-link.notification.fail.message'
           ](),
       });
       console.log(err);
@@ -73,11 +73,11 @@ export const PublicDoc = ({ disabled }: { disabled?: boolean }) => {
       notify.success({
         title:
           t[
-            'com.affine.share-menu.create-public-link.notification.success.title'
+            'com.blank.share-menu.create-public-link.notification.success.title'
           ](),
         message:
           t[
-            'com.affine.share-menu.create-public-link.notification.success.message'
+            'com.blank.share-menu.create-public-link.notification.success.message'
           ](),
         style: 'normal',
         icon: <SingleSelectCheckSolidIcon color={cssVar('primaryColor')} />,
@@ -94,14 +94,14 @@ export const PublicDoc = ({ disabled }: { disabled?: boolean }) => {
   return (
     <div className={styles.rowContainerStyle}>
       <div className={styles.labelStyle}>
-        {t['com.affine.share-menu.option.link.label']()}
+        {t['com.blank.share-menu.option.link.label']()}
       </div>
       {disabled ? (
         <div className={clsx(styles.menuTriggerStyle, 'disable')}>
           <div className={styles.menuTriggerText}>
             {isSharedPage
-              ? t['com.affine.share-menu.option.link.readonly']()
-              : t['com.affine.share-menu.option.link.no-access']()}
+              ? t['com.blank.share-menu.option.link.readonly']()
+              : t['com.blank.share-menu.option.link.no-access']()}
           </div>
         </div>
       ) : (
@@ -118,7 +118,7 @@ export const PublicDoc = ({ disabled }: { disabled?: boolean }) => {
               >
                 <div className={styles.publicItemRowStyle}>
                   <div>
-                    {t['com.affine.share-menu.option.link.no-access']()}
+                    {t['com.blank.share-menu.option.link.no-access']()}
                   </div>
                 </div>
               </MenuItem>
@@ -129,7 +129,7 @@ export const PublicDoc = ({ disabled }: { disabled?: boolean }) => {
                 selected={!!isSharedPage}
               >
                 <div className={styles.publicItemRowStyle}>
-                  <div>{t['com.affine.share-menu.option.link.readonly']()}</div>
+                  <div>{t['com.blank.share-menu.option.link.readonly']()}</div>
                 </div>
               </MenuItem>
             </>
@@ -147,8 +147,8 @@ export const PublicDoc = ({ disabled }: { disabled?: boolean }) => {
             disabled={isRevalidating}
           >
             {isSharedPage
-              ? t['com.affine.share-menu.option.link.readonly']()
-              : t['com.affine.share-menu.option.link.no-access']()}
+              ? t['com.blank.share-menu.option.link.readonly']()
+              : t['com.blank.share-menu.option.link.no-access']()}
           </MenuTrigger>
         </Menu>
       )}

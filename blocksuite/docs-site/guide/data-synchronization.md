@@ -1,7 +1,7 @@
 # Data Synchronization
 
 ::: info
-🌐 This documentation has a [Chinese translation](https://insider.affine.pro/share/af3478a2-9c9c-4d16-864d-bffa1eb10eb6/xiObHbAC0yUb7HmX4-fjg).
+🌐 This documentation has a [Chinese translation](https://insider.blank.pro/share/af3478a2-9c9c-4d16-864d-bffa1eb10eb6/xiObHbAC0yUb7HmX4-fjg).
 :::
 
 This guide explores several optimal ways to synchronize (in other words, save and load) documents in BlockSuite.
@@ -53,19 +53,19 @@ In BlockSuite, the data-driven synchronization strategy is implemented through p
 - Similarly, when loading an existing document, the method is to create a new empty `doc` object and connect it to the corresponding provider. At this time, the block tree data will also flow in from the provider data source:
 
 ```ts
-import { AffineSchemas } from '@blocksuite/blocks';
-import { AffineEditorContainer } from '@blocksuite/presets';
+import { BlankSchemas } from '@blocksuite/blocks';
+import { BlankEditorContainer } from '@blocksuite/presets';
 import { Schema } from '@blocksuite/store';
 import { DocCollection, Text } from '@blocksuite/store';
 import { IndexeddbPersistence } from 'y-indexeddb';
 
-const schema = new Schema().register(AffineSchemas);
+const schema = new Schema().register(BlankSchemas);
 const collection = new DocCollection({ schema });
 collection.meta.initialize();
 
 // Let's start with an empty doc
 const doc = collection.createDoc();
-const editor = new AffineEditorContainer();
+const editor = new BlankEditorContainer();
 editor.doc = doc;
 document.body.append(editor);
 
@@ -76,12 +76,12 @@ function createDoc() {
   new IndexeddbPersistence('provider-demo', doc.spaceDoc);
 
   doc.load(() => {
-    const pageBlockId = doc.addBlock('affine:page', {
+    const pageBlockId = doc.addBlock('blank:page', {
       title: new Text('Test'),
     });
-    doc.addBlock('affine:surface', {}, pageBlockId);
-    const noteId = doc.addBlock('affine:note', {}, pageBlockId);
-    doc.addBlock('affine:paragraph', { text: new Text('Hello World!') }, noteId);
+    doc.addBlock('blank:surface', {}, pageBlockId);
+    const noteId = doc.addBlock('blank:note', {}, pageBlockId);
+    doc.addBlock('blank:paragraph', { text: new Text('Hello World!') }, noteId);
   });
 }
 

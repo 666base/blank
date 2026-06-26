@@ -4,13 +4,13 @@ import {
   DragHandle as DragHandleIcon,
   Tooltip,
   useDraggable,
-} from '@affine/component';
-import { DocsService } from '@affine/core/modules/doc';
-import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
-import { WorkbenchLink } from '@affine/core/modules/workbench';
-import type { AffineDNDData } from '@affine/core/types/dnd';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+} from '@blank/component';
+import { DocsService } from '@blank/core/modules/doc';
+import { DocDisplayMetaService } from '@blank/core/modules/doc-display-meta';
+import { WorkbenchLink } from '@blank/core/modules/workbench';
+import type { BlankDNDData } from '@blank/core/types/dnd';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import {
   AutoTidyUpIcon,
   PropertyIcon,
@@ -148,7 +148,7 @@ export const DocListItem = ({ ...props }: DocListItemProps) => {
     [contextValue, handleMultiSelect, prevCheckAnchorId, props, selectMode]
   );
 
-  const { dragRef, CustomDragPreview } = useDraggable<AffineDNDData>(
+  const { dragRef, CustomDragPreview } = useDraggable<BlankDNDData>(
     () => ({
       canDrag: true,
       data: {

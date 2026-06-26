@@ -1,0 +1,49 @@
+{
+  "name": "@blocksuite/blank-gfx-mindmap",
+  "description": "Gfx mindmap for BlockSuite.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "sideEffects": false,
+  "keywords": [],
+  "author": "toeverything",
+  "license": "MIT",
+  "dependencies": {
+    "@blocksuite/blank-block-attachment": "workspace:*",
+    "@blocksuite/blank-block-image": "workspace:*",
+    "@blocksuite/blank-block-surface": "workspace:*",
+    "@blocksuite/blank-components": "workspace:*",
+    "@blocksuite/blank-ext-loader": "workspace:*",
+    "@blocksuite/blank-gfx-connector": "workspace:*",
+    "@blocksuite/blank-gfx-pointer": "workspace:*",
+    "@blocksuite/blank-gfx-shape": "workspace:*",
+    "@blocksuite/blank-gfx-text": "workspace:*",
+    "@blocksuite/blank-model": "workspace:*",
+    "@blocksuite/blank-shared": "workspace:*",
+    "@blocksuite/blank-widget-edgeless-toolbar": "workspace:*",
+    "@blocksuite/global": "workspace:*",
+    "@blocksuite/icons": "^2.2.17",
+    "@blocksuite/std": "workspace:*",
+    "@blocksuite/store": "workspace:*",
+    "@lit/context": "^1.1.2",
+    "@preact/signals-core": "^1.8.0",
+    "@types/lodash-es": "^4.17.12",
+    "lit": "^3.2.0",
+    "lodash-es": "^4.17.23",
+    "simple-xml-to-json": "^1.2.2",
+    "yjs": "^13.6.27"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./view": "./src/view.ts",
+    "./store": "./src/store.ts"
+  },
+  "files": [
+    "src",
+    "dist",
+    "!src/__tests__",
+    "!dist/__tests__"
+  ],
+  "version": "0.27.0"
+}

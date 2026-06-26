@@ -41,13 +41,13 @@ export class EditorSettingDocCreateMiddleware
     };
 
     const preferMode =
-      this.editorSettingService.editorSetting.settings$.value.newDocDefaultMode;
+      this.editorSettingService.editorSetting.get('newDocDefaultMode');
     const mode = preferMode === 'ask' ? 'page' : preferMode;
     docCreateOptions.primaryMode ??= mode;
 
     docCreateOptions.docProps = {
       ...docCreateOptions.docProps,
-      note: this.editorSettingService.editorSetting.get('affine:note'),
+      note: this.editorSettingService.editorSetting.get('blank:note'),
     };
 
     return docCreateOptions;

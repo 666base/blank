@@ -1,8 +1,8 @@
-import type { ElementOrFactory } from '@affine/component';
+import type { ElementOrFactory } from '@blank/component';
 import {
   type ViewExtensionContext,
   ViewExtensionProvider,
-} from '@blocksuite/affine/ext-loader';
+} from '@blocksuite/blank/ext-loader';
 import type { TemplateResult } from 'lit';
 import { z } from 'zod';
 
@@ -21,7 +21,7 @@ const optionsSchema = z.object({
 type PdfViewOptions = z.infer<typeof optionsSchema>;
 
 export class PdfViewExtension extends ViewExtensionProvider<PdfViewOptions> {
-  override name = 'affine-view-pdf';
+  override name = 'blank-view-pdf';
 
   override schema = optionsSchema;
 

@@ -1,4 +1,4 @@
-import type { NbstoreService } from '@affine/core/modules/storage';
+import type { NbstoreService } from '@blank/core/modules/storage';
 import {
   ContextCategories,
   type CopilotChatHistoryFragment,
@@ -9,7 +9,7 @@ import {
   type QueryResponse,
   type RequestOptions,
   type UpdateChatSessionInput,
-} from '@affine/graphql';
+} from '@blank/graphql';
 import { Subject } from 'rxjs';
 
 import type { ActionEventType } from '../../provider';

@@ -10,11 +10,11 @@ import {
   updateCommentMutation,
   updateReplyMutation,
   uploadCommentAttachmentMutation,
-} from '@affine/graphql';
+} from '@blank/graphql';
 import type {
   RealtimeSubscriptionReady,
   RealtimeTopicEventOf,
-} from '@affine/realtime';
+} from '@blank/realtime';
 import { Entity } from '@toeverything/infra';
 import type { Observable } from 'rxjs';
 

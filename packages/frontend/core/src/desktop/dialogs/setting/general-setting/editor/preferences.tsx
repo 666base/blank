@@ -1,32 +1,32 @@
-import { Button } from '@affine/component';
+import { Button } from '@blank/component';
 import {
   SettingRow,
   SettingWrapper,
-} from '@affine/component/setting-components';
-import { useI18n } from '@affine/i18n';
+} from '@blank/component/setting-components';
+import { useI18n } from '@blank/i18n';
 
 export const Preferences = () => {
   const t = useI18n();
   return (
     <SettingWrapper
-      title={t['com.affine.settings.editorSettings.preferences']()}
+      title={t['com.blank.settings.editorSettings.preferences']()}
     >
       <SettingRow
         name={t[
-          'com.affine.settings.editorSettings.preferences.export.title'
+          'com.blank.settings.editorSettings.preferences.export.title'
         ]()}
         desc={t[
-          'com.affine.settings.editorSettings.preferences.export.description'
+          'com.blank.settings.editorSettings.preferences.export.description'
         ]()}
       >
         <Button>Export</Button>
       </SettingRow>
       <SettingRow
         name={t[
-          'com.affine.settings.editorSettings.preferences.import.title'
+          'com.blank.settings.editorSettings.preferences.import.title'
         ]()}
         desc={t[
-          'com.affine.settings.editorSettings.preferences.import.description'
+          'com.blank.settings.editorSettings.preferences.import.description'
         ]()}
       >
         <Button>Import</Button>

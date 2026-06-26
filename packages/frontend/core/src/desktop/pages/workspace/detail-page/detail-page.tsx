@@ -1,27 +1,27 @@
-import { Scrollable } from '@affine/component';
-import { PageDetailLoading } from '@affine/component/page-detail-skeleton';
-import type { AffineEditorContainer } from '@affine/core/blocksuite/block-suite-editor';
-import { EditorOutlineViewer } from '@affine/core/blocksuite/outline-viewer';
-import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
-// import { PageAIOnboarding } from '@affine/core/components/affine/ai-onboarding';
-import { GlobalPageHistoryModal } from '@affine/core/components/affine/page-history-modal';
-import { CommentSidebar } from '@affine/core/components/comment/sidebar';
-import { useGuard } from '@affine/core/components/guard';
-import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
-import { useRegisterBlocksuiteEditorCommands } from '@affine/core/components/hooks/affine/use-register-blocksuite-editor-commands';
-import { useActiveBlocksuiteEditor } from '@affine/core/components/hooks/use-block-suite-editor';
-import { PageDetailEditor } from '@affine/core/components/page-detail-editor';
-import { WorkspacePropertySidebar } from '@affine/core/components/properties/sidebar';
-import { TrashPageFooter } from '@affine/core/components/pure/trash-page-footer';
-import { TopTip } from '@affine/core/components/top-tip';
-import { ServerService } from '@affine/core/modules/cloud';
-import { DocService } from '@affine/core/modules/doc';
-import { EditorService } from '@affine/core/modules/editor';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { GlobalContextService } from '@affine/core/modules/global-context';
-import { JournalService } from '@affine/core/modules/journal';
-import { PeekViewService } from '@affine/core/modules/peek-view';
-import { RecentDocsService } from '@affine/core/modules/quicksearch';
+import { Scrollable } from '@blank/component';
+import { CachedDetailPageLoading } from '@blank/core/components/cached-detail-page-loading';
+import { usePersistDocSnapshot } from '@blank/core/components/hooks/use-persist-doc-snapshot';
+import type { BlankEditorContainer } from '@blank/core/blocksuite/block-suite-editor';
+import { EditorOutlineViewer } from '@blank/core/blocksuite/outline-viewer';
+import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
+// import { PageAIOnboarding } from '@blank/core/components/blank/ai-onboarding';
+import { CommentSidebar } from '@blank/core/components/comment/sidebar';
+import { useGuard } from '@blank/core/components/guard';
+import { useAppSettingHelper } from '@blank/core/components/hooks/blank/use-app-setting-helper';
+import { useRegisterBlocksuiteEditorCommands } from '@blank/core/components/hooks/blank/use-register-blocksuite-editor-commands';
+import { useActiveBlocksuiteEditor } from '@blank/core/components/hooks/use-block-suite-editor';
+import { PageDetailEditor } from '@blank/core/components/page-detail-editor';
+import { WorkspacePropertySidebar } from '@blank/core/components/properties/sidebar';
+import { TrashPageFooter } from '@blank/core/components/pure/trash-page-footer';
+import { TopTip } from '@blank/core/components/top-tip';
+import { ServerService } from '@blank/core/modules/cloud';
+import { DocService } from '@blank/core/modules/doc';
+import { EditorService } from '@blank/core/modules/editor';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { GlobalContextService } from '@blank/core/modules/global-context';
+import { JournalService } from '@blank/core/modules/journal';
+import { PeekViewService } from '@blank/core/modules/peek-view';
+import { RecentDocsService } from '@blank/core/modules/quicksearch';
 import {
   useIsActiveView,
   ViewBody,
@@ -29,15 +29,17 @@ import {
   ViewService,
   ViewSidebarTab,
   WorkbenchService,
-} from '@affine/core/modules/workbench';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { isNewTabTrigger } from '@affine/core/utils';
-import { ServerFeature } from '@affine/graphql';
-import track from '@affine/track';
-import { DisposableGroup } from '@blocksuite/affine/global/disposable';
-import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
-import { focusBlockEnd } from '@blocksuite/affine/shared/commands';
-import { getLastNoteBlock } from '@blocksuite/affine/shared/utils';
+} from '@blank/core/modules/workbench';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { preloadBlockSuiteEditor } from '@blank/core/blocksuite/preload-block-suite-editor';
+import { isNewTabTrigger } from '@blank/core/utils';
+import { persistFastBootRoute } from '@blank/core/utils/blank-fast-boot';
+import { ServerFeature } from '@blank/graphql';
+import track from '@blank/track';
+import { DisposableGroup } from '@blocksuite/blank/global/disposable';
+import { RefNodeSlotsProvider } from '@blocksuite/blank/inlines/reference';
+import { focusBlockEnd } from '@blocksuite/blank/shared/commands';
+import { getLastNoteBlock } from '@blocksuite/blank/shared/utils';
 import {
   ChartPanelIcon,
   CommentIcon,
@@ -55,7 +57,7 @@ import {
 } from '@toeverything/infra';
 import clsx from 'clsx';
 import { nanoid } from 'nanoid';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { PageNotFound } from '../../404';
@@ -63,10 +65,19 @@ import * as styles from './detail-page.css';
 import { DetailPageHeader } from './detail-page-header';
 import { DetailPageWrapper } from './detail-page-wrapper';
 import { EditorAdapterPanel } from './tabs/adapter';
-import { EditorAnalyticsPanel } from './tabs/analytics';
 import { EditorFramePanel } from './tabs/frame';
 import { EditorJournalPanel } from './tabs/journal';
 import { EditorOutlinePanel } from './tabs/outline';
+
+const EditorAnalyticsPanel = lazy(() =>
+  import('./tabs/analytics').then(m => ({ default: m.EditorAnalyticsPanel }))
+);
+
+const GlobalPageHistoryModal = lazy(() =>
+  import('@blank/core/components/blank/page-history-modal').then(m => ({
+    default: m.GlobalPageHistoryModal,
+  }))
+);
 
 const DetailPageImpl = memo(function DetailPageImpl() {
   const {
@@ -169,7 +180,7 @@ const DetailPageImpl = memo(function DetailPageImpl() {
   const isJournal = !!useLiveData(journalService.journalDate$(doc.id));
 
   const onLoad = useCallback(
-    (editorContainer: AffineEditorContainer) => {
+    (editorContainer: BlankEditorContainer) => {
       const std = editorContainer.std;
       const disposable = new DisposableGroup();
 
@@ -200,7 +211,7 @@ const DetailPageImpl = memo(function DetailPageImpl() {
         const refNodeSlots = std.getOptional(RefNodeSlotsProvider);
         if (refNodeSlots) {
           disposable.add(
-            // the event should not be emitted by AffineReference
+            // the event should not be emitted by BlankReference
             refNodeSlots.docLinkClicked.subscribe(
               ({ pageId, params, openMode, event, host }) => {
                 if (host !== editorContainer.host) {
@@ -314,7 +325,7 @@ const DetailPageImpl = memo(function DetailPageImpl() {
           data-has-scroll-top={hasScrollTop}
         >
           {/* Add a key to force rerender when page changed, to avoid error boundary persisting. */}
-          <AffineErrorBoundary key={doc.id}>
+          <BlankErrorBoundary key={doc.id}>
             <TopTip pageId={doc.id} workspace={workspace} />
             <Scrollable.Root>
               <Scrollable.Viewport
@@ -322,8 +333,8 @@ const DetailPageImpl = memo(function DetailPageImpl() {
                 ref={scrollViewportRef}
                 data-dragging={dragging}
                 className={clsx(
-                  'affine-page-viewport',
-                  styles.affineDocViewport,
+                  'blank-page-viewport',
+                  styles.blankDocViewport,
                   styles.editorContainer,
                   { [styles.pageModeViewportContentBox]: mode === 'page' }
                 )}
@@ -341,7 +352,7 @@ const DetailPageImpl = memo(function DetailPageImpl() {
               show={mode === 'page' && !isSideBarOpen}
               openOutlinePanel={openOutlinePanel}
             />
-          </AffineErrorBoundary>
+          </BlankErrorBoundary>
           {isInTrash ? <TrashPageFooter /> : null}
         </div>
       </ViewBody>
@@ -403,18 +414,22 @@ const DetailPageImpl = memo(function DetailPageImpl() {
         </ViewSidebarTab>
       )}
 
-      {workspace.flavour === 'affine-cloud' && enableViewAnalyticsPanel && (
+      {workspace.flavour === 'blank-cloud' && enableViewAnalyticsPanel && (
         <ViewSidebarTab tabId="analytics" icon={<ChartPanelIcon />}>
           <Scrollable.Root className={styles.sidebarScrollArea}>
             <Scrollable.Viewport>
-              <EditorAnalyticsPanel workspaceId={workspace.id} docId={doc.id} />
+              <Suspense fallback={null}>
+                <EditorAnalyticsPanel workspaceId={workspace.id} docId={doc.id} />
+              </Suspense>
             </Scrollable.Viewport>
             <Scrollable.Scrollbar />
           </Scrollable.Root>
         </ViewSidebarTab>
       )}
 
-      <GlobalPageHistoryModal />
+      <Suspense fallback={null}>
+        <GlobalPageHistoryModal />
+      </Suspense>
       {/* FIXME: wait for better ai, <PageAIOnboarding /> */}
     </FrameworkScope>
   );
@@ -423,15 +438,17 @@ const DetailPageImpl = memo(function DetailPageImpl() {
 export const Component = () => {
   const params = useParams();
   const recentPages = useService(RecentDocsService);
+  const workspace = useService(WorkspaceService).workspace;
 
   useEffect(() => {
     if (params.pageId) {
       const pageId = params.pageId;
-      localStorage.setItem('last_page_id', pageId);
+      preloadBlockSuiteEditor();
+      persistFastBootRoute(workspace.id, pageId, workspace.flavour);
 
       recentPages.addRecentDoc(pageId);
     }
-  }, [params, recentPages]);
+  }, [params.pageId, recentPages, workspace.id]);
 
   const pageId = params.pageId;
   const canAccess = useGuard('Doc_Read', pageId ?? '');
@@ -440,7 +457,7 @@ export const Component = () => {
     <DetailPageWrapper
       pageId={pageId}
       canAccess={canAccess}
-      skeleton={<PageDetailLoading />}
+      skeleton={<CachedDetailPageLoading pageId={pageId} />}
       notFound={<PageNotFound noPermission />}
     >
       <DetailPageImpl />

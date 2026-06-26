@@ -1,11 +1,11 @@
-import { notify } from '@affine/component';
-import { AffineOtherPageLayout } from '@affine/component/affine-other-page-layout';
-import { SignInPageContainer } from '@affine/component/auth-components';
-import { SignInPanel } from '@affine/core/components/sign-in';
-import { SignInBackgroundArts } from '@affine/core/components/sign-in/background-arts';
-import type { AuthSessionStatus } from '@affine/core/modules/cloud/entities/session';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
-import { useI18n } from '@affine/i18n';
+import { notify } from '@blank/component';
+import { BlankOtherPageLayout } from '@blank/component/blank-other-page-layout';
+import { SignInPageContainer } from '@blank/component/auth-components';
+import { SignInPanel } from '@blank/core/components/sign-in';
+import { SignInBackgroundArts } from '@blank/core/components/sign-in/background-arts';
+import type { AuthSessionStatus } from '@blank/core/modules/cloud/entities/session';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
+import { useI18n } from '@blank/i18n';
 import { useCallback, useEffect } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -31,7 +31,7 @@ export const SignIn = ({
   useEffect(() => {
     if (error) {
       notify.error({
-        title: t['com.affine.auth.toast.title.failed'](),
+        title: t['com.blank.auth.toast.title.failed'](),
         message: error,
       });
     }
@@ -83,9 +83,9 @@ export const Component = () => {
   }
 
   return (
-    <AffineOtherPageLayout>
+    <BlankOtherPageLayout>
       <SignInBackgroundArts />
       <SignIn />
-    </AffineOtherPageLayout>
+    </BlankOtherPageLayout>
   );
 };

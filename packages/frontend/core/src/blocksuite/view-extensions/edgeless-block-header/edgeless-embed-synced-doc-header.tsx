@@ -1,11 +1,11 @@
-import { Button, IconButton, Menu, MenuItem } from '@affine/component';
-import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { stopPropagation } from '@affine/core/utils';
-import { useI18n } from '@affine/i18n';
-import { EmbedSyncedDocBlockComponent } from '@blocksuite/affine/blocks/embed-doc';
-import { isPeekable, peek } from '@blocksuite/affine/components/peek';
-import type { EmbedSyncedDocModel } from '@blocksuite/affine-model';
+import { Button, IconButton, Menu, MenuItem } from '@blank/component';
+import { DocDisplayMetaService } from '@blank/core/modules/doc-display-meta';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { stopPropagation } from '@blank/core/utils';
+import { useI18n } from '@blank/i18n';
+import { EmbedSyncedDocBlockComponent } from '@blocksuite/blank/blocks/embed-doc';
+import { isPeekable, peek } from '@blocksuite/blank/components/peek';
+import type { EmbedSyncedDocModel } from '@blocksuite/blank-model';
 import {
   ArrowDownSmallIcon,
   CenterPeekIcon,
@@ -57,8 +57,8 @@ const ToggleButton = ({ model }: { model: EmbedSyncedDocModel }) => {
       onClick={toggle}
       tooltip={
         isFolded
-          ? t['com.affine.editor.edgeless-embed-synced-doc-header.unfold']()
-          : t['com.affine.editor.edgeless-embed-synced-doc-header.fold']()
+          ? t['com.blank.editor.edgeless-embed-synced-doc-header.unfold']()
+          : t['com.blank.editor.edgeless-embed-synced-doc-header.fold']()
       }
       icon={isFolded ? <ToggleRightIcon /> : <ToggleDownIcon />}
     />
@@ -144,7 +144,7 @@ const OpenButton = ({
         prefix={<ExpandFullIcon />}
       >
         <span className={styles.buttonText}>
-          {t['com.affine.editor.edgeless-embed-synced-doc-header.open']()}
+          {t['com.blank.editor.edgeless-embed-synced-doc-header.open']()}
         </span>
       </Button>
       <MoreMenu model={model} std={std} />
@@ -166,7 +166,7 @@ const MoreMenu = ({
     return [
       {
         type: 'open-in-active-view',
-        label: t['com.affine.peek-view-controls.open-doc'](),
+        label: t['com.blank.peek-view-controls.open-doc'](),
         icon: <ExpandFullIcon />,
         onClick: () => {
           workbench.openDoc(model.props.pageId);
@@ -175,7 +175,7 @@ const MoreMenu = ({
       },
       {
         type: 'open-in-center-peek',
-        label: t['com.affine.peek-view-controls.open-doc-in-center-peek'](),
+        label: t['com.blank.peek-view-controls.open-doc-in-center-peek'](),
         icon: <CenterPeekIcon />,
         onClick: () => {
           const block = std.view.getBlock(model.id);
@@ -191,7 +191,7 @@ const MoreMenu = ({
       },
       {
         type: 'open-in-split-view',
-        label: t['com.affine.peek-view-controls.open-doc-in-split-view'](),
+        label: t['com.blank.peek-view-controls.open-doc-in-split-view'](),
         icon: <SplitViewIcon />,
         onClick: () => {
           workbench.openDoc(model.props.pageId, { at: 'beside' });
@@ -200,7 +200,7 @@ const MoreMenu = ({
       },
       {
         type: 'open-in-new-tab',
-        label: t['com.affine.peek-view-controls.open-doc-in-new-tab'](),
+        label: t['com.blank.peek-view-controls.open-doc-in-new-tab'](),
         icon: <OpenInNewIcon />,
         onClick: () => {
           workbench.openDoc(model.props.pageId, {

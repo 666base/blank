@@ -1,8 +1,8 @@
-import { Avatar } from '@affine/component';
-import { useSignOut } from '@affine/core/components/hooks/affine/use-sign-out';
-import { AuthService } from '@affine/core/modules/cloud';
-import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import { useI18n } from '@affine/i18n';
+import { Avatar } from '@blank/component';
+import { useSignOut } from '@blank/core/components/hooks/blank/use-sign-out';
+import { AuthService } from '@blank/core/modules/cloud';
+import { GlobalDialogService } from '@blank/core/modules/dialogs';
+import { useI18n } from '@blank/i18n';
 import { ArrowRightSmallIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { type ReactNode } from 'react';
@@ -82,8 +82,8 @@ const UnauthorizedUserProfile = () => {
     <BaseLayout
       onClick={() => globalDialogService.open('sign-in', {})}
       avatar={<Avatar size={48} rounded={4} />}
-      title={t['com.affine.settings.sign']()}
-      caption={t['com.affine.setting.sign.message']()}
+      title={t['com.blank.settings.sign']()}
+      caption={t['com.blank.setting.sign.message']()}
     />
   );
 };

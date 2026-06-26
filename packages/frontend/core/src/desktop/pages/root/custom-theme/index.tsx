@@ -1,6 +1,6 @@
-import { EditorSettingService } from '@affine/core/modules/editor-setting';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { ThemeEditorService } from '@affine/core/modules/theme-editor';
+import { EditorSettingService } from '@blank/core/modules/editor-setting';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { ThemeEditorService } from '@blank/core/modules/theme-editor';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
@@ -53,7 +53,7 @@ export const CustomThemeModifier = () => {
   useEffect(() => {
     if (settings?.fontSize) {
       document.documentElement.style.setProperty(
-        '--affine-font-base',
+        '--blank-font-base',
         `${settings.fontSize}px`
       );
     }

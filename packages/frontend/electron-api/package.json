@@ -1,5 +1,5 @@
 {
-  "name": "@affine/electron-api",
+  "name": "@blank/electron-api",
   "version": "0.27.0",
   "type": "module",
   "private": true,

@@ -1,10 +1,10 @@
-import { ConfirmModal, notify, useConfirmModal } from '@affine/component';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { AuthService } from '@affine/core/modules/cloud';
-import { WorkspacesService } from '@affine/core/modules/workspace';
-import { UserFriendlyError } from '@affine/error';
-import { Trans, useI18n } from '@affine/i18n';
-import track from '@affine/track';
+import { ConfirmModal, notify, useConfirmModal } from '@blank/component';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { AuthService } from '@blank/core/modules/cloud';
+import { WorkspacesService } from '@blank/core/modules/workspace';
+import { UserFriendlyError } from '@blank/error';
+import { Trans, useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import { ArrowRightSmallIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useState } from 'react';
@@ -33,7 +33,7 @@ export const DeleteAccount = () => {
     <>
       {account ? (
         <RowLayout
-          label={t['com.affine.mobile.setting.others.delete-account']()}
+          label={t['com.blank.mobile.setting.others.delete-account']()}
           onClick={openModal}
         >
           <ArrowRightSmallIcon fontSize={22} />
@@ -63,9 +63,9 @@ const TeamOwnerWarningModal = ({
     <ConfirmModal
       open={open}
       onOpenChange={onOpenChange}
-      title={t['com.affine.setting.account.delete.team-warning-title']()}
+      title={t['com.blank.setting.account.delete.team-warning-title']()}
       description={t[
-        'com.affine.setting.account.delete.team-warning-description'
+        'com.blank.setting.account.delete.team-warning-description'
       ]()}
       confirmText={t['Confirm']()}
       confirmButtonOptions={{
@@ -105,15 +105,15 @@ const DeleteAccountModal = ({
       await authService.deleteAccount();
       track.$.$.auth.deleteAccount();
       openConfirmModal({
-        title: t['com.affine.setting.account.delete.success-title'](),
+        title: t['com.blank.setting.account.delete.success-title'](),
         description: (
           <>
             <span>
-              {t['com.affine.setting.account.delete.success-description-1']()}
+              {t['com.blank.setting.account.delete.success-description-1']()}
             </span>
             <br />
             <span>
-              {t['com.affine.setting.account.delete.success-description-2']()}
+              {t['com.blank.setting.account.delete.success-description-2']()}
             </span>
           </>
         ),
@@ -152,17 +152,17 @@ const DeleteAccountModal = ({
     <ConfirmModal
       open={open}
       onOpenChange={onOpenChange}
-      title={t['com.affine.setting.account.delete.confirm-title']()}
+      title={t['com.blank.setting.account.delete.confirm-title']()}
       description={
         <Trans
-          i18nKey="com.affine.setting.account.delete.confirm-description-2"
+          i18nKey="com.blank.setting.account.delete.confirm-description-2"
           components={{
             1: <strong />,
           }}
         />
       }
       descriptionClassName={styles.description}
-      confirmText={t['com.affine.setting.account.delete.confirm-button']()}
+      confirmText={t['com.blank.setting.account.delete.confirm-button']()}
       confirmButtonOptions={{
         variant: 'error',
         disabled: isLoading,

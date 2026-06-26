@@ -1,10 +1,16 @@
 import { execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 
-import { Path, ProjectRoot } from '@affine-tools/utils/path';
+import { Path, ProjectRoot } from '@blank-tools/utils/path';
 import { Repository } from '@napi-rs/simple-git';
 import { HtmlRspackPlugin, type HtmlRspackPluginOptions } from '@rspack/core';
 import { once } from 'lodash-es';
+
+import {
+  BLANK_BOOT_SHELL_CSS,
+  BLANK_BOOT_SHELL_HTML,
+} from '../../../../packages/frontend/core/src/utils/blank-boot-shell.html.ts';
+import { getBlankFastBootInlineScript } from '../../../../packages/frontend/core/src/utils/blank-fast-boot.ts';
 
 type HtmlRspackPluginInstance = InstanceType<typeof HtmlRspackPlugin>;
 
@@ -53,11 +59,11 @@ export const getPublicPath = (BUILD_CONFIG: BUILD_CONFIG_TYPE) => {
 
   switch (BUILD_TYPE) {
     case 'stable':
-      return 'https://prod.affineassets.com/';
+      return 'https://prod.blankassets.com/';
     case 'beta':
-      return 'https://beta.affineassets.com/';
+      return 'https://beta.blankassets.com/';
     default:
-      return 'https://dev.affineassets.com/';
+      return 'https://dev.blankassets.com/';
   }
 };
 
@@ -88,6 +94,11 @@ function getHTMLPluginOptions(BUILD_CONFIG: BUILD_CONFIG_TYPE) {
   const templateParams = {
     GIT_SHORT_SHA: gitShortHash(),
     DESCRIPTION,
+    FAST_BOOT_SCRIPT: getBlankFastBootInlineScript(
+      BUILD_CONFIG.isMobileEdition ? 'home' : 'all'
+    ),
+    BOOT_SHELL_CSS: BLANK_BOOT_SHELL_CSS,
+    BOOT_SHELL_HTML: BLANK_BOOT_SHELL_HTML,
     PRECONNECT: cdnOrigin
       ? `<link rel="preconnect" href="${cdnOrigin}" />`
       : '',

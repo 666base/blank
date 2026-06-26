@@ -1,8 +1,8 @@
-import { getPromptModelsQuery } from '@affine/graphql';
+import { getPromptModelsQuery } from '@blank/graphql';
 import {
   createSignalFromObservable,
   type Signal,
-} from '@blocksuite/affine/shared/utils';
+} from '@blocksuite/blank/shared/utils';
 import { signal } from '@preact/signals-core';
 import { LiveData, Service } from '@toeverything/infra';
 
@@ -65,7 +65,7 @@ export class AIModelService extends Service {
   };
 
   private readonly initModels = async (prompt?: string) => {
-    const promptName = prompt || 'Chat With AFFiNE AI';
+    const promptName = prompt || 'Chat With Blank AI';
     const models = await this.getModelsByPrompt(promptName);
     if (models) {
       const { defaultModel, optionalModels, proModels } = models;

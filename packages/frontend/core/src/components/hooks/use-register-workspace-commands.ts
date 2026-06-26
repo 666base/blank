@@ -1,14 +1,14 @@
-import { AppSidebarService } from '@affine/core/modules/app-sidebar';
-import { DesktopApiService } from '@affine/core/modules/desktop-api';
+import { AppSidebarService } from '@blank/core/modules/app-sidebar';
+import { DesktopApiService } from '@blank/core/modules/desktop-api';
 import {
   GlobalDialogService,
   WorkspaceDialogService,
-} from '@affine/core/modules/dialogs';
-import { I18nService } from '@affine/core/modules/i18n';
-import { UrlService } from '@affine/core/modules/url';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/dialogs';
+import { I18nService } from '@blank/core/modules/i18n';
+import { UrlService } from '@blank/core/modules/url';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
 import {
   useService,
   useServiceOptional,
@@ -21,24 +21,24 @@ import { useEffect } from 'react';
 import { usePageHelper } from '../../blocksuite/block-suite-page-list/utils';
 import {
   PreconditionStrategy,
-  registerAffineCommand,
-  registerAffineCreationCommands,
-  registerAffineHelpCommands,
-  registerAffineLanguageCommands,
-  registerAffineLayoutCommands,
-  registerAffineNavigationCommands,
-  registerAffineSettingsCommands,
-  registerAffineUpdatesCommands,
+  registerBlankCommand,
+  registerBlankCreationCommands,
+  registerBlankHelpCommands,
+  registerBlankLanguageCommands,
+  registerBlankLayoutCommands,
+  registerBlankNavigationCommands,
+  registerBlankSettingsCommands,
+  registerBlankUpdatesCommands,
 } from '../../commands';
 import { EditorSettingService } from '../../modules/editor-setting';
 import { CMDKQuickSearchService } from '../../modules/quicksearch/services/cmdk';
 import { useNavigateHelper } from './use-navigate-helper';
 
 function registerCMDKCommand(service: CMDKQuickSearchService) {
-  return registerAffineCommand({
-    id: 'affine:show-quick-search',
+  return registerBlankCommand({
+    id: 'blank:show-quick-search',
     preconditionStrategy: PreconditionStrategy.Never,
-    category: 'affine:general',
+    category: 'blank:general',
     keyBinding: {
       binding: '$mod+K',
     },
@@ -89,13 +89,13 @@ export function useRegisterWorkspaceCommands() {
     };
   }, [cMDKQuickSearchService]);
 
-  // register AffineUpdatesCommands
+  // register BlankUpdatesCommands
   useEffect(() => {
     if (!quitAndInstall) {
       return;
     }
 
-    const unsub = registerAffineUpdatesCommands({
+    const unsub = registerBlankUpdatesCommands({
       store,
       t,
       quitAndInstall,
@@ -106,9 +106,9 @@ export function useRegisterWorkspaceCommands() {
     };
   }, [quitAndInstall, store, t]);
 
-  // register AffineNavigationCommands
+  // register BlankNavigationCommands
   useEffect(() => {
-    const unsub = registerAffineNavigationCommands({
+    const unsub = registerBlankNavigationCommands({
       t,
       docCollection: currentWorkspace.docCollection,
       navigationHelper,
@@ -129,9 +129,9 @@ export function useRegisterWorkspaceCommands() {
     workbenchService,
   ]);
 
-  // register AffineSettingsCommands
+  // register BlankSettingsCommands
   useEffect(() => {
-    const unsub = registerAffineSettingsCommands({
+    const unsub = registerBlankSettingsCommands({
       store,
       t,
       theme,
@@ -144,7 +144,7 @@ export function useRegisterWorkspaceCommands() {
   }, [editorSettingService, store, t, theme]);
 
   useEffect(() => {
-    const unsub = registerAffineLanguageCommands({
+    const unsub = registerBlankLanguageCommands({
       i18n,
       t,
     });
@@ -154,18 +154,18 @@ export function useRegisterWorkspaceCommands() {
     };
   }, [i18n, t]);
 
-  // register AffineLayoutCommands
+  // register BlankLayoutCommands
   useEffect(() => {
-    const unsub = registerAffineLayoutCommands({ t, appSidebarService });
+    const unsub = registerBlankLayoutCommands({ t, appSidebarService });
 
     return () => {
       unsub();
     };
   }, [appSidebarService, store, t]);
 
-  // register AffineCreationCommands
+  // register BlankCreationCommands
   useEffect(() => {
-    const unsub = registerAffineCreationCommands({
+    const unsub = registerBlankCreationCommands({
       globalDialogService,
       pageHelper: pageHelper,
       t,
@@ -176,9 +176,9 @@ export function useRegisterWorkspaceCommands() {
     };
   }, [store, pageHelper, t, globalDialogService]);
 
-  // register AffineHelpCommands
+  // register BlankHelpCommands
   useEffect(() => {
-    const unsub = registerAffineHelpCommands({
+    const unsub = registerBlankHelpCommands({
       t,
       urlService,
       workspaceDialogService,

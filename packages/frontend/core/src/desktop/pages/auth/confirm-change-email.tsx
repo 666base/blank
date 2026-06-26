@@ -1,10 +1,10 @@
-import { Button } from '@affine/component';
-import { AuthPageContainer } from '@affine/component/auth-components';
-import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-helper';
-import { GraphQLService } from '@affine/core/modules/cloud';
-import { UserFriendlyError } from '@affine/error';
-import { changeEmailMutation } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
+import { Button } from '@blank/component';
+import { AuthPageContainer } from '@blank/component/auth-components';
+import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { GraphQLService } from '@blank/core/modules/cloud';
+import { UserFriendlyError } from '@blank/error';
+import { changeEmailMutation } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
 import { useService } from '@toeverything/infra';
 import { type FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -12,8 +12,8 @@ import { useSearchParams } from 'react-router-dom';
 import { AppContainer } from '../../components/app-container';
 
 export const ConfirmChangeEmail: FC<{
-  onOpenAffine: () => void;
-}> = ({ onOpenAffine }) => {
+  onOpenBlank: () => void;
+}> = ({ onOpenBlank }) => {
   const t = useI18n();
   const [searchParams] = useSearchParams();
   const navigateHelper = useNavigateHelper();
@@ -54,11 +54,11 @@ export const ConfirmChangeEmail: FC<{
 
   return (
     <AuthPageContainer
-      title={t['com.affine.auth.change.email.page.success.title']()}
-      subtitle={t['com.affine.auth.change.email.page.success.subtitle']()}
+      title={t['com.blank.auth.change.email.page.success.title']()}
+      subtitle={t['com.blank.auth.change.email.page.success.subtitle']()}
     >
-      <Button variant="primary" size="large" onClick={onOpenAffine}>
-        {t['com.affine.auth.open.affine']()}
+      <Button variant="primary" size="large" onClick={onOpenBlank}>
+        {t['com.blank.auth.open.blank']()}
       </Button>
     </AuthPageContainer>
   );

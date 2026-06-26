@@ -1,5 +1,5 @@
-import type { PasswordLimitsFragment } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
+import type { PasswordLimitsFragment } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
 import type { FC } from 'react';
 import { useCallback, useRef, useState } from 'react';
 
@@ -41,11 +41,11 @@ export const SetPassword: FC<{
           onSetPassword(passwordRef.current);
         }, [onSetPassword])}
       >
-        {t['com.affine.auth.set.password.save']()}
+        {t['com.blank.auth.set.password.save']()}
       </Button>
       {showLater ? (
         <Button variant="plain" size="large" onClick={onLater}>
-          {t['com.affine.auth.later']()}
+          {t['com.blank.auth.later']()}
         </Button>
       ) : null}
     </>

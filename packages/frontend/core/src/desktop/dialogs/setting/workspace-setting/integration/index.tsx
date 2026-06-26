@@ -1,7 +1,7 @@
-import { SettingHeader } from '@affine/component/setting-components';
-import { useWorkspaceInfo } from '@affine/core/components/hooks/use-workspace-info';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
+import { SettingHeader } from '@blank/component/setting-components';
+import { useWorkspaceInfo } from '@blank/core/components/hooks/use-workspace-info';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
 import { useService } from '@toeverything/infra';
 import {
   type ReactNode,
@@ -61,12 +61,12 @@ export const IntegrationSetting = ({
   return (
     <>
       <SettingHeader
-        title={t['com.affine.integration.integrations']()}
+        title={t['com.blank.integration.integrations']()}
         subtitle={
           <>
-            {t['com.affine.integration.setting.description']()}
+            {t['com.blank.integration.setting.description']()}
             {/* <br /> */}
-            {/* <a>{t['Learn how to develop a integration for AFFiNE']()}</a> */}
+            {/* <a>{t['Learn how to develop a integration for Blank']()}</a> */}
           </>
         }
       />
@@ -124,7 +124,7 @@ const IntegrationSettingPage = ({
 
   return (
     <SubPageProvider
-      backText={t['com.affine.integration.integrations']()}
+      backText={t['com.blank.integration.integrations']()}
       island={island}
       open={open}
       onClose={onClose}

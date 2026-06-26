@@ -1,18 +1,18 @@
-import type { StoreExtensionManager } from '@blocksuite/affine/ext-loader';
-import { AffineSchemas } from '@blocksuite/affine/schemas';
-import { nanoid, Schema, Transformer } from '@blocksuite/affine/store';
+import type { StoreExtensionManager } from '@blocksuite/blank/ext-loader';
+import { BlankSchemas } from '@blocksuite/blank/schemas';
+import { nanoid, Schema, Transformer } from '@blocksuite/blank/store';
 import {
   createAutoIncrementIdGenerator,
   type DocCollectionOptions,
   TestWorkspace,
-} from '@blocksuite/affine/store/test';
+} from '@blocksuite/blank/store/test';
 import {
   type BlobSource,
   BroadcastChannelAwarenessSource,
   BroadcastChannelDocSource,
   IndexedDBBlobSource,
   MemoryBlobSource,
-} from '@blocksuite/affine/sync';
+} from '@blocksuite/blank/sync';
 import * as Y from 'yjs';
 
 import { MockServerBlobSource } from '../../_common/sync/blob/mock-server.js';
@@ -28,7 +28,7 @@ export function createStarterDocCollection(
 ) {
   const collectionId = room ?? 'starter';
   const schema = new Schema();
-  schema.register(AffineSchemas);
+  schema.register(BlankSchemas);
   const idGenerator = isE2E ? createAutoIncrementIdGenerator() : nanoid;
 
   let docSources: DocCollectionOptions['docSources'];
@@ -63,7 +63,7 @@ export function createStarterDocCollection(
 
   // debug info
   window.collection = collection;
-  window.blockSchemas = AffineSchemas;
+  window.blockSchemas = BlankSchemas;
   window.job = new Transformer({
     schema,
     blobCRUD: collection.blobSync,

@@ -1,28 +1,28 @@
 import type {
   AIDraftService,
   AIToolsConfigService,
-} from '@affine/core/modules/ai-button';
-import type { AIModelService } from '@affine/core/modules/ai-button/services/models';
+} from '@blank/core/modules/ai-button';
+import type { AIModelService } from '@blank/core/modules/ai-button/services/models';
 import type {
   ServerService,
   SubscriptionService,
-} from '@affine/core/modules/cloud';
-import type { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import type { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import type { CopilotChatHistoryFragment } from '@affine/graphql';
+} from '@blank/core/modules/cloud';
+import type { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import type { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import type { CopilotChatHistoryFragment } from '@blank/graphql';
 import {
   CanvasElementType,
   EdgelessCRUDIdentifier,
   getSurfaceBlock,
-} from '@blocksuite/affine/blocks/surface';
-import { ViewExtensionManagerIdentifier } from '@blocksuite/affine/ext-loader';
-import { ConnectorMode } from '@blocksuite/affine/model';
+} from '@blocksuite/blank/blocks/surface';
+import { ViewExtensionManagerIdentifier } from '@blocksuite/blank/ext-loader';
+import { ConnectorMode } from '@blocksuite/blank/model';
 import {
   DocModeProvider,
   NotificationProvider,
   TelemetryProvider,
-} from '@blocksuite/affine/shared/services';
-import type { EditorHost } from '@blocksuite/affine/std';
+} from '@blocksuite/blank/shared/services';
+import type { EditorHost } from '@blocksuite/blank/std';
 import { html, LitElement, nothing, type PropertyValues } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -213,7 +213,7 @@ export class AIChatBlockPeekView extends LitElement {
     // create a new AI chat block
     const surfaceBlock = store
       .getAllModels()
-      .find(block => block.flavour === 'affine:surface');
+      .find(block => block.flavour === 'blank:surface');
     if (!surfaceBlock) {
       return;
     }
@@ -233,7 +233,7 @@ export class AIChatBlockPeekView extends LitElement {
 
     const crud = this.host.std.get(EdgelessCRUDIdentifier);
     const forkBlockId = crud.addBlock(
-      'affine:embed-ai-chat',
+      'blank:embed-ai-chat',
       {
         xywh: bound.serialize(),
         messages: JSON.stringify(messages),
@@ -470,7 +470,7 @@ export class AIChatBlockPeekView extends LitElement {
 
     this._textRendererOptions = {
       extensions,
-      affineFeatureFlagService: this.affineFeatureFlagService,
+      blankFeatureFlagService: this.blankFeatureFlagService,
     };
     this._historyMessages = this._deserializeHistoryChatMessages(
       this.historyMessagesString
@@ -581,10 +581,10 @@ export class AIChatBlockPeekView extends LitElement {
         .updateContext=${updateContext}
         .docDisplayConfig=${this.docDisplayConfig}
         .searchMenuConfig=${this.searchMenuConfig}
-        .affineWorkspaceDialogService=${this.affineWorkspaceDialogService}
+        .blankWorkspaceDialogService=${this.blankWorkspaceDialogService}
         .notificationService=${notificationService}
         .aiToolsConfigService=${this.aiToolsConfigService}
-        .affineFeatureFlagService=${this.affineFeatureFlagService}
+        .blankFeatureFlagService=${this.blankFeatureFlagService}
         .onChatSuccess=${this._onChatSuccess}
         .trackOptions=${{
           where: 'ai-chat-block',
@@ -622,10 +622,10 @@ export class AIChatBlockPeekView extends LitElement {
   accessor searchMenuConfig!: SearchMenuConfig;
 
   @property({ attribute: false })
-  accessor affineFeatureFlagService!: FeatureFlagService;
+  accessor blankFeatureFlagService!: FeatureFlagService;
 
   @property({ attribute: false })
-  accessor affineWorkspaceDialogService!: WorkspaceDialogService;
+  accessor blankWorkspaceDialogService!: WorkspaceDialogService;
 
   @property({ attribute: false })
   accessor aiDraftService!: AIDraftService;
@@ -677,8 +677,8 @@ export const AIChatBlockPeekViewTemplate = (
   searchMenuConfig: SearchMenuConfig,
   reasoningConfig: AIReasoningConfig,
   serverService: ServerService,
-  affineFeatureFlagService: FeatureFlagService,
-  affineWorkspaceDialogService: WorkspaceDialogService,
+  blankFeatureFlagService: FeatureFlagService,
+  blankWorkspaceDialogService: WorkspaceDialogService,
   aiDraftService: AIDraftService,
   aiToolsConfigService: AIToolsConfigService,
   subscriptionService: SubscriptionService,
@@ -692,8 +692,8 @@ export const AIChatBlockPeekViewTemplate = (
     .searchMenuConfig=${searchMenuConfig}
     .reasoningConfig=${reasoningConfig}
     .serverService=${serverService}
-    .affineFeatureFlagService=${affineFeatureFlagService}
-    .affineWorkspaceDialogService=${affineWorkspaceDialogService}
+    .blankFeatureFlagService=${blankFeatureFlagService}
+    .blankWorkspaceDialogService=${blankWorkspaceDialogService}
     .aiDraftService=${aiDraftService}
     .aiToolsConfigService=${aiToolsConfigService}
     .subscriptionService=${subscriptionService}

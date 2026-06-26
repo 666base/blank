@@ -1,5 +1,5 @@
-import type { Collection } from '@affine/core/modules/collection';
-import { useI18n } from '@affine/i18n';
+import type { Collection } from '@blank/core/modules/collection';
+import { useI18n } from '@blank/i18n';
 import { DeleteIcon, FilterIcon } from '@blocksuite/icons/rc';
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
@@ -27,15 +27,15 @@ export const useActions = ({
       {
         icon: <FilterIcon />,
         name: 'edit',
-        tooltip: t['com.affine.collection-bar.action.tooltip.edit'](),
+        tooltip: t['com.blank.collection-bar.action.tooltip.edit'](),
         click: () => {
           openEdit(collection);
         },
       },
       {
-        icon: <DeleteIcon style={{ color: 'var(--affine-error-color)' }} />,
+        icon: <DeleteIcon style={{ color: 'var(--blank-error-color)' }} />,
         name: 'delete',
-        tooltip: t['com.affine.collection-bar.action.tooltip.delete'](),
+        tooltip: t['com.blank.collection-bar.action.tooltip.delete'](),
         click: onDelete,
       },
     ];

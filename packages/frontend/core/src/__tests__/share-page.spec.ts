@@ -1,4 +1,4 @@
-import { UserFriendlyError } from '@affine/error';
+import { UserFriendlyError } from '@blank/error';
 import { TimeoutError } from 'rxjs';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 
@@ -47,7 +47,7 @@ describe('fetchSharedPublishMode', () => {
 
     await expect(
       fetchSharedPublishMode({
-        serverBaseUrl: 'https://app.affine.pro',
+        serverBaseUrl: 'https://app.blank.pro',
         workspaceId: 'workspace-id',
         docId: 'doc-id',
       })
@@ -60,7 +60,7 @@ describe('fetchSharedPublishMode', () => {
 
     await expect(
       fetchSharedPublishMode({
-        serverBaseUrl: 'https://app.affine.pro',
+        serverBaseUrl: 'https://app.blank.pro',
         workspaceId: 'workspace-id',
         docId: 'doc-id',
       })

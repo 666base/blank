@@ -1,15 +1,14 @@
 import { wrapCreateBrowserRouterV6 } from '@sentry/react';
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 import {
   createBrowserRouter as reactRouterCreateBrowserRouter,
   redirect,
-  useNavigate,
 } from 'react-router-dom';
 
-import { AppContainer } from './components/app-container';
-import { AffineErrorComponent } from '../components/affine/affine-error-boundary/affine-error-fallback';
+import { BlankErrorComponent } from '../components/blank/blank-error-boundary/blank-error-fallback';
 import { NavigateContext } from '../components/hooks/use-navigate-helper';
+import { getInstantBootPath } from '../utils/blank-fast-boot';
 import { RootWrapper } from './pages/root';
 import {
   CATCH_ALL_ROUTE_PATH,
@@ -21,28 +20,33 @@ import {
 
 export function RootRouter() {
   const navigate = useNavigate();
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    // a hack to make sure router is ready
-    setReady(true);
-  }, []);
 
-  return ready ? (
+  return (
     <NavigateContext.Provider value={navigate}>
       <RootWrapper />
     </NavigateContext.Provider>
-  ) : (
-    <AppContainer fallback />
   );
 }
 
 export const topLevelRoutes = [
   {
     element: <RootRouter />,
-    errorElement: <AffineErrorComponent />,
+    errorElement: <BlankErrorComponent />,
     children: [
       {
         path: '/',
+        loader: ({ request }) => {
+          const { pathname } = new URL(request.url);
+          if (
+            pathname !== '/' &&
+            pathname !== '/index.html' &&
+            !pathname.endsWith('/index.html')
+          ) {
+            return null;
+          }
+          const fast = getInstantBootPath();
+          return fast ? redirect(fast) : null;
+        },
         lazy: () => import('./pages/index'),
       },
       {

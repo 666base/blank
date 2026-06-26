@@ -33,10 +33,10 @@ export type AIActionAnswer = {
   streamObjects?: StreamObject[];
 };
 
-export interface AffineAIPanelWidgetConfig {
+export interface BlankAIPanelWidgetConfig {
   answerRenderer: (
     answer: string,
-    state?: AffineAIPanelState
+    state?: BlankAIPanelState
   ) => TemplateResult<1> | typeof nothing;
   generateAnswer?: (props: {
     input: string;
@@ -55,7 +55,7 @@ export interface AffineAIPanelWidgetConfig {
   copy?: CopyConfig;
 }
 
-export type AffineAIPanelState =
+export type BlankAIPanelState =
   | 'hidden'
   | 'input'
   | 'generating'

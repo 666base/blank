@@ -1,7 +1,7 @@
 /**
  * @vitest-environment happy-dom
  */
-import type { CopilotChatHistoryFragment } from '@affine/graphql';
+import type { CopilotChatHistoryFragment } from '@blank/graphql';
 import { describe, expect, test, vi } from 'vitest';
 
 import type { AIRequestService } from '../request';
@@ -32,7 +32,7 @@ function session(
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     parentSessionId: null,
-    promptName: 'Chat With AFFiNE AI',
+    promptName: 'Chat With Blank AI',
     action: null,
     optionalModels: null,
     tokens: 0,

@@ -1,5 +1,5 @@
-import type { EditorHost, TextSelection } from '@blocksuite/affine/std';
-import { getSelectedBlocksCommand } from '@blocksuite/affine-shared/commands';
+import type { EditorHost, TextSelection } from '@blocksuite/blank/std';
+import { getSelectedBlocksCommand } from '@blocksuite/blank-shared/commands';
 import * as Y from 'yjs';
 
 export interface CommentMeta {

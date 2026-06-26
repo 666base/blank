@@ -1,5 +1,5 @@
-import type { WorkspaceServerService } from '@affine/core/modules/cloud';
-import { leaveWorkspaceMutation } from '@affine/graphql';
+import type { WorkspaceServerService } from '@blank/core/modules/cloud';
+import { leaveWorkspaceMutation } from '@blank/graphql';
 import { Store } from '@toeverything/infra';
 
 import type { NbstoreService } from '../../storage';

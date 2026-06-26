@@ -1,5 +1,5 @@
-import { getBlankDownloadUrl } from '@affine/core/utils/blank-links';
-import { useI18n } from '@affine/i18n';
+import { getBlankDownloadUrl } from '@blank/core/utils/blank-links';
+import { useI18n } from '@blank/i18n';
 import { ArrowRightBigIcon } from '@blocksuite/icons/rc';
 
 import * as styles from './share-footer.css';
@@ -10,7 +10,7 @@ export const ShareFooter = () => {
     <div className={styles.footerContainer}>
       <div className={styles.footer}>
         <div className={styles.description}>
-          {t['com.affine.share-page.footer.description']()}
+          {t['com.blank.share-page.footer.description']()}
         </div>
         <a
           className={styles.getStartLink}
@@ -18,7 +18,7 @@ export const ShareFooter = () => {
           target="_blank"
           rel="noreferrer"
         >
-          {t['com.affine.share-page.footer.get-started']()}
+          {t['com.blank.share-page.footer.get-started']()}
           <ArrowRightBigIcon fontSize={16} />
         </a>
       </div>

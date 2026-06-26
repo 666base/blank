@@ -1,7 +1,7 @@
-import { AuthSession } from '@affine/core/modules/cloud/entities/session';
-import { AuthService } from '@affine/core/modules/cloud/services/auth';
-import { AuthStore } from '@affine/core/modules/cloud/stores/auth';
-import { NbstoreService } from '@affine/core/modules/storage';
+import { AuthSession } from '@blank/core/modules/cloud/entities/session';
+import { AuthService } from '@blank/core/modules/cloud/services/auth';
+import { AuthStore } from '@blank/core/modules/cloud/stores/auth';
+import { NbstoreService } from '@blank/core/modules/storage';
 import { Framework } from '@toeverything/infra';
 import { of } from 'rxjs';
 import { describe, expect, test, vi } from 'vitest';

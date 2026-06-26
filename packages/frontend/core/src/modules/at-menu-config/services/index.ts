@@ -1,28 +1,28 @@
-import { notify } from '@affine/component';
-import { UserFriendlyError } from '@affine/error';
+import { notify } from '@blank/component';
+import { UserFriendlyError } from '@blank/error';
 import {
   type DocMode as GraphqlDocMode,
   DocRole,
   ErrorNames,
-} from '@affine/graphql';
-import { I18n, i18nTime } from '@affine/i18n';
-import track from '@affine/track';
-import type { DocMode } from '@blocksuite/affine/model';
-import { DocModeProvider } from '@blocksuite/affine/shared/services';
-import type { AffineInlineEditor } from '@blocksuite/affine/shared/types';
+} from '@blank/graphql';
+import { I18n, i18nTime } from '@blank/i18n';
+import track from '@blank/track';
+import type { DocMode } from '@blocksuite/blank/model';
+import { DocModeProvider } from '@blocksuite/blank/shared/services';
+import type { BlankInlineEditor } from '@blocksuite/blank/shared/types';
 import {
   BLOCK_ID_ATTR,
   type BlockComponent,
   type EditorHost,
-} from '@blocksuite/affine/std';
-import type { DocMeta } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/std';
+import type { DocMeta } from '@blocksuite/blank/store';
 import {
   type LinkedMenuGroup,
   type LinkedMenuItem,
   type LinkedWidgetConfig,
   LinkedWidgetUtils,
-} from '@blocksuite/affine/widgets/linked-doc';
-import { unsafeHTML } from '@blocksuite/affine-shared/utils';
+} from '@blocksuite/blank/widgets/linked-doc';
+import { unsafeHTML } from '@blocksuite/blank-shared/utils';
 import {
   DateTimeIcon,
   NewXxxEdgelessIcon,
@@ -87,7 +87,7 @@ export class AtMenuConfigService extends Service {
     };
   }
 
-  private insertDoc(inlineEditor: AffineInlineEditor, id: string) {
+  private insertDoc(inlineEditor: BlankInlineEditor, id: string) {
     LinkedWidgetUtils.insertLinkedNode({
       inlineEditor,
       docId: id,
@@ -120,7 +120,7 @@ export class AtMenuConfigService extends Service {
     query: string,
     close: () => void,
     editorHost: EditorHost,
-    inlineEditor: AffineInlineEditor
+    inlineEditor: BlankInlineEditor
   ): LinkedMenuGroup {
     const originalNewDocMenuGroup = LinkedWidgetUtils.createNewDocMenuGroup(
       query,
@@ -153,7 +153,7 @@ export class AtMenuConfigService extends Service {
       {
         key: RESERVED_ITEM_KEYS.createPage,
         icon: NewXxxPageIcon(),
-        name: I18n.t('com.affine.editor.at-menu.create-page', {
+        name: I18n.t('com.blank.editor.at-menu.create-page', {
           name: query || I18n.t('Untitled'),
         }),
         action: () => {
@@ -168,7 +168,7 @@ export class AtMenuConfigService extends Service {
       {
         key: RESERVED_ITEM_KEYS.createEdgeless,
         icon: NewXxxEdgelessIcon(),
-        name: I18n.t('com.affine.editor.at-menu.create-edgeless', {
+        name: I18n.t('com.blank.editor.at-menu.create-edgeless', {
           name: query || I18n.t('Untitled'),
         }),
         action: () => {
@@ -183,7 +183,7 @@ export class AtMenuConfigService extends Service {
     ];
     const customImportItem: LinkedMenuItem = {
       ...importItem,
-      name: I18n.t('com.affine.editor.at-menu.import'),
+      name: I18n.t('com.blank.editor.at-menu.import'),
       action: () => {
         close();
         track.doc.editor.atMenu.import();
@@ -209,7 +209,7 @@ export class AtMenuConfigService extends Service {
 
     return {
       ...originalNewDocMenuGroup,
-      name: I18n.t('com.affine.editor.at-menu.new-doc'),
+      name: I18n.t('com.blank.editor.at-menu.new-doc'),
       items: [...customNewDocItems, customImportItem],
     };
   }
@@ -217,7 +217,7 @@ export class AtMenuConfigService extends Service {
   private journalGroup(
     query: string,
     close: () => void,
-    inlineEditor: AffineInlineEditor
+    inlineEditor: BlankInlineEditor
   ): LinkedMenuGroup {
     const suggestedDate = suggestJournalDate(query);
 
@@ -225,7 +225,7 @@ export class AtMenuConfigService extends Service {
       {
         icon: DateTimeIcon(),
         key: RESERVED_ITEM_KEYS.datePicker,
-        name: I18n.t('com.affine.editor.at-menu.date-picker'),
+        name: I18n.t('com.blank.editor.at-menu.date-picker'),
         action: () => {
           close();
 
@@ -297,7 +297,7 @@ export class AtMenuConfigService extends Service {
     }
 
     return {
-      name: I18n.t('com.affine.editor.at-menu.journal'),
+      name: I18n.t('com.blank.editor.at-menu.journal'),
       items,
     };
   }
@@ -305,7 +305,7 @@ export class AtMenuConfigService extends Service {
   private linkToDocGroup(
     query: string,
     close: () => void,
-    inlineEditor: AffineInlineEditor,
+    inlineEditor: BlankInlineEditor,
     abortSignal: AbortSignal
   ): LinkedMenuGroup {
     const action = (meta: DocMeta) => {
@@ -360,7 +360,7 @@ export class AtMenuConfigService extends Service {
   private memberGroup(
     query: string,
     close: () => void,
-    inlineEditor: AffineInlineEditor,
+    inlineEditor: BlankInlineEditor,
     _: AbortSignal
   ): LinkedMenuGroup {
     const getMenuItem = (
@@ -478,9 +478,9 @@ export class AtMenuConfigService extends Service {
                 if (canUserManage) {
                   const username = name ?? 'Unknown';
                   notify.error({
-                    title: I18n.t('com.affine.editor.at-menu.access-needed'),
+                    title: I18n.t('com.blank.editor.at-menu.access-needed'),
                     message: I18n[
-                      'com.affine.editor.at-menu.access-needed-message'
+                      'com.blank.editor.at-menu.access-needed-message'
                     ]({
                       username,
                     }),
@@ -515,7 +515,7 @@ export class AtMenuConfigService extends Service {
 
                             notify.success({
                               title: I18n.t(
-                                'com.affine.editor.at-menu.invited-and-notified'
+                                'com.blank.editor.at-menu.invited-and-notified'
                               ),
                             });
                           } catch (error) {
@@ -531,11 +531,11 @@ export class AtMenuConfigService extends Service {
                 } else {
                   notify.error({
                     title: I18n.t(
-                      'com.affine.editor.at-menu.member-not-notified'
+                      'com.blank.editor.at-menu.member-not-notified'
                     ),
                     message:
                       I18n[
-                        'com.affine.editor.at-menu.member-not-notified-message'
+                        'com.blank.editor.at-menu.member-not-notified-message'
                       ](),
                   });
                 }
@@ -640,7 +640,7 @@ export class AtMenuConfigService extends Service {
     }
 
     return {
-      name: I18n.t('com.affine.editor.at-menu.mention-members'),
+      name: I18n.t('com.blank.editor.at-menu.mention-members'),
       items,
       loading: this.memberSearchService.isLoading$.signal,
       hidden,
@@ -648,7 +648,7 @@ export class AtMenuConfigService extends Service {
       overflowText: computed(() => {
         const totalCount = this.memberSearchService.result$.signal.value.length;
         const remainingCount = totalCount - 3;
-        return I18n.t('com.affine.editor.at-menu.more-members-hint', {
+        return I18n.t('com.blank.editor.at-menu.more-members-hint', {
           count: remainingCount,
         });
       }),

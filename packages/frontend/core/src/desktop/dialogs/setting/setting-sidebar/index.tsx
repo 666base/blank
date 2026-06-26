@@ -1,16 +1,17 @@
-import { Scrollable } from '@affine/component';
-import { Avatar } from '@affine/component/ui/avatar';
-import { UserPlanButton } from '@affine/core/components/affine/auth/user-plan-button';
-import { useCatchEventCallback } from '@affine/core/components/hooks/use-catch-event-hook';
-import { AuthService } from '@affine/core/modules/cloud';
-import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import type { SettingTab } from '@affine/core/modules/dialogs/constant';
-import { type WorkspaceMetadata } from '@affine/core/modules/workspace';
-import { isBlankBuild } from '@affine/core/utils/blank-links';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
-import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
+import { Scrollable } from '@blank/component';
+import { Avatar } from '@blank/component/ui/avatar';
+import { UserPlanButton } from '@blank/core/components/blank/auth/user-plan-button';
+import { useCatchEventCallback } from '@blank/core/components/hooks/use-catch-event-hook';
+import { AuthService } from '@blank/core/modules/cloud';
+import { GlobalDialogService } from '@blank/core/modules/dialogs';
+import type { SettingTab } from '@blank/core/modules/dialogs/constant';
+import { type WorkspaceMetadata } from '@blank/core/modules/workspace';
+import { useBlankAuth } from '@blank/core/modules/blank-auth/use-blank-auth';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
+import { BlankAppLogo, isBlankBranding } from '@blank/core/utils/blank-branding';
 import { Logo1Icon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -24,6 +25,7 @@ import {
 
 import { useGeneralSettingList } from '../general-setting';
 import { useWorkspaceSettingList } from '../workspace-setting';
+import { BlankSignInButton, BlankUserInfo } from './blank-auth-sidebar';
 import * as style from './style.css';
 
 export type UserInfoProps = {
@@ -101,11 +103,11 @@ export const SignInButton = () => {
       </div>
 
       <div className="content">
-        <div className="name" title={t['com.affine.settings.sign']()}>
-          {t['com.affine.settings.sign']()}
+        <div className="name" title={t['com.blank.settings.sign']()}>
+          {t['com.blank.settings.sign']()}
         </div>
-        <div className="email" title={t['com.affine.setting.sign.message']()}>
-          {t['com.affine.setting.sign.message']()}
+        <div className="email" title={t['com.blank.setting.sign.message']()}>
+          {t['com.blank.setting.sign.message']()}
         </div>
       </div>
     </div>
@@ -174,6 +176,7 @@ export const SettingSidebar = ({
   const t = useI18n();
   const localOnly = isLocalOnlyMode();
   const loginStatus = useLiveData(useService(AuthService).session.status$);
+  const blankAuth = useBlankAuth();
   const generalList = useGeneralSettingList();
   const workspaceSettingList = useWorkspaceSettingList();
   const gotoTab = useCallback(
@@ -192,12 +195,12 @@ export const SettingSidebar = ({
     const res = [
       {
         key: 'setting:general',
-        title: t['com.affine.settingSidebar.settings.general'](),
+        title: t['com.blank.settingSidebar.settings.general'](),
         items: generalList,
       },
       {
         key: 'setting:workspace',
-        title: t['com.affine.settingSidebar.settings.workspace'](),
+        title: t['com.blank.settingSidebar.settings.workspace'](),
         items: workspaceSettingList,
       },
     ].map(group => {
@@ -219,11 +222,20 @@ export const SettingSidebar = ({
   return (
     <div className={style.settingSlideBar} data-testid="settings-sidebar">
       <div className={style.sidebarTitle}>
-        {t['com.affine.settingSidebar.title']()}
+        {t['com.blank.settingSidebar.title']()}
       </div>
 
-      {!localOnly && loginStatus === 'unauthenticated' ? <SignInButton /> : null}
-      {!localOnly && loginStatus === 'authenticated' ? (
+      {isBlankBuild() && !blankAuth.isSignedIn && !blankAuth.loading ? (
+        <BlankSignInButton />
+      ) : null}
+      {isBlankBuild() && blankAuth.isSignedIn ? (
+        <BlankUserInfo active={activeTab === 'sync'} />
+      ) : null}
+
+      {!isBlankBuild() && !localOnly && loginStatus === 'unauthenticated' ? (
+        <SignInButton />
+      ) : null}
+      {!isBlankBuild() && !localOnly && loginStatus === 'authenticated' ? (
         <Suspense>
           <UserInfo
             onAccountSettingClick={onAccountSettingClick}

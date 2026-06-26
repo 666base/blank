@@ -1,16 +1,16 @@
-import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-helper';
-import { AuthService } from '@affine/core/modules/cloud';
+import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { AuthService } from '@blank/core/modules/cloud';
 import {
   buildAuthenticationDeepLink,
   buildOpenAppUrlRoute,
   normalizeOpenAppSignInNextParam,
-} from '@affine/core/modules/open-in-app';
-import { OpenInAppPage } from '@affine/core/modules/open-in-app/views/open-in-app-page';
+} from '@blank/core/modules/open-in-app';
+import { OpenInAppPage } from '@blank/core/modules/open-in-app/views/open-in-app-page';
 import {
   appSchemaUrl,
   appSchemes,
   channelToScheme,
-} from '@affine/core/utils/channel';
+} from '@blank/core/utils/channel';
 import { useService } from '@toeverything/infra';
 import { useCallback, useEffect, useRef } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';

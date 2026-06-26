@@ -1,15 +1,15 @@
-import { Tabs, Tooltip, useConfirmModal } from '@affine/component';
-import { Button } from '@affine/component/ui/button';
-import { Menu } from '@affine/component/ui/menu';
-import { ServerService } from '@affine/core/modules/cloud';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { WorkspacePermissionService } from '@affine/core/modules/permissions';
-import { WorkspaceQuotaService } from '@affine/core/modules/quota';
-import { ShareInfoService } from '@affine/core/modules/share-doc';
-import type { WorkspaceMetadata } from '@affine/core/modules/workspace';
-import { ServerDeploymentType, SubscriptionPlan } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
-import type { Store } from '@blocksuite/affine/store';
+import { Tabs, Tooltip, useConfirmModal } from '@blank/component';
+import { Button } from '@blank/component/ui/button';
+import { Menu } from '@blank/component/ui/menu';
+import { ServerService } from '@blank/core/modules/cloud';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { WorkspacePermissionService } from '@blank/core/modules/permissions';
+import { WorkspaceQuotaService } from '@blank/core/modules/quota';
+import { ShareInfoService } from '@blank/core/modules/share-doc';
+import type { WorkspaceMetadata } from '@blank/core/modules/workspace';
+import { ServerDeploymentType, SubscriptionPlan } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
+import type { Store } from '@blocksuite/blank/store';
 import { LockIcon, PublishIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import {
@@ -31,7 +31,7 @@ import { SharePage } from './share-page';
 export interface ShareMenuProps extends PropsWithChildren {
   workspaceMetadata: WorkspaceMetadata;
   currentPage: Store;
-  onEnableAffineCloud: () => void;
+  onEnableBlankCloud: () => void;
   onOpenShareModal?: (open: boolean) => void;
   openPaywallModal?: () => void;
   hittingPaywall?: boolean;
@@ -99,15 +99,15 @@ export const ShareMenuContent = (props: ShareMenuProps) => {
     openConfirmModal({
       title:
         t[
-          `com.affine.share-menu.paywall.${isOwner ? 'owner' : 'member'}.title`
+          `com.blank.share-menu.paywall.${isOwner ? 'owner' : 'member'}.title`
         ](),
       description:
         t[
-          `com.affine.share-menu.paywall.${isOwner ? 'owner' : 'member'}.description`
+          `com.blank.share-menu.paywall.${isOwner ? 'owner' : 'member'}.description`
         ](),
       confirmText:
         t[
-          `com.affine.share-menu.paywall.${isOwner ? 'owner' : 'member'}.confirm`
+          `com.blank.share-menu.paywall.${isOwner ? 'owner' : 'member'}.confirm`
         ](),
       onConfirm: onConfirm,
       cancelText: t['Cancel'](),
@@ -156,7 +156,7 @@ export const ShareMenuContent = (props: ShareMenuProps) => {
       >
         <Tabs.List className={styles.tabList}>
           <Tabs.Trigger value={ShareMenuTab.Share} className={styles.tab}>
-            {t['com.affine.share-menu.shareButton']()}
+            {t['com.blank.share-menu.shareButton']()}
           </Tabs.Trigger>
           <Tabs.Trigger
             value={ShareMenuTab.Export}
@@ -222,8 +222,8 @@ const DefaultShareButton = forwardRef(function DefaultShareButton(
   const tooltip =
     props.tooltip ??
     (shared
-      ? t['com.affine.share-menu.option.link.readonly.description']()
-      : t['com.affine.share-menu.option.link.no-access.description']());
+      ? t['com.blank.share-menu.option.link.readonly.description']()
+      : t['com.blank.share-menu.option.link.no-access.description']());
 
   return (
     <Tooltip content={tooltip}>
@@ -235,7 +235,7 @@ const DefaultShareButton = forwardRef(function DefaultShareButton(
       >
         <div className={styles.buttonContainer}>
           {shared ? <PublishIcon fontSize={16} /> : <LockIcon fontSize={16} />}
-          {t['com.affine.share-menu.shareButton']()}
+          {t['com.blank.share-menu.shareButton']()}
         </div>
       </Button>
     </Tooltip>

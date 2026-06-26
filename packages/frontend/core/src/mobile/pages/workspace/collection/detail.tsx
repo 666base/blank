@@ -1,7 +1,7 @@
-import { useThemeColorV2 } from '@affine/component';
-import { PageNotFound } from '@affine/core/desktop/pages/404';
-import { CollectionService } from '@affine/core/modules/collection';
-import { GlobalContextService } from '@affine/core/modules/global-context';
+import { useThemeColorV2 } from '@blank/component';
+import { PageNotFound } from '@blank/core/desktop/pages/404';
+import { CollectionService } from '@blank/core/modules/collection';
+import { GlobalContextService } from '@blank/core/modules/global-context';
 import { useLiveData, useServices } from '@toeverything/infra';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';

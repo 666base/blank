@@ -1,10 +1,10 @@
-import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
-import { AffineErrorComponent } from '@affine/core/components/affine/affine-error-boundary/affine-error-fallback';
-import { PageNotFound } from '@affine/core/desktop/pages/404';
-import { SharePage } from '@affine/core/desktop/pages/workspace/share/share-page';
-import { workbenchRoutes } from '@affine/core/mobile/workbench-router';
-import { ServersService } from '@affine/core/modules/cloud';
-import { WorkspacesService } from '@affine/core/modules/workspace';
+import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
+import { BlankErrorComponent } from '@blank/core/components/blank/blank-error-boundary/blank-error-fallback';
+import { PageNotFound } from '@blank/core/desktop/pages/404';
+import { workbenchRoutes } from '@blank/core/mobile/workbench-router';
+import { ServersService } from '@blank/core/modules/cloud';
+import { getOptimisticWorkspaceMeta } from '@blank/core/utils/blank-fast-boot';
+import { WorkspacesService } from '@blank/core/modules/workspace';
 import { FrameworkScope, useLiveData, useServices } from '@toeverything/infra';
 import {
   lazy as reactLazy,
@@ -25,17 +25,23 @@ import {
 import { WorkspaceLayout } from './layout';
 import { MobileWorkbenchRoot } from './workbench-root';
 
+const SharePage = reactLazy(() =>
+  import('@blank/core/desktop/pages/workspace/share/share-page').then(m => ({
+    default: m.SharePage,
+  }))
+);
+
 type Route = { Component: React.ComponentType };
 /**
  * Source: core/src/modules/workbench/view/route-container.tsx
  **/
 const MobileRouteContainer = ({ route }: { route: Route }) => {
   return (
-    <AffineErrorBoundary>
+    <BlankErrorBoundary>
       <Suspense>
         <route.Component />
       </Suspense>
-    </AffineErrorBoundary>
+    </BlankErrorBoundary>
   );
 };
 
@@ -60,7 +66,7 @@ const warpedRoutes = workbenchRoutes.map((originalRoute: RouteObject) => {
     Component: () => {
       return <MobileRouteContainer route={route} />;
     },
-    errorElement: <AffineErrorComponent />,
+    errorElement: <BlankErrorComponent />,
   };
 });
 
@@ -106,15 +112,22 @@ export const Component = () => {
     return workspaces.find(({ id }) => id === params.workspaceId);
   }, [workspaces, params.workspaceId]);
 
+  const effectiveMeta = useMemo(() => {
+    if (meta) {
+      return meta;
+    }
+    return getOptimisticWorkspaceMeta(params.workspaceId) ?? undefined;
+  }, [meta, params.workspaceId]);
+
   // if listLoading is false, we can show 404 page, otherwise we should show loading page.
   useEffect(() => {
-    if (listLoading === false && meta === undefined) {
+    if (listLoading === false && effectiveMeta === undefined) {
       setWorkspaceNotFound(true);
     }
-    if (meta) {
+    if (effectiveMeta) {
       setWorkspaceNotFound(false);
     }
-  }, [listLoading, meta, workspacesService]);
+  }, [listLoading, effectiveMeta, workspacesService]);
 
   // if workspace is not found, we should retry
   const retryTimesRef = useRef(3);
@@ -123,7 +136,7 @@ export const Component = () => {
     workspacesService.list.revalidate();
   }, [params.workspaceId, workspacesService.list]);
   useEffect(() => {
-    if (listLoading === false && meta === undefined) {
+    if (listLoading === false && effectiveMeta === undefined) {
       const timer = setInterval(() => {
         if (retryTimesRef.current > 0) {
           workspacesService.list.revalidate();
@@ -133,7 +146,7 @@ export const Component = () => {
       return () => clearInterval(timer);
     }
     return;
-  }, [listLoading, meta, workspaceNotFound, workspacesService]);
+  }, [listLoading, effectiveMeta, workspaceNotFound, workspacesService]);
 
   // server search params
   const serverFromSearchParams = useLiveData(
@@ -143,8 +156,8 @@ export const Component = () => {
   );
   // server from workspace
   const serverFromWorkspace = useLiveData(
-    meta?.flavour && meta.flavour !== 'local'
-      ? serversService.server$(meta?.flavour)
+    effectiveMeta?.flavour && effectiveMeta.flavour !== 'local'
+      ? serversService.server$(effectiveMeta?.flavour)
       : undefined
   );
   const server = serverFromWorkspace ?? serverFromSearchParams;
@@ -156,20 +169,22 @@ export const Component = () => {
     ) {
       return (
         <FrameworkScope scope={server?.scope}>
-          <SharePage
-            docId={detailDocRoute.docId}
-            workspaceId={detailDocRoute.workspaceId}
-          />
+          <Suspense fallback={null}>
+            <SharePage
+              docId={detailDocRoute.docId}
+              workspaceId={detailDocRoute.workspaceId}
+            />
+          </Suspense>
         </FrameworkScope>
       );
     }
     return <PageNotFound noPermission />;
   }
-  if (!meta) {
+  if (!effectiveMeta) {
     return;
   }
   return (
-    <WorkspaceLayout meta={meta}>
+    <WorkspaceLayout meta={effectiveMeta}>
       <MobileWorkbenchRoot routes={warpedRoutes} />
     </WorkspaceLayout>
   );

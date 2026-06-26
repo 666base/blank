@@ -1,21 +1,37 @@
-import { uniReactRoot } from '@affine/component';
-import { useResponsiveSidebar } from '@affine/core/components/hooks/use-responsive-siedebar';
-import { SWRConfigProvider } from '@affine/core/components/providers/swr-config-provider';
-import { WorkspaceSideEffects } from '@affine/core/components/providers/workspace-side-effects';
-import { AppContainer } from '@affine/core/desktop/components/app-container';
-import { DocumentTitle } from '@affine/core/desktop/components/document-title';
-import { WorkspaceDialogs } from '@affine/core/desktop/dialogs';
-import { PeekViewManagerModal } from '@affine/core/modules/peek-view';
-import { QuotaCheck } from '@affine/core/modules/quota';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { WorkspaceService } from '@affine/core/modules/workspace';
+import { uniReactRoot } from '@blank/component';
+import { useResponsiveSidebar } from '@blank/core/components/hooks/use-responsive-siedebar';
+import { SWRConfigProvider } from '@blank/core/components/providers/swr-config-provider';
+import { WorkspaceSideEffects } from '@blank/core/components/providers/workspace-side-effects';
+import { AppContainer } from '@blank/core/desktop/components/app-container';
+import { DocumentTitle } from '@blank/core/desktop/components/document-title';
+import { WorkspaceDialogs } from '@blank/core/desktop/dialogs';
+import { QuotaCheck } from '@blank/core/modules/quota';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { WorkspaceService } from '@blank/core/modules/workspace';
 import { LiveData, useLiveData, useService } from '@toeverything/infra';
-import type { PropsWithChildren } from 'react';
+import { lazy, Suspense, type PropsWithChildren, useEffect } from 'react';
+
+import { preloadBlockSuiteEditor } from '@blank/core/blocksuite/preload-block-suite-editor';
+
+const PeekViewManagerModal = lazy(() =>
+  import('@blank/core/modules/peek-view').then(m => ({
+    default: m.PeekViewManagerModal,
+  }))
+);
 
 export const WorkspaceLayout = function WorkspaceLayout({
   children,
 }: PropsWithChildren) {
   const currentWorkspace = useService(WorkspaceService).workspace;
+  useEffect(() => {
+    const run = () => preloadBlockSuiteEditor();
+    if (typeof requestIdleCallback === 'function') {
+      const id = requestIdleCallback(run, { timeout: 1200 });
+      return () => cancelIdleCallback(id);
+    }
+    const timer = window.setTimeout(run, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
   return (
     <SWRConfigProvider>
       <WorkspaceDialogs />
@@ -25,7 +41,9 @@ export const WorkspaceLayout = function WorkspaceLayout({
         <QuotaCheck workspaceMeta={currentWorkspace.meta} />
       ) : null}
       <WorkspaceSideEffects />
-      <PeekViewManagerModal />
+      <Suspense fallback={null}>
+        <PeekViewManagerModal />
+      </Suspense>
       <DocumentTitle />
 
       <WorkspaceLayoutInner>{children}</WorkspaceLayoutInner>

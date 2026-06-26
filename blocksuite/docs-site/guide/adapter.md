@@ -77,7 +77,7 @@ walker.setONodeTypeGuard(
 
 walker.setEnter(async (o, context) => {
   switch (o.node.flavour) {
-    case 'affine:list': {
+    case 'blank:list': {
       context
         .openNode(
           {
@@ -95,7 +95,7 @@ walker.setEnter(async (o, context) => {
 
 walker.setLeave(async (o, context) => {
   switch (o.node.flavour) {
-    case 'affine:list': {
+    case 'blank:list': {
       context.closeNode();
       break;
     }

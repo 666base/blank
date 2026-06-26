@@ -16,16 +16,16 @@ import '@shoelace-style/shoelace/dist/themes/light.css';
 import '@shoelace-style/shoelace/dist/themes/dark.css';
 import './left-side-panel.js';
 
-import { PresentTool } from '@blocksuite/affine/blocks/frame';
-import { ExportManager } from '@blocksuite/affine/blocks/surface';
-import { toast } from '@blocksuite/affine/components/toast';
-import { StoreExtensionManagerIdentifier } from '@blocksuite/affine/ext-loader';
+import { PresentTool } from '@blocksuite/blank/blocks/frame';
+import { ExportManager } from '@blocksuite/blank/blocks/surface';
+import { toast } from '@blocksuite/blank/components/toast';
+import { StoreExtensionManagerIdentifier } from '@blocksuite/blank/ext-loader';
 import {
   BlockSuiteError,
   ErrorCode,
-} from '@blocksuite/affine/global/exceptions';
-import type { SerializedXYWH } from '@blocksuite/affine/global/gfx';
-import { ColorScheme, type DocMode } from '@blocksuite/affine/model';
+} from '@blocksuite/blank/global/exceptions';
+import type { SerializedXYWH } from '@blocksuite/blank/global/gfx';
+import { ColorScheme, type DocMode } from '@blocksuite/blank/model';
 import {
   defaultImageProxyMiddleware,
   docLinkBaseURLMiddleware,
@@ -33,26 +33,26 @@ import {
   MarkdownAdapterFactoryIdentifier,
   PlainTextAdapterFactoryIdentifier,
   titleMiddleware,
-} from '@blocksuite/affine/shared/adapters';
-import { DocModeProvider } from '@blocksuite/affine/shared/services';
+} from '@blocksuite/blank/shared/adapters';
+import { DocModeProvider } from '@blocksuite/blank/shared/services';
 import {
   ColorVariables,
   FontFamilyVariables,
   SizeVariables,
   StyleVariables,
-} from '@blocksuite/affine/shared/theme';
+} from '@blocksuite/blank/shared/theme';
 import {
   openFilesWith,
   openSingleFileWith,
   printToPdf,
-} from '@blocksuite/affine/shared/utils';
-import { ShadowlessElement } from '@blocksuite/affine/std';
-import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
+} from '@blocksuite/blank/shared/utils';
+import { ShadowlessElement } from '@blocksuite/blank/std';
+import { GfxControllerIdentifier } from '@blocksuite/blank/std/gfx';
 import {
   type DeltaInsert,
   Text,
   type Workspace,
-} from '@blocksuite/affine/store';
+} from '@blocksuite/blank/store';
 import {
   createAssetsArchive,
   download,
@@ -60,10 +60,10 @@ import {
   MarkdownTransformer,
   NotionHtmlTransformer,
   ZipTransformer,
-} from '@blocksuite/affine/widgets/linked-doc';
-import { NotionHtmlAdapter } from '@blocksuite/affine-shared/adapters';
-import type { AffineTextAttributes } from '@blocksuite/affine-shared/types';
-import { TestAffineEditorContainer } from '@blocksuite/integration-test';
+} from '@blocksuite/blank/widgets/linked-doc';
+import { NotionHtmlAdapter } from '@blocksuite/blank-shared/adapters';
+import type { BlankTextAttributes } from '@blocksuite/blank-shared/types';
+import { TestBlankEditorContainer } from '@blocksuite/integration-test';
 import type { SlDropdown } from '@shoelace-style/shoelace';
 import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import { css, html } from 'lit';
@@ -147,13 +147,13 @@ function initStyleDebugMenu(
   fontFamilyFolder
     .addBinding(
       {
-        '--affine-font-family':
+        '--blank-font-family':
           'Roboto Mono, apple-system, BlinkMacSystemFont,Helvetica Neue, Tahoma, PingFang SC, Microsoft Yahei, Arial,Hiragino Sans GB, sans-serif, Apple Color Emoji, Segoe UI Emoji,Segoe UI Symbol, Noto Color Emoji',
       },
-      '--affine-font-family'
+      '--blank-font-family'
     )
     .on('change', e => {
-      writer.setProperty('--affine-font-family', e.value);
+      writer.setProperty('--blank-font-family', e.value);
     });
   ColorVariables.forEach(name => {
     const value = reader.getPropertyValue(name);
@@ -194,8 +194,8 @@ interface AdapterConfig {
 export class StarterDebugMenu extends ShadowlessElement {
   static override styles = css`
     :root {
-      --sl-font-size-medium: var(--affine-font-xs);
-      --sl-input-font-size-small: var(--affine-font-xs);
+      --sl-font-size-medium: var(--blank-font-xs);
+      --sl-input-font-size-small: var(--blank-font-xs);
     }
 
     .dg.ac {
@@ -237,8 +237,8 @@ export class StarterDebugMenu extends ShadowlessElement {
     const count = rootModel.children.length;
     const xywh: SerializedXYWH = `[0,${count * 60},800,95]`;
 
-    const noteId = this.doc.addBlock('affine:note', { xywh }, rootId);
-    this.doc.addBlock('affine:paragraph', {}, noteId);
+    const noteId = this.doc.addBlock('blank:note', { xywh }, rootId);
+    this.doc.addBlock('blank:paragraph', {}, noteId);
   }
 
   private async _clearSiteData() {
@@ -507,9 +507,9 @@ export class StarterDebugMenu extends ShadowlessElement {
         );
         for (const doc of docs) {
           if (doc) {
-            const noteBlock = window.doc.getModelsByFlavour('affine:note');
+            const noteBlock = window.doc.getModelsByFlavour('blank:note');
             window.doc.addBlock(
-              'affine:paragraph',
+              'blank:paragraph',
               {
                 type: 'text',
                 text: new Text([
@@ -521,7 +521,7 @@ export class StarterDebugMenu extends ShadowlessElement {
                         pageId: doc.id,
                       },
                     },
-                  } as DeltaInsert<AffineTextAttributes>,
+                  } as DeltaInsert<BlankTextAttributes>,
                 ]),
               },
               noteBlock[0].id
@@ -641,21 +641,21 @@ export class StarterDebugMenu extends ShadowlessElement {
     const app = document.querySelector('#app');
     if (app) {
       const currentEditorCount = app.querySelectorAll(
-        'affine-editor-container'
+        'blank-editor-container'
       ).length;
       if (currentEditorCount === 1) {
         // Add a second editor
         const newEditor = createTestEditor(this.doc, this.collection);
         app.append(newEditor);
         app.childNodes.forEach(child => {
-          if (child instanceof TestAffineEditorContainer) {
+          if (child instanceof TestBlankEditorContainer) {
             child.style.flex = '1';
           }
         });
         (app as HTMLElement).style.display = 'flex';
       } else {
         // Remove the second editor
-        const secondEditor = app.querySelectorAll('affine-editor-container')[1];
+        const secondEditor = app.querySelectorAll('blank-editor-container')[1];
         if (secondEditor) {
           secondEditor.remove();
         }
@@ -1018,7 +1018,7 @@ export class StarterDebugMenu extends ShadowlessElement {
   accessor docsPanel!: DocsPanel;
 
   @property({ attribute: false })
-  accessor editor!: TestAffineEditorContainer;
+  accessor editor!: TestBlankEditorContainer;
 
   @property({ attribute: false })
   accessor framePanel!: CustomFramePanel;

@@ -1,16 +1,16 @@
-import { DocService, DocsService } from '@affine/core/modules/doc';
-import { AppThemeService } from '@affine/core/modules/theme';
-import type { Container } from '@blocksuite/affine/global/di';
-import { ColorScheme } from '@blocksuite/affine/model';
+import { DocService, DocsService } from '@blank/core/modules/doc';
+import { AppThemeService } from '@blank/core/modules/theme';
+import type { Container } from '@blocksuite/blank/global/di';
+import { ColorScheme } from '@blocksuite/blank/model';
 import {
   type ThemeExtension,
   ThemeExtensionIdentifier,
-} from '@blocksuite/affine/shared/services';
+} from '@blocksuite/blank/shared/services';
 import {
   createSignalFromObservable,
   type Signal,
-} from '@blocksuite/affine/shared/utils';
-import { LifeCycleWatcher, StdIdentifier } from '@blocksuite/affine/std';
+} from '@blocksuite/blank/shared/utils';
+import { LifeCycleWatcher, StdIdentifier } from '@blocksuite/blank/std';
 import { type FrameworkProvider } from '@toeverything/infra';
 import type { Observable } from 'rxjs';
 import { combineLatest, map } from 'rxjs';
@@ -18,11 +18,11 @@ import { combineLatest, map } from 'rxjs';
 export function getThemeExtension(
   framework: FrameworkProvider
 ): typeof LifeCycleWatcher {
-  class AffineThemeExtension
+  class BlankThemeExtension
     extends LifeCycleWatcher
     implements ThemeExtension
   {
-    static override readonly key = 'affine-theme';
+    static override readonly key = 'blank-theme';
 
     private readonly themes: Map<string, Signal<ColorScheme>> = new Map();
 
@@ -30,7 +30,7 @@ export function getThemeExtension(
 
     static override setup(di: Container) {
       super.setup(di);
-      di.override(ThemeExtensionIdentifier, AffineThemeExtension, [
+      di.override(ThemeExtensionIdentifier, BlankThemeExtension, [
         StdIdentifier,
       ]);
     }
@@ -93,5 +93,5 @@ export function getThemeExtension(
     }
   }
 
-  return AffineThemeExtension;
+  return BlankThemeExtension;
 }

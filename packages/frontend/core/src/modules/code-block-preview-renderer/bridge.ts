@@ -1,16 +1,16 @@
 import {
   renderMermaidSvgBackend,
   renderTypstSvgBackend,
-} from '@affine/core/modules/code-block-preview-renderer/platform-backend';
+} from '@blank/core/modules/code-block-preview-renderer/platform-backend';
 import type {
   MermaidRenderRequest,
   MermaidRenderResult,
-} from '@affine/core/modules/mermaid/renderer';
+} from '@blank/core/modules/mermaid/renderer';
 import type {
   TypstRenderRequest,
   TypstRenderResult,
-} from '@affine/core/modules/typst/renderer';
-import { sanitizeSvg as sanitizeSvgDocument } from '@blocksuite/affine-shared/utils';
+} from '@blank/core/modules/typst/renderer';
+import { sanitizeSvg as sanitizeSvgDocument } from '@blocksuite/blank-shared/utils';
 
 export function sanitizeSvg(svg: string): string {
   return sanitizeSvgDocument(svg);

@@ -1,11 +1,11 @@
-import type { MindmapStyle } from '@blocksuite/affine/model';
-import type { EditorHost } from '@blocksuite/affine/std';
+import type { MindmapStyle } from '@blocksuite/blank/model';
+import type { EditorHost } from '@blocksuite/blank/std';
 import { html, nothing } from 'lit';
 
 import { markdownToMindmap } from '../mini-mindmap';
 import { getAIPanelWidget } from '../utils/ai-widgets';
 import type { AIContext } from '../utils/context';
-import type { AffineAIPanelWidgetConfig } from '../widgets/ai-panel/type';
+import type { BlankAIPanelWidgetConfig } from '../widgets/ai-panel/type';
 
 export const createMindmapRenderer: (
   host: EditorHost,
@@ -14,7 +14,7 @@ export const createMindmapRenderer: (
    */
   ctx: AIContext,
   style?: MindmapStyle
-) => AffineAIPanelWidgetConfig['answerRenderer'] = (host, ctx, style) => {
+) => BlankAIPanelWidgetConfig['answerRenderer'] = (host, ctx, style) => {
   return (answer, state) => {
     if (state === 'generating') {
       const panel = getAIPanelWidget(host);
@@ -47,7 +47,7 @@ export const createMindmapExecuteRenderer: (
    */
   ctx: AIContext,
   handler: (host: EditorHost, ctx: AIContext) => void
-) => AffineAIPanelWidgetConfig['answerRenderer'] = (host, ctx, handler) => {
+) => BlankAIPanelWidgetConfig['answerRenderer'] = (host, ctx, handler) => {
   return (answer, state) => {
     if (state !== 'finished') {
       const panel = getAIPanelWidget(host);

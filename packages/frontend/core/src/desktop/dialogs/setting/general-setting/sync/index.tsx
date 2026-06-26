@@ -1,10 +1,10 @@
-import { Button, Input } from '@affine/component';
+import { Button, Input } from '@blank/component';
 import {
   SettingHeader,
   SettingRow,
   SettingWrapper,
-} from '@affine/component/setting-components';
-import { useI18n } from '@affine/i18n';
+} from '@blank/component/setting-components';
+import { useI18n } from '@blank/i18n';
 import { useCallback, useState } from 'react';
 
 import {

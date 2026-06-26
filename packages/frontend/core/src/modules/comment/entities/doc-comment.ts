@@ -1,11 +1,11 @@
-import { type CommentChangeAction, DocMode } from '@affine/graphql';
-import { track } from '@affine/track';
-import { InlineCommentManager } from '@blocksuite/affine/inlines/comment';
+import { type CommentChangeAction, DocMode } from '@blank/graphql';
+import { track } from '@blank/track';
+import { InlineCommentManager } from '@blocksuite/blank/inlines/comment';
 import type {
   BaseSelection,
   DocSnapshot,
   Store,
-} from '@blocksuite/affine/store';
+} from '@blocksuite/blank/store';
 import type { BlockStdScope } from '@blocksuite/std';
 import {
   effect,
@@ -138,7 +138,7 @@ export class DocCommentEntity extends Entity<{
     const mention: string | undefined = reply?.user.id;
     if (mention) {
       // insert mention at the end of the paragraph
-      const paragraph = doc.getModelsByFlavour('affine:paragraph').at(-1);
+      const paragraph = doc.getModelsByFlavour('blank:paragraph').at(-1);
       if (paragraph) {
         paragraph.text?.insert(' ', paragraph.text.length, {
           mention: {

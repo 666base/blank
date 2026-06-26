@@ -1,4 +1,4 @@
-import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
+import { RefNodeSlotsProvider } from '@blocksuite/blank/inlines/reference';
 import {
   CommunityCanvasTextFonts,
   DocModeProvider,
@@ -6,9 +6,9 @@ import {
   FeatureFlagService,
   FontConfigExtension,
   ParseDocUrlExtension,
-} from '@blocksuite/affine/shared/services';
-import type { ExtensionType, Store, Workspace } from '@blocksuite/affine/store';
-import { type TestAffineEditorContainer } from '@blocksuite/integration-test';
+} from '@blocksuite/blank/shared/services';
+import type { ExtensionType, Store, Workspace } from '@blocksuite/blank/store';
+import { type TestBlankEditorContainer } from '@blocksuite/integration-test';
 import { getTestViewManager } from '@blocksuite/integration-test/view';
 
 import {
@@ -20,7 +20,7 @@ import {
 const viewManager = getTestViewManager();
 
 export function getTestCommonExtensions(
-  editor: TestAffineEditorContainer
+  editor: TestBlankEditorContainer
 ): ExtensionType[] {
   return [
     FontConfigExtension(CommunityCanvasTextFonts),
@@ -42,7 +42,7 @@ export function createTestEditor(store: Store, workspace: Workspace) {
     .get(FeatureFlagService)
     .setFlag('enable_advanced_block_visibility', true);
 
-  const editor = document.createElement('affine-editor-container');
+  const editor = document.createElement('blank-editor-container');
 
   editor.autofocus = true;
   editor.doc = store;

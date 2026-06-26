@@ -164,14 +164,14 @@ const events = {
     },
   },
   updater: {
-    onUpdateReady() {
-      return () => {};
+    onUpdateReady(cb) {
+      return hub.on('updater:onUpdateReady', cb);
     },
-    onUpdateAvailable() {
-      return () => {};
+    onUpdateAvailable(cb) {
+      return hub.on('updater:onUpdateAvailable', cb);
     },
-    onDownloadProgress() {
-      return () => {};
+    onDownloadProgress(cb) {
+      return hub.on('updater:onDownloadProgress', cb);
     },
   },
 };
@@ -179,10 +179,12 @@ const events = {
 const apis = {
   ui,
   updater: {
-    currentVersion: async () => '0.28.0',
-    checkForUpdates: async () => null,
-    downloadUpdate: async () => {},
-    quitAndInstall: async () => {},
+    currentVersion: () => invoke(`${CHANNEL_PREFIX}updater:currentVersion`),
+    checkForUpdates: () => invoke(`${CHANNEL_PREFIX}updater:checkForUpdates`),
+    downloadUpdate: () => invoke(`${CHANNEL_PREFIX}updater:downloadUpdate`),
+    quitAndInstall: () => invoke(`${CHANNEL_PREFIX}updater:quitAndInstall`),
+    setConfig: config =>
+      invoke(`${CHANNEL_PREFIX}updater:setConfig`, config),
   },
   clipboard: {
     copyAsPNG: () => invoke(`${CHANNEL_PREFIX}clipboard:copyAsPNG`),
@@ -202,6 +204,9 @@ const apis = {
       invoke(`${CHANNEL_PREFIX}workspace:recoverBackupWorkspace`, ...args),
     deleteBackupWorkspace: (...args) =>
       invoke(`${CHANNEL_PREFIX}workspace:deleteBackupWorkspace`, ...args),
+  },
+  fastBoot: {
+    setRoute: data => invoke(`${CHANNEL_PREFIX}fastBoot:setRoute`, data),
   },
 };
 

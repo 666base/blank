@@ -1,10 +1,10 @@
-import { DebugLogger } from '@affine/debug';
-import { UserFriendlyError } from '@affine/error';
+import { DebugLogger } from '@blank/debug';
+import { UserFriendlyError } from '@blank/error';
 import { fromPromise, Service } from '@toeverything/infra';
 
 import type { ServerService } from './server';
 
-const logger = new DebugLogger('affine:fetch');
+const logger = new DebugLogger('blank:fetch');
 
 export type FetchInit = RequestInit & { timeout?: number };
 
@@ -61,7 +61,7 @@ export class FetchService extends Service {
         signal: abortController.signal,
         headers: {
           ...init?.headers,
-          'x-affine-version': BUILD_CONFIG.appVersion,
+          'x-blank-version': BUILD_CONFIG.appVersion,
         },
       });
     } catch (err: any) {

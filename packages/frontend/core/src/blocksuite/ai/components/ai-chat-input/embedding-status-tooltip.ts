@@ -1,6 +1,6 @@
-import type { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { SignalWatcher } from '@blocksuite/affine/global/lit';
-import { unsafeCSSVar } from '@blocksuite/affine/shared/theme';
+import type { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { SignalWatcher } from '@blocksuite/blank/global/lit';
+import { unsafeCSSVar } from '@blocksuite/blank/shared/theme';
 import { css, html, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import { debounce } from 'lodash-es';
@@ -31,12 +31,12 @@ export class AIChatEmbeddingStatusTooltip extends SignalWatcher(LitElement) {
       border-radius: 4px;
     }
     .check-status:hover {
-      background-color: ${unsafeCSSVar('--affine-hover-color')};
+      background-color: ${unsafeCSSVar('--blank-hover-color')};
     }
   `;
 
   @property({ attribute: false })
-  accessor affineWorkspaceDialogService!: WorkspaceDialogService;
+  accessor blankWorkspaceDialogService!: WorkspaceDialogService;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -44,7 +44,7 @@ export class AIChatEmbeddingStatusTooltip extends SignalWatcher(LitElement) {
 
   private readonly _handleCheckStatusClick = debounce(
     () => {
-      this.affineWorkspaceDialogService.open('setting', {
+      this.blankWorkspaceDialogService.open('setting', {
         activeTab: 'workspace:embedding',
       });
     },

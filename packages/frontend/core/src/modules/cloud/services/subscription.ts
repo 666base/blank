@@ -1,4 +1,4 @@
-import { tracker } from '@affine/track';
+import { tracker } from '@blank/track';
 import { OnEvent, Service } from '@toeverything/infra';
 
 import { Subscription } from '../entities/subscription';

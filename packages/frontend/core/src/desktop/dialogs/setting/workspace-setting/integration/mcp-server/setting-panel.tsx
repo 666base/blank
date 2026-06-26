@@ -1,10 +1,10 @@
-import { Button, ErrorMessage, notify, Skeleton } from '@affine/component';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { AccessTokenService } from '@affine/core/modules/cloud';
-import type { AccessToken } from '@affine/core/modules/cloud/stores/access-token';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { UserFriendlyError } from '@affine/error';
-import { useI18n } from '@affine/i18n';
+import { Button, ErrorMessage, notify, Skeleton } from '@blank/component';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { AccessTokenService } from '@blank/core/modules/cloud';
+import type { AccessToken } from '@blank/core/modules/cloud/stores/access-token';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { UserFriendlyError } from '@blank/error';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
@@ -22,8 +22,8 @@ const McpServerSettingHeader = ({ action }: { action?: ReactNode }) => {
   return (
     <IntegrationSettingHeader
       icon={<img src={MCPIcon} />}
-      name={t['com.affine.integration.mcp-server.name']()}
-      desc={t['com.affine.integration.mcp-server.desc']()}
+      name={t['com.blank.integration.mcp-server.name']()}
+      desc={t['com.blank.integration.mcp-server.desc']()}
       action={action}
     />
   );
@@ -54,10 +54,10 @@ const McpServerSetting = () => {
       ? JSON.stringify(
           {
             mcpServers: {
-              [`affine_workspace_${workspaceService.workspace.id}`]: {
+              [`blank_workspace_${workspaceService.workspace.id}`]: {
                 type: 'streamable-http',
                 url: '',
-                note: `Read docs from AFFiNE workspace "${workspaceName}"`,
+                note: `Read docs from Blank workspace "${workspaceName}"`,
                 headers: {
                   Authorization: `Bearer ${revealedAccessToken.token}`,
                 },
@@ -72,7 +72,7 @@ const McpServerSetting = () => {
 
   const copyJsonDisabled = !code || mutating || isRedactedDisplay;
   const copyJsonTooltip = isRedactedDisplay
-    ? t['com.affine.integration.mcp-server.copy-json.disabled-hint']()
+    ? t['com.blank.integration.mcp-server.copy-json.disabled-hint']()
     : undefined;
 
   const showLoading = accessTokens === null && isRevalidating;

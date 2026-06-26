@@ -1,12 +1,12 @@
 import type {
   AuthService,
   PublicUserService,
-} from '@affine/core/modules/cloud';
-import { UserFriendlyError } from '@affine/error';
+} from '@blank/core/modules/cloud';
+import { UserFriendlyError } from '@blank/error';
 import {
-  type AffineUserInfo,
+  type BlankUserInfo,
   UserServiceExtension,
-} from '@blocksuite/affine/shared/services';
+} from '@blocksuite/blank/shared/services';
 
 export function patchUserExtensions(
   publicUserService: PublicUserService,
@@ -23,7 +23,7 @@ export function patchUserExtensions(
         name: account.label,
         avatar: account.avatar,
         removed: false,
-      } as AffineUserInfo;
+      } as BlankUserInfo;
     }).signal,
     // eslint-disable-next-line rxjs/finnish
     userInfo$(id) {

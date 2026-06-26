@@ -1,10 +1,10 @@
-import { type DropTargetGetFeedback, Skeleton } from '@affine/component';
-import { ResizePanel } from '@affine/component/resize-panel';
-import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
-import { NavigateContext } from '@affine/core/components/hooks/use-navigate-helper';
-import { WorkspaceNavigator } from '@affine/core/components/workspace-selector';
-import type { AffineDNDData } from '@affine/core/types/dnd';
-import { useI18n } from '@affine/i18n';
+import { type DropTargetGetFeedback, Skeleton } from '@blank/component';
+import { ResizePanel } from '@blank/component/resize-panel';
+import { useAppSettingHelper } from '@blank/core/components/hooks/blank/use-app-setting-helper';
+import { NavigateContext } from '@blank/core/components/hooks/use-navigate-helper';
+import { WorkspaceNavigator } from '@blank/core/components/workspace-selector';
+import type { BlankDNDData } from '@blank/core/types/dnd';
+import { useI18n } from '@blank/i18n';
 import {
   useLiveData,
   useService,
@@ -17,7 +17,7 @@ import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { WorkbenchService } from '../../workbench';
 import { allowedSplitViewEntityTypes } from '../../workbench/view/split-view/types';
 import { WorkspaceService } from '../../workspace';
-import { isLocalOnlyMode } from '../../../utils/local-only';
+import { isDesktopApp, isLocalOnlyMode } from '../../../utils/local-only';
 import { AppSidebarService } from '../services/app-sidebar';
 import * as styles from './fallback.css';
 import {
@@ -38,7 +38,7 @@ export type History = {
 
 const MAX_WIDTH = 480;
 const MIN_WIDTH = 248;
-const isMacosDesktop = BUILD_CONFIG.isElectron && environment.isMacOs;
+const isMacosDesktop = isDesktopApp() && environment.isMacOs;
 
 export function AppSidebar({ children }: PropsWithChildren) {
   const { appSettings } = useAppSettingHelper();
@@ -64,7 +64,7 @@ export function AppSidebar({ children }: PropsWithChildren) {
         ? 'floating'
         : 'close';
 
-  const hasRightBorder = !BUILD_CONFIG.isElectron && !clientBorder;
+  const hasRightBorder = !isDesktopApp() && !clientBorder;
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
@@ -129,7 +129,7 @@ export function AppSidebar({ children }: PropsWithChildren) {
           viewId: firstView.id,
         };
       },
-      canDrop: (data: DropTargetGetFeedback<AffineDNDData>) => {
+      canDrop: (data: DropTargetGetFeedback<BlankDNDData>) => {
         return (
           (!!data.source.data.entity?.type &&
             allowedSplitViewEntityTypes.has(data.source.data.entity?.type)) ||
@@ -174,10 +174,16 @@ export function AppSidebar({ children }: PropsWithChildren) {
         data-testid="app-sidebar-wrapper"
         data-is-macos-electron={isMacosDesktop}
         data-client-border={clientBorder}
-        data-is-electron={BUILD_CONFIG.isElectron}
+        data-is-electron={isDesktopApp()}
       >
-        <nav className={navStyle} data-testid="app-sidebar">
-          {!BUILD_CONFIG.isElectron && sidebarState !== 'floating' && (
+        <nav
+          className={navStyle}
+          data-testid="app-sidebar"
+          data-has-nav-header={
+            !isDesktopApp() && sidebarState !== 'floating' ? 'true' : 'false'
+          }
+        >
+          {!isDesktopApp() && sidebarState !== 'floating' && (
             <SidebarHeader />
           )}
           <div className={navBodyStyle} data-testid="sliderBar-inner">
@@ -200,8 +206,8 @@ const ResizeHandleTooltipContent = () => {
   const t = useI18n();
   return (
     <div>
-      <div>{t['com.affine.rootAppSidebar.resize-handle.tooltip.drag']()}</div>
-      <div>{t['com.affine.rootAppSidebar.resize-handle.tooltip.click']()}</div>
+      <div>{t['com.blank.rootAppSidebar.resize-handle.tooltip.drag']()}</div>
+      <div>{t['com.blank.rootAppSidebar.resize-handle.tooltip.click']()}</div>
     </div>
   );
 };
@@ -302,11 +308,11 @@ export const AppSidebarFallback = (): ReactElement | null => {
     <div
       style={{ width }}
       className={navWrapperStyle}
-      data-has-border={!BUILD_CONFIG.isElectron && !clientBorder}
+      data-has-border={!isDesktopApp() && !clientBorder}
       data-open="true"
     >
       <nav className={navStyle}>
-        {!BUILD_CONFIG.isElectron ? <div className={navHeaderStyle} /> : null}
+        {!isDesktopApp() ? <div className={navHeaderStyle} /> : null}
         <div className={navBodyStyle}>
           <div className={styles.fallback}>
             <FallbackHeaderWithWorkspaceNavigator />
@@ -331,11 +337,11 @@ export const ShellAppSidebarFallback = () => {
     <div
       style={{ width }}
       className={navWrapperStyle}
-      data-has-border={!BUILD_CONFIG.isElectron && !clientBorder}
+      data-has-border={!isDesktopApp() && !clientBorder}
       data-open="true"
     >
       <nav className={navStyle}>
-        {!BUILD_CONFIG.isElectron ? <div className={navHeaderStyle} /> : null}
+        {!isDesktopApp() ? <div className={navHeaderStyle} /> : null}
         <div className={navBodyStyle}>
           <div className={styles.fallback}>
             <FallbackHeader />

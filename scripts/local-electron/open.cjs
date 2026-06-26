@@ -8,8 +8,8 @@ const devInfoFile = path.join(root, '.blank', 'electron-dev-server.json');
 const isWindows = process.platform === 'win32';
 
 function resolveDevServerUrl() {
-  if (process.env.AFFINE_DESKTOP_URL) {
-    return process.env.AFFINE_DESKTOP_URL;
+  if (process.env.BLANK_DESKTOP_URL) {
+    return process.env.BLANK_DESKTOP_URL;
   }
 
   try {
@@ -78,9 +78,9 @@ const mainPath = path.join(__dirname, 'main.cjs');
     env: {
       ...process.env,
       NODE_ENV: process.env.NODE_ENV || 'development',
-      AFFINE_DESKTOP_URL: url,
-      AFFINE_ENABLE_BACKEND_PROXY:
-        process.env.AFFINE_ENABLE_BACKEND_PROXY || 'false',
+      BLANK_DESKTOP_URL: url,
+      BLANK_ENABLE_BACKEND_PROXY:
+        process.env.BLANK_ENABLE_BACKEND_PROXY || 'false',
     },
     windowsHide: isWindows,
   });

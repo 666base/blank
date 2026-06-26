@@ -1,15 +1,15 @@
-import { notify } from '@affine/component';
+import { notify } from '@blank/component';
 import {
   generateUrl,
   type UseSharingUrl,
-} from '@affine/core/components/hooks/affine/use-share-url';
-import { WorkspaceServerService } from '@affine/core/modules/cloud';
-import { EditorService } from '@affine/core/modules/editor';
-import type { EditorSettingExt } from '@affine/core/modules/editor-setting/entities/editor-setting';
-import { copyLinkToBlockStdScopeClipboard } from '@affine/core/utils/clipboard';
-import { I18n, i18nTime } from '@affine/i18n';
-import { track } from '@affine/track';
-import { BookmarkBlockComponent } from '@blocksuite/affine/blocks/bookmark';
+} from '@blank/core/components/hooks/blank/use-share-url';
+import { WorkspaceServerService } from '@blank/core/modules/cloud';
+import { EditorService } from '@blank/core/modules/editor';
+import type { EditorSettingExt } from '@blank/core/modules/editor-setting/entities/editor-setting';
+import { copyLinkToBlockStdScopeClipboard } from '@blank/core/utils/clipboard';
+import { I18n, i18nTime } from '@blank/i18n';
+import { track } from '@blank/track';
+import { BookmarkBlockComponent } from '@blocksuite/blank/blocks/bookmark';
 import {
   EmbedFigmaBlockComponent,
   EmbedGithubBlockComponent,
@@ -17,38 +17,38 @@ import {
   EmbedLoomBlockComponent,
   EmbedYoutubeBlockComponent,
   getDocContentWithMaxLength,
-} from '@blocksuite/affine/blocks/embed';
+} from '@blocksuite/blank/blocks/embed';
 import {
   EmbedLinkedDocBlockComponent,
   EmbedSyncedDocBlockComponent,
-} from '@blocksuite/affine/blocks/embed-doc';
-import { SurfaceRefBlockComponent } from '@blocksuite/affine/blocks/surface-ref';
-import { toggleEmbedCardEditModal } from '@blocksuite/affine/components/embed-card-modal';
-import { notifyLinkedDocClearedAliases } from '@blocksuite/affine/components/notification';
-import { isPeekable, peek } from '@blocksuite/affine/components/peek';
-import { toast } from '@blocksuite/affine/components/toast';
+} from '@blocksuite/blank/blocks/embed-doc';
+import { SurfaceRefBlockComponent } from '@blocksuite/blank/blocks/surface-ref';
+import { toggleEmbedCardEditModal } from '@blocksuite/blank/components/embed-card-modal';
+import { notifyLinkedDocClearedAliases } from '@blocksuite/blank/components/notification';
+import { isPeekable, peek } from '@blocksuite/blank/components/peek';
+import { toast } from '@blocksuite/blank/components/toast';
 import {
   EditorChevronDown,
   type MenuContext,
   type MenuItemGroup,
-} from '@blocksuite/affine/components/toolbar';
-import { watch } from '@blocksuite/affine/global/lit';
+} from '@blocksuite/blank/components/toolbar';
+import { watch } from '@blocksuite/blank/global/lit';
 import {
-  AffineReference,
+  BlankReference,
   toggleReferencePopup,
-} from '@blocksuite/affine/inlines/reference';
+} from '@blocksuite/blank/inlines/reference';
 import {
   BookmarkBlockModel,
   EmbedIframeBlockModel,
   EmbedLinkedDocModel,
   EmbedSyncedDocModel,
   SurfaceRefBlockSchema,
-} from '@blocksuite/affine/model';
+} from '@blocksuite/blank/model';
 import {
   draftSelectedModelsCommand,
   getSelectedModelsCommand,
-} from '@blocksuite/affine/shared/commands';
-import { ImageSelection } from '@blocksuite/affine/shared/selection';
+} from '@blocksuite/blank/shared/commands';
+import { ImageSelection } from '@blocksuite/blank/shared/selection';
 import {
   ActionPlacement,
   CitationProvider,
@@ -63,18 +63,18 @@ import {
   type ToolbarModuleConfig,
   ToolbarModuleExtension,
   UserProvider,
-} from '@blocksuite/affine/shared/services';
-import { matchModels } from '@blocksuite/affine/shared/utils';
+} from '@blocksuite/blank/shared/services';
+import { matchModels } from '@blocksuite/blank/shared/utils';
 import {
   BlockFlavourIdentifier,
   BlockSelection,
   TextSelection,
-} from '@blocksuite/affine/std';
+} from '@blocksuite/blank/std';
 import {
   GfxBlockElementModel,
   GfxPrimitiveElementModel,
-} from '@blocksuite/affine/std/gfx';
-import { type ExtensionType, Slice } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/std/gfx';
+import { type ExtensionType, Slice } from '@blocksuite/blank/store';
 import {
   CopyAsImgaeIcon,
   CopyIcon,
@@ -224,7 +224,7 @@ function createCopyAsMarkdownMenuItem(
   _framework: FrameworkProvider,
   item = {
     icon: ExportToMarkdownIcon({ width: '20', height: '20' }),
-    label: I18n['com.affine.export.copy-markdown'](),
+    label: I18n['com.blank.export.copy-markdown'](),
     type: 'copy-as-markdown',
     when: (ctx: MenuContext) => {
       if (ctx.isEmpty()) return false;
@@ -257,7 +257,7 @@ function createCopyAsMarkdownMenuItem(
           );
           if (markdown) {
             await navigator.clipboard.writeText(markdown);
-            toast(std.host, I18n['com.affine.export.copied-as-markdown']());
+            toast(std.host, I18n['com.blank.export.copied-as-markdown']());
           }
         }
       })()
@@ -290,7 +290,7 @@ function createToolbarMoreMenuConfigV2(baseUrl?: string) {
           },
           {
             id: 'copy-as-markdown',
-            label: I18n['com.affine.export.copy-markdown'](),
+            label: I18n['com.blank.export.copy-markdown'](),
             icon: ExportToMarkdownIcon(),
             when: ({ gfx, flags, isPageMode }) => {
               if (flags.isHovering()) return false;
@@ -321,7 +321,7 @@ function createToolbarMoreMenuConfigV2(baseUrl?: string) {
                     await navigator.clipboard.writeText(markdown);
                     toast(
                       std.host,
-                      I18n['com.affine.export.copied-as-markdown']()
+                      I18n['com.blank.export.copied-as-markdown']()
                     );
                   }
                 }
@@ -474,7 +474,7 @@ function createToolbarMoreMenuConfigV2(baseUrl?: string) {
                 return value.name;
               });
               const user = computed(() => {
-                return I18n.t('com.affine.page.toolbar.created_by', {
+                return I18n.t('com.blank.page.toolbar.created_by', {
                   name: name.value,
                 });
               });
@@ -588,7 +588,7 @@ function createOpenDocActions(
   target:
     | EmbedLinkedDocBlockComponent
     | EmbedSyncedDocBlockComponent
-    | AffineReference
+    | BlankReference
     | SurfaceRefBlockComponent,
   isSameDoc: boolean,
   actions = openDocActions.map(
@@ -701,7 +701,7 @@ function createSurfaceRefToolbarConfig(baseUrl?: string): ToolbarModuleConfig {
             .map(action => {
               if (action.id.endsWith('open-in-active-view')) {
                 action.label =
-                  I18n['com.affine.peek-view-controls.open-doc-in-edgeless']();
+                  I18n['com.blank.peek-view-controls.open-doc-in-edgeless']();
               }
               return action;
             });
@@ -813,7 +813,7 @@ function renderOpenDocMenu(
   target:
     | EmbedLinkedDocBlockComponent
     | EmbedSyncedDocBlockComponent
-    | AffineReference,
+    | BlankReference,
   isSameDoc: boolean
 ) {
   const actions = createOpenDocActions(ctx, target, isSameDoc).map(action => ({
@@ -831,13 +831,13 @@ function renderOpenDocMenu(
   return html`${keyed(
     target,
     html`
-      <affine-open-doc-dropdown-menu
+      <blank-open-doc-dropdown-menu
         .actions=${actions}
         .context=${ctx}
         .openDocModeSignal=${openDocMode}
         .updateOpenDocMode=${updateOpenDocMode}
       >
-      </affine-open-doc-dropdown-menu>
+      </blank-open-doc-dropdown-menu>
     `
   )}`;
 }
@@ -975,7 +975,7 @@ const inlineReferenceToolbarConfig = {
           icon: CopyIcon(),
           run(ctx) {
             const target = ctx.message$.peek()?.element;
-            if (!(target instanceof AffineReference)) return;
+            if (!(target instanceof BlankReference)) return;
 
             const { pageId, params } = target.referenceInfo;
 
@@ -1004,7 +1004,7 @@ const inlineReferenceToolbarConfig = {
           icon: EditIcon(),
           run(ctx) {
             const target = ctx.message$.peek()?.element;
-            if (!(target instanceof AffineReference)) return;
+            if (!(target instanceof BlankReference)) return;
 
             // Clears
             ctx.reset();
@@ -1082,62 +1082,62 @@ export const createCustomToolbarExtension = (
 ): ExtensionType[] => {
   return [
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:*'),
+      id: BlockFlavourIdentifier('custom:blank:*'),
       config: createToolbarMoreMenuConfigV2(baseUrl),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:bookmark'),
+      id: BlockFlavourIdentifier('custom:blank:bookmark'),
       config: createExternalLinkableToolbarConfig(BookmarkBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:surface:bookmark'),
+      id: BlockFlavourIdentifier('custom:blank:surface:bookmark'),
       config: createExternalLinkableToolbarConfig(BookmarkBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:embed-figma'),
+      id: BlockFlavourIdentifier('custom:blank:embed-figma'),
       config: createExternalLinkableToolbarConfig(EmbedFigmaBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:surface:embed-figma'),
+      id: BlockFlavourIdentifier('custom:blank:surface:embed-figma'),
       config: createExternalLinkableToolbarConfig(BookmarkBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:embed-github'),
+      id: BlockFlavourIdentifier('custom:blank:embed-github'),
       config: createExternalLinkableToolbarConfig(EmbedGithubBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:surface:embed-github'),
+      id: BlockFlavourIdentifier('custom:blank:surface:embed-github'),
       config: createExternalLinkableToolbarConfig(BookmarkBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:embed-loom'),
+      id: BlockFlavourIdentifier('custom:blank:embed-loom'),
       config: createExternalLinkableToolbarConfig(EmbedLoomBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:surface:embed-loom'),
+      id: BlockFlavourIdentifier('custom:blank:surface:embed-loom'),
       config: createExternalLinkableToolbarConfig(BookmarkBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:embed-youtube'),
+      id: BlockFlavourIdentifier('custom:blank:embed-youtube'),
       config: createExternalLinkableToolbarConfig(EmbedYoutubeBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:surface:embed-youtube'),
+      id: BlockFlavourIdentifier('custom:blank:surface:embed-youtube'),
       config: createExternalLinkableToolbarConfig(BookmarkBlockComponent),
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:embed-linked-doc'),
+      id: BlockFlavourIdentifier('custom:blank:embed-linked-doc'),
       config: {
         actions: [
           embedLinkedDocToolbarConfig.actions,
@@ -1147,7 +1147,7 @@ export const createCustomToolbarExtension = (
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:surface:embed-linked-doc'),
+      id: BlockFlavourIdentifier('custom:blank:surface:embed-linked-doc'),
       config: {
         actions: [
           embedLinkedDocToolbarConfig.actions,
@@ -1160,7 +1160,7 @@ export const createCustomToolbarExtension = (
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:embed-synced-doc'),
+      id: BlockFlavourIdentifier('custom:blank:embed-synced-doc'),
       config: {
         actions: [
           embedSyncedDocToolbarConfig.actions,
@@ -1170,7 +1170,7 @@ export const createCustomToolbarExtension = (
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:surface:embed-synced-doc'),
+      id: BlockFlavourIdentifier('custom:blank:surface:embed-synced-doc'),
       config: {
         actions: [
           // the open actions are provided by the header of embed-edgeless-synced-doc-block
@@ -1183,7 +1183,7 @@ export const createCustomToolbarExtension = (
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:reference'),
+      id: BlockFlavourIdentifier('custom:blank:reference'),
       config: {
         actions: [
           {
@@ -1191,7 +1191,7 @@ export const createCustomToolbarExtension = (
             id: 'A.open-doc',
             content(ctx) {
               const target = ctx.message$.peek()?.element;
-              if (!(target instanceof AffineReference)) return null;
+              if (!(target instanceof BlankReference)) return null;
 
               return renderOpenDocMenu(
                 settings,
@@ -1207,12 +1207,12 @@ export const createCustomToolbarExtension = (
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:embed-iframe'),
+      id: BlockFlavourIdentifier('custom:blank:embed-iframe'),
       config: embedIframeToolbarConfig,
     }),
 
     ToolbarModuleExtension({
-      id: BlockFlavourIdentifier('custom:affine:surface:embed-iframe'),
+      id: BlockFlavourIdentifier('custom:blank:surface:embed-iframe'),
       config: {
         actions: [embedIframeToolbarConfig.actions].flat(),
 

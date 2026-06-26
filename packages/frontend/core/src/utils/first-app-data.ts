@@ -1,17 +1,12 @@
-// the following import is used to ensure the block suite editor effects are run
-import '../blocksuite/block-suite-editor';
-
-import { DebugLogger } from '@affine/debug';
-import { DEFAULT_WORKSPACE_NAME } from '@affine/env/constant';
-import onboardingUrl from '@affine/templates/onboarding.zip';
-import { ZipTransformer } from '@blocksuite/affine/widgets/linked-doc';
+import { DebugLogger } from '@blank/debug';
+import { getDefaultWorkspaceName, isBlankBuild } from '../utils/blank-links';
+import onboardingUrl from '@blank/templates/onboarding.zip';
+import { ZipTransformer } from '@blocksuite/blank/widgets/linked-doc';
 
 import { DocsService } from '../modules/doc';
 import { OrganizeService } from '../modules/organize';
-import {
-  getAFFiNEWorkspaceSchema,
-  type WorkspacesService,
-} from '../modules/workspace';
+import { ensureBlankWorkspaceSchema } from '../modules/workspace/global-schema';
+import type { WorkspacesService } from '../modules/workspace';
 import { isLocalOnlyMode } from './local-only';
 import { isBlankSyncEnabled } from './sync-config';
 
@@ -25,11 +20,8 @@ export async function buildShowcaseWorkspace(
     docCollection.doc.getMap('meta').set('name', workspaceName);
     if (!isLocalOnlyMode()) {
       const blob = await (await fetch(onboardingUrl)).blob();
-      await ZipTransformer.importDocs(
-        docCollection,
-        getAFFiNEWorkspaceSchema(),
-        blob
-      );
+      const schema = await ensureBlankWorkspaceSchema();
+      await ZipTransformer.importDocs(docCollection, schema, blob);
     }
   });
 
@@ -77,6 +69,9 @@ export async function buildShowcaseWorkspace(
 const logger = new DebugLogger('createFirstAppData');
 
 export async function createFirstAppData(workspacesService: WorkspacesService) {
+  if (isBlankBuild()) {
+    return;
+  }
   if (localStorage.getItem('is-first-open') !== null) {
     return;
   }
@@ -87,7 +82,7 @@ export async function createFirstAppData(workspacesService: WorkspacesService) {
   const { meta, defaultDocId } = await buildShowcaseWorkspace(
     workspacesService,
     'local',
-    DEFAULT_WORKSPACE_NAME
+    getDefaultWorkspaceName()
   );
   logger.info('create first workspace', defaultDocId);
   return { meta, defaultPageId: defaultDocId };

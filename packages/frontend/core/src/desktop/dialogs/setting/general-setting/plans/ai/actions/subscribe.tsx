@@ -1,9 +1,9 @@
-import { Button, type ButtonProps, Skeleton } from '@affine/component';
-import { generateSubscriptionCallbackLink } from '@affine/core/components/hooks/affine/use-subscription-notify';
-import { AuthService, SubscriptionService } from '@affine/core/modules/cloud';
-import { SubscriptionPlan, SubscriptionRecurring } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+import { Button, type ButtonProps, Skeleton } from '@blank/component';
+import { generateSubscriptionCallbackLink } from '@blank/core/components/hooks/blank/use-subscription-notify';
+import { AuthService, SubscriptionService } from '@blank/core/modules/cloud';
+import { SubscriptionPlan, SubscriptionRecurring } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useMemo } from 'react';
 
@@ -66,8 +66,8 @@ export const AISubscribe = ({
   ).toFixed(2)}`;
   const priceFrequency =
     displayedFrequency === 'yearly'
-      ? t['com.affine.payment.billing-setting.year']()
-      : t['com.affine.payment.billing-setting.month']();
+      ? t['com.blank.payment.billing-setting.year']()
+      : t['com.blank.payment.billing-setting.month']();
 
   return (
     <CheckoutSlot
@@ -90,7 +90,7 @@ export const AISubscribe = ({
                 paddingLeft: 4,
               }}
             >
-              {t['com.affine.payment.ai.subscribe.billed-annually']()}
+              {t['com.blank.payment.ai.subscribe.billed-annually']()}
             </span>
           ) : null}
         </Button>

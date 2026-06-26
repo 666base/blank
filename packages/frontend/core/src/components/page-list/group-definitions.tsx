@@ -1,8 +1,8 @@
-import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
-import type { Tag } from '@affine/core/modules/tag';
-import { TagService } from '@affine/core/modules/tag';
-import { useI18n } from '@affine/i18n';
-import type { DocMeta } from '@blocksuite/affine/store';
+import { CompatibleFavoriteItemsAdapter } from '@blank/core/modules/favorite';
+import type { Tag } from '@blank/core/modules/tag';
+import { TagService } from '@blank/core/modules/tag';
+import { useI18n } from '@blank/i18n';
+import type { DocMeta } from '@blocksuite/blank/store';
 import { FavoritedIcon, FavoriteIcon } from '@blocksuite/icons/rc';
 import { LiveData, useLiveData, useService } from '@toeverything/infra';
 import { type ReactNode, useMemo } from 'react';
@@ -44,7 +44,7 @@ export const useDateGroupDefinitions = <T extends ListItem>(
         label: count => (
           <GroupLabel
             id="today"
-            label={t['com.affine.today']()}
+            label={t['com.blank.today']()}
             count={count}
           />
         ),
@@ -56,7 +56,7 @@ export const useDateGroupDefinitions = <T extends ListItem>(
         label: count => (
           <GroupLabel
             id="yesterday"
-            label={t['com.affine.yesterday']()}
+            label={t['com.blank.yesterday']()}
             count={count}
           />
         ),
@@ -68,7 +68,7 @@ export const useDateGroupDefinitions = <T extends ListItem>(
         label: count => (
           <GroupLabel
             id="last7Days"
-            label={t['com.affine.last7Days']()}
+            label={t['com.blank.last7Days']()}
             count={count}
           />
         ),
@@ -80,7 +80,7 @@ export const useDateGroupDefinitions = <T extends ListItem>(
         label: count => (
           <GroupLabel
             id="last30Days"
-            label={t['com.affine.last30Days']()}
+            label={t['com.blank.last30Days']()}
             count={count}
           />
         ),
@@ -92,7 +92,7 @@ export const useDateGroupDefinitions = <T extends ListItem>(
         label: count => (
           <GroupLabel
             id="moreThan30Days"
-            label={t['com.affine.moreThan30Days']()}
+            label={t['com.blank.moreThan30Days']()}
             count={count}
           />
         ),
@@ -144,7 +144,7 @@ export const useTagGroupDefinitions = (): ItemGroupDefinition<ListItem>[] => {
       label: (count: number) => (
         <GroupLabel
           id="Untagged"
-          label={t['com.affine.page.display.grouping.group-by-tag.untagged']()}
+          label={t['com.blank.page.display.grouping.group-by-tag.untagged']()}
           count={count}
         />
       ),
@@ -180,7 +180,7 @@ export const useFavoriteGroupDefinitions = <
         label: count => (
           <GroupLabel
             id="favourited"
-            label={t['com.affine.page.group-header.favourited']()}
+            label={t['com.blank.page.group-header.favourited']()}
             count={count}
             icon={<FavoritedIcon className={styles.favouritedIcon} />}
           />
@@ -192,7 +192,7 @@ export const useFavoriteGroupDefinitions = <
         label: count => (
           <GroupLabel
             id="notFavourited"
-            label={t['com.affine.page.group-header.not-favourited']()}
+            label={t['com.blank.page.group-header.not-favourited']()}
             count={count}
             icon={<FavoriteIcon className={styles.notFavouritedIcon} />}
           />

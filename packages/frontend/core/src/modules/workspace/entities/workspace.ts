@@ -1,6 +1,6 @@
-import type { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { toArrayBuffer } from '@affine/core/utils/array-buffer';
-import type { Workspace as WorkspaceInterface } from '@blocksuite/affine/store';
+import type { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { toArrayBuffer } from '@blank/core/utils/array-buffer';
+import type { Workspace as WorkspaceInterface } from '@blocksuite/blank/store';
 import { Entity, LiveData, yjsGetPath } from '@toeverything/infra';
 import type { Observable } from 'rxjs';
 import { Doc as YDoc, transact } from 'yjs';

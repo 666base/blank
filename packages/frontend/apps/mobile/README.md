@@ -1,4 +1,4 @@
-# @affine/mobile
+# @blank/mobile
 
 Mobile web build for Blank (bottom tabs, touch-first UI).
 

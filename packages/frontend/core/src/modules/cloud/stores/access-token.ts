@@ -1,8 +1,8 @@
 import {
   generateUserAccessTokenMutation,
   revokeUserAccessTokenMutation,
-} from '@affine/graphql';
-import type { AccessTokenSnapshot } from '@affine/realtime';
+} from '@blank/graphql';
+import type { AccessTokenSnapshot } from '@blank/realtime';
 import { Store } from '@toeverything/infra';
 
 import type { NbstoreService } from '../../storage';

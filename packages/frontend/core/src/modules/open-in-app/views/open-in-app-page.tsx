@@ -1,13 +1,12 @@
-import { Button } from '@affine/component/ui/button';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { appIconMap, appNames } from '@affine/core/utils/channel';
+import { Button } from '@blank/component/ui/button';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { appIconMap, appNames } from '@blank/core/utils/channel';
 import {
   getBlankDownloadUrl,
-  getBlankGithubUrl,
   isBlankBuild,
-} from '@affine/core/utils/blank-links';
-import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
-import { Trans, useI18n } from '@affine/i18n';
+} from '@blank/core/utils/blank-links';
+import { BlankAppLogo, isBlankBranding } from '@blank/core/utils/blank-branding';
+import { Trans, useI18n } from '@blank/i18n';
 import { LocalWorkspaceIcon, Logo1Icon } from '@blocksuite/icons/rc';
 import { useServiceOptional } from '@toeverything/infra';
 import type { MouseEvent } from 'react';
@@ -26,7 +25,7 @@ interface OpenAppProps {
 const channel = BUILD_CONFIG.appBuildType;
 const url = isBlankBuild()
   ? getBlankDownloadUrl()
-  : 'https://affine.pro/download' + (channel !== 'stable' ? '/beta-canary' : '');
+  : 'https://blank.pro/download' + (channel !== 'stable' ? '/beta-canary' : '');
 
 export const OpenInAppPage = ({
   urlToOpen,
@@ -48,32 +47,19 @@ export const OpenInAppPage = ({
   const navLinks = useMemo(
     () =>
       isBlankBuild()
-        ? [
-            {
-              href: getBlankGithubUrl(),
-              label: t['com.affine.other-page.nav.github'](),
-            },
-            {
-              href: getBlankDownloadUrl(),
-              label: t['com.affine.other-page.nav.releases'](),
-            },
-            {
-              href: `${getBlankGithubUrl()}/issues`,
-              label: t['com.affine.other-page.nav.issues'](),
-            },
-          ]
+        ? []
         : [
             {
-              href: 'https://affine.pro',
-              label: t['com.affine.other-page.nav.official-website'](),
+              href: 'https://blank.pro',
+              label: t['com.blank.other-page.nav.official-website'](),
             },
             {
-              href: 'https://affine.pro/blog',
-              label: t['com.affine.other-page.nav.blog'](),
+              href: 'https://blank.pro/blog',
+              label: t['com.blank.other-page.nav.blog'](),
             },
             {
-              href: 'https://affine.pro/about-us',
-              label: t['com.affine.other-page.nav.contact-us'](),
+              href: 'https://blank.pro/about-us',
+              label: t['com.blank.other-page.nav.contact-us'](),
             },
           ],
     [t]
@@ -101,7 +87,7 @@ export const OpenInAppPage = ({
   return (
     <div className={styles.root}>
       <div className={styles.topNav}>
-        <a href="/" rel="noreferrer" className={styles.affineLogo}>
+        <a href="/" rel="noreferrer" className={styles.blankLogo}>
           {isBlankBranding() ? (
             <BlankAppLogo size={24} />
           ) : (
@@ -109,22 +95,24 @@ export const OpenInAppPage = ({
           )}
         </a>
 
-        <div className={styles.topNavLinks}>
-          {navLinks.map(link => (
-            <a
-              key={link.href}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.topNavLink}
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
+        {navLinks.length > 0 ? (
+          <div className={styles.topNavLinks}>
+            {navLinks.map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.topNavLink}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        ) : null}
 
         <Button onClick={openDownloadLink}>
-          {t['com.affine.auth.open.affine.download-app']()}
+          {t['com.blank.auth.open.blank.download-app']()}
         </Button>
       </div>
 
@@ -133,11 +121,11 @@ export const OpenInAppPage = ({
 
         <div className={styles.prompt}>
           {mode === 'open-doc' ? (
-            <Trans i18nKey="com.affine.auth.open.affine.open-doc-prompt">
+            <Trans i18nKey="com.blank.auth.open.blank.open-doc-prompt">
               This doc is now opened in {appName}
             </Trans>
           ) : (
-            <Trans i18nKey="com.affine.auth.open.affine.prompt">
+            <Trans i18nKey="com.blank.auth.open.blank.prompt">
               Open {appName} app now
             </Trans>
           )}
@@ -151,7 +139,7 @@ export const OpenInAppPage = ({
               target="_blank"
               rel="noreferrer"
             >
-              {t['com.affine.auth.open.affine.doc.open-here']()}
+              {t['com.blank.auth.open.blank.doc.open-here']()}
             </a>
           )}
           <a
@@ -160,7 +148,7 @@ export const OpenInAppPage = ({
             target="_blank"
             rel="noreferrer"
           >
-            {t['com.affine.auth.open.affine.try-again']()}
+            {t['com.blank.auth.open.blank.try-again']()}
           </a>
         </div>
       </div>
@@ -171,12 +159,12 @@ export const OpenInAppPage = ({
             className={styles.editSettingsLink}
             onClick={goToAppearanceSetting}
           >
-            {t['com.affine.auth.open.affine.doc.edit-settings']()}
+            {t['com.blank.auth.open.blank.doc.edit-settings']()}
           </button>
 
           <div className={styles.docFooterText}>
             <LocalWorkspaceIcon width={16} height={16} />
-            {t['com.affine.auth.open.affine.doc.footer-text']()}
+            {t['com.blank.auth.open.blank.doc.footer-text']()}
           </div>
         </div>
       ) : null}

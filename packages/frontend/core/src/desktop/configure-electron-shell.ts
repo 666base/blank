@@ -5,7 +5,7 @@ import { configureDesktopApiModule } from '../modules/desktop-api';
 import { configureDesktopWorkbenchModule } from '../modules/workbench';
 import { configureElectronStateStorageImpls } from './storage';
 
-/** Wire AFFiNE desktop modules for the minimal Blank Electron shell. */
+/** Wire Blank desktop modules for the minimal Blank Electron shell. */
 export function configureElectronShellModules(framework: Framework) {
   configureDesktopApiModule(framework);
   configureDesktopWorkbenchModule(framework);

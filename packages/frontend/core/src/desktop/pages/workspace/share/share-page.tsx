@@ -1,34 +1,34 @@
-import { Scrollable, uniReactRoot } from '@affine/component';
-import type { AffineEditorContainer } from '@affine/core/blocksuite/block-suite-editor';
-import { EditorOutlineViewer } from '@affine/core/blocksuite/outline-viewer';
-import { useActiveBlocksuiteEditor } from '@affine/core/components/hooks/use-block-suite-editor';
-import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-helper';
-import { PageDetailEditor } from '@affine/core/components/page-detail-editor';
-import { AppContainer } from '@affine/core/desktop/components/app-container';
-import { AuthService, ServerService } from '@affine/core/modules/cloud';
-import { type Doc, DocsService } from '@affine/core/modules/doc';
+import { Scrollable, uniReactRoot } from '@blank/component';
+import type { BlankEditorContainer } from '@blank/core/blocksuite/block-suite-editor';
+import { EditorOutlineViewer } from '@blank/core/blocksuite/outline-viewer';
+import { useActiveBlocksuiteEditor } from '@blank/core/components/hooks/use-block-suite-editor';
+import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { PageDetailEditor } from '@blank/core/components/page-detail-editor';
+import { AppContainer } from '@blank/core/desktop/components/app-container';
+import { AuthService, ServerService } from '@blank/core/modules/cloud';
+import { type Doc, DocsService } from '@blank/core/modules/doc';
 import {
   type Editor,
   type EditorSelector,
   EditorService,
   EditorsService,
-} from '@affine/core/modules/editor';
-import { PeekViewManagerModal } from '@affine/core/modules/peek-view';
+} from '@blank/core/modules/editor';
+import { PeekViewManagerModal } from '@blank/core/modules/peek-view';
 import {
   ViewIcon,
   ViewTitle,
   WorkbenchService,
-} from '@affine/core/modules/workbench';
+} from '@blank/core/modules/workbench';
 import {
   type Workspace,
   WorkspacesService,
-} from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import { DisposableGroup } from '@blocksuite/affine/global/disposable';
-import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
-import { type DocMode, DocModes } from '@blocksuite/affine/model';
-import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
-import { getBlankGithubUrl } from '@affine/core/utils/blank-links';
+} from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import { DisposableGroup } from '@blocksuite/blank/global/disposable';
+import { RefNodeSlotsProvider } from '@blocksuite/blank/inlines/reference';
+import { type DocMode, DocModes } from '@blocksuite/blank/model';
+import { BlankAppLogo, isBlankBranding } from '@blank/core/utils/blank-branding';
+import { getBlankGithubUrl } from '@blank/core/utils/blank-links';
 import { Logo1Icon } from '@blocksuite/icons/rc';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -207,7 +207,7 @@ const SharePageInner = ({
       {
         metadata: {
           id: workspaceId,
-          flavour: 'affine-cloud',
+          flavour: 'blank-cloud',
         },
         isSharedMode: true,
       },
@@ -302,7 +302,7 @@ const SharePageInner = ({
   useUpdateBasename(workspace);
 
   const onEditorLoad = useCallback(
-    (editorContainer: AffineEditorContainer) => {
+    (editorContainer: BlankEditorContainer) => {
       setActiveBlocksuiteEditor(editorContainer);
       if (!editor) {
         return;
@@ -367,7 +367,7 @@ const SharePageInner = ({
               <Scrollable.Root>
                 <Scrollable.Viewport
                   className={clsx(
-                    'affine-page-viewport',
+                    'blank-page-viewport',
                     styles.editorContainer
                   )}
                 >
@@ -405,13 +405,13 @@ const SharePageFooter = () => {
   }
   return (
     <a
-      href={isBlankBranding() ? getBlankGithubUrl() : 'https://affine.pro'}
+      href={isBlankBranding() ? getBlankGithubUrl() : 'https://blank.pro'}
       target="_blank"
       className={styles.link}
       rel="noreferrer"
     >
       <span className={styles.linkText}>
-        {t['com.affine.share-page.footer.built-with']()}
+        {t['com.blank.share-page.footer.built-with']()}
       </span>
       {isBlankBranding() ? (
         <BlankAppLogo size={20} />

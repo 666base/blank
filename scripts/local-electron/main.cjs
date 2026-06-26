@@ -36,15 +36,58 @@ function getWebRoot() {
   return path.join(__dirname, 'web');
 }
 
+const LAST_ROUTE_FILE = 'blank-last-route.json';
+const DEFAULT_INSTANT_ROUTE = {
+  workspaceId: 'blank-default',
+  pageId: null,
+  flavour: 'local',
+};
+
+function ensureDefaultRouteFile() {
+  try {
+    const file = path.join(app.getPath('userData'), LAST_ROUTE_FILE);
+    if (!fs.existsSync(file)) {
+      fs.writeFileSync(file, JSON.stringify(DEFAULT_INSTANT_ROUTE));
+    }
+  } catch {
+    // ignore
+  }
+}
+
+function readLastRoutePath() {
+  try {
+    const file = path.join(app.getPath('userData'), LAST_ROUTE_FILE);
+    if (!fs.existsSync(file)) {
+      return null;
+    }
+    const { workspaceId, pageId } = JSON.parse(fs.readFileSync(file, 'utf8'));
+    if (!workspaceId) {
+      return null;
+    }
+    if (pageId) {
+      return `/workspace/${workspaceId}/${pageId}`;
+    }
+    return `/workspace/${workspaceId}/all`;
+  } catch {
+    return null;
+  }
+}
+
 function getStartUrl() {
-  if (process.env.AFFINE_DESKTOP_URL) {
-    return process.env.AFFINE_DESKTOP_URL;
+  ensureDefaultRouteFile();
+  const route =
+    readLastRoutePath() ??
+    `/workspace/${DEFAULT_INSTANT_ROUTE.workspaceId}/all`;
+  if (process.env.BLANK_DESKTOP_URL) {
+    const base = process.env.BLANK_DESKTOP_URL.replace(/\/$/, '');
+    return route ? `${base}${route}` : process.env.BLANK_DESKTOP_URL;
   }
   if (shouldUsePackagedWeb()) {
-    // Use trailing slash so React Router sees pathname "/" not "/index.html".
-    return `${APP_SCHEME}://app/`;
+    const base = `${APP_SCHEME}://app`;
+    return route ? `${base}${route}` : `${base}/`;
   }
-  return 'http://127.0.0.1:8080';
+  const base = 'http://127.0.0.1:8080';
+  return route ? `${base}${route}` : base;
 }
 
 function registerPackagedProtocol() {
@@ -123,6 +166,29 @@ function isInternalUrl(targetUrl, appUrl) {
 let mainWindow = null;
 let blankApi = null;
 
+function syncFastBootToLocalStorage(win) {
+  if (!win || win.isDestroyed()) {
+    return;
+  }
+  try {
+    const file = path.join(app.getPath('userData'), LAST_ROUTE_FILE);
+    const { workspaceId, pageId, flavour } = JSON.parse(
+      fs.readFileSync(file, 'utf8')
+    );
+    if (!workspaceId) {
+      return;
+    }
+    const script = `(function(){try{
+      localStorage.setItem("last_workspace_id",${JSON.stringify(workspaceId)});
+      ${pageId ? `localStorage.setItem("last_page_id",${JSON.stringify(pageId)});` : ''}
+      ${flavour ? `localStorage.setItem("last_workspace_flavour",${JSON.stringify(flavour)});` : ''}
+    }catch(e){}})();`;
+    void win.webContents.executeJavaScript(script);
+  } catch {
+    // ignore
+  }
+}
+
 function createWindow() {
   const startUrl = getStartUrl();
   const win = new BrowserWindow({
@@ -132,7 +198,7 @@ function createWindow() {
     minHeight: 620,
     title: 'Blank',
     backgroundColor: '#121212',
-    show: false,
+    show: true,
     autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: true,
@@ -140,10 +206,6 @@ function createWindow() {
       sandbox: true,
       preload: preloadPath,
     },
-  });
-
-  win.once('ready-to-show', () => {
-    win.show();
   });
 
   win.webContents.setWindowOpenHandler(({ url }) => {
@@ -194,6 +256,7 @@ function createWindow() {
   }
 
   win.webContents.on('did-finish-load', () => {
+    syncFastBootToLocalStorage(win);
     if (isDev) {
       console.log(`Loaded ${win.webContents.getURL()}`);
     }
@@ -206,6 +269,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  ensureDefaultRouteFile();
   blankApi = registerBlankDesktopApi(() => mainWindow);
 
   if (shouldUsePackagedWeb()) {

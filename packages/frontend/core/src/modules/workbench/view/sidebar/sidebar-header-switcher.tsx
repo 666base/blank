@@ -1,4 +1,4 @@
-import { RadioGroup } from '@affine/component';
+import { RadioGroup } from '@blank/component';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
 

@@ -1,30 +1,30 @@
-import { CloudViewExtension } from '@affine/core/blocksuite/view-extensions/cloud';
-import { AffineEditorViewExtension } from '@affine/core/blocksuite/view-extensions/editor-view/editor-view';
-import { AffineThemeViewExtension } from '@affine/core/blocksuite/view-extensions/theme';
-import { I18n } from '@affine/i18n';
-import { CodeBlockViewExtension } from '@blocksuite/affine/blocks/code/view';
-import { DividerViewExtension } from '@blocksuite/affine/blocks/divider/view';
-import { LatexViewExtension as LatexBlockViewExtension } from '@blocksuite/affine/blocks/latex/view';
-import { ListViewExtension } from '@blocksuite/affine/blocks/list/view';
-import { NoteViewExtension } from '@blocksuite/affine/blocks/note/view';
-import { ParagraphViewExtension } from '@blocksuite/affine/blocks/paragraph/view';
-import { RootViewExtension } from '@blocksuite/affine/blocks/root/view';
+import { CloudViewExtension } from '@blank/core/blocksuite/view-extensions/cloud';
+import { BlankEditorViewExtension } from '@blank/core/blocksuite/view-extensions/editor-view/editor-view';
+import { BlankThemeViewExtension } from '@blank/core/blocksuite/view-extensions/theme';
+import { I18n } from '@blank/i18n';
+import { CodeBlockViewExtension } from '@blocksuite/blank/blocks/code/view';
+import { DividerViewExtension } from '@blocksuite/blank/blocks/divider/view';
+import { LatexViewExtension as LatexBlockViewExtension } from '@blocksuite/blank/blocks/latex/view';
+import { ListViewExtension } from '@blocksuite/blank/blocks/list/view';
+import { NoteViewExtension } from '@blocksuite/blank/blocks/note/view';
+import { ParagraphViewExtension } from '@blocksuite/blank/blocks/paragraph/view';
+import { RootViewExtension } from '@blocksuite/blank/blocks/root/view';
 import {
   PeekViewExtension,
   type PeekViewService,
-} from '@blocksuite/affine/components/peek';
+} from '@blocksuite/blank/components/peek';
 import {
   type ViewExtensionContext,
   ViewExtensionManager,
   ViewExtensionProvider,
-} from '@blocksuite/affine/ext-loader';
-import { PlainTextClipboardConfig } from '@blocksuite/affine/foundation/clipboard';
-import { LatexInlineSpecExtension } from '@blocksuite/affine/inlines/latex';
-import { LatexViewExtension as LatexInlineViewExtension } from '@blocksuite/affine/inlines/latex/view';
-import { LinkInlineSpecExtension } from '@blocksuite/affine/inlines/link';
-import { LinkViewExtension } from '@blocksuite/affine/inlines/link/view';
-import { MentionInlineSpecExtension } from '@blocksuite/affine/inlines/mention';
-import { MentionViewExtension } from '@blocksuite/affine/inlines/mention/view';
+} from '@blocksuite/blank/ext-loader';
+import { PlainTextClipboardConfig } from '@blocksuite/blank/foundation/clipboard';
+import { LatexInlineSpecExtension } from '@blocksuite/blank/inlines/latex';
+import { LatexViewExtension as LatexInlineViewExtension } from '@blocksuite/blank/inlines/latex/view';
+import { LinkInlineSpecExtension } from '@blocksuite/blank/inlines/link';
+import { LinkViewExtension } from '@blocksuite/blank/inlines/link/view';
+import { MentionInlineSpecExtension } from '@blocksuite/blank/inlines/mention';
+import { MentionViewExtension } from '@blocksuite/blank/inlines/mention/view';
 import {
   BackgroundInlineSpecExtension,
   BoldInlineSpecExtension,
@@ -34,9 +34,9 @@ import {
   ItalicInlineSpecExtension,
   StrikeInlineSpecExtension,
   UnderlineInlineSpecExtension,
-} from '@blocksuite/affine/inlines/preset';
-import { ReferenceInlineSpecExtension } from '@blocksuite/affine/inlines/reference';
-import { ReferenceViewExtension } from '@blocksuite/affine/inlines/reference/view';
+} from '@blocksuite/blank/inlines/preset';
+import { ReferenceInlineSpecExtension } from '@blocksuite/blank/inlines/reference';
+import { ReferenceViewExtension } from '@blocksuite/blank/inlines/reference/view';
 import {
   DefaultOpenDocExtension,
   DocDisplayMetaService,
@@ -48,12 +48,12 @@ import {
   PageViewportServiceExtension,
   ThemeService,
   ToolbarRegistryExtension,
-} from '@blocksuite/affine/shared/services';
-import type { AffineTextAttributes } from '@blocksuite/affine/shared/types';
-import { InlineManagerExtension } from '@blocksuite/affine/std/inline';
-import { LinkedDocViewExtension } from '@blocksuite/affine/widgets/linked-doc/view';
-import { ToolbarViewExtension } from '@blocksuite/affine/widgets/toolbar/view';
-import { ViewportOverlayViewExtension } from '@blocksuite/affine/widgets/viewport-overlay/view';
+} from '@blocksuite/blank/shared/services';
+import type { BlankTextAttributes } from '@blocksuite/blank/shared/types';
+import { InlineManagerExtension } from '@blocksuite/blank/std/inline';
+import { LinkedDocViewExtension } from '@blocksuite/blank/widgets/linked-doc/view';
+import { ToolbarViewExtension } from '@blocksuite/blank/widgets/toolbar/view';
+import { ViewportOverlayViewExtension } from '@blocksuite/blank/widgets/viewport-overlay/view';
 import type { FrameworkProvider } from '@toeverything/infra';
 import { z } from 'zod';
 
@@ -89,7 +89,7 @@ class CommentEditorViewExtensionProvider extends ViewExtensionProvider<CommentEd
       FileSizeLimitService,
 
       ...InlineSpecExtensions,
-      InlineManagerExtension<AffineTextAttributes>({
+      InlineManagerExtension<BlankTextAttributes>({
         id: 'DefaultInlineManager',
         specs: [
           BoldInlineSpecExtension.identifier,
@@ -145,9 +145,9 @@ export function getCommentEditorViewManager(framework: FrameworkProvider) {
       ViewportOverlayViewExtension,
       LinkedDocViewExtension,
 
-      // Affine side
-      AffineThemeViewExtension,
-      AffineEditorViewExtension,
+      // Blank side
+      BlankThemeViewExtension,
+      BlankEditorViewExtension,
 
       // for rendering mentions
       CloudViewExtension,
@@ -155,7 +155,7 @@ export function getCommentEditorViewManager(framework: FrameworkProvider) {
 
     manager.configure(ParagraphViewExtension, {
       getPlaceholder: () => {
-        return I18n.t('com.affine.notification.comment-prompt');
+        return I18n.t('com.blank.notification.comment-prompt');
       },
     });
 

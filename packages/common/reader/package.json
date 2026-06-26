@@ -1,5 +1,5 @@
 {
-  "name": "@affine/reader",
+  "name": "@blank/reader",
   "type": "module",
   "version": "0.27.0",
   "private": true,
@@ -10,18 +10,18 @@
     "./dist": "./dist/index.js"
   },
   "scripts": {
-    "build": "affine bundle -p @affine/reader",
-    "bundle": "affine bundle -p @affine/reader"
+    "build": "blank bundle -p @blank/reader",
+    "bundle": "blank bundle -p @blank/reader"
   },
   "dependencies": {
     "lodash-es": "^4.17.23",
     "yjs": "^13.6.27"
   },
   "devDependencies": {
-    "@blocksuite/affine": "workspace:*",
+    "@blocksuite/blank": "workspace:*",
     "vitest": "^4.1.8"
   },
   "peerDependencies": {
-    "@blocksuite/affine": "workspace:*"
+    "@blocksuite/blank": "workspace:*"
   }
 }

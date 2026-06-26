@@ -1,16 +1,17 @@
-import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
-import { PageDetailLoading } from '@affine/component/page-detail-skeleton';
-import { RootAppSidebar } from '@affine/core/components/root-app-sidebar';
-import { AppSidebarService } from '@affine/core/modules/app-sidebar';
+import { useAppSettingHelper } from '@blank/core/components/hooks/blank/use-app-setting-helper';
+import { PageDetailLoading } from '@blank/component/page-detail-skeleton';
+import { RootAppSidebar } from '@blank/core/components/root-app-sidebar';
+import { scheduleRemoveBootSplash } from '@blank/core/utils/blank-fast-boot';
+import { AppSidebarService } from '@blank/core/modules/app-sidebar';
 import {
   AppSidebarFallback,
   OpenInAppCard,
   SidebarSwitch,
-} from '@affine/core/modules/app-sidebar/views';
-import { AppTabsHeader } from '@affine/core/modules/app-tabs-header';
-import { NavigationButtons } from '@affine/core/modules/navigation';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { isElectronShell, isLocalOnlyMode } from '@affine/core/utils/local-only';
+} from '@blank/core/modules/app-sidebar/views';
+import { AppTabsHeader } from '@blank/core/modules/app-tabs-header';
+import { NavigationButtons } from '@blank/core/modules/navigation';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { isDesktopApp, isElectronShell, isLocalOnlyMode } from '@blank/core/utils/local-only';
 import {
   useLiveData,
   useService,
@@ -22,6 +23,7 @@ import {
   type HTMLAttributes,
   type PropsWithChildren,
   type ReactElement,
+  useEffect,
 } from 'react';
 
 import * as styles from './styles.css';
@@ -37,10 +39,17 @@ export const AppContainer = ({
 }>) => {
   const { appSettings } = useAppSettingHelper();
 
+  useEffect(() => {
+    if (fallback) {
+      return;
+    }
+    scheduleRemoveBootSplash();
+  }, [fallback]);
+
   const noisyBackground =
-    BUILD_CONFIG.isElectron && appSettings.enableNoisyBackground;
+    isDesktopApp() && appSettings.enableNoisyBackground;
   const blurBackground =
-    BUILD_CONFIG.isElectron &&
+    isDesktopApp() &&
     environment.isMacOs &&
     appSettings.enableBlurBackground;
   return (
@@ -126,7 +135,7 @@ const MainContainer = forwardRef<
     <div
       {...props}
       className={clsx(styles.mainContainerStyle, className)}
-      data-is-desktop={BUILD_CONFIG.isElectron}
+      data-is-desktop={isDesktopApp()}
       data-transparent={false}
       data-client-border={appSettings.clientBorder}
       data-side-bar-open={open && isInWorkspace}

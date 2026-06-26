@@ -1,7 +1,7 @@
-import { showAILoginRequiredAtom } from '@affine/core/components/affine/auth/ai-login-required';
-import type { AIToolsConfig } from '@affine/core/modules/ai-button';
-import type { NbstoreService } from '@affine/core/modules/storage';
-import { UserFriendlyError } from '@affine/error';
+import { showAILoginRequiredAtom } from '@blank/core/components/blank/auth/ai-login-required';
+import type { AIToolsConfig } from '@blank/core/modules/ai-button';
+import type { NbstoreService } from '@blank/core/modules/storage';
+import { UserFriendlyError } from '@blank/error';
 import {
   addContextBlobMutation,
   addContextCategoryMutation,
@@ -31,7 +31,7 @@ import {
   removeContextFileMutation,
   type RequestOptions,
   updateCopilotSessionMutation,
-} from '@affine/graphql';
+} from '@blank/graphql';
 import { getCurrentStore } from '@toeverything/infra';
 
 import {

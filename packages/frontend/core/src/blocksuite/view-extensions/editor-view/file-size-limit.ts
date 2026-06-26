@@ -1,17 +1,17 @@
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import track from '@affine/track';
-import type { Container } from '@blocksuite/affine/global/di';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import track from '@blank/track';
+import type { Container } from '@blocksuite/blank/global/di';
 import {
   FileSizeLimitProvider,
   type IFileSizeLimitService,
-} from '@blocksuite/affine/shared/services';
-import { Extension } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/shared/services';
+import { Extension } from '@blocksuite/blank/store';
 import type { FrameworkProvider } from '@toeverything/infra';
 
 export function patchFileSizeLimitExtension(framework: FrameworkProvider) {
   const workspaceDialogService = framework.get(WorkspaceDialogService);
 
-  class AffineFileSizeLimitService
+  class BlankFileSizeLimitService
     extends Extension
     implements IFileSizeLimitService
   {
@@ -27,9 +27,9 @@ export function patchFileSizeLimitExtension(framework: FrameworkProvider) {
     }
 
     static override setup(di: Container) {
-      di.override(FileSizeLimitProvider, AffineFileSizeLimitService);
+      di.override(FileSizeLimitProvider, BlankFileSizeLimitService);
     }
   }
 
-  return AffineFileSizeLimitService;
+  return BlankFileSizeLimitService;
 }

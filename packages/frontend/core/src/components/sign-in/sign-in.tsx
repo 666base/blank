@@ -1,17 +1,18 @@
-import { Button, notify } from '@affine/component';
+import { Button, notify } from '@blank/component';
 import {
   AuthContainer,
   AuthContent,
   AuthFooter,
   AuthHeader,
   AuthInput,
-} from '@affine/component/auth-components';
-import { OAuth } from '@affine/core/components/affine/auth/oauth';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { AuthService, ServerService } from '@affine/core/modules/cloud';
-import type { AuthSessionStatus } from '@affine/core/modules/cloud/entities/session';
-import { ServerDeploymentType } from '@affine/graphql';
-import { Trans, useI18n } from '@affine/i18n';
+} from '@blank/component/auth-components';
+import { OAuth } from '@blank/core/components/blank/auth/oauth';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
+import { AuthService, ServerService } from '@blank/core/modules/cloud';
+import type { AuthSessionStatus } from '@blank/core/modules/cloud/entities/session';
+import { ServerDeploymentType } from '@blank/graphql';
+import { Trans, useI18n } from '@blank/i18n';
 import {
   ArrowRightBigIcon,
   LocalWorkspaceIcon,
@@ -27,7 +28,7 @@ import {
   useState,
 } from 'react';
 
-import { useSelfhostLoginVersionGuard } from '../hooks/affine/use-selfhost-login-version-guard';
+import { useSelfhostLoginVersionGuard } from '../hooks/blank/use-selfhost-login-version-guard';
 import type { SignInState } from '.';
 import { Back } from './back';
 import * as style from './style.css';
@@ -73,8 +74,8 @@ export const SignInStep = ({
   useEffect(() => {
     if (loginStatus === 'authenticated') {
       notify.success({
-        title: t['com.affine.auth.toast.title.signed-in'](),
-        message: t['com.affine.auth.toast.message.signed-in'](),
+        title: t['com.blank.auth.toast.title.signed-in'](),
+        message: t['com.blank.auth.toast.message.signed-in'](),
       });
     }
     onAuthenticated?.(loginStatus);
@@ -138,7 +139,7 @@ export const SignInStep = ({
     return (
       <AuthContainer>
         <AuthHeader
-          title={t['com.affine.auth.sign.in']()}
+          title={t['com.blank.auth.sign.in']()}
           subTitle={serverName}
         />
         <AuthContent>
@@ -151,7 +152,7 @@ export const SignInStep = ({
   return (
     <AuthContainer>
       <AuthHeader
-        title={t['com.affine.auth.sign.in']()}
+        title={t['com.blank.auth.sign.in']()}
         subTitle={serverName}
       />
 
@@ -166,12 +167,12 @@ export const SignInStep = ({
         >
           <AuthInput
             className={style.authInput}
-            label={t['com.affine.settings.email']()}
-            placeholder={t['com.affine.auth.sign.email.placeholder']()}
+            label={t['com.blank.settings.email']()}
+            placeholder={t['com.blank.auth.sign.email.placeholder']()}
             onChange={setEmail}
             error={!isValidEmail}
             errorHint={
-              isValidEmail ? '' : t['com.affine.auth.sign.email.error']()
+              isValidEmail ? '' : t['com.blank.auth.sign.email.error']()
             }
             onEnter={onContinue}
             type="email"
@@ -190,17 +191,17 @@ export const SignInStep = ({
             suffix={<ArrowRightBigIcon />}
             suffixStyle={{ width: 20, height: 20, color: cssVar('blue') }}
           >
-            {t['com.affine.auth.sign.email.continue']()}
+            {t['com.blank.auth.sign.email.continue']()}
           </Button>
         </form>
 
-        {!isSelfhosted && (
+        {!isSelfhosted && !isBlankBuild() && (
           <>
             <div className={style.authMessage}>
               {/*prettier-ignore*/}
-              <Trans i18nKey="com.affine.auth.sign.message">
+              <Trans i18nKey="com.blank.auth.sign.message">
                 By clicking &quot;Continue with Google/Email&quot; above, you acknowledge that
-                you agree to AFFiNE&apos;s <a href="https://affine.pro/terms" target="_blank" rel="noreferrer">Terms of Conditions</a> and <a href="https://affine.pro/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>.
+                you agree to Blank&apos;s <a href="https://blank.pro/terms" target="_blank" rel="noreferrer">Terms of Conditions</a> and <a href="https://blank.pro/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>.
             </Trans>
             </div>
             <div className={style.skipDivider}>
@@ -218,11 +219,11 @@ export const SignInStep = ({
                   }
                   onClick={onAddSelfhosted}
                 >
-                  {t['com.affine.auth.sign.add-selfhosted']()}
+                  {t['com.blank.auth.sign.add-selfhosted']()}
                 </Button>
               ) : (
                 <div className={style.skipText}>
-                  {t['com.affine.mobile.sign-in.skip.hint']()}
+                  {t['com.blank.mobile.sign-in.skip.hint']()}
                 </div>
               )}
               <Button
@@ -231,7 +232,7 @@ export const SignInStep = ({
                 className={style.skipLink}
                 prefix={<LocalWorkspaceIcon className={style.skipLinkIcon} />}
               >
-                {t['com.affine.mobile.sign-in.skip.link']()}
+                {t['com.blank.mobile.sign-in.skip.link']()}
               </Button>
             </div>
           </>

@@ -1,9 +1,9 @@
-import { Modal } from '@affine/component';
-import { SelectPage } from '@affine/core/components/page-list/docs/select-page';
+import { Modal } from '@blank/component';
+import { SelectPage } from '@blank/core/components/page-list/docs/select-page';
 import type {
   DialogComponentProps,
   WORKSPACE_DIALOG_SCHEMA,
-} from '@affine/core/modules/dialogs';
+} from '@blank/core/modules/dialogs';
 import { cssVar } from '@toeverything/theme';
 
 export const DocSelectorDialog = ({

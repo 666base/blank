@@ -27,8 +27,8 @@ export const editorContainer = style({
   flex: 1,
   zIndex: 0,
 });
-// brings styles of .affine-page-viewport from blocksuite
-export const affineDocViewport = style({
+// brings styles of .blank-page-viewport from blocksuite
+export const blankDocViewport = style({
   display: 'flex',
   flexDirection: 'column',
   containerName: 'viewport',
@@ -49,11 +49,11 @@ export const affineDocViewport = style({
 
 export const pageModeViewportContentBox = style({});
 globalStyle(
-  `${pageModeViewportContentBox} >:first-child:has(>[data-affine-editor-container])`,
+  `${pageModeViewportContentBox} >:first-child:has(>[data-blank-editor-container])`,
   { display: 'table !important', minWidth: '100%' }
 );
 globalStyle(
-  `${pageModeViewportContentBox} >:first-child:has(>[data-affine-editor-container].full-screen)`,
+  `${pageModeViewportContentBox} >:first-child:has(>[data-blank-editor-container].full-screen)`,
   { display: 'block !important', width: '100%', minWidth: '100%' }
 );
 globalStyle(

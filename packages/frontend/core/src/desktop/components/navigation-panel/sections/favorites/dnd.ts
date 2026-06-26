@@ -1,6 +1,6 @@
-import type { DropTargetOptions } from '@affine/component';
-import { isFavoriteSupportType } from '@affine/core/modules/favorite';
-import type { AffineDNDData } from '@affine/core/types/dnd';
+import type { DropTargetOptions } from '@blank/component';
+import { isFavoriteSupportType } from '@blank/core/modules/favorite';
+import type { BlankDNDData } from '@blank/core/types/dnd';
 
 import type { NavigationPanelTreeNodeDropEffect } from '../../tree';
 
@@ -35,13 +35,13 @@ export const favoriteRootDropEffect: NavigationPanelTreeNodeDropEffect =
     return;
   };
 
-export const favoriteRootCanDrop: DropTargetOptions<AffineDNDData>['canDrop'] =
+export const favoriteRootCanDrop: DropTargetOptions<BlankDNDData>['canDrop'] =
   data => {
     return data.source.data.entity?.type
       ? isFavoriteSupportType(data.source.data.entity.type)
       : false;
   };
 
-export const favoriteChildrenCanDrop: DropTargetOptions<AffineDNDData>['canDrop'] =
+export const favoriteChildrenCanDrop: DropTargetOptions<BlankDNDData>['canDrop'] =
   // Same as favoriteRootCanDrop
   data => favoriteRootCanDrop(data);

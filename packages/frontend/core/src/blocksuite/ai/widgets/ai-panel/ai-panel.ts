@@ -1,24 +1,24 @@
-import { ColorScheme } from '@blocksuite/affine/model';
+import { ColorScheme } from '@blocksuite/blank/model';
 import {
   DocModeProvider,
   NotificationProvider,
   ThemeProvider,
   ToolbarFlag,
   ToolbarRegistryIdentifier,
-} from '@blocksuite/affine/shared/services';
-import { unsafeCSSVar } from '@blocksuite/affine/shared/theme';
+} from '@blocksuite/blank/shared/services';
+import { unsafeCSSVar } from '@blocksuite/blank/shared/theme';
 import {
   getPageRootByElement,
   stopPropagation,
-} from '@blocksuite/affine/shared/utils';
-import { WidgetComponent, WidgetViewExtension } from '@blocksuite/affine/std';
-import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
-import { RANGE_SYNC_EXCLUDE_ATTR } from '@blocksuite/affine/std/inline';
-import type { BaseSelection } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/shared/utils';
+import { WidgetComponent, WidgetViewExtension } from '@blocksuite/blank/std';
+import { GfxControllerIdentifier } from '@blocksuite/blank/std/gfx';
+import { RANGE_SYNC_EXCLUDE_ATTR } from '@blocksuite/blank/std/inline';
+import type { BaseSelection } from '@blocksuite/blank/store';
 import {
-  AFFINE_VIEWPORT_OVERLAY_WIDGET,
-  type AffineViewportOverlayWidget,
-} from '@blocksuite/affine/widgets/viewport-overlay';
+  BLANK_VIEWPORT_OVERLAY_WIDGET,
+  type BlankViewportOverlayWidget,
+} from '@blocksuite/blank/widgets/viewport-overlay';
 import {
   autoPlacement,
   autoUpdate,
@@ -38,21 +38,21 @@ import { literal, unsafeStatic } from 'lit/static-html.js';
 import { type AIError } from '../../provider';
 import type { AIPanelGenerating } from './components/index.js';
 import type {
-  AffineAIPanelState,
-  AffineAIPanelWidgetConfig,
+  BlankAIPanelState,
+  BlankAIPanelWidgetConfig,
   AIActionAnswer,
 } from './type.js';
 import { mergeAIActionAnswer } from './utils';
-export const AFFINE_AI_PANEL_WIDGET = 'affine-ai-panel-widget';
+export const BLANK_AI_PANEL_WIDGET = 'blank-ai-panel-widget';
 
-export class AffineAIPanelWidget extends WidgetComponent {
+export class BlankAIPanelWidget extends WidgetComponent {
   static override styles = css`
     :host {
       display: flex;
       outline: none;
       border-radius: var(--8, 8px);
       border: 1px solid;
-      border-color: ${unsafeCSSVar('--affine-border-color')};
+      border-color: ${unsafeCSSVar('--blank-border-color')};
       background: ${unsafeCSSVar('backgroundOverlayPanelColor')};
       box-shadow: ${unsafeCSSVar('overlayShadow')};
 
@@ -63,23 +63,23 @@ export class AffineAIPanelWidget extends WidgetComponent {
       left: 0;
       overflow-y: auto;
       scrollbar-width: none !important;
-      z-index: var(--affine-z-index-popover);
-      --affine-font-family: var(--affine-font-sans-family);
+      z-index: var(--blank-z-index-popover);
+      --blank-font-family: var(--blank-font-sans-family);
     }
 
     :host([data-app-theme='light']) {
       background: ${unsafeCSS(
-        lightCssVariables['--affine-background-overlay-panel-color']
+        lightCssVariables['--blank-background-overlay-panel-color']
       )};
-      border-color: ${unsafeCSS(lightCssVariables['--affine-border-color'])};
-      box-shadow: ${unsafeCSS(lightCssVariables['--affine-overlay-shadow'])};
+      border-color: ${unsafeCSS(lightCssVariables['--blank-border-color'])};
+      box-shadow: ${unsafeCSS(lightCssVariables['--blank-overlay-shadow'])};
     }
     :host([data-app-theme='dark']) {
       background: ${unsafeCSS(
-        darkCssVariables['--affine-background-overlay-panel-color']
+        darkCssVariables['--blank-background-overlay-panel-color']
       )};
-      border-color: ${unsafeCSS(darkCssVariables['--affine-border-color'])};
-      box-shadow: ${unsafeCSS(darkCssVariables['--affine-overlay-shadow'])};
+      border-color: ${unsafeCSS(darkCssVariables['--blank-border-color'])};
+      box-shadow: ${unsafeCSS(darkCssVariables['--blank-overlay-shadow'])};
     }
 
     .ai-panel-container {
@@ -286,7 +286,7 @@ export class AffineAIPanelWidget extends WidgetComponent {
     }
   };
 
-  setState = (state: AffineAIPanelState, reference: Element) => {
+  setState = (state: BlankAIPanelState, reference: Element) => {
     this.state = state;
     this._autoUpdatePosition(reference);
   };
@@ -358,9 +358,9 @@ export class AffineAIPanelWidget extends WidgetComponent {
     const rootId = this.host.store.root?.id;
     return rootId
       ? (this.host.view.getWidget(
-          AFFINE_VIEWPORT_OVERLAY_WIDGET,
+          BLANK_VIEWPORT_OVERLAY_WIDGET,
           rootId
-        ) as AffineViewportOverlayWidget)
+        ) as BlankViewportOverlayWidget)
       : null;
   }
 
@@ -370,7 +370,7 @@ export class AffineAIPanelWidget extends WidgetComponent {
     //    child paragraph
     {
       const childrenContainer = reference.querySelector(
-        '.affine-block-children-container'
+        '.blank-block-children-container'
       );
       if (childrenContainer && childrenContainer.previousElementSibling) {
         reference = childrenContainer.previousElementSibling;
@@ -611,20 +611,20 @@ export class AffineAIPanelWidget extends WidgetComponent {
   }
 
   @property({ attribute: false })
-  accessor config: AffineAIPanelWidgetConfig | null = null;
+  accessor config: BlankAIPanelWidgetConfig | null = null;
 
   @query('ai-panel-generating')
   accessor generatingElement: AIPanelGenerating | null = null;
 
   @property()
-  accessor state: AffineAIPanelState = 'hidden';
+  accessor state: BlankAIPanelState = 'hidden';
 
   @property({ attribute: 'data-app-theme', reflect: true })
   accessor appTheme: ColorScheme = ColorScheme.Light;
 }
 
 export const aiPanelWidget = WidgetViewExtension(
-  'affine:page',
-  AFFINE_AI_PANEL_WIDGET,
-  literal`${unsafeStatic(AFFINE_AI_PANEL_WIDGET)}`
+  'blank:page',
+  BLANK_AI_PANEL_WIDGET,
+  literal`${unsafeStatic(BLANK_AI_PANEL_WIDGET)}`
 );

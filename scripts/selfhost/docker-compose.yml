@@ -1,46 +1,52 @@
-# Self-hosted sync server for Blank (AFFiNE-compatible).
-# Docs: https://docs.affine.pro/self-host-affine/
+# Self-hosted sync server for Blank (Blank-compatible).
+# Docs: https://docs.blank.pro/self-host-blank/
 #
 # Usage:
 #   cd scripts/selfhost
-#   copy .env.example .env   # set AFFINE_SERVER_HTTPS and secrets
+#   copy .env.example .env   # set BLANK_SERVER_HTTPS and secrets
 #   docker compose up -d
 
 services:
-  affine:
-    image: ghcr.io/toeverything/affine-graphql:${AFFINE_REVISION:-stable}
-    container_name: blank-sync-affine
+  blank:
+    image: ghcr.io/666base/blank:${BLANK_REVISION:-stable}
+    container_name: blank-sync-blank
     ports:
-      - '${AFFINE_PORT:-3010}:3010'
+      - '${BLANK_PORT:-3010}:3010'
     depends_on:
       redis:
         condition: service_healthy
       postgres:
         condition: service_healthy
-      affine_migration:
+      blank_migration:
         condition: service_completed_successfully
     volumes:
-      - affine_data:/root/.affine/storage
+      - blank_data:/root/.blank/storage
+      - blank_config:/root/.blank/config
     environment:
       REDIS_SERVER_HOST: redis
-      DATABASE_URL: postgresql://${POSTGRES_USER:-affine}:${POSTGRES_PASSWORD:-affine}@postgres:5432/${POSTGRES_DB:-affine}
-      AFFINE_SERVER_HTTPS: ${AFFINE_SERVER_HTTPS:-false}
-      AFFINE_SERVER_HOST: ${AFFINE_SERVER_HOST:-localhost}
-      AFFINE_SERVER_PORT: '3010'
+      DATABASE_URL: postgresql://${POSTGRES_USER:-blank}:${POSTGRES_PASSWORD:-blank}@postgres:5432/${POSTGRES_DB:-blank}
+      BLANK_SERVER_HTTPS: ${BLANK_SERVER_HTTPS:-false}
+      BLANK_SERVER_HOST: ${BLANK_SERVER_HOST:-localhost}
+      BLANK_SERVER_PORT: '3010'
+      BLANK_INDEXER_ENABLED: 'false'
     restart: unless-stopped
 
-  affine_migration:
-    image: ghcr.io/toeverything/affine-graphql:${AFFINE_REVISION:-stable}
+  blank_migration:
+    image: ghcr.io/666base/blank:${BLANK_REVISION:-stable}
     container_name: blank-sync-migration
     volumes:
-      - affine_data:/root/.affine/storage
+      - blank_data:/root/.blank/storage
+      - blank_config:/root/.blank/config
     command: ['sh', '-c', 'node ./scripts/self-host-predeploy.js']
     depends_on:
       postgres:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
       REDIS_SERVER_HOST: redis
-      DATABASE_URL: postgresql://${POSTGRES_USER:-affine}:${POSTGRES_PASSWORD:-affine}@postgres:5432/${POSTGRES_DB:-affine}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-blank}:${POSTGRES_PASSWORD:-blank}@postgres:5432/${POSTGRES_DB:-blank}
+      BLANK_INDEXER_ENABLED: 'false'
 
   redis:
     image: redis
@@ -56,18 +62,19 @@ services:
     image: pgvector/pgvector:pg16
     container_name: blank-sync-postgres
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-affine}']
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-blank}']
       interval: 10s
       timeout: 5s
       retries: 5
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-affine}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-affine}
-      POSTGRES_DB: ${POSTGRES_DB:-affine}
+      POSTGRES_USER: ${POSTGRES_USER:-blank}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-blank}
+      POSTGRES_DB: ${POSTGRES_DB:-blank}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
 volumes:
-  affine_data:
+  blank_data:
+  blank_config:
   postgres_data:

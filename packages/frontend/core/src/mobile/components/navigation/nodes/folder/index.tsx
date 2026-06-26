@@ -5,23 +5,23 @@ import {
   MenuSeparator,
   MenuSub,
   notify,
-} from '@affine/component';
-import { usePageHelper } from '@affine/core/blocksuite/block-suite-page-list/utils';
+} from '@blank/component';
+import { usePageHelper } from '@blank/core/blocksuite/block-suite-page-list/utils';
 import type {
   NavigationPanelTreeNodeIcon,
   NodeOperation,
-} from '@affine/core/desktop/components/navigation-panel';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { NavigationPanelService } from '@affine/core/modules/navigation-panel';
+} from '@blank/core/desktop/components/navigation-panel';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { CompatibleFavoriteItemsAdapter } from '@blank/core/modules/favorite';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { NavigationPanelService } from '@blank/core/modules/navigation-panel';
 import {
   type FolderNode,
   OrganizeService,
-} from '@affine/core/modules/organize';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+} from '@blank/core/modules/organize';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import {
   DeleteIcon,
   FolderIcon,
@@ -172,10 +172,10 @@ const NavigationPanelFolderNodeFolder = ({
       type: 'folder',
     });
     notify.success({
-      title: t['com.affine.rootAppSidebar.organize.delete.notify-title']({
+      title: t['com.blank.rootAppSidebar.organize.delete.notify-title']({
         name,
       }),
-      message: t['com.affine.rootAppSidebar.organize.delete.notify-message'](),
+      message: t['com.blank.rootAppSidebar.organize.delete.notify-message'](),
     });
   }, [name, node, t]);
 
@@ -269,7 +269,7 @@ const NavigationPanelFolderNodeFolder = ({
             size="16"
             onClick={handleNewDoc}
             tooltip={t[
-              'com.affine.rootAppSidebar.explorer.organize-add-tooltip'
+              'com.blank.rootAppSidebar.explorer.organize-add-tooltip'
             ]()}
           >
             <PlusIcon />
@@ -297,10 +297,10 @@ const NavigationPanelFolderNodeFolder = ({
         view: (
           <FolderRenameSubMenu
             text={t[
-              'com.affine.rootAppSidebar.organize.folder.create-subfolder'
+              'com.blank.rootAppSidebar.organize.folder.create-subfolder'
             ]()}
             title={t[
-              'com.affine.rootAppSidebar.organize.folder.create-subfolder'
+              'com.blank.rootAppSidebar.organize.folder.create-subfolder'
             ]()}
             onConfirm={handleCreateSubfolder}
             descRenderer={createSubTipRenderer}
@@ -324,26 +324,26 @@ const NavigationPanelFolderNodeFolder = ({
                   prefixIcon={<PageIcon />}
                   onClick={() => handleAddToFolder('doc')}
                 >
-                  {t['com.affine.rootAppSidebar.organize.folder.add-docs']()}
+                  {t['com.blank.rootAppSidebar.organize.folder.add-docs']()}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleAddToFolder('tag')}
                   prefixIcon={<TagsIcon />}
                 >
-                  {t['com.affine.rootAppSidebar.organize.folder.add-tags']()}
+                  {t['com.blank.rootAppSidebar.organize.folder.add-tags']()}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleAddToFolder('collection')}
                   prefixIcon={<LayerIcon />}
                 >
                   {t[
-                    'com.affine.rootAppSidebar.organize.folder.add-collections'
+                    'com.blank.rootAppSidebar.organize.folder.add-collections'
                   ]()}
                 </MenuItem>
               </>
             }
           >
-            {t['com.affine.rootAppSidebar.organize.folder.add-others']()}
+            {t['com.blank.rootAppSidebar.organize.folder.add-others']()}
           </MenuSub>
         ),
       },
@@ -365,7 +365,7 @@ const NavigationPanelFolderNodeFolder = ({
             prefixIcon={<DeleteIcon />}
             onClick={handleDelete}
           >
-            {t['com.affine.rootAppSidebar.organize.delete']()}
+            {t['com.blank.rootAppSidebar.organize.delete']()}
           </MenuItem>
         ),
       },
@@ -403,7 +403,7 @@ const NavigationPanelFolderNodeFolder = ({
                 data-event-args-type={node.type$.value}
                 onClick={() => node.delete()}
               >
-                {t['com.affine.rootAppSidebar.organize.delete-from-folder']()}
+                {t['com.blank.rootAppSidebar.organize.delete-from-folder']()}
               </MenuItem>
             ),
           },
@@ -446,7 +446,7 @@ const NavigationPanelFolderNodeFolder = ({
         />
       ))}
       <AddItemPlaceholder
-        label={t['com.affine.rootAppSidebar.organize.folder.new-doc']()}
+        label={t['com.blank.rootAppSidebar.organize.folder.new-doc']()}
         onClick={handleNewDoc}
         data-testid="new-folder-in-folder-button"
       />

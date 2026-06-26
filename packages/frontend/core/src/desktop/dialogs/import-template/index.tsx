@@ -1,23 +1,23 @@
-import { Button, Modal } from '@affine/component';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-helper';
-import { useWorkspaceName } from '@affine/core/components/hooks/use-workspace-info';
-import { WorkspaceSelector } from '@affine/core/components/workspace-selector';
-import { AuthService } from '@affine/core/modules/cloud';
+import { Button, Modal } from '@blank/component';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { useWorkspaceName } from '@blank/core/components/hooks/use-workspace-info';
+import { WorkspaceSelector } from '@blank/core/components/workspace-selector';
+import { AuthService } from '@blank/core/modules/cloud';
 import {
   type DialogComponentProps,
   type GLOBAL_DIALOG_SCHEMA,
-} from '@affine/core/modules/dialogs';
+} from '@blank/core/modules/dialogs';
 import {
   ImportTemplateService,
   TemplateDownloaderService,
-} from '@affine/core/modules/import-template';
+} from '@blank/core/modules/import-template';
 import {
   type WorkspaceMetadata,
   WorkspacesService,
-} from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
-import type { DocMode } from '@blocksuite/affine/model';
+} from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
+import type { DocMode } from '@blocksuite/blank/model';
 import { AllDocsIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVar } from '@toeverything/theme';
@@ -145,7 +145,7 @@ const Dialog = ({
       const { workspaceId, docId } =
         await importTemplateService.importToNewWorkspace(
           // TODO: support selfhosted
-          'affine-cloud',
+          'blank-cloud',
           'Workspace',
           templateDownloader.data$.value
         );
@@ -170,7 +170,7 @@ const Dialog = ({
       <div className={styles.dialogContainer}>
         <AllDocsIcon className={styles.mainIcon} />
         <h6 className={styles.mainTitle}>
-          {t['com.affine.import-template.dialog.createDocWithTemplate']({
+          {t['com.blank.import-template.dialog.createDocWithTemplate']({
             templateName,
           })}
         </h6>
@@ -200,12 +200,12 @@ const Dialog = ({
       </div>
       {importingError && (
         <span style={{ color: cssVar('warningColor') }}>
-          {t['com.affine.import-template.dialog.errorImport']()}
+          {t['com.blank.import-template.dialog.errorImport']()}
         </span>
       )}
       {downloadError ? (
         <span style={{ color: cssVar('warningColor') }}>
-          {t['com.affine.import-template.dialog.errorLoad']()}
+          {t['com.blank.import-template.dialog.errorLoad']()}
         </span>
       ) : selectedWorkspace ? (
         <Button
@@ -217,7 +217,7 @@ const Dialog = ({
           data-testid="import-template-to-workspace-btn"
         >
           {selectedWorkspaceName &&
-            t['com.affine.import-template.dialog.createDocToWorkspace']({
+            t['com.blank.import-template.dialog.createDocToWorkspace']({
               workspace: selectedWorkspaceName,
             })}
         </Button>
@@ -229,7 +229,7 @@ const Dialog = ({
           disabled={disabled}
           onClick={handleImportToNewWorkspace}
         >
-          {t['com.affine.import-template.dialog.createDocToNewWorkspace']()}
+          {t['com.blank.import-template.dialog.createDocToNewWorkspace']()}
         </Button>
       )}
     </>

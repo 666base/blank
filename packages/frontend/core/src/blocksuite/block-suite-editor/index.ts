@@ -1,8 +1,2 @@
-import { editorEffects } from '@affine/core/blocksuite/editors';
-
-import { registerTemplates } from './register-templates';
-
-editorEffects();
-registerTemplates();
-
+export { ensureBlockSuiteEditorEffects } from './ensure-effects';
 export * from './blocksuite-editor';

@@ -1,6 +1,6 @@
-import { type MenuSubProps, useMobileMenuController } from '@affine/component';
-import { TagService } from '@affine/core/modules/tag';
-import { useI18n } from '@affine/i18n';
+import { type MenuSubProps, useMobileMenuController } from '@blank/component';
+import { TagService } from '@blank/core/modules/tag';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import {
   createContext,
@@ -135,9 +135,9 @@ export const TagRenameDialog = ({
   ...props
 }: TagRenameDialogProps) => {
   const t = useI18n();
-  const title = propsTitle || t['com.affine.m.explorer.tag.new-dialog-title']();
+  const title = propsTitle || t['com.blank.m.explorer.tag.new-dialog-title']();
   const confirmText =
-    propsConfirmText || t['com.affine.m.explorer.tag.rename-confirm']();
+    propsConfirmText || t['com.blank.m.explorer.tag.rename-confirm']();
 
   return (
     <RenameDialog
@@ -185,7 +185,7 @@ export const TagRenameSubMenu = ({
 
   return (
     <RenameSubMenu
-      title={title ?? t['com.affine.m.explorer.tag.rename-menu-title']()}
+      title={title ?? t['com.blank.m.explorer.tag.rename-menu-title']()}
       icon={icon}
       text={text}
       menuProps={menuProps}

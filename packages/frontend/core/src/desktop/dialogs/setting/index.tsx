@@ -1,20 +1,20 @@
-import { Loading, Scrollable } from '@affine/component';
-import { WorkspaceDetailSkeleton } from '@affine/component/setting-components';
-import type { ModalProps } from '@affine/component/ui/modal';
-import { Modal } from '@affine/component/ui/modal';
+import { Loading, Scrollable } from '@blank/component';
+import { WorkspaceDetailSkeleton } from '@blank/component/setting-components';
+import type { ModalProps } from '@blank/component/ui/modal';
+import { Modal } from '@blank/component/ui/modal';
 import {
   AuthService,
   DefaultServerService,
   ServersService,
-} from '@affine/core/modules/cloud';
-import type { DialogComponentProps } from '@affine/core/modules/dialogs';
+} from '@blank/core/modules/cloud';
+import type { DialogComponentProps } from '@blank/core/modules/dialogs';
 import type {
   SettingTab,
   WORKSPACE_DIALOG_SCHEMA,
-} from '@affine/core/modules/dialogs/constant';
-import { GlobalContextService } from '@affine/core/modules/global-context';
-import { createIsland, type Island } from '@affine/core/utils/island';
-import { Trans, useTranslation } from '@affine/i18n';
+} from '@blank/core/modules/dialogs/constant';
+import { GlobalContextService } from '@blank/core/modules/global-context';
+import { createIsland, type Island } from '@blank/core/utils/island';
+import { Trans, useTranslation } from '@blank/i18n';
 import { ContactWithUsIcon } from '@blocksuite/icons/rc';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
 import { debounce } from 'lodash-es';
@@ -29,12 +29,12 @@ import {
 } from 'react';
 import { flushSync } from 'react-dom';
 
-import { isBlankBuild } from '@affine/core/utils/blank-links';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { AccountSetting } from './account-setting';
 import { GeneralSetting } from './general-setting';
 import { IssueFeedbackModal } from './issue-feedback-modal';
 import { SettingSidebar } from './setting-sidebar';
-import { StarAFFiNEModal } from './star-affine-modal';
+import { StarBlankModal } from './star-blank-modal';
 import * as style from './style.css';
 import {
   SubPageContext,
@@ -138,15 +138,15 @@ const SettingModalInner = ({
     [setSettingState]
   );
   const [openIssueFeedbackModal, setOpenIssueFeedbackModal] = useState(false);
-  const [openStarAFFiNEModal, setOpenStarAFFiNEModal] = useState(false);
+  const [openStarBlankModal, setOpenStarBlankModal] = useState(false);
 
   const handleOpenIssueFeedbackModal = useCallback(() => {
     setOpenIssueFeedbackModal(true);
   }, [setOpenIssueFeedbackModal]);
 
-  const handleOpenStarAFFiNEModal = useCallback(() => {
-    setOpenStarAFFiNEModal(true);
-  }, [setOpenStarAFFiNEModal]);
+  const handleOpenStarBlankModal = useCallback(() => {
+    setOpenStarBlankModal(true);
+  }, [setOpenStarBlankModal]);
 
   const addSubPageIsland = useCallback(() => {
     const island = createIsland();
@@ -229,12 +229,12 @@ const SettingModalInner = ({
               <div className={style.footer}>
                 <ContactWithUsIcon fontSize={16} />
                 <Trans
-                  i18nKey={'com.affine.settings.suggestion-2'}
+                  i18nKey={'com.blank.settings.suggestion-2'}
                   components={{
                     1: (
                       <span
                         className={style.link}
-                        onClick={handleOpenStarAFFiNEModal}
+                        onClick={handleOpenStarBlankModal}
                       />
                     ),
                     2: (
@@ -258,9 +258,9 @@ const SettingModalInner = ({
               </div>
               )}
               {!isBlankBuild() ? (
-              <StarAFFiNEModal
-                open={openStarAFFiNEModal}
-                setOpen={setOpenStarAFFiNEModal}
+              <StarBlankModal
+                open={openStarBlankModal}
+                setOpen={setOpenStarBlankModal}
               />
               ) : null}
               <IssueFeedbackModal

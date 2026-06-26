@@ -1,12 +1,12 @@
-import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
-import { noop } from '@blocksuite/affine/global/utils';
-import { ThemeProvider } from '@blocksuite/affine/shared/services';
+import { SignalWatcher, WithDisposable } from '@blocksuite/blank/global/lit';
+import { noop } from '@blocksuite/blank/global/utils';
+import { ThemeProvider } from '@blocksuite/blank/shared/services';
 import {
   BlockStdScope,
   EditorHost,
   ShadowlessElement,
-} from '@blocksuite/affine/std';
-import type { ExtensionType, Store } from '@blocksuite/affine/store';
+} from '@blocksuite/blank/std';
+import type { ExtensionType, Store } from '@blocksuite/blank/store';
 import { css, html, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { guard } from 'lit/directives/guard.js';
@@ -18,8 +18,8 @@ export class PageEditor extends SignalWatcher(
 ) {
   static override styles = css`
     page-editor {
-      font-family: var(--affine-font-family);
-      background: var(--affine-background-primary-color);
+      font-family: var(--blank-font-family);
+      background: var(--blank-background-primary-color);
     }
 
     page-editor * {
@@ -32,7 +32,7 @@ export class PageEditor extends SignalWatcher(
       }
     }
 
-    .affine-page-viewport {
+    .blank-page-viewport {
       position: relative;
       height: 100%;
       overflow-x: hidden;

@@ -4,10 +4,10 @@ import { join } from 'node:path';
 import { createServer } from 'node:net';
 
 export const RSPACK_SUPPORTED_PACKAGES = [
-  '@affine/web',
-  '@affine/mobile',
-  '@affine/reader',
-  '@affine/media-capture-playground',
+  '@blank/web',
+  '@blank/mobile',
+  '@blank/reader',
+  '@blank/media-capture-playground',
 ] as const;
 
 const rspackSupportedPackageSet = new Set<string>(RSPACK_SUPPORTED_PACKAGES);
@@ -28,8 +28,8 @@ export function assertRspackSupportedPackageName(name: string) {
 
 /** Default dev ports per frontend app (web + mobile can run side by side). */
 export const DEFAULT_DEV_SERVER_PORTS: Record<string, number> = {
-  '@affine/web': 8080,
-  '@affine/mobile': 8081,
+  '@blank/web': 8080,
+  '@blank/mobile': 8081,
 };
 
 export function getDefaultDevServerPort(packageName: string) {
@@ -39,15 +39,15 @@ export function getDefaultDevServerPort(packageName: string) {
 export function getPreferredDevServerPort(packageName: string) {
   const packageDefault = getDefaultDevServerPort(packageName);
 
-  if (process.env.AFFINE_DESKTOP_URL) {
-    const url = new URL(process.env.AFFINE_DESKTOP_URL);
+  if (process.env.BLANK_DESKTOP_URL) {
+    const url = new URL(process.env.BLANK_DESKTOP_URL);
     return Number(url.port || packageDefault);
   }
 
   if (process.env.PORT) {
     const envPort = Number(process.env.PORT);
     if (
-      packageName === '@affine/mobile' &&
+      packageName === '@blank/mobile' &&
       envPort === 8080 &&
       packageDefault !== 8080
     ) {
@@ -115,7 +115,7 @@ export function createDevServerConfig(port: number): RspackDevServerConfiguratio
       ],
     },
     proxy:
-      process.env.AFFINE_ENABLE_BACKEND_PROXY === 'true'
+      process.env.BLANK_ENABLE_BACKEND_PROXY === 'true'
         ? [
             {
               context: '/api',
@@ -143,7 +143,7 @@ export function getElectronDevServerInfoPath() {
 }
 
 export function writeElectronDevServerInfo(port: number) {
-  if (process.env.AFFINE_ELECTRON_DEV !== '1') {
+  if (process.env.BLANK_ELECTRON_DEV !== '1') {
     return;
   }
   const dir = join(process.cwd(), '.blank');

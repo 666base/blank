@@ -1,8 +1,8 @@
-import { MenuItem } from '@affine/component/ui/menu';
-import { DefaultServerService } from '@affine/core/modules/cloud';
-import { isDesktopApp } from '@affine/core/utils/local-only';
-import { ServerFeature } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
+import { MenuItem } from '@blank/component/ui/menu';
+import { DefaultServerService } from '@blank/core/modules/cloud';
+import { isDesktopApp } from '@blank/core/utils/local-only';
+import { ServerFeature } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
 import { ImportIcon, PlusIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 
@@ -37,7 +37,7 @@ export const AddWorkspace = ({
           className={styles.ItemContainer}
         >
           <div className={styles.ItemText}>
-            {t['com.affine.workspace.local.import']()}
+            {t['com.blank.workspace.local.import']()}
           </div>
         </MenuItem>
       )}
@@ -51,8 +51,8 @@ export const AddWorkspace = ({
       >
         <div className={styles.ItemText}>
           {enableLocalWorkspace
-            ? t['com.affine.workspaceList.addWorkspace.create']()
-            : t['com.affine.workspaceList.addWorkspace.create-cloud']()}
+            ? t['com.blank.workspaceList.addWorkspace.create']()
+            : t['com.blank.workspaceList.addWorkspace.create-cloud']()}
         </div>
       </MenuItem>
     </>

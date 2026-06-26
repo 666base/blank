@@ -1,30 +1,32 @@
-import { useThemeColorV2 } from '@affine/component';
-import { PageDetailLoading } from '@affine/component/page-detail-skeleton';
-import type { AffineEditorContainer } from '@affine/core/blocksuite/block-suite-editor';
-import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
-import { useGuard } from '@affine/core/components/guard';
-import { useActiveBlocksuiteEditor } from '@affine/core/components/hooks/use-block-suite-editor';
-import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-helper';
-import { PageDetailEditor } from '@affine/core/components/page-detail-editor';
-import { DetailPageWrapper } from '@affine/core/desktop/pages/workspace/detail-page/detail-page-wrapper';
-import { PageHeader } from '@affine/core/mobile/components';
-import { ServerService } from '@affine/core/modules/cloud';
-import { DocService } from '@affine/core/modules/doc';
-import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
-import { EditorService } from '@affine/core/modules/editor';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { GlobalContextService } from '@affine/core/modules/global-context';
-import { JournalService } from '@affine/core/modules/journal';
-import { WorkbenchService } from '@affine/core/modules/workbench';
-import { ViewService } from '@affine/core/modules/workbench/services/view';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { i18nTime } from '@affine/i18n';
-import { DisposableGroup } from '@blocksuite/affine/global/disposable';
-import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
+import { useThemeColorV2 } from '@blank/component';
+import type { BlankEditorContainer } from '@blank/core/blocksuite/block-suite-editor';
+import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
+import { CachedDetailPageLoading } from '@blank/core/components/cached-detail-page-loading';
+import { preloadBlockSuiteEditor } from '@blank/core/blocksuite/preload-block-suite-editor';
+import { usePersistDocSnapshot } from '@blank/core/components/hooks/use-persist-doc-snapshot';
+import { useGuard } from '@blank/core/components/guard';
+import { useActiveBlocksuiteEditor } from '@blank/core/components/hooks/use-block-suite-editor';
+import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import { PageDetailEditor } from '@blank/core/components/page-detail-editor';
+import { DetailPageWrapper } from '@blank/core/desktop/pages/workspace/detail-page/detail-page-wrapper';
+import { PageHeader } from '@blank/core/mobile/components';
+import { ServerService } from '@blank/core/modules/cloud';
+import { DocService } from '@blank/core/modules/doc';
+import { DocDisplayMetaService } from '@blank/core/modules/doc-display-meta';
+import { EditorService } from '@blank/core/modules/editor';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { GlobalContextService } from '@blank/core/modules/global-context';
+import { JournalService } from '@blank/core/modules/journal';
+import { WorkbenchService } from '@blank/core/modules/workbench';
+import { ViewService } from '@blank/core/modules/workbench/services/view';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { i18nTime } from '@blank/i18n';
+import { DisposableGroup } from '@blocksuite/blank/global/disposable';
+import { RefNodeSlotsProvider } from '@blocksuite/blank/inlines/reference';
 import {
   customImageProxyMiddleware,
   ImageProxyService,
-} from '@blocksuite/affine/shared/adapters';
+} from '@blocksuite/blank/shared/adapters';
 import {
   FrameworkScope,
   useLiveData,
@@ -93,6 +95,8 @@ const DetailPageImpl = ({
   const globalContext = globalContextService.globalContext;
   const doc = docService.doc;
 
+  usePersistDocSnapshot(workspace.id, doc);
+
   const mode = useLiveData(editor.mode$);
 
   const isInTrash = useLiveData(doc.meta$.map(meta => meta.trash));
@@ -142,7 +146,7 @@ const DetailPageImpl = ({
   const server = useService(ServerService).server;
 
   const onLoad = useCallback(
-    (editorContainer: AffineEditorContainer) => {
+    (editorContainer: BlankEditorContainer) => {
       // provide image proxy endpoint to blocksuite
       const imageProxyUrl = new URL(
         BUILD_CONFIG.imageProxyUrl,
@@ -209,7 +213,7 @@ const DetailPageImpl = ({
 
   const immersiveViewportStyle = immersiveZoomToolbarBottom
     ? ({
-        '--affine-edgeless-zoom-toolbar-bottom': immersiveZoomToolbarBottom,
+        '--blank-edgeless-zoom-toolbar-bottom': immersiveZoomToolbarBottom,
       } as CSSProperties)
     : undefined;
 
@@ -222,27 +226,27 @@ const DetailPageImpl = ({
           ref={scrollViewportRef}
           style={immersiveViewportStyle}
           className={clsx(
-            'affine-page-viewport',
-            styles.affineDocViewport,
+            'blank-page-viewport',
+            styles.blankDocViewport,
             styles.editorContainer
           )}
           onPointerDown={immersiveTapHandlers?.onPointerDown}
           onPointerUp={immersiveTapHandlers?.onPointerUp}
           onPointerCancel={immersiveTapHandlers?.onPointerCancel}
         >
-          <AffineErrorBoundary key={doc.id} className={styles.errorBoundary}>
+          <BlankErrorBoundary key={doc.id} className={styles.errorBoundary}>
             <PageDetailEditor onLoad={onLoad} readonly={readonly} />
-          </AffineErrorBoundary>
+          </BlankErrorBoundary>
         </div>
       </div>
     </FrameworkScope>
   );
 };
 
-const getSkeleton = (back: boolean) => (
+const getSkeleton = (pageId: string, back: boolean) => (
   <>
     <PageHeader back={back} className={styles.header} />
-    <PageDetailLoading />
+    <CachedDetailPageLoading pageId={pageId} />
   </>
 );
 const getNotFound = (back: boolean) => (
@@ -251,8 +255,8 @@ const getNotFound = (back: boolean) => (
     Page Not Found (TODO)
   </>
 );
-const skeleton = getSkeleton(false);
-const skeletonWithBack = getSkeleton(true);
+const skeleton = (pageId: string) => getSkeleton(pageId, false);
+const skeletonWithBack = (pageId: string) => getSkeleton(pageId, true);
 const notFound = getNotFound(false);
 const notFoundWithBack = getNotFound(true);
 
@@ -550,7 +554,7 @@ const MobileDetailPage = ({
   return (
     <div className={styles.root}>
       <DetailPageWrapper
-        skeleton={date ? skeleton : skeletonWithBack}
+        skeleton={date ? skeleton(pageId) : skeletonWithBack(pageId)}
         notFound={date ? notFound : notFoundWithBack}
         pageId={pageId}
         canAccess={canAccess}
@@ -575,6 +579,12 @@ export const Component = () => {
   const params = useParams();
   const pageId = params.pageId;
   const journalDate = useLiveData(journalService.journalDate$(pageId ?? ''));
+
+  useEffect(() => {
+    if (pageId) {
+      preloadBlockSuiteEditor();
+    }
+  }, [pageId]);
 
   if (!pageId) {
     return null;

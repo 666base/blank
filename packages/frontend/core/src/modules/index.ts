@@ -1,5 +1,5 @@
-import { configureQuotaModule } from '@affine/core/modules/quota';
-import { isAiDisabled } from '@affine/core/utils/local-only';
+import { configureQuotaModule } from '@blank/core/modules/quota';
+import { isAiDisabled } from '@blank/core/utils/local-only';
 import { type Framework } from '@toeverything/infra';
 
 import {

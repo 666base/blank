@@ -64,7 +64,7 @@ const deleteWorkspaceByokConfigMutation = vi.hoisted(() =>
   Symbol('deleteWorkspaceByokConfigMutation')
 );
 
-vi.mock('@affine/component', () => ({
+vi.mock('@blank/component', () => ({
   Button: ({
     children,
     ...props
@@ -94,7 +94,7 @@ vi.mock('@affine/component', () => ({
   },
 }));
 
-vi.mock('@affine/component/setting-components', () => ({
+vi.mock('@blank/component/setting-components', () => ({
   SettingHeader: ({
     title,
     subtitle,
@@ -112,21 +112,21 @@ vi.mock('@affine/component/setting-components', () => ({
   ),
 }));
 
-vi.mock('@affine/core/modules/cloud', () => ({
+vi.mock('@blank/core/modules/cloud', () => ({
   WorkspaceServerService: WorkspaceServerServiceToken,
 }));
 
-vi.mock('@affine/core/modules/workspace', () => ({
+vi.mock('@blank/core/modules/workspace', () => ({
   WorkspaceService: WorkspaceServiceToken,
 }));
 
-vi.mock('@affine/electron-api', () => ({
+vi.mock('@blank/electron-api', () => ({
   get apis() {
     return electronApiState.apis;
   },
 }));
 
-vi.mock('@affine/graphql', () => ({
+vi.mock('@blank/graphql', () => ({
   ByokKeyStorage,
   ByokKeyTestStatus,
   ByokProvider,
@@ -137,42 +137,42 @@ vi.mock('@affine/graphql', () => ({
   workspaceByokSettingsQuery,
 }));
 
-vi.mock('@affine/i18n', () => {
+vi.mock('@blank/i18n', () => {
   const messages: Record<string, string> = {
-    'com.affine.settings.workspace.byok.action.add-key': 'Add key',
-    'com.affine.settings.workspace.byok.action.edit': 'Edit',
-    'com.affine.settings.workspace.byok.action.delete': 'Delete',
-    'com.affine.settings.workspace.byok.action.test-key': 'Test key',
-    'com.affine.settings.workspace.byok.action.save-key': 'Save key',
-    'com.affine.settings.workspace.byok.action.cancel': 'Cancel',
-    'com.affine.settings.workspace.byok.action.clear-all':
+    'com.blank.settings.workspace.byok.action.add-key': 'Add key',
+    'com.blank.settings.workspace.byok.action.edit': 'Edit',
+    'com.blank.settings.workspace.byok.action.delete': 'Delete',
+    'com.blank.settings.workspace.byok.action.test-key': 'Test key',
+    'com.blank.settings.workspace.byok.action.save-key': 'Save key',
+    'com.blank.settings.workspace.byok.action.cancel': 'Cancel',
+    'com.blank.settings.workspace.byok.action.clear-all':
       'Clear all BYOK keys',
-    'com.affine.settings.workspace.byok.field.api-key': 'API key',
-    'com.affine.settings.workspace.byok.field.storage': 'Key storage',
-    'com.affine.settings.workspace.byok.placeholder.key-name': 'Primary',
-    'com.affine.settings.workspace.byok.status.key-verified': 'Key verified',
-    'com.affine.settings.workspace.byok.status.disabled-after-failure':
+    'com.blank.settings.workspace.byok.field.api-key': 'API key',
+    'com.blank.settings.workspace.byok.field.storage': 'Key storage',
+    'com.blank.settings.workspace.byok.placeholder.key-name': 'Primary',
+    'com.blank.settings.workspace.byok.status.key-verified': 'Key verified',
+    'com.blank.settings.workspace.byok.status.disabled-after-failure':
       'Disabled after failure',
-    'com.affine.settings.workspace.byok.storage.local': 'Local',
-    'com.affine.settings.workspace.byok.storage.server': 'Server',
-    'com.affine.settings.workspace.byok.storage.local-this-device':
+    'com.blank.settings.workspace.byok.storage.local': 'Local',
+    'com.blank.settings.workspace.byok.storage.server': 'Server',
+    'com.blank.settings.workspace.byok.storage.local-this-device':
       'Local (this device)',
-    'com.affine.settings.workspace.byok.storage.local-desktop-only':
+    'com.blank.settings.workspace.byok.storage.local-desktop-only':
       'Local (Desktop only)',
-    'com.affine.settings.workspace.byok.usage.tokens': '{{count}} tokens',
-    'com.affine.settings.workspace.byok.notify.operation-failed.message':
+    'com.blank.settings.workspace.byok.usage.tokens': '{{count}} tokens',
+    'com.blank.settings.workspace.byok.notify.operation-failed.message':
       'Please try again.',
-    'com.affine.settings.workspace.byok.notify.test-failed.title':
+    'com.blank.settings.workspace.byok.notify.test-failed.title':
       'Key test failed',
-    'com.affine.settings.workspace.byok.notify.load-failed.title':
+    'com.blank.settings.workspace.byok.notify.load-failed.title':
       'BYOK settings not loaded',
-    'com.affine.settings.workspace.byok.notify.save-failed.title':
+    'com.blank.settings.workspace.byok.notify.save-failed.title':
       'BYOK key not saved',
-    'com.affine.settings.workspace.byok.notify.delete-failed.title':
+    'com.blank.settings.workspace.byok.notify.delete-failed.title':
       'BYOK key not deleted',
-    'com.affine.settings.workspace.byok.notify.reorder-failed.title':
+    'com.blank.settings.workspace.byok.notify.reorder-failed.title':
       'BYOK keys not reordered',
-    'com.affine.settings.workspace.byok.notify.clear-failed.title':
+    'com.blank.settings.workspace.byok.notify.clear-failed.title':
       'BYOK keys not cleared',
   };
   const translate = (key: string, options?: Record<string, unknown>) => {

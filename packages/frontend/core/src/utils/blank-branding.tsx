@@ -30,3 +30,8 @@ export function BlankAppLogo({
 export function isBlankBranding() {
   return isBlankBuild();
 }
+
+export {
+  applyBlankBranding,
+  isBlankProduct,
+} from '@blank/i18n/blank-branding';

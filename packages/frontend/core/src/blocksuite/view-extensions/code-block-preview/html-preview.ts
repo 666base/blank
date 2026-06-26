@@ -1,7 +1,7 @@
-import { CodeBlockPreviewExtension } from '@blocksuite/affine/blocks/code';
-import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
-import type { CodeBlockModel } from '@blocksuite/affine/model';
-import { unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
+import { CodeBlockPreviewExtension } from '@blocksuite/blank/blocks/code';
+import { SignalWatcher, WithDisposable } from '@blocksuite/blank/global/lit';
+import type { CodeBlockModel } from '@blocksuite/blank/model';
+import { unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
 import { ShadowlessElement } from '@blocksuite/std';
 import { css, html, type PropertyValues } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
@@ -12,7 +12,7 @@ import { linkIframe } from './iframe-container';
 
 export const CodeBlockHtmlPreview = CodeBlockPreviewExtension(
   'html',
-  model => html`<affine-html-preview .model=${model}></affine-html-preview>`
+  model => html`<blank-html-preview .model=${model}></blank-html-preview>`
 );
 
 export class HTMLPreview extends SignalWatcher(
@@ -136,7 +136,7 @@ export class HTMLPreview extends SignalWatcher(
             () =>
               html`<div class="html-preview-fallback">
                 This feature is not supported in your browser. Please download
-                the AFFiNE Desktop App to use it.
+                the Blank Desktop App to use it.
               </div>`,
           ],
         ])}
@@ -153,11 +153,11 @@ export class HTMLPreview extends SignalWatcher(
 }
 
 export function effects() {
-  customElements.define('affine-html-preview', HTMLPreview);
+  customElements.define('blank-html-preview', HTMLPreview);
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'affine-html-preview': HTMLPreview;
+    'blank-html-preview': HTMLPreview;
   }
 }

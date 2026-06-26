@@ -1,5 +1,5 @@
-import { NotificationCountService } from '@affine/core/modules/notification';
-import { WorkbenchService } from '@affine/core/modules/workbench';
+import { NotificationCountService } from '@blank/core/modules/notification';
+import { WorkbenchService } from '@blank/core/modules/workbench';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useEffect } from 'react';
 

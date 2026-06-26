@@ -1,4 +1,4 @@
-import { DebugLogger } from '@affine/debug';
+import { DebugLogger } from '@blank/debug';
 
 import type { CallableEventsChain, EventsUnion } from './types';
 

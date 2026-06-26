@@ -7,19 +7,19 @@ import {
   notify,
   Tooltip,
   useConfirmModal,
-} from '@affine/component';
-import { useGuard } from '@affine/core/components/guard';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { DocService } from '@affine/core/modules/doc';
+} from '@blank/component';
+import { useGuard } from '@blank/core/components/guard';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { DocService } from '@blank/core/modules/doc';
 import {
   DocGrantedUsersService,
   type GrantedUser,
   WorkspacePermissionService,
-} from '@affine/core/modules/permissions';
-import { UserFriendlyError } from '@affine/error';
-import { DocRole } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+} from '@blank/core/modules/permissions';
+import { UserFriendlyError } from '@blank/error';
+import { DocRole } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import { useCallback, useMemo } from 'react';
@@ -150,11 +150,11 @@ const Options = ({
         if (res) {
           notify.success({
             title:
-              t['com.affine.share-menu.member-management.update-success'](),
+              t['com.blank.share-menu.member-management.update-success'](),
           });
         } else {
           notify.error({
-            title: t['com.affine.share-menu.member-management.update-fail'](),
+            title: t['com.blank.share-menu.member-management.update-fail'](),
           });
         }
       } catch (error) {
@@ -195,11 +195,11 @@ const Options = ({
     openConfirmModal({
       title:
         t[
-          'com.affine.share-menu.member-management.set-as-owner.confirm.title'
+          'com.blank.share-menu.member-management.set-as-owner.confirm.title'
         ](),
       description:
         t[
-          'com.affine.share-menu.member-management.set-as-owner.confirm.description'
+          'com.blank.share-menu.member-management.set-as-owner.confirm.description'
         ](),
       onConfirm: changeToOwner,
       confirmText: t['Confirm'](),
@@ -226,18 +226,18 @@ const Options = ({
   const operationButtonInfo = useMemo(() => {
     return [
       {
-        label: t['com.affine.share-menu.option.permission.can-manage'](),
+        label: t['com.blank.share-menu.option.permission.can-manage'](),
         onClick: changeToManager,
         role: DocRole.Manager,
       },
       {
-        label: t['com.affine.share-menu.option.permission.can-edit'](),
+        label: t['com.blank.share-menu.option.permission.can-edit'](),
         onClick: changeToEditor,
         role: DocRole.Editor,
         showPlanTag: hittingPaywall,
       },
       {
-        label: t['com.affine.share-menu.option.permission.can-read'](),
+        label: t['com.blank.share-menu.option.permission.can-read'](),
         onClick: changeToReader,
         role: DocRole.Reader,
         showPlanTag: hittingPaywall,
@@ -260,7 +260,7 @@ const Options = ({
         </MenuItem>
       ))}
       <MenuItem onSelect={openTransferOwnerModal} disabled={!canTransferOwner}>
-        {t['com.affine.share-menu.member-management.set-as-owner']()}
+        {t['com.blank.share-menu.member-management.set-as-owner']()}
       </MenuItem>
       <MenuSeparator />
       <MenuItem
@@ -269,7 +269,7 @@ const Options = ({
         className={styles.remove}
         disabled={!canManageUsers}
       >
-        {t['com.affine.share-menu.member-management.remove']()}
+        {t['com.blank.share-menu.member-management.remove']()}
       </MenuItem>
     </>
   );

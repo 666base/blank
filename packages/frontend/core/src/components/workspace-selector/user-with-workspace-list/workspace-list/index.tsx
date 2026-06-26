@@ -1,20 +1,23 @@
-import { IconButton, Menu, MenuItem } from '@affine/component';
-import { Divider } from '@affine/component/ui/divider';
-import { useEnableCloud } from '@affine/core/components/hooks/affine/use-enable-cloud';
-import { useSignOut } from '@affine/core/components/hooks/affine/use-sign-out';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { useNavigateHelper } from '@affine/core/components/hooks/use-navigate-helper';
-import type { AuthAccountInfo, Server } from '@affine/core/modules/cloud';
-import { AuthService, ServersService } from '@affine/core/modules/cloud';
-import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import { GlobalContextService } from '@affine/core/modules/global-context';
+import { IconButton, Menu, MenuItem } from '@blank/component';
+import { Divider } from '@blank/component/ui/divider';
+import { useEnableCloud } from '@blank/core/components/hooks/blank/use-enable-cloud';
+import { useSignOut } from '@blank/core/components/hooks/blank/use-sign-out';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { useNavigateHelper } from '@blank/core/components/hooks/use-navigate-helper';
+import type { AuthAccountInfo, Server } from '@blank/core/modules/cloud';
+import { AuthService, ServersService } from '@blank/core/modules/cloud';
+import { GlobalDialogService } from '@blank/core/modules/dialogs';
+import { GlobalContextService } from '@blank/core/modules/global-context';
 import {
   type WorkspaceMetadata,
   WorkspaceService,
   WorkspacesService,
-} from '@affine/core/modules/workspace';
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/workspace';
+import { useBlankAuth } from '@blank/core/modules/blank-auth/use-blank-auth';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
+import { BLANK_CLOUD_FLAVOUR } from '@blank/core/modules/workspace-engine';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
+import { useI18n } from '@blank/i18n';
 import {
   AccountIcon,
   CloudWorkspaceIcon,
@@ -62,8 +65,8 @@ const WorkspaceServerInfo = ({
 }) => {
   const t = useI18n();
   const isCloud = server !== 'local';
-  const isAffineCloud = server === 'affine-cloud';
-  const Icon = isAffineCloud
+  const isBlankCloud = server === 'blank-cloud';
+  const Icon = isBlankCloud
     ? CloudWorkspaceIcon
     : isCloud
       ? SelfhostIcon
@@ -72,14 +75,14 @@ const WorkspaceServerInfo = ({
   const menuItems = useMemo(
     () =>
       [
-        server !== 'affine-cloud' && server !== 'local' && (
+        server !== 'blank-cloud' && server !== 'local' && (
           <MenuItem
             prefixIcon={<DeleteIcon />}
             type="danger"
             key="delete-server"
             onClick={onDeleteServer}
           >
-            {t['com.affine.server.delete']()}
+            {t['com.blank.server.delete']()}
           </MenuItem>
         ),
         accountStatus === 'authenticated' && (
@@ -200,6 +203,35 @@ const CloudWorkSpaceList = ({
   );
 };
 
+const BlankSyncWorkspaces = ({
+  workspaces,
+  onClickWorkspace,
+}: {
+  workspaces: WorkspaceMetadata[];
+  onClickWorkspace: (workspaceMetadata: WorkspaceMetadata) => void;
+}) => {
+  const t = useI18n();
+  const { user, isSignedIn } = useBlankAuth();
+  if (!workspaces.length) {
+    return null;
+  }
+  return (
+    <>
+      <WorkspaceServerInfo
+        server={BLANK_CLOUD_FLAVOUR}
+        name={t['com.blank.sync.workspaceListTitle']()}
+        account={
+          isSignedIn && user?.email
+            ? { id: user.id, label: user.email, email: user.email }
+            : null
+        }
+        accountStatus={isSignedIn ? 'authenticated' : 'unauthenticated'}
+      />
+      <WorkspaceList items={workspaces} onClick={onClickWorkspace} />
+    </>
+  );
+};
+
 const LocalWorkspaces = ({
   workspaces,
   onClickWorkspace,
@@ -214,7 +246,7 @@ const LocalWorkspaces = ({
     <>
       <WorkspaceServerInfo
         server="local"
-        name={t['com.affine.workspaceList.workspaceListType.local']()}
+        name={t['com.blank.workspaceList.workspaceListType.local']()}
       />
       <WorkspaceList
         items={workspaces}
@@ -226,7 +258,7 @@ const LocalWorkspaces = ({
   );
 };
 
-export const AFFiNEWorkspaceList = ({
+export const BlankWorkspaceList = ({
   onEventEnd,
   onClickWorkspace,
   showEnableCloudButton,
@@ -242,19 +274,28 @@ export const AFFiNEWorkspaceList = ({
 
   const serversService = useService(ServersService);
   const servers = useLiveData(serversService.servers$);
-  const affineCloudServer = useMemo(
-    () => servers.find(s => s.id === 'affine-cloud') as Server,
+  const blankCloudServer = useMemo(
+    () => servers.find(s => s.id === 'blank-cloud') as Server,
     [servers]
   );
   const selfhostServers = useMemo(
-    () => servers.filter(s => s.id !== 'affine-cloud'),
+    () => servers.filter(s => s.id !== 'blank-cloud'),
     [servers]
+  );
+
+  const blankCloudWorkspaces = useMemo(
+    () =>
+      workspaces.filter(
+        ({ flavour }) => flavour === BLANK_CLOUD_FLAVOUR
+      ) as WorkspaceMetadata[],
+    [workspaces]
   );
 
   const cloudWorkspaces = useMemo(
     () =>
       workspaces.filter(
-        ({ flavour }) => flavour !== 'local'
+        ({ flavour }) =>
+          flavour !== 'local' && flavour !== BLANK_CLOUD_FLAVOUR
       ) as WorkspaceMetadata[],
     [workspaces]
   );
@@ -289,15 +330,26 @@ export const AFFiNEWorkspaceList = ({
 
   return (
     <>
+      {isBlankBuild() && blankCloudWorkspaces.length > 0 ? (
+        <>
+          <BlankSyncWorkspaces
+            workspaces={blankCloudWorkspaces}
+            onClickWorkspace={handleClickWorkspace}
+          />
+          {(localWorkspaces.length > 0 || !isLocalOnlyMode()) && (
+            <Divider size="thinner" className={styles.serverDivider} />
+          )}
+        </>
+      ) : null}
       {!isLocalOnlyMode() ? (
         <FrameworkScope
-          key={affineCloudServer.id}
-          scope={affineCloudServer.scope}
+          key={blankCloudServer.id}
+          scope={blankCloudServer.scope}
         >
           <CloudWorkSpaceList
-            server={affineCloudServer}
+            server={blankCloudServer}
             workspaces={cloudWorkspaces.filter(
-              ({ flavour }) => flavour === affineCloudServer.id
+              ({ flavour }) => flavour === blankCloudServer.id
             )}
             onClickWorkspace={handleClickWorkspace}
           />

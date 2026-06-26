@@ -3,15 +3,15 @@ import {
   type MasonryGroup,
   type MasonryItem,
   useConfirmModal,
-} from '@affine/component';
-import { DocsService } from '@affine/core/modules/doc';
-import { WorkspacePropertyService } from '@affine/core/modules/workspace-property';
-import { Trans, useI18n } from '@affine/i18n';
+} from '@blank/component';
+import { DocsService } from '@blank/core/modules/doc';
+import { WorkspacePropertyService } from '@blank/core/modules/workspace-property';
+import { Trans, useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import { memo, useCallback, useContext, useEffect, useMemo } from 'react';
 
-import { EmptyDocs } from '../../affine/empty';
+import { EmptyDocs } from '../../blank/empty';
 import { ListFloatingToolbar } from '../../page-list/components/list-floating-toolbar';
 import { SystemPropertyTypes } from '../../system-property-types';
 import { WorkspacePropertyTypes } from '../../workspace-property-types';
@@ -179,15 +179,15 @@ export const DocsExplorer = ({
     }
 
     openConfirmModal({
-      title: t['com.affine.moveToTrash.confirmModal.title.multiple']({
+      title: t['com.blank.moveToTrash.confirmModal.title.multiple']({
         number: selectedDocIds.length.toString(),
       }),
       description: t[
-        'com.affine.moveToTrash.confirmModal.description.multiple'
+        'com.blank.moveToTrash.confirmModal.description.multiple'
       ]({
         number: selectedDocIds.length.toString(),
       }),
-      cancelText: t['com.affine.confirmModal.button.cancel'](),
+      cancelText: t['com.blank.confirmModal.button.cancel'](),
       confirmText: t.Delete(),
       confirmButtonOptions: {
         variant: 'error',
@@ -272,7 +272,7 @@ export const DocsExplorer = ({
           onClose={handleCloseFloatingToolbar}
           content={
             <Trans
-              i18nKey="com.affine.page.toolbar.selected"
+              i18nKey="com.blank.page.toolbar.selected"
               count={selectedDocIds.length}
             >
               <div style={{ color: cssVarV2.text.secondary }}>

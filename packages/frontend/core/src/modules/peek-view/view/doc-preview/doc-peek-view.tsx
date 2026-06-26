@@ -1,16 +1,17 @@
-import { Scrollable } from '@affine/component';
-import { PageDetailLoading } from '@affine/component/page-detail-skeleton';
-import type { AffineEditorContainer } from '@affine/core/blocksuite/block-suite-editor';
-import { EditorOutlineViewer } from '@affine/core/blocksuite/outline-viewer';
-import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
-import { useGuard } from '@affine/core/components/guard';
-import { PageNotFound } from '@affine/core/desktop/pages/404';
-import { EditorService } from '@affine/core/modules/editor';
-import { DebugLogger } from '@affine/debug';
-import { DisposableGroup } from '@blocksuite/affine/global/disposable';
-import { Bound } from '@blocksuite/affine/global/gfx';
-import { RefNodeSlotsProvider } from '@blocksuite/affine/inlines/reference';
-import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
+import { Scrollable } from '@blank/component';
+import { CachedDetailPageLoading } from '@blank/core/components/cached-detail-page-loading';
+import { preloadBlockSuiteEditor } from '@blank/core/blocksuite/preload-block-suite-editor';
+import type { BlankEditorContainer } from '@blank/core/blocksuite/block-suite-editor';
+import { EditorOutlineViewer } from '@blank/core/blocksuite/outline-viewer';
+import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
+import { useGuard } from '@blank/core/components/guard';
+import { PageNotFound } from '@blank/core/desktop/pages/404';
+import { EditorService } from '@blank/core/modules/editor';
+import { DebugLogger } from '@blank/debug';
+import { DisposableGroup } from '@blocksuite/blank/global/disposable';
+import { Bound } from '@blocksuite/blank/global/gfx';
+import { RefNodeSlotsProvider } from '@blocksuite/blank/inlines/reference';
+import { GfxControllerIdentifier } from '@blocksuite/blank/std/gfx';
 import {
   FrameworkScope,
   useLiveData,
@@ -30,13 +31,13 @@ const logger = new DebugLogger('doc-peek-view');
 
 // Lazy load BlockSuiteEditor to break circular dependency
 const BlockSuiteEditor = lazy(() =>
-  import('@affine/core/blocksuite/block-suite-editor').then(module => ({
+  preloadBlockSuiteEditor().then(module => ({
     default: module.BlockSuiteEditor,
   }))
 );
 
 function fitViewport(
-  editor: AffineEditorContainer,
+  editor: BlankEditorContainer,
   xywh?: `[${number},${number},${number},${number}]`
 ) {
   try {
@@ -88,7 +89,7 @@ function DocPeekPreviewEditor({
   const isInTrash = useLiveData(doc.record.trash$);
 
   const handleOnEditorReady = useCallback(
-    (editorContainer: AffineEditorContainer) => {
+    (editorContainer: BlankEditorContainer) => {
       const disposableGroup = new DisposableGroup();
       const refNodeSlots =
         editorContainer.std.getOptional(RefNodeSlotsProvider);
@@ -134,13 +135,17 @@ function DocPeekPreviewEditor({
 
   const readonly = !canEdit || isInTrash;
 
+  useEffect(() => {
+    preloadBlockSuiteEditor();
+  }, []);
+
   return (
-    <AffineErrorBoundary>
+    <BlankErrorBoundary>
       <Scrollable.Root>
         <Scrollable.Viewport
-          className={clsx('affine-page-viewport', styles.affineDocViewport)}
+          className={clsx('blank-page-viewport', styles.blankDocViewport)}
         >
-          <Suspense fallback={<PageDetailLoading />}>
+          <Suspense fallback={<CachedDetailPageLoading pageId={doc.id} />}>
             <BlockSuiteEditor
               className={styles.editor}
               mode={mode}
@@ -160,7 +165,7 @@ function DocPeekPreviewEditor({
           openOutlinePanel={openOutlinePanel}
         />
       ) : null}
-    </AffineErrorBoundary>
+    </BlankErrorBoundary>
   );
 }
 
@@ -204,7 +209,7 @@ export function DocPeekPreview({
   // if sync engine has been synced and the page is null, show 404 page.
   if (!doc || !editor || !canAccess) {
     return loading || canAccess === undefined ? (
-      <PageDetailLoading key="current-page-is-null" />
+      <CachedDetailPageLoading key="current-page-is-null" pageId={docId} />
     ) : (
       <PageNotFound noPermission />
     );

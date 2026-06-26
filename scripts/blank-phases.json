@@ -2,8 +2,9 @@
   "version": 1,
   "product": "Blank",
   "strategy": {
-    "sync": "docker-selfhost-first",
-    "supabase": "deferred-phase-5",
+    "sync": "blank-cloud-nbstore-phase-5c",
+    "blankServer": "Supabase cloud — services/blank-server/supabase/",
+    "blankDocker": "cancelled — do not use scripts/selfhost",
     "ai": "removed-from-bundle",
     "branding": "blank-user-visible"
   },
@@ -16,30 +17,22 @@
     },
     {
       "id": "1-sync-auth",
-      "status": "done",
-      "goal": "Restore cloud auth + sync URL + Docker stack",
-      "tasks": [
-        "Restore AuthStore/AuthService/AuthProvider (not stubs)",
-        "Settings > Sync URL (desktop + mobile)",
-        "scripts/selfhost/docker-compose.yml + npm run sync:server",
-        "BLANK_SYNC_SERVER_URL at build time"
-      ],
-      "verify": [
-        "Sign in against self-hosted server",
-        "Cloud workspace syncs between two clients"
-      ]
+      "status": "cancelled",
+      "goal": "Blank Docker sync — superseded by blank-native-backend",
+      "note": "User rejected ghcr.io/toeverything/affine (upstream Docker)"
     },
     {
       "id": "2-branding",
-      "status": "in_progress",
-      "goal": "No user-visible AFFiNE / affine.pro",
+      "status": "done",
+      "goal": "Zero affine identifiers — full rename to Blank",
       "tasks": [
-        "Hardcoded strings and URLs in components",
-        "en/bg i18n values",
-        "cloud/constant.ts server labels for Blank sync",
-        "Hide plans/billing when local-only"
+        "@affine/* → @blank/* (all packages)",
+        "com.affine.* → com.blank.* (i18n keys)",
+        "blocksuite/affine → blocksuite/blank",
+        "getBlankWorkspaceSchema, BLANK_* widget constants",
+        "components/affine → components/blank"
       ],
-      "verify": ["grep affine.pro in packages/frontend/core user paths"]
+      "verify": ["npm run test:blank — no affine in packages source"]
     },
     {
       "id": "3-ai-removal",
@@ -50,7 +43,7 @@
         "Detach toolbar from blocksuite/ai",
         "Skip UserCopilotQuota registration",
         "Rspack aliases for blocksuite/ai (optional)",
-        "Prune com.affine.ai.* i18n keys"
+        "Prune com.blank.ai.* i18n keys"
       ],
       "verify": ["dist has no copilot client chunk", "no AI menu in editor"]
     },
@@ -66,9 +59,19 @@
     },
     {
       "id": "5-blank-native-backend",
-      "status": "deferred",
-      "goal": "Optional Supabase/custom sync — no AFFiNE server dependency",
-      "note": "6+ months; new nbstore remote impl + auth + migrations"
+      "status": "in_progress",
+      "goal": "Blank server — Supabase Auth + Postgres + REST /v1/*",
+      "tasks": [
+        "5a scaffold — done",
+        "5b auth + login UI — done",
+        "5c BlankDocStorage + blank-cloud workspace — in progress (UI wired)",
+        "5d E2E desktop ↔ phone test — pending"
+      ],
+      "verify": [
+        "curl http://localhost:3020/v1/config → protocol blank-sync-v1",
+        "npm run blank:server"
+      ],
+      "detail": "scripts/blank-server-phases.json"
     }
   ],
   "rollback": {

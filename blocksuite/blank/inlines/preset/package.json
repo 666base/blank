@@ -1,0 +1,44 @@
+{
+  "name": "@blocksuite/blank-inline-preset",
+  "description": "Inline preset for BlockSuite.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "sideEffects": false,
+  "keywords": [],
+  "author": "toeverything",
+  "license": "MIT",
+  "dependencies": {
+    "@blocksuite/blank-components": "workspace:*",
+    "@blocksuite/blank-ext-loader": "workspace:*",
+    "@blocksuite/blank-inline-comment": "workspace:*",
+    "@blocksuite/blank-inline-footnote": "workspace:*",
+    "@blocksuite/blank-inline-latex": "workspace:*",
+    "@blocksuite/blank-inline-link": "workspace:*",
+    "@blocksuite/blank-inline-mention": "workspace:*",
+    "@blocksuite/blank-inline-reference": "workspace:*",
+    "@blocksuite/blank-model": "workspace:*",
+    "@blocksuite/blank-rich-text": "workspace:*",
+    "@blocksuite/blank-shared": "workspace:*",
+    "@blocksuite/std": "workspace:*",
+    "@blocksuite/store": "workspace:*",
+    "@toeverything/theme": "^1.1.23",
+    "@types/hast": "^3.0.4",
+    "collapse-white-space": "^2.1.0",
+    "lit": "^3.2.0",
+    "zod": "^3.25.76"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./store": "./src/store.ts",
+    "./view": "./src/view.ts"
+  },
+  "files": [
+    "src",
+    "dist",
+    "!src/__tests__",
+    "!dist/__tests__"
+  ],
+  "version": "0.27.0"
+}

@@ -1,15 +1,15 @@
-import { toast, useConfirmModal } from '@affine/component';
+import { toast, useConfirmModal } from '@blank/component';
 import {
   createDocExplorerContext,
   DocExplorerContext,
-} from '@affine/core/components/explorer/context';
-import { DocsExplorer } from '@affine/core/components/explorer/docs-view/docs-list';
-import { useBlockSuiteMetaHelper } from '@affine/core/components/hooks/affine/use-block-suite-meta-helper';
-import { Header } from '@affine/core/components/pure/header';
-import { CollectionRulesService } from '@affine/core/modules/collection-rules';
-import { GlobalContextService } from '@affine/core/modules/global-context';
-import { WorkspacePermissionService } from '@affine/core/modules/permissions';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/components/explorer/context';
+import { DocsExplorer } from '@blank/core/components/explorer/docs-view/docs-list';
+import { useBlockSuiteMetaHelper } from '@blank/core/components/hooks/blank/use-block-suite-meta-helper';
+import { Header } from '@blank/core/components/pure/header';
+import { CollectionRulesService } from '@blank/core/modules/collection-rules';
+import { GlobalContextService } from '@blank/core/modules/global-context';
+import { WorkspacePermissionService } from '@blank/core/modules/permissions';
+import { useI18n } from '@blank/i18n';
 import { DeleteIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
@@ -31,7 +31,7 @@ const TrashHeader = () => {
       left={
         <div className={styles.trashTitle}>
           <DeleteIcon className={styles.trashIcon} />
-          {t['com.affine.workspaceSubPath.trash']()}
+          {t['com.blank.workspaceSubPath.trash']()}
         </div>
       }
     />
@@ -80,7 +80,7 @@ export const TrashPage = () => {
         restoreFromTrash(id);
       });
       toast(
-        t['com.affine.toastMessage.restored']({
+        t['com.blank.toastMessage.restored']({
           title: ids.length > 1 ? 'docs' : 'doc',
         })
       );
@@ -93,7 +93,7 @@ export const TrashPage = () => {
       ids.forEach(pageId => {
         permanentlyDeletePage(pageId);
       });
-      toast(t['com.affine.toastMessage.permanentlyDeleted']());
+      toast(t['com.blank.toastMessage.permanentlyDeleted']());
     },
     [permanentlyDeletePage, t]
   );
@@ -110,10 +110,10 @@ export const TrashPage = () => {
         return;
       }
       openConfirmModal({
-        title: `${t['com.affine.trashOperation.deletePermanently']()}?`,
-        description: t['com.affine.trashOperation.deleteDescription'](),
+        title: `${t['com.blank.trashOperation.deletePermanently']()}?`,
+        description: t['com.blank.trashOperation.deleteDescription'](),
         cancelText: t['Cancel'](),
-        confirmText: t['com.affine.trashOperation.delete'](),
+        confirmText: t['com.blank.trashOperation.delete'](),
         confirmButtonOptions: {
           variant: 'error',
         },

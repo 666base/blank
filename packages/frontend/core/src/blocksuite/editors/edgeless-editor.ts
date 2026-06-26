@@ -1,7 +1,7 @@
-import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
-import { ThemeProvider } from '@blocksuite/affine/shared/services';
-import { BlockStdScope, ShadowlessElement } from '@blocksuite/affine/std';
-import type { ExtensionType, Store } from '@blocksuite/affine/store';
+import { SignalWatcher, WithDisposable } from '@blocksuite/blank/global/lit';
+import { ThemeProvider } from '@blocksuite/blank/shared/services';
+import { BlockStdScope, ShadowlessElement } from '@blocksuite/blank/std';
+import type { ExtensionType, Store } from '@blocksuite/blank/store';
 import { css, html, nothing, type TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { guard } from 'lit/directives/guard.js';
@@ -11,8 +11,8 @@ export class EdgelessEditor extends SignalWatcher(
 ) {
   static override styles = css`
     edgeless-editor {
-      font-family: var(--affine-font-family);
-      background: var(--affine-background-primary-color);
+      font-family: var(--blank-font-family);
+      background: var(--blank-background-primary-color);
     }
 
     edgeless-editor * {
@@ -25,7 +25,7 @@ export class EdgelessEditor extends SignalWatcher(
       }
     }
 
-    .affine-edgeless-viewport {
+    .blank-edgeless-viewport {
       display: block;
       height: 100%;
       position: relative;
@@ -66,7 +66,7 @@ export class EdgelessEditor extends SignalWatcher(
     const std = this.std;
     const theme = std.get(ThemeProvider).edgeless$.value;
     return html`
-      <div class="affine-edgeless-viewport" data-theme=${theme}>
+      <div class="blank-edgeless-viewport" data-theme=${theme}>
         ${guard([std], () => std.render())}
       </div>
     `;

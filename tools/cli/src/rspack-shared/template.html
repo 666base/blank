@@ -16,6 +16,12 @@
 
     <title>Blank</title>
     <meta name="theme-color" content="#121212" />
+    <style>
+      <%= BOOT_SHELL_CSS %>
+    </style>
+    <script>
+      <%= FAST_BOOT_SCRIPT %>
+    </script>
     <%= PRECONNECT %>
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -27,30 +33,7 @@
 
   <body>
     <div id="app" data-version="<%= GIT_SHORT_SHA %>">
-      <div
-        id="blank-boot-splash"
-        style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 16px;
-          min-height: 100vh;
-          margin: 0;
-          font-family: system-ui, sans-serif;
-          background: #121212;
-          color: #e8e8e8;
-        "
-      >
-        <img
-          src="/imgs/blank-app-icon.png"
-          width="64"
-          height="64"
-          alt=""
-          style="border-radius: 14px"
-        />
-        <span style="font-size: 15px; letter-spacing: 0.02em">Loading Blank…</span>
-      </div>
+      <%= BOOT_SHELL_HTML %>
     </div>
   </body>
 </html>

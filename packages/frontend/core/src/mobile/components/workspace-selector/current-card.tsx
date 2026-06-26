@@ -1,8 +1,8 @@
-import { Avatar } from '@affine/component';
-import { useWorkspaceInfo } from '@affine/core/components/hooks/use-workspace-info';
-import { WorkspaceAvatar } from '@affine/core/components/workspace-avatar';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { UNTITLED_WORKSPACE_NAME } from '@affine/env/constant';
+import { Avatar } from '@blank/component';
+import { useWorkspaceInfo } from '@blank/core/components/hooks/use-workspace-info';
+import { WorkspaceAvatar } from '@blank/core/components/workspace-avatar';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { UNTITLED_WORKSPACE_NAME } from '@blank/env/constant';
 import { ArrowDownSmallIcon } from '@blocksuite/icons/rc';
 import { useServiceOptional } from '@toeverything/infra';
 import clsx from 'clsx';

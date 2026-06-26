@@ -1,4 +1,4 @@
-import type { IconData } from '@affine/component';
+import type { IconData } from '@blank/component';
 import { Store } from '@toeverything/infra';
 
 import type { WorkspaceDBService } from '../../db';

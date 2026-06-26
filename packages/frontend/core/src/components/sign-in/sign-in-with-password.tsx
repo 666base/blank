@@ -1,23 +1,23 @@
-import { notify } from '@affine/component';
+import { notify } from '@blank/component';
 import {
   AuthContainer,
   AuthContent,
   AuthFooter,
   AuthHeader,
   AuthInput,
-} from '@affine/component/auth-components';
-import { Button } from '@affine/component/ui/button';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
+} from '@blank/component/auth-components';
+import { Button } from '@blank/component/ui/button';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
 import {
   AuthService,
   CaptchaService,
   ServerService,
-} from '@affine/core/modules/cloud';
-import type { AuthSessionStatus } from '@affine/core/modules/cloud/entities/session';
-import { Unreachable } from '@affine/env/constant';
-import { UserFriendlyError } from '@affine/error';
-import { ServerDeploymentType } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
+} from '@blank/core/modules/cloud';
+import type { AuthSessionStatus } from '@blank/core/modules/cloud/entities/session';
+import { Unreachable } from '@blank/env/constant';
+import { UserFriendlyError } from '@blank/error';
+import { ServerDeploymentType } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import type { Dispatch, SetStateAction } from 'react';
 import { useCallback, useEffect, useState } from 'react';
@@ -69,15 +69,15 @@ export const SignInWithPasswordStep = ({
   useEffect(() => {
     if (loginStatus === 'authenticated') {
       notify.success({
-        title: t['com.affine.auth.toast.title.signed-in'](),
-        message: t['com.affine.auth.toast.message.signed-in'](),
+        title: t['com.blank.auth.toast.title.signed-in'](),
+        message: t['com.blank.auth.toast.message.signed-in'](),
       });
     }
     onAuthenticated?.(loginStatus);
   }, [loginStatus, onAuthenticated, t]);
 
   useEffect(() => {
-    setPasswordErrorHint(t['com.affine.auth.password.error']());
+    setPasswordErrorHint(t['com.blank.auth.password.error']());
   }, [t]);
 
   const onSignIn = useAsyncCallback(async () => {
@@ -100,11 +100,11 @@ export const SignInWithPasswordStep = ({
         error.is('PASSWORD_REQUIRED')
       ) {
         setPasswordError(true);
-        setPasswordErrorHint(t['com.affine.auth.password.error']());
+        setPasswordErrorHint(t['com.blank.auth.password.error']());
       } else {
         setPasswordError(false);
         notify.error({
-          title: t['com.affine.auth.toast.title.failed'](),
+          title: t['com.blank.auth.toast.title.failed'](),
           message: error.is('REQUEST_ABORTED')
             ? t['error.NETWORK_ERROR']()
             : t[`error.${error.name}`](error.data),
@@ -133,7 +133,7 @@ export const SignInWithPasswordStep = ({
   return (
     <AuthContainer>
       <AuthHeader
-        title={t['com.affine.auth.sign.in']()}
+        title={t['com.blank.auth.sign.in']()}
         subTitle={serverName}
       />
 
@@ -145,7 +145,7 @@ export const SignInWithPasswordStep = ({
           }}
         >
           <AuthInput
-            label={t['com.affine.settings.email']()}
+            label={t['com.blank.settings.email']()}
             readOnly={true}
             value={email}
             type="email"
@@ -155,7 +155,7 @@ export const SignInWithPasswordStep = ({
           <AuthInput
             autoFocus
             data-testid="password-input"
-            label={t['com.affine.auth.password']()}
+            label={t['com.blank.auth.password']()}
             value={password}
             type="password"
             name="password"
@@ -164,7 +164,7 @@ export const SignInWithPasswordStep = ({
               setPassword(value);
               if (passwordError) {
                 setPasswordError(false);
-                setPasswordErrorHint(t['com.affine.auth.password.error']());
+                setPasswordErrorHint(t['com.blank.auth.password.error']());
               }
             }}
             error={passwordError}
@@ -179,7 +179,7 @@ export const SignInWithPasswordStep = ({
             style={{ width: '100%' }}
             disabled={isLoading || (!verifyToken && needCaptcha)}
           >
-            {t['com.affine.auth.sign.in']()}
+            {t['com.blank.auth.sign.in']()}
           </Button>
         </form>
         {!isSelfhosted && (
@@ -189,7 +189,7 @@ export const SignInWithPasswordStep = ({
               className={styles.linkButton}
               onClick={sendMagicLink}
             >
-              {t['com.affine.auth.sign.auth.code.send-email.sign-in']()}
+              {t['com.blank.auth.sign.auth.code.send-email.sign-in']()}
             </a>
           </div>
         )}

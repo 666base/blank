@@ -1,4 +1,5 @@
 import { isBlankSyncEnabled } from './sync-config';
+import { isBlankBuild } from './blank-links';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -20,7 +21,12 @@ export function isDesktopApp() {
 }
 
 export function isLocalOnlyMode() {
-  const explicitSetting = globalThis.localStorage?.getItem('affine:local-only');
+  // Blank: local notes only — no Blank cloud, no Blank-compatible self-host sync.
+  if (isBlankBuild()) {
+    return true;
+  }
+
+  const explicitSetting = globalThis.localStorage?.getItem('blank:local-only');
 
   if (explicitSetting === 'false') {
     return false;
@@ -43,7 +49,7 @@ export function isLocalOnlyMode() {
   );
 }
 
-/** Blank builds ship without AFFiNE Copilot / inline AI. */
+/** Blank builds ship without Blank Copilot / inline AI. */
 export function isAiDisabled() {
   return true;
 }

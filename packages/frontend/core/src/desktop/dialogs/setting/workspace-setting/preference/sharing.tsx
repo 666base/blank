@@ -1,13 +1,13 @@
-import { Switch } from '@affine/component';
+import { Switch } from '@blank/component';
 import {
   SettingRow,
   SettingWrapper,
-} from '@affine/component/setting-components';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { WorkspacePermissionService } from '@affine/core/modules/permissions';
-import { WorkspaceShareSettingService } from '@affine/core/modules/share-setting';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import { useI18n } from '@affine/i18n';
+} from '@blank/component/setting-components';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { WorkspacePermissionService } from '@blank/core/modules/permissions';
+import { WorkspaceShareSettingService } from '@blank/core/modules/share-setting';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import { useI18n } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 
 export const SharingPanel = () => {
@@ -59,11 +59,11 @@ const SharingInner = ({
   }
 
   return (
-    <SettingWrapper title={t['com.affine.settings.workspace.sharing.title']()}>
+    <SettingWrapper title={t['com.blank.settings.workspace.sharing.title']()}>
       <SettingRow
-        name={t['com.affine.settings.workspace.sharing.url-preview.title']()}
+        name={t['com.blank.settings.workspace.sharing.url-preview.title']()}
         desc={t[
-          'com.affine.settings.workspace.sharing.url-preview.description'
+          'com.blank.settings.workspace.sharing.url-preview.description'
         ]()}
       >
         <Switch
@@ -74,10 +74,10 @@ const SharingInner = ({
       </SettingRow>
       <SettingRow
         name={t[
-          'com.affine.settings.workspace.sharing.workspace-sharing.title'
+          'com.blank.settings.workspace.sharing.workspace-sharing.title'
         ]()}
         desc={t[
-          'com.affine.settings.workspace.sharing.workspace-sharing.description'
+          'com.blank.settings.workspace.sharing.workspace-sharing.description'
         ]()}
       >
         <Switch

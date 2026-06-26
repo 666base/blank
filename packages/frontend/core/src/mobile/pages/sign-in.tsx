@@ -1,5 +1,5 @@
 // oxlint-disable-next-line no-restricted-imports
-import { isLocalOnlyMode } from '@affine/core/utils/local-only';
+import { isLocalOnlyMode } from '@blank/core/utils/local-only';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import { MobileSignInPanel } from '../components/sign-in';

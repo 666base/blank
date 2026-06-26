@@ -1,4 +1,5 @@
-import { IconButton } from '@affine/component';
+import { IconButton } from '@blank/component';
+import { isDesktopApp } from '@blank/core/utils/local-only';
 
 import * as styles from './sidebar-header.css';
 
@@ -63,7 +64,7 @@ export const Header = ({ children, onToggle }: HeaderProps) => {
   return (
     <Container className={styles.header}>
       {children}
-      {!BUILD_CONFIG.isElectron && (
+      {!isDesktopApp() && (
         <>
           <div className={styles.spacer} />
           <ToggleButton onToggle={onToggle} />

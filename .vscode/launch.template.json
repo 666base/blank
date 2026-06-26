@@ -2,33 +2,33 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch AFFiNE Cloud",
+      "name": "Launch Blank Cloud",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
       "cwd": "${workspaceFolder}",
       "runtimeArgs": [
-        "affine",
-        "@affine/server",
+        "blank",
+        "@blank/server",
         "dev"
       ]
     },
     {
-      "name": "Lanuch AFFiNE Web",
+      "name": "Lanuch Blank Web",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "yarn",
       "cwd": "${workspaceFolder}",
       "runtimeArgs": [
-        "affine",
-        "@affine/web",
+        "blank",
+        "@blank/web",
         "dev"
       ]
     },
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Debug AFFiNE Web",
+      "name": "Debug Blank Web",
       "url": "http://localhost:8080"
     }
   ]

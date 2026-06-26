@@ -4,15 +4,15 @@ export const PackageToDistribution = new Map<
   PackageName,
   BUILD_CONFIG_TYPE['distribution']
 >([
-  ['@affine/web', 'web'],
-  ['@affine/mobile', 'mobile'],
-  ['@affine/media-capture-playground', 'web'],
+  ['@blank/web', 'web'],
+  ['@blank/mobile', 'mobile'],
+  ['@blank/media-capture-playground', 'web'],
 ]);
 
 export const AliasToPackage = new Map<string, PackageName>([
-  ['web', '@affine/web'],
-  ['mobile', '@affine/mobile'],
-  ['gql', '@affine/graphql'],
+  ['web', '@blank/web'],
+  ['mobile', '@blank/mobile'],
+  ['gql', '@blank/graphql'],
   ...PackageList.map(
     pkg => [pkg.name.split('/').pop()!, pkg.name] as [string, PackageName]
   ),

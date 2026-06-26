@@ -4,22 +4,22 @@ import {
   Loading,
   toast,
   Tooltip,
-} from '@affine/component';
-import { Guard } from '@affine/core/components/guard';
-import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
-import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { DocsService } from '@affine/core/modules/doc';
-import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
-import { DocsSearchService } from '@affine/core/modules/docs-search';
-import { FeatureFlagService } from '@affine/core/modules/feature-flag';
-import { GlobalContextService } from '@affine/core/modules/global-context';
-import { NavigationPanelService } from '@affine/core/modules/navigation-panel';
-import { GuardService } from '@affine/core/modules/permissions';
-import { WorkspaceService } from '@affine/core/modules/workspace';
-import type { AffineDNDData } from '@affine/core/types/dnd';
-import { useI18n } from '@affine/i18n';
-import { track } from '@affine/track';
+} from '@blank/component';
+import { Guard } from '@blank/core/components/guard';
+import { useAppSettingHelper } from '@blank/core/components/hooks/blank/use-app-setting-helper';
+import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { DocsService } from '@blank/core/modules/doc';
+import { DocDisplayMetaService } from '@blank/core/modules/doc-display-meta';
+import { DocsSearchService } from '@blank/core/modules/docs-search';
+import { FeatureFlagService } from '@blank/core/modules/feature-flag';
+import { GlobalContextService } from '@blank/core/modules/global-context';
+import { NavigationPanelService } from '@blank/core/modules/navigation-panel';
+import { GuardService } from '@blank/core/modules/permissions';
+import { WorkspaceService } from '@blank/core/modules/workspace';
+import type { BlankDNDData } from '@blank/core/types/dnd';
+import { useI18n } from '@blank/i18n';
+import { track } from '@blank/track';
 import {
   LiveData,
   MANUALLY_STOP,
@@ -161,7 +161,7 @@ export const NavigationPanelDocNode = ({
       dropTarget: {
         at: 'navigation-panel:doc',
       },
-    } satisfies AffineDNDData;
+    } satisfies BlankDNDData;
   }, [docId, location]);
 
   const handleRename = useAsyncCallback(
@@ -173,12 +173,12 @@ export const NavigationPanelDocNode = ({
   );
 
   const handleDropOnDoc = useAsyncCallback(
-    async (data: DropTargetDropEvent<AffineDNDData>) => {
+    async (data: DropTargetDropEvent<BlankDNDData>) => {
       if (data.treeInstruction?.type === 'make-child') {
         if (data.source.data.entity?.type === 'doc') {
           const canEdit = await guardService.can('Doc_Update', docId);
           if (!canEdit) {
-            toast(t['com.affine.no-permission']());
+            toast(t['com.blank.no-permission']());
             return;
           }
           await docsService.addLinkedDoc(docId, data.source.data.entity.id);
@@ -189,7 +189,7 @@ export const NavigationPanelDocNode = ({
             type: data.source.data.entity.type,
           });
         } else {
-          toast(t['com.affine.rootAppSidebar.doc.link-doc-only']());
+          toast(t['com.blank.rootAppSidebar.doc.link-doc-only']());
         }
       } else {
         onDrop?.(data);
@@ -213,11 +213,11 @@ export const NavigationPanelDocNode = ({
   );
 
   const handleDropOnPlaceholder = useAsyncCallback(
-    async (data: DropTargetDropEvent<AffineDNDData>) => {
+    async (data: DropTargetDropEvent<BlankDNDData>) => {
       if (data.source.data.entity?.type === 'doc') {
         const canEdit = await guardService.can('Doc_Update', docId);
         if (!canEdit) {
-          toast(t['com.affine.no-permission']());
+          toast(t['com.blank.no-permission']());
           return;
         }
         // TODO(eyhn): timeout&error handling
@@ -229,13 +229,13 @@ export const NavigationPanelDocNode = ({
           type: data.source.data.entity.type,
         });
       } else {
-        toast(t['com.affine.rootAppSidebar.doc.link-doc-only']());
+        toast(t['com.blank.rootAppSidebar.doc.link-doc-only']());
       }
     },
     [docId, docsService, guardService, t]
   );
 
-  const handleCanDrop = useMemo<DropTargetOptions<AffineDNDData>['canDrop']>(
+  const handleCanDrop = useMemo<DropTargetOptions<BlankDNDData>['canDrop']>(
     () => args => {
       const entityType = args.source.data.entity?.type;
       return args.treeInstruction?.type !== 'make-child'
@@ -289,7 +289,7 @@ export const NavigationPanelDocNode = ({
         referencesLoading &&
         !isCollapsed && (
           <Tooltip
-            content={t['com.affine.rootAppSidebar.docs.references-loading']()}
+            content={t['com.blank.rootAppSidebar.docs.references-loading']()}
           >
             <div className={styles.loadingIcon}>
               <Loading />

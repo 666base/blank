@@ -29,13 +29,13 @@ export const IS_WINDOWS = /Win/.test(platform) || /win32/.test(platform);
 export const IS_LINUX = /Linux/.test(platform);
 
 declare global {
-  // Set by @affine/mobile setup before BlockSuite loads.
+  // Set by @blank/mobile setup before BlockSuite loads.
   // oxlint-disable-next-line no-var
-  var __AFFINE_FORCE_MOBILE__: boolean | undefined;
+  var __BLANK_FORCE_MOBILE__: boolean | undefined;
 }
 
 export const IS_MOBILE =
   IS_IOS ||
   IS_IPAD ||
   IS_ANDROID ||
-  globalThis.__AFFINE_FORCE_MOBILE__ === true;
+  globalThis.__BLANK_FORCE_MOBILE__ === true;

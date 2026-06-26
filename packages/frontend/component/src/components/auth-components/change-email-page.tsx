@@ -1,4 +1,4 @@
-import { useI18n } from '@affine/i18n';
+import { useI18n } from '@blank/i18n';
 import { useCallback, useState } from 'react';
 
 import { Button } from '../../ui/button';
@@ -11,7 +11,7 @@ export const ChangeEmailPage = ({
   onChangeEmail: propsOnChangeEmail,
 }: {
   onChangeEmail: (email: string) => Promise<boolean>;
-  onOpenAffine: () => void;
+  onOpenBlank: () => void;
 }) => {
   const t = useI18n();
   const [hasSetUp, setHasSetUp] = useState(false);
@@ -40,19 +40,19 @@ export const ChangeEmailPage = ({
   }, []);
   return (
     <AuthPageContainer
-      title={t['com.affine.auth.change.email.page.title']()}
-      subtitle={t['com.affine.auth.change.email.page.subtitle']()}
+      title={t['com.blank.auth.change.email.page.title']()}
+      subtitle={t['com.blank.auth.change.email.page.subtitle']()}
     >
       <>
         <AuthInput
           className={styles.input}
-          label={t['com.affine.settings.email']()}
-          placeholder={t['com.affine.auth.sign.email.placeholder']()}
+          label={t['com.blank.settings.email']()}
+          placeholder={t['com.blank.auth.sign.email.placeholder']()}
           value={email}
           onChange={onEmailChange}
           error={!isValidEmail}
           errorHint={
-            isValidEmail ? '' : t['com.affine.auth.sign.email.error']()
+            isValidEmail ? '' : t['com.blank.auth.sign.email.error']()
           }
           onEnter={onContinue}
           disabled={hasSetUp}
@@ -64,7 +64,7 @@ export const ChangeEmailPage = ({
           loading={loading}
           disabled={hasSetUp}
         >
-          {t['com.affine.auth.set.email.save']()}
+          {t['com.blank.auth.set.email.save']()}
         </Button>
       </>
     </AuthPageContainer>

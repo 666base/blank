@@ -1,4 +1,4 @@
-import type { CreateCheckoutSessionInput } from '@affine/graphql';
+import type { CreateCheckoutSessionInput } from '@blank/graphql';
 import { type PropsWithChildren, type ReactNode, useCallback } from 'react';
 
 export interface CheckoutSlotProps extends PropsWithChildren {

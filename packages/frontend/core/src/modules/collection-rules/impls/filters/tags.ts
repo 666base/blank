@@ -1,6 +1,6 @@
-import type { DocsService } from '@affine/core/modules/doc';
-import type { TagService } from '@affine/core/modules/tag';
-import type { WorkspacePropertyFilter } from '@affine/core/modules/workspace-property';
+import type { DocsService } from '@blank/core/modules/doc';
+import type { TagService } from '@blank/core/modules/tag';
+import type { WorkspacePropertyFilter } from '@blank/core/modules/workspace-property';
 import { Service } from '@toeverything/infra';
 import { combineLatest, map, type Observable, of, switchMap } from 'rxjs';
 

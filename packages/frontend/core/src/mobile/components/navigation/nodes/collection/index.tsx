@@ -1,15 +1,15 @@
-import { MenuItem, notify } from '@affine/component';
-import type { NodeOperation } from '@affine/core/desktop/components/navigation-panel';
+import { MenuItem, notify } from '@blank/component';
+import type { NodeOperation } from '@blank/core/desktop/components/navigation-panel';
 import {
   type Collection,
   CollectionService,
-} from '@affine/core/modules/collection';
-import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
-import { GlobalContextService } from '@affine/core/modules/global-context';
-import { NavigationPanelService } from '@affine/core/modules/navigation-panel';
-import { ShareDocsListService } from '@affine/core/modules/share-doc';
-import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
+} from '@blank/core/modules/collection';
+import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
+import { GlobalContextService } from '@blank/core/modules/global-context';
+import { NavigationPanelService } from '@blank/core/modules/navigation-panel';
+import { ShareDocsListService } from '@blank/core/modules/share-doc';
+import { useI18n } from '@blank/i18n';
+import track from '@blank/track';
 import { FilterMinusIcon, ViewLayersIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -142,7 +142,7 @@ const NavigationPanelCollectionNodeChildren = ({
       track.$.navigationPanel.collections.removeOrganizeItem({ type: 'doc' });
       collectionService.removeDocFromCollection(collection.id, id);
       notify.success({
-        message: t['com.affine.collection.removePage.success'](),
+        message: t['com.blank.collection.removePage.success'](),
       });
     },
     [collection.id, collectionService, t]

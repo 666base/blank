@@ -1,24 +1,24 @@
-import { notify } from '@affine/component';
-import { getBlankDownloadUrl } from '@affine/core/utils/blank-links';
-import { isMindmapChild, isMindMapRoot } from '@affine/core/blocksuite/utils/edgeless-mindmap';
-import { EditorService } from '@affine/core/modules/editor';
-import { apis } from '@affine/electron-api';
-import { I18n } from '@affine/i18n';
-import type { MenuContext } from '@blocksuite/affine/components/toolbar';
-import { Bound, getCommonBound } from '@blocksuite/affine/global/gfx';
-import type { BlockStdScope } from '@blocksuite/affine/std';
+import { notify } from '@blank/component';
+import { getBlankDownloadUrl } from '@blank/core/utils/blank-links';
+import { isMindmapChild, isMindMapRoot } from '@blank/core/blocksuite/utils/edgeless-mindmap';
+import { EditorService } from '@blank/core/modules/editor';
+import { apis } from '@blank/electron-api';
+import { I18n } from '@blank/i18n';
+import type { MenuContext } from '@blocksuite/blank/components/toolbar';
+import { Bound, getCommonBound } from '@blocksuite/blank/global/gfx';
+import type { BlockStdScope } from '@blocksuite/blank/std';
 import {
   type GfxBlockElementModel,
   GfxControllerIdentifier,
   type GfxModel,
   GfxPrimitiveElementModel,
   isGfxGroupCompatibleModel,
-} from '@blocksuite/affine/std/gfx';
+} from '@blocksuite/blank/std/gfx';
 import { CopyAsImgaeIcon } from '@blocksuite/icons/lit';
 import type { FrameworkProvider } from '@toeverything/infra';
 
 const snapshotStyle = `
-  affine-edgeless-root .widgets-container,
+  blank-edgeless-root .widgets-container,
   .copy-as-image-transparent {
     opacity: 0;
   }
@@ -30,7 +30,7 @@ const snapshotStyle = `
 function getSelectedRect() {
   const selected = document
     .querySelector('edgeless-selected-rect')
-    ?.shadowRoot?.querySelector('.affine-edgeless-selected-rect');
+    ?.shadowRoot?.querySelector('.blank-edgeless-selected-rect');
   if (!selected) {
     throw new Error('Missing edgeless selected rect');
   }
@@ -108,12 +108,12 @@ const MARGIN = 20;
 export function copyAsImage(std: BlockStdScope) {
   if (!apis) {
     notify.error({
-      title: I18n.t('com.affine.copy.asImage.notAvailable.title'),
-      message: I18n.t('com.affine.copy.asImage.notAvailable.message'),
+      title: I18n.t('com.blank.copy.asImage.notAvailable.title'),
+      message: I18n.t('com.blank.copy.asImage.notAvailable.message'),
       actions: [
         {
           key: 'download',
-          label: I18n.t('com.affine.copy.asImage.notAvailable.action'),
+          label: I18n.t('com.blank.copy.asImage.notAvailable.action'),
           onClick: () => {
             window.open(getBlankDownloadUrl());
           },
@@ -179,7 +179,7 @@ export function copyAsImage(std: BlockStdScope) {
       const { zoom } = gfx.viewport;
       const isFrameSelected =
         selected.length === 1 &&
-        (selected[0] as GfxBlockElementModel).flavour === 'affine:frame';
+        (selected[0] as GfxBlockElementModel).flavour === 'blank:frame';
       const margin = isFrameSelected ? -2 : MARGIN * zoom;
 
       gfx.selection.clear();
@@ -193,12 +193,12 @@ export function copyAsImage(std: BlockStdScope) {
         })
         .then(() => {
           notify.success({
-            title: I18n.t('com.affine.copy.asImage.success'),
+            title: I18n.t('com.blank.copy.asImage.success'),
           });
         })
         .catch(e => {
           notify.error({
-            title: I18n.t('com.affine.copy.asImage.failed'),
+            title: I18n.t('com.blank.copy.asImage.failed'),
             message: String(e),
           });
         })
@@ -210,7 +210,7 @@ export function copyAsImage(std: BlockStdScope) {
       styleEle.remove();
       showEdgelessElements(overlapElements, std);
       notify.error({
-        title: I18n.t('com.affine.copy.asImage.failed'),
+        title: I18n.t('com.blank.copy.asImage.failed'),
         message: String(e),
       });
     }

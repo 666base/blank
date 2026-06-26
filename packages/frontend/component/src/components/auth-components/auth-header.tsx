@@ -2,7 +2,7 @@ import { Logo1Icon } from '@blocksuite/icons/rc';
 import clsx from 'clsx';
 import type { FC } from 'react';
 
-import { BlankAppLogo, isBlankBranding } from '@affine/core/utils/blank-branding';
+import { BlankAppLogo, isBlankBranding } from '@blank/core/utils/blank-branding';
 import { authHeaderWrapper } from './share.css';
 
 export const AuthHeader: FC<{

@@ -1,6 +1,6 @@
-import { useCatchEventCallback } from '@affine/core/components/hooks/use-catch-event-hook';
-import { getBlankDownloadUrl } from '@affine/core/utils/blank-links';
-import { track } from '@affine/track';
+import { useCatchEventCallback } from '@blank/core/components/hooks/use-catch-event-hook';
+import { getBlankDownloadUrl } from '@blank/core/utils/blank-links';
+import { track } from '@blank/track';
 import { CloseIcon, DownloadIcon } from '@blocksuite/icons/rc';
 import clsx from 'clsx';
 import { useCallback, useState } from 'react';

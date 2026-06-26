@@ -1,16 +1,16 @@
-import { Wrapper } from '@affine/component';
+import { Wrapper } from '@blank/component';
 import {
   EmptyCollectionDetail,
   EmptyDocs,
-} from '@affine/core/components/affine/empty';
+} from '@blank/core/components/blank/empty';
 import {
   createDocExplorerContext,
   DocExplorerContext,
-} from '@affine/core/components/explorer/context';
-import { DocsExplorer } from '@affine/core/components/explorer/docs-view/docs-list';
-import { PageHeader } from '@affine/core/mobile/components';
-import { Page } from '@affine/core/mobile/components/page';
-import type { Collection } from '@affine/core/modules/collection';
+} from '@blank/core/components/explorer/context';
+import { DocsExplorer } from '@blank/core/components/explorer/docs-view/docs-list';
+import { PageHeader } from '@blank/core/mobile/components';
+import { Page } from '@blank/core/mobile/components/page';
+import type { Collection } from '@blank/core/modules/collection';
 import { ViewLayersIcon } from '@blocksuite/icons/rc';
 import { useLiveData } from '@toeverything/infra';
 import { useEffect, useState } from 'react';

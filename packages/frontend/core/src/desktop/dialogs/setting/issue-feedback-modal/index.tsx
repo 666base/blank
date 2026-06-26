@@ -1,5 +1,5 @@
-import { OverlayModal } from '@affine/component';
-import { useI18n } from '@affine/i18n';
+import { OverlayModal } from '@blank/component';
+import { useI18n } from '@blank/i18n';
 
 export const IssueFeedbackModal = ({
   open,
@@ -23,12 +23,12 @@ export const IssueFeedbackModal = ({
           loop
         />
       }
-      title={t['com.affine.issue-feedback.title']()}
+      title={t['com.blank.issue-feedback.title']()}
       onOpenChange={setOpen}
-      description={t['com.affine.issue-feedback.description']()}
-      cancelText={t['com.affine.issue-feedback.cancel']()}
+      description={t['com.blank.issue-feedback.description']()}
+      cancelText={t['com.blank.issue-feedback.cancel']()}
       to={`${BUILD_CONFIG.githubUrl}/issues/new/choose`}
-      confirmText={t['com.affine.issue-feedback.confirm']()}
+      confirmText={t['com.blank.issue-feedback.confirm']()}
       confirmButtonOptions={{
         variant: 'primary',
       }}

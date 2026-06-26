@@ -1,18 +1,18 @@
-import type { AIToolsConfigService } from '@affine/core/modules/ai-button';
-import type { AIModelService } from '@affine/core/modules/ai-button/services/models';
+import type { AIToolsConfigService } from '@blank/core/modules/ai-button';
+import type { AIModelService } from '@blank/core/modules/ai-button/services/models';
 import type {
   ServerService,
   SubscriptionService,
-} from '@affine/core/modules/cloud';
-import { type CopilotChatHistoryFragment } from '@affine/graphql';
+} from '@blank/core/modules/cloud';
+import { type CopilotChatHistoryFragment } from '@blank/graphql';
 import {
   menu,
   popMenu,
   popupTargetFromElement,
-} from '@blocksuite/affine/components/context-menu';
-import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
-import { unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
-import type { NotificationService } from '@blocksuite/affine-shared/services';
+} from '@blocksuite/blank/components/context-menu';
+import { SignalWatcher, WithDisposable } from '@blocksuite/blank/global/lit';
+import { unsafeCSSVarV2 } from '@blocksuite/blank/shared/theme';
+import type { NotificationService } from '@blocksuite/blank-shared/services';
 import {
   AiOutlineIcon,
   ArrowDownSmallIcon,
@@ -40,7 +40,7 @@ export class ChatInputPreference extends SignalWatcher(
       display: flex;
       align-items: center;
       padding: 0px 4px;
-      color: var(--affine-v2-icon-primary);
+      color: var(--blank-v2-icon-primary);
       transition: all 0.23s ease;
       border-radius: 4px;
       background: transparent;
@@ -48,7 +48,7 @@ export class ChatInputPreference extends SignalWatcher(
       cursor: pointer;
     }
     .chat-input-preference-trigger:hover {
-      background-color: var(--affine-v2-layer-background-hoverOverlay);
+      background-color: var(--blank-v2-layer-background-hoverOverlay);
     }
     .chat-input-preference-trigger-label {
       font-size: 14px;

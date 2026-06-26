@@ -1,5 +1,5 @@
-import { SubscriptionStatus } from '@affine/graphql';
-import { useI18n } from '@affine/i18n';
+import { SubscriptionStatus } from '@blank/graphql';
+import { useI18n } from '@blank/i18n';
 import {
   InformationFillDuotoneIcon,
   SingleSelectCheckSolidIcon,
@@ -43,11 +43,11 @@ const StatusLabel = ({ status }: { status: SubscriptionStatus }) => {
   const label = useMemo(() => {
     switch (status) {
       case SubscriptionStatus.Active:
-        return t['com.affine.payment.subscription-status.active']();
+        return t['com.blank.payment.subscription-status.active']();
       case SubscriptionStatus.PastDue:
-        return t['com.affine.payment.subscription-status.past-due']();
+        return t['com.blank.payment.subscription-status.past-due']();
       case SubscriptionStatus.Trialing:
-        return t['com.affine.payment.subscription-status.trialing']();
+        return t['com.blank.payment.subscription-status.trialing']();
       default:
         return '';
     }
