@@ -30,6 +30,11 @@ export const headerIconActions = style({
   flexShrink: 0,
 });
 
+export const headerIconActionButton = style({
+  width: 28,
+  height: 28,
+});
+
 export const float = style({
   position: 'fixed',
   top: 0,
@@ -60,18 +65,4 @@ export const floatWsSelector = style({
       pointerEvents: 'auto',
     },
   },
-});
-
-export const notificationBadge = style({
-  position: 'absolute',
-  top: -2,
-  right: -2,
-  backgroundColor: cssVarV2('button/primary'),
-  color: cssVarV2('text/pureWhite'),
-  width: '16px',
-  height: '16px',
-  fontSize: '12px',
-  lineHeight: '16px',
-  borderRadius: '50%',
-  textAlign: 'center',
 });

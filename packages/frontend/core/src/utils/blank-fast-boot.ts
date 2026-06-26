@@ -85,6 +85,10 @@ export function getOptimisticWorkspaceMeta(
   }
 }
 
+function shouldSkipLastPageOnBoot() {
+  return typeof BUILD_CONFIG !== 'undefined' && BUILD_CONFIG.isMobileEdition;
+}
+
 /** Last opened workspace + page (for instant reopen). */
 export function getFastBootPath(): string | null {
   try {
@@ -93,7 +97,9 @@ export function getFastBootPath(): string | null {
     if (!workspaceId) {
       return null;
     }
-    const pageId = globalThis.localStorage?.getItem(LAST_PAGE_KEY);
+    const pageId = shouldSkipLastPageOnBoot()
+      ? null
+      : globalThis.localStorage?.getItem(LAST_PAGE_KEY);
     if (pageId) {
       return getWorkspaceDocPath(workspaceId, pageId);
     }
@@ -146,6 +152,12 @@ export function removeBootSplash() {
   if (!el) {
     return;
   }
+  const instant =
+    typeof BUILD_CONFIG !== 'undefined' && BUILD_CONFIG.isMobileEdition;
+  if (instant) {
+    el.remove();
+    return;
+  }
   el.style.opacity = '0';
   el.style.pointerEvents = 'none';
   window.setTimeout(() => el.remove(), 120);
@@ -171,12 +183,28 @@ export function scheduleRemoveBootSplash() {
   });
 }
 
+export type FastBootInlineScriptOptions = {
+  /** Mobile cold start opens Home, not the last doc (avoids doc skeleton flash). */
+  skipLastPage?: boolean;
+  /** Do not paint cached doc title into the boot shell before React loads. */
+  skipHydrate?: boolean;
+};
+
 /** Inline script for index.html — runs before JS bundles parse. */
 export function getBlankFastBootInlineScript(
-  defaultView: 'home' | 'all' = 'all'
+  defaultView: 'home' | 'all' = 'all',
+  options: FastBootInlineScriptOptions = {}
 ) {
   const snapPrefix = BLANK_DOC_SNAPSHOT_PREFIX;
-  return `(function(){try{var INSTANT="${BLANK_INSTANT_WORKSPACE_ID}";var FLAVOUR="${BLANK_INSTANT_WORKSPACE_FLAVOUR}";var SNAP="${snapPrefix}";var w=localStorage.getItem("last_workspace_id");if(!w){w=INSTANT;localStorage.setItem("last_workspace_id",w);localStorage.setItem("last_workspace_flavour",FLAVOUR);}var p=localStorage.getItem("last_page_id");var view=${JSON.stringify(defaultView)};var path=p?"/workspace/"+w+"/"+p:"/workspace/"+w+"/"+view;var base=(document.querySelector('meta[name="env:publicPath"]')||{}).content||"/";if(base&&base!=="/"){path=base.replace(/\\/$/,"")+path;}var pn=location.pathname;if(pn==="/"||pn==="/index.html"||pn.endsWith("/index.html")){history.replaceState(null,"",path);}function hydrate(){try{if(!p)return;var raw=localStorage.getItem(SNAP+w+":"+p);if(!raw)return;var snap=JSON.parse(raw);var main=document.querySelector(".blank-boot-mobile-main")||document.querySelector(".blank-boot-main");if(!main||!snap)return;main.innerHTML="";if(snap.title){var h=document.createElement("div");h.className="blank-boot-cached-title";h.textContent=snap.title;main.appendChild(h);}if(snap.preview){var t=document.createElement("div");t.className="blank-boot-cached-preview";t.textContent=snap.preview;main.appendChild(t);}}catch(e){}}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",hydrate);}else{hydrate();}}catch(e){}})();`;
+  const skipLastPage = options.skipLastPage ?? false;
+  const skipHydrate = options.skipHydrate ?? false;
+  const pageIdInit = skipLastPage
+    ? 'var p=null;'
+    : 'var p=localStorage.getItem("last_page_id");';
+  const hydrateScript = skipHydrate
+    ? ''
+    : 'function hydrate(){try{if(!p)return;var raw=localStorage.getItem(SNAP+w+":"+p);if(!raw)return;var snap=JSON.parse(raw);var main=document.querySelector(".blank-boot-mobile-main")||document.querySelector(".blank-boot-main");if(!main||!snap)return;main.innerHTML="";if(snap.title){var h=document.createElement("div");h.className="blank-boot-cached-title";h.textContent=snap.title;main.appendChild(h);}if(snap.preview){var t=document.createElement("div");t.className="blank-boot-cached-preview";t.textContent=snap.preview;main.appendChild(t);}}catch(e){}}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",hydrate);}else{hydrate();}';
+  return `(function(){try{var INSTANT="${BLANK_INSTANT_WORKSPACE_ID}";var FLAVOUR="${BLANK_INSTANT_WORKSPACE_FLAVOUR}";var SNAP="${snapPrefix}";var w=localStorage.getItem("last_workspace_id");if(!w){w=INSTANT;localStorage.setItem("last_workspace_id",w);localStorage.setItem("last_workspace_flavour",FLAVOUR);}${pageIdInit}var view=${JSON.stringify(defaultView)};var path=p?"/workspace/"+w+"/"+p:"/workspace/"+w+"/"+view;var base=(document.querySelector('meta[name="env:publicPath"]')||{}).content||"/";if(base&&base!=="/"){path=base.replace(/\\/$/,"")+path;}var pn=location.pathname;if(pn==="/"||pn==="/index.html"||pn.endsWith("/index.html")){history.replaceState(null,"",path);}${hydrateScript}}catch(e){}})();`;
 }
 
 /** @deprecated Use getBlankFastBootInlineScript() from html build with correct view. */

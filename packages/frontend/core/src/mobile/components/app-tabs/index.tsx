@@ -31,8 +31,17 @@ export const AppTabs = ({
   const location = useLiveData(workbench.location$);
   const globalCache = useService(GlobalCacheService).globalCache;
 
-  // always set the active tab to home when the location is changed to home
   useEffect(() => {
+    if (globalCache.get<string>(cacheKey) === 'all') {
+      globalCache.set(cacheKey, 'home');
+    }
+  }, [globalCache]);
+
+  useEffect(() => {
+    if (location.pathname.startsWith('/journals')) {
+      globalCache.set(cacheKey, 'journal');
+      return;
+    }
     if (
       location.pathname === '/home' ||
       location.pathname.startsWith('/home/')

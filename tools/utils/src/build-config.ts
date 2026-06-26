@@ -43,7 +43,7 @@ export function getBuildConfig(
         editorVersion: pkg.version,
         githubUrl: 'https://github.com/666base/blank',
         changelogUrl: 'https://github.com/666base/blank/releases',
-        downloadUrl: 'https://github.com/666base/blank-releases',
+        downloadUrl: 'https://github.com/666base/blank-releases/releases',
         pricingUrl: '',
         discordUrl: '',
         requestLicenseUrl: '',

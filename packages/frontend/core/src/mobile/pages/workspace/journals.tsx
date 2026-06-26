@@ -8,7 +8,7 @@ import { i18nTime } from '@blank/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
 import { cssVarV2 } from '@toeverything/theme/v2';
 import dayjs from 'dayjs';
-import { useCallback, useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect } from 'react';
 
 import { AppTabs, PageHeader } from '../../components';
 import { JournalDatePicker } from './detail/journal-date-picker';
@@ -20,33 +20,39 @@ export const JournalsPageWithConfirmation = () => {
   const view = useService(ViewService).view;
   const location = useLiveData(view.location$);
   const dateString = getDateFromUrl(location);
-  const [ready, setReady] = useState(false);
   const allJournalDates = useLiveData(journalService.allJournalDates$);
+  const existingJournalId = journalService.journalsByDate$(dateString).value[0]?.id;
 
-  const handleDateChange = useCallback(
-    (date: string) => {
-      workbench.open(`/journals?date=${date}`, { at: 'active' });
+  const openJournalDoc = useCallback(
+    (docId: string) => {
+      workbench.openDoc(docId, { replaceHistory: true, at: 'active' });
     },
     [workbench]
   );
 
+  const handleDateChange = useCallback(
+    (date: string) => {
+      const journal = journalService.journalsByDate$(date).value[0];
+      if (journal) {
+        openJournalDoc(journal.id);
+        return;
+      }
+      workbench.open(`/journals?date=${date}`, { at: 'active' });
+    },
+    [journalService, openJournalDoc, workbench]
+  );
+
   useLayoutEffect(() => {
-    // only handle current route
     if (!location.pathname.startsWith('/journals')) return;
+    if (!existingJournalId) return;
+    openJournalDoc(existingJournalId);
+  }, [dateString, existingJournalId, location.pathname, openJournalDoc]);
 
-    // check if the journal is created
-    const docs = journalService.journalsByDate$(dateString).value;
-    if (docs.length === 0) {
-      setReady(true);
-      return;
-    }
-
-    // if created, redirect to the journal
-    const journal = docs[0];
-    workbench.openDoc(journal.id, { replaceHistory: true, at: 'active' });
-  }, [dateString, journalService, location.pathname, view, workbench]);
-
-  if (!ready) return null;
+  if (existingJournalId) {
+    return (
+      <AppTabs background={cssVarV2('layer/background/primary')} hidden />
+    );
+  }
 
   return (
     <>

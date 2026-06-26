@@ -2,8 +2,8 @@
  * Shared GitHub Releases helpers for desktop auto-update and mobile APK checks.
  */
 import {
+  BLANK_UPDATE_REPO,
   getBlankGithubUrl,
-  getBlankUpdateGithubUrl,
   getBlankUpdateReleasesUrl,
 } from './blank-links';
 
@@ -26,7 +26,7 @@ export type BlankReleaseCheckResult = {
   error?: string;
 };
 
-const GITHUB_API_LATEST = `${getBlankUpdateGithubUrl()}/releases/latest`;
+const GITHUB_API_LATEST = `https://api.github.com/repos/${BLANK_UPDATE_REPO}/releases/latest`;
 const MANIFEST_URL = `${getBlankUpdateReleasesUrl()}/latest/download/version.json`;
 
 function normalizeVersion(version: string) {
@@ -106,6 +106,7 @@ async function fetchJson(url: string) {
   const response = await fetch(url, {
     headers: {
       Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
     },
   });
   if (!response.ok) {
@@ -114,25 +115,42 @@ async function fetchJson(url: string) {
   return response.json();
 }
 
+function manifestFromVersionJson(
+  manifest: Partial<BlankReleaseManifest>
+): BlankReleaseManifest | null {
+  if (!manifest?.version || !manifest.tag) {
+    return null;
+  }
+  return {
+    version: normalizeVersion(manifest.version),
+    tag: manifest.tag,
+    desktopExe: manifest.desktopExe ?? `Blank-Setup-${manifest.version}.exe`,
+    androidApk: manifest.androidApk ?? `Blank-${manifest.version}.apk`,
+    publishedAt: manifest.publishedAt ?? '',
+    releaseUrl: manifest.releaseUrl ?? getBlankUpdateReleasesUrl(),
+  };
+}
+
 export async function fetchBlankReleaseManifest(): Promise<BlankReleaseManifest | null> {
   try {
-    const manifest = (await fetchJson(MANIFEST_URL)) as Partial<BlankReleaseManifest>;
-    if (manifest?.version && manifest.tag) {
-      return {
-        version: normalizeVersion(manifest.version),
-        tag: manifest.tag,
-        desktopExe: manifest.desktopExe ?? `Blank-Setup-${manifest.version}.exe`,
-        androidApk: manifest.androidApk ?? `Blank-${manifest.version}.apk`,
-        publishedAt: manifest.publishedAt ?? '',
-        releaseUrl: manifest.releaseUrl ?? getBlankUpdateReleasesUrl(),
-      };
+    const release = (await fetchJson(GITHUB_API_LATEST)) as Record<
+      string,
+      unknown
+    >;
+    const fromApi = manifestFromReleaseJson(release);
+    if (fromApi) {
+      return fromApi;
     }
   } catch {
-    // fall through to GitHub API
+    // fall through to version.json
   }
 
-  const release = (await fetchJson(GITHUB_API_LATEST)) as Record<string, unknown>;
-  return manifestFromReleaseJson(release);
+  try {
+    const manifest = (await fetchJson(MANIFEST_URL)) as Partial<BlankReleaseManifest>;
+    return manifestFromVersionJson(manifest);
+  } catch {
+    return null;
+  }
 }
 
 export async function checkBlankAppUpdate(

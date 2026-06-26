@@ -24,6 +24,7 @@ import {
 
 import { WorkspaceLayout } from './layout';
 import { MobileWorkbenchRoot } from './workbench-root';
+import { MobileBootPlaceholder } from '../../components/boot-placeholder';
 
 const SharePage = reactLazy(() =>
   import('@blank/core/desktop/pages/workspace/share/share-page').then(m => ({
@@ -181,7 +182,7 @@ export const Component = () => {
     return <PageNotFound noPermission />;
   }
   if (!effectiveMeta) {
-    return;
+    return <MobileBootPlaceholder />;
   }
   return (
     <WorkspaceLayout meta={effectiveMeta}>

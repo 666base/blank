@@ -16,23 +16,30 @@ export function isBlankBuild() {
 }
 
 export function getBlankDownloadUrl() {
-  return BUILD_CONFIG.downloadUrl || BLANK_UPDATE_RELEASES_URL;
+  return getBlankUpdateReleasesUrl();
 }
 
 export function getBlankGithubUrl() {
   return BUILD_CONFIG.githubUrl || BLANK_GITHUB_URL;
 }
 
+/** Always `https://github.com/{owner}/{repo}/releases` (BUILD_CONFIG may omit `/releases`). */
 export function getBlankUpdateReleasesUrl() {
-  return BUILD_CONFIG.downloadUrl || BLANK_UPDATE_RELEASES_URL;
+  const raw = (BUILD_CONFIG.downloadUrl || BLANK_UPDATE_RELEASES_URL).replace(
+    /\/$/,
+    ''
+  );
+  if (raw.endsWith('/releases')) {
+    return raw;
+  }
+  if (/^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(raw)) {
+    return `${raw}/releases`;
+  }
+  return raw;
 }
 
 export function getBlankUpdateGithubUrl() {
-  const download = BUILD_CONFIG.downloadUrl?.trim();
-  if (download?.includes('github.com/')) {
-    return download.replace(/\/releases\/?$/, '');
-  }
-  return BLANK_UPDATE_GITHUB_URL;
+  return getBlankUpdateReleasesUrl().replace(/\/releases\/?$/, '');
 }
 
 /** Default local workspace title for Blank builds. */

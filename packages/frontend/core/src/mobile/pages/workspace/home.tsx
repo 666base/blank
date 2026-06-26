@@ -1,6 +1,8 @@
 import { SafeArea, useThemeColorV2 } from '@blank/component';
 import { WorkbenchService } from '@blank/core/modules/workbench';
+import { scheduleRemoveBootSplash } from '@blank/core/utils/blank-fast-boot';
 import { useLiveData, useService } from '@toeverything/infra';
+import { useLayoutEffect } from 'react';
 
 import { AppTabs } from '../../components';
 import { CollectionList } from '../../views/all-docs/collection/list';
@@ -18,6 +20,10 @@ export const Component = () => {
   const workbench = useService(WorkbenchService).workbench;
   const pathname = useLiveData(workbench.location$).pathname;
   const activeTab = resolveHomeBrowseTab(pathname);
+
+  useLayoutEffect(() => {
+    scheduleRemoveBootSplash();
+  }, []);
 
   return (
     <>

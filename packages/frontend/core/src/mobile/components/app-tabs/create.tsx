@@ -26,24 +26,24 @@ export const AppTabCreate = ({ tab }: AppTabCustomFCProps) => {
     templateDocService.setting.pageTemplateDocId$
   );
 
-  const createPage = useAsyncCallback(
-    async (isActive: boolean) => {
-      if (isActive) return;
-      if (enablePageTemplate && pageTemplateDocId) {
-        const docId =
-          await docsService.duplicateFromTemplate(pageTemplateDocId);
-        workbench.openDoc({ docId, fromTab: 'true' });
-      } else {
-        const doc = pageHelper.createPage(undefined, { show: false });
-        workbench.openDoc({ docId: doc.id, fromTab: 'true' });
-      }
-      track.$.navigationPanel.$.createDoc();
-    },
-    [docsService, enablePageTemplate, pageHelper, pageTemplateDocId, workbench]
-  );
+  const createPage = useAsyncCallback(async () => {
+    if (enablePageTemplate && pageTemplateDocId) {
+      const docId = await docsService.duplicateFromTemplate(pageTemplateDocId);
+      workbench.openDoc({ docId, fromTab: 'true' });
+    } else {
+      const doc = pageHelper.createPage(undefined, { show: false });
+      workbench.openDoc({ docId: doc.id, fromTab: 'true' });
+    }
+    track.$.navigationPanel.$.createDoc();
+  }, [docsService, enablePageTemplate, pageHelper, pageTemplateDocId, workbench]);
 
   return (
-    <TabItem id={tab.key} onClick={createPage} label="New Page">
+    <TabItem
+      id={tab.key}
+      onClick={createPage}
+      label="New Page"
+      persistActive={false}
+    >
       <EditIcon />
     </TabItem>
   );

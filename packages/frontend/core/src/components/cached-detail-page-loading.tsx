@@ -2,6 +2,7 @@ import { DocSummaryService } from '@blank/core/modules/doc-summary';
 import { DocsService } from '@blank/core/modules/doc';
 import { WorkspaceService } from '@blank/core/modules/workspace';
 import { readDocSnapshotSync } from '@blank/core/utils/blank-doc-snapshot';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { LiveData, useLiveData, useService } from '@toeverything/infra';
 import { useMemo } from 'react';
 import { EMPTY } from 'rxjs';
@@ -44,6 +45,9 @@ export const CachedDetailPageLoading = ({ pageId }: { pageId: string }) => {
     '';
 
   if (!title && !preview) {
+    if (isBlankBuild() && BUILD_CONFIG.isMobileEdition) {
+      return null;
+    }
     return <DocLoadingSkeleton />;
   }
 

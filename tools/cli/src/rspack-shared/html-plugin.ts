@@ -95,7 +95,10 @@ function getHTMLPluginOptions(BUILD_CONFIG: BUILD_CONFIG_TYPE) {
     GIT_SHORT_SHA: gitShortHash(),
     DESCRIPTION,
     FAST_BOOT_SCRIPT: getBlankFastBootInlineScript(
-      BUILD_CONFIG.isMobileEdition ? 'home' : 'all'
+      BUILD_CONFIG.isMobileEdition ? 'home' : 'all',
+      BUILD_CONFIG.isMobileEdition
+        ? { skipLastPage: true, skipHydrate: true }
+        : undefined
     ),
     BOOT_SHELL_CSS: getBlankBootShellCss(BUILD_CONFIG.isMobileEdition),
     BOOT_SHELL_HTML: getBlankBootShellHtml(BUILD_CONFIG.isMobileEdition),

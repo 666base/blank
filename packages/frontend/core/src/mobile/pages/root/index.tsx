@@ -1,5 +1,6 @@
 import { NotificationCenter } from '@blank/component';
 import { DefaultServerService } from '@blank/core/modules/cloud';
+import { isBlankBuild } from '@blank/core/utils/blank-links';
 import { isLocalOnlyMode } from '@blank/core/utils/local-only';
 import { FrameworkScope, useService } from '@toeverything/infra';
 import { useEffect, useState } from 'react';
@@ -10,7 +11,9 @@ import { GlobalDialogs } from '../../dialogs';
 
 export const RootWrapper = () => {
   const defaultServerService = useService(DefaultServerService);
-  const [isServerReady, setIsServerReady] = useState(() => isLocalOnlyMode());
+  const [isServerReady, setIsServerReady] = useState(
+    () => isLocalOnlyMode() || isBlankBuild()
+  );
 
   useEffect(() => {
     if (isServerReady) {
@@ -29,7 +32,7 @@ export const RootWrapper = () => {
   }, [defaultServerService, isServerReady]);
 
   if (!isServerReady) {
-    return <AppFallback />;
+    return isBlankBuild() ? null : <AppFallback />;
   }
 
   return (

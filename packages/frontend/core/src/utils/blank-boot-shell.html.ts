@@ -21,10 +21,8 @@ export const BLANK_BOOT_SHELL_HTML = `<div id="blank-boot-shell" class="blank-bo
   </div>
 </div>`;
 
-/** Mobile: solid app background only — no desktop tabs/sidebar skeleton. */
-export const BLANK_BOOT_SHELL_MOBILE_HTML = `<div id="blank-boot-shell" class="blank-boot-shell blank-boot-shell--mobile" aria-hidden="true">
-  <main class="blank-boot-mobile-main"></main>
-</div>`;
+/** Mobile: solid app background only — no cached doc preview before React. */
+export const BLANK_BOOT_SHELL_MOBILE_HTML = `<div id="blank-boot-shell" class="blank-boot-shell blank-boot-shell--mobile" aria-hidden="true"></div>`;
 
 export const BLANK_BOOT_SHELL_CSS = `
 .blank-boot-shell{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;background:#121212;color:#e8e8e8;font-family:system-ui,-apple-system,sans-serif;transition:opacity .12s ease}
@@ -44,10 +42,7 @@ export const BLANK_BOOT_SHELL_CSS = `
 `;
 
 export const BLANK_BOOT_SHELL_MOBILE_CSS = `
-.blank-boot-shell--mobile{background:#141414;color:#e8e8e8}
-.blank-boot-mobile-main{flex:1;min-height:0;padding:16px;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:env(safe-area-inset-bottom)}
-.blank-boot-shell--mobile .blank-boot-cached-title{font-size:22px;font-weight:600;line-height:1.35;margin-bottom:10px}
-.blank-boot-shell--mobile .blank-boot-cached-preview{font-size:16px;line-height:1.6;max-width:none}
+.blank-boot-shell--mobile{background:#141414}
 `;
 
 export function getBlankBootShellHtml(isMobileEdition: boolean) {

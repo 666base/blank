@@ -1,20 +1,17 @@
 import {
   IconButton,
-  Menu,
   SafeArea,
   startScopedViewTransition,
 } from '@blank/component';
-import { NotificationList } from '@blank/core/components/notification/list';
 import { WorkspaceDialogService } from '@blank/core/modules/dialogs';
-import { NotificationCountService } from '@blank/core/modules/notification';
 import { WorkbenchService } from '@blank/core/modules/workbench';
 import { useI18n } from '@blank/i18n';
-import { NotificationIcon, SearchIcon, SettingsIcon } from '@blocksuite/icons/rc';
-import { useLiveData, useService } from '@toeverything/infra';
-import { cssVarV2 } from '@toeverything/theme/v2';
+import { SearchIcon, SettingsIcon } from '@blocksuite/icons/rc';
+import { useService } from '@toeverything/infra';
 import clsx from 'clsx';
 import { useCallback, useRef, useState } from 'react';
 
+import { NotificationButton } from '../../../components/root-app-sidebar/notification-button';
 import { WorkspaceSelector } from '../../components';
 import { searchVTScope } from '../../components/search-input/style.css';
 import { useGlobalEvent } from '../../hooks/use-global-events';
@@ -30,8 +27,6 @@ export const HomeHeader = () => {
   const floatWorkspaceCardRef = useRef<HTMLDivElement>(null);
   const t = useI18n();
   const workbench = useService(WorkbenchService).workbench;
-  const notificationCountService = useService(NotificationCountService);
-  const notificationCount = useLiveData(notificationCountService.count$);
 
   const navSearch = useCallback(() => {
     startScopedViewTransition(searchVTScope, () => {
@@ -74,38 +69,20 @@ export const HomeHeader = () => {
         />
         <div className={styles.headerIconActions}>
           <IconButton
+            className={styles.headerIconActionButton}
             style={{ transition: 'none' }}
             onClick={navSearch}
-            size={28}
+            size="24"
             icon={<SearchIcon />}
             aria-label={t['Quick search']()}
             data-testid="mobile-quick-search-button"
           />
-          <Menu items={<NotificationList />}>
-            <div
-              style={{
-                position: 'relative',
-                lineHeight: 0,
-                color: cssVarV2.icon.primary,
-              }}
-            >
-              <NotificationIcon width={28} height={28} />
-              {notificationCount > 0 && (
-                <div
-                  className={styles.notificationBadge}
-                  style={{
-                    fontSize: notificationCount > 99 ? '8px' : '12px',
-                  }}
-                >
-                  {notificationCount > 99 ? '99+' : notificationCount}
-                </div>
-              )}
-            </div>
-          </Menu>
+          <NotificationButton iconOnly />
           <IconButton
+            className={styles.headerIconActionButton}
             style={{ transition: 'none' }}
             onClick={openSetting}
-            size={28}
+            size="24"
             icon={<SettingsIcon />}
             data-testid="settings-button"
           />

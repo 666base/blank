@@ -26,6 +26,7 @@ import {
 } from 'react';
 
 import { WorkspaceDialogs } from '../../dialogs';
+import { MobileBootPlaceholder } from '../../components/boot-placeholder';
 import {
   persistFastBootRoute,
   scheduleRemoveBootSplash,
@@ -64,13 +65,18 @@ export const WorkspaceLayout = ({
   const workspaceServer = workspace?.scope.get(WorkspaceServerService)?.server;
 
   useLayoutEffect(() => {
-    scheduleRemoveBootSplash();
     const ref = workspacesService.open({ metadata: meta });
     setWorkspace(ref.workspace);
     return () => {
       ref.dispose();
     };
   }, [meta, workspacesService]);
+
+  useEffect(() => {
+    if (workspace) {
+      scheduleRemoveBootSplash();
+    }
+  }, [workspace]);
 
   useEffect(() => {
     if (workspace) {
@@ -117,7 +123,7 @@ export const WorkspaceLayout = ({
   ]);
 
   if (!workspace) {
-    return null; // skip this, workspace will be set in layout effect
+    return <MobileBootPlaceholder />;
   }
 
   return (
