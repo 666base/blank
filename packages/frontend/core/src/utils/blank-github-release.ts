@@ -2,9 +2,9 @@
  * Shared GitHub Releases helpers for desktop auto-update and mobile APK checks.
  */
 import {
-  BLANK_GITHUB_URL,
-  BLANK_RELEASES_URL,
   getBlankGithubUrl,
+  getBlankUpdateGithubUrl,
+  getBlankUpdateReleasesUrl,
 } from './blank-links';
 
 export type BlankReleaseManifest = {
@@ -26,8 +26,8 @@ export type BlankReleaseCheckResult = {
   error?: string;
 };
 
-const GITHUB_API_LATEST = `${getBlankGithubUrl()}/releases/latest`;
-const MANIFEST_URL = `${BLANK_RELEASES_URL}/latest/download/version.json`;
+const GITHUB_API_LATEST = `${getBlankUpdateGithubUrl()}/releases/latest`;
+const MANIFEST_URL = `${getBlankUpdateReleasesUrl()}/latest/download/version.json`;
 
 function normalizeVersion(version: string) {
   return version.replace(/^v/i, '').trim();
@@ -63,7 +63,7 @@ export function isNewerVersion(latest: string, current: string) {
 }
 
 function assetUrl(tag: string, fileName: string) {
-  return `${BLANK_RELEASES_URL}/download/${tag}/${fileName}`;
+  return `${getBlankUpdateReleasesUrl()}/download/${tag}/${fileName}`;
 }
 
 function manifestFromReleaseJson(
@@ -96,7 +96,9 @@ function manifestFromReleaseJson(
     publishedAt:
       typeof release.published_at === 'string' ? release.published_at : '',
     releaseUrl:
-      typeof release.html_url === 'string' ? release.html_url : BLANK_RELEASES_URL,
+      typeof release.html_url === 'string'
+        ? release.html_url
+        : getBlankUpdateReleasesUrl(),
   };
 }
 
@@ -122,7 +124,7 @@ export async function fetchBlankReleaseManifest(): Promise<BlankReleaseManifest 
         desktopExe: manifest.desktopExe ?? `Blank-Setup-${manifest.version}.exe`,
         androidApk: manifest.androidApk ?? `Blank-${manifest.version}.apk`,
         publishedAt: manifest.publishedAt ?? '',
-        releaseUrl: manifest.releaseUrl ?? BLANK_RELEASES_URL,
+        releaseUrl: manifest.releaseUrl ?? getBlankUpdateReleasesUrl(),
       };
     }
   } catch {
@@ -161,6 +163,10 @@ export async function checkBlankAppUpdate(
       desktopDownloadUrl: assetUrl(manifest.tag, manifest.desktopExe),
     };
   } catch (error) {
+    const raw = error instanceof Error ? error.message : String(error);
+    const message = /failed to fetch/i.test(raw)
+      ? 'Cannot reach the update server. Check your internet connection.'
+      : raw;
     return {
       updateAvailable: false,
       currentVersion: current,
@@ -168,7 +174,7 @@ export async function checkBlankAppUpdate(
       manifest: null,
       apkDownloadUrl: null,
       desktopDownloadUrl: null,
-      error: error instanceof Error ? error.message : String(error),
+      error: message,
     };
   }
 }
@@ -183,9 +189,9 @@ export function openBlankReleaseDownload(url: string) {
 }
 
 export function getBlankReleasePageUrl() {
-  return BLANK_RELEASES_URL;
+  return getBlankUpdateReleasesUrl();
 }
 
 export function getBlankRepositoryUrl() {
-  return BLANK_GITHUB_URL;
+  return getBlankGithubUrl();
 }

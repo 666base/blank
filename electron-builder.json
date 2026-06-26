@@ -36,7 +36,7 @@
   "publish": {
     "provider": "github",
     "owner": "666base",
-    "repo": "blank",
+    "repo": "blank-releases",
     "releaseType": "release"
   }
 }

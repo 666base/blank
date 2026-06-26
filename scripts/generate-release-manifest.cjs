@@ -13,7 +13,7 @@ const manifest = {
   desktopExe: `Blank-Setup-${version}.exe`,
   androidApk: `Blank-${version}.apk`,
   publishedAt: new Date().toISOString(),
-  releaseUrl: `https://github.com/666base/blank/releases/tag/${tag}`,
+  releaseUrl: `https://github.com/666base/blank-releases/releases/tag/${tag}`,
 };
 
 const desktopDir = path.join(root, 'releases/desktop');

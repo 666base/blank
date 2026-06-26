@@ -63,20 +63,22 @@ fs.writeFileSync(
   'utf8'
 );
 
+const UPDATE_REPO = '666base/blank-releases';
+
 const existing = spawnSync(
   'gh',
-  ['release', 'view', tag, '--repo', '666base/blank'],
+  ['release', 'view', tag, '--repo', UPDATE_REPO],
   { encoding: 'utf8', shell: true }
 );
 
 const ghArgs = existing.status === 0
-  ? ['release', 'upload', tag, '--repo', '666base/blank', ...assets]
+  ? ['release', 'upload', tag, '--repo', UPDATE_REPO, ...assets]
   : [
       'release',
       'create',
       tag,
       '--repo',
-      '666base/blank',
+      UPDATE_REPO,
       '--title',
       `Blank ${version}`,
       '--notes-file',
@@ -87,4 +89,4 @@ const ghArgs = existing.status === 0
 console.log(`Publishing ${tag} to GitHub...`);
 run('gh', ghArgs, { shell: false });
 
-console.log(`\nPublished: https://github.com/666base/blank/releases/tag/${tag}`);
+console.log(`\nPublished: https://github.com/${UPDATE_REPO}/releases/tag/${tag}`);

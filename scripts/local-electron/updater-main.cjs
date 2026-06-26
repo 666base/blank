@@ -1,7 +1,7 @@
 const { app } = require('electron');
 
 const GITHUB_OWNER = '666base';
-const GITHUB_REPO = 'blank';
+const GITHUB_REPO = 'blank-releases';
 
 /** @type {{ autoCheckUpdate: boolean; autoDownloadUpdate: boolean }} */
 let config = {
