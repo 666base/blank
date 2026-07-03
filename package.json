@@ -1,6 +1,6 @@
 {
   "name": "@blank/monorepo",
-  "version": "0.29.9",
+  "version": "0.29.10",
   "description": "Blank local notes app",
   "private": true,
   "author": "local",
