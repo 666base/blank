@@ -36,6 +36,7 @@ export class DocsStore extends Store {
 
   createDoc(docId?: string) {
     const id = docId ?? nanoid();
+    console.log('[DEBUG-DOC-STORE] createDoc called. docId:', docId);
 
     transact(
       this.workspaceService.workspace.rootYDoc,
@@ -44,8 +45,17 @@ export class DocsStore extends Store {
           .getMap('meta')
           .get('pages');
 
+        console.log('[DEBUG-DOC-STORE] docs exists?', !!docs, 'isYArray?', docs instanceof YArray);
+
         if (!docs || !(docs instanceof YArray)) {
           return;
+        }
+
+        try {
+          this.workspaceService.workspace.docCollection.createDoc(id);
+          console.log('[DEBUG-DOC-STORE] createDoc SUCCESS!');
+        } catch (err) {
+          console.error('[DEBUG-DOC-STORE] createDoc THREW:', err);
         }
 
         docs.push([
