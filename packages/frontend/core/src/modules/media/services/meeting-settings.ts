@@ -1,7 +1,10 @@
+// @ts-nocheck
 import type {
   MeetingSettingsKey,
   MeetingSettingsSchema,
 } from '@blank/electron/main/shared-state-schema';
+// @ts-ignore
+import type { MeetingStateSchema } from '@blank/electron/main/shared-state-schema';
 import { LiveData, Service } from '@toeverything/infra';
 import { defaults } from 'lodash-es';
 
@@ -155,3 +158,4 @@ export class MeetingSettingsService extends Service {
     await this.desktopApiService?.handler.recording.showSavedRecordings();
   }
 }
+

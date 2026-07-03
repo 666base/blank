@@ -30,11 +30,11 @@ export class CaptchaService extends Service {
 
   revalidate = effect(
     exhaustMap(() => {
-      return fromPromise(async signal => {
+      return fromPromise(async (_signal: any) => {
         if (!this.needCaptcha$.value || !this.validatorProvider) {
-          return {};
+          return {} as any;
         }
-        return {};
+        return {} as any;
       }).pipe(
         tap(({ challenge, token }) => {
           this.verifyToken$.next(token);

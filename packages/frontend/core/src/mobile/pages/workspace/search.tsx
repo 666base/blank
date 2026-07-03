@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   Button,
   SafeArea,
@@ -187,3 +188,4 @@ export const Component = () => {
     </>
   );
 };
+

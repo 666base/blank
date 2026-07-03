@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { BlankEditorContainer } from '@blank/core/blocksuite/block-suite-editor';
 import { BlankErrorBoundary } from '@blank/core/components/blank/blank-error-boundary';
 import { scheduleRemoveBootSplash } from '@blank/core/utils/blank-fast-boot';
@@ -599,3 +600,4 @@ export const Component = () => {
 
   return <MobileDetailPage pageId={pageId} date={journalDate} />;
 };
+

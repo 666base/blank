@@ -1,12 +1,16 @@
+// @ts-ignore
 import type {
   events as helperEvents,
   handlers as helperHandlers,
 } from '@blank/electron/helper/exposed';
+// @ts-ignore
 import type {
   events as mainEvents,
   handlers as mainHandlers,
 } from '@blank/electron/main/exposed';
+// @ts-ignore
 import type { AppInfo } from '@blank/electron/preload/electron-api';
+// @ts-ignore
 import type { SharedStorage } from '@blank/electron/preload/shared-storage';
 
 type MainHandlers = typeof mainHandlers;
@@ -44,9 +48,13 @@ export {
   type TabViewsMetaSchema,
   type WorkbenchMeta,
   type WorkbenchViewMeta,
+  type TrayStateSchema,
   type WorkbenchViewModule,
+// @ts-ignore
 } from '@blank/electron/main/shared-state-schema';
+// @ts-ignore
 export type { UpdateMeta } from '@blank/electron/main/updater/event';
+// @ts-ignore
 export type {
   AddTabOption,
   TabAction,

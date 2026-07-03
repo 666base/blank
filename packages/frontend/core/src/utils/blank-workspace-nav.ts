@@ -1,6 +1,4 @@
 import {
-  BLANK_INSTANT_WORKSPACE_FLAVOUR,
-  BLANK_INSTANT_WORKSPACE_ID,
   inferBlankWorkspaceFlavour,
   persistFastBootRoute,
 } from './blank-fast-boot';

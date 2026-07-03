@@ -17,7 +17,7 @@ export const ViewTitle = ({ title }: { title: string }) => {
         .updateActiveViewMeta({
           title,
         })
-        .catch(e => {
+        .catch((e: any) => {
           console.error(e);
         });
     }
@@ -37,7 +37,7 @@ export const ViewIcon = ({ icon }: { icon: ViewIconName }) => {
         .updateActiveViewMeta({
           iconName: icon,
         })
-        .catch(e => {
+        .catch((e: any) => {
           console.error(e);
         });
     }

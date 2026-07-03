@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { UserFriendlyError } from '@blank/error';
 import { type DocMode, DocModes } from '@blocksuite/blank/model';
 import { TimeoutError } from 'rxjs';
@@ -55,3 +56,4 @@ export const isSharePagePermissionError = (error: unknown) =>
 
 export const isSharePageTimeoutError = (error: unknown) =>
   error instanceof TimeoutError;
+

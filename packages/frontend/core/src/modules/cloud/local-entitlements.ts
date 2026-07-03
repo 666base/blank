@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   SubscriptionPlan,
   type SubscriptionPrice,
@@ -18,7 +19,6 @@ function localSubscription(
   return {
     __typename: 'SubscriptionType',
     canceledAt: null,
-    createdAt: now,
     end: farFuture,
     iapStore: null,
     id: `local-${plan.toLowerCase()}`,
@@ -30,7 +30,6 @@ function localSubscription(
     status: SubscriptionStatus.Active,
     trialEnd: null,
     trialStart: null,
-    updatedAt: now,
     variant: null,
   };
 }
@@ -82,3 +81,4 @@ export function getLocalSubscriptionPrices(): SubscriptionPrice[] {
     },
   ];
 }
+

@@ -22,6 +22,7 @@ import clsx from 'clsx';
 import { lazy, Suspense, useCallback, useEffect } from 'react';
 
 import { WorkbenchService } from '../../../workbench/services/workbench';
+import { EditorService } from '@blank/core/modules/editor';
 import type { DocReferenceInfo } from '../../entities/peek-view';
 import { PeekViewService } from '../../services/peek-view';
 import { useEditor } from '../utils';
@@ -79,7 +80,6 @@ function DocPeekPreviewEditor({
   });
   const editor = editorService.editor;
   const doc = editor.doc;
-  const workspace = editor.doc.workspace;
   const mode = useLiveData(editor.mode$);
   const defaultOpenProperty = useLiveData(editor.defaultOpenProperty$);
   const workbench = useService(WorkbenchService).workbench;

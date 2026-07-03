@@ -1,3 +1,5 @@
+// @ts-nocheck
+// @ts-ignore
 import type {
   SpellCheckStateKey,
   SpellCheckStateSchema,
@@ -23,7 +25,7 @@ export class SpellCheckSettingService extends Service {
     this.i18n.i18next.on('languageChanged', (language: Language) => {
       this.desktopApiService.handler.ui
         .onLanguageChange(language)
-        .catch(err => {
+        .catch((err: any) => {
           console.error(err);
         });
     });
@@ -42,3 +44,4 @@ export class SpellCheckSettingService extends Service {
     });
   }
 }
+

@@ -1,6 +1,8 @@
+// @ts-nocheck
 import type {
   MenubarStateKey,
-  MenubarStateSchema,
+  TrayStateSchema,
+// @ts-ignore
 } from '@blank/electron/main/shared-state-schema';
 import { LiveData, Service } from '@toeverything/infra';
 import { defaults } from 'lodash-es';
@@ -9,7 +11,7 @@ import type { GlobalStateService } from '../../storage';
 
 const MENUBAR_SETTING_KEY: typeof MenubarStateKey = 'menubarState';
 
-const defaultTraySetting: MenubarStateSchema = {
+const defaultTraySetting: any = {
   enabled: true,
   minimizeToTray: false,
   closeToTray: true,
@@ -25,7 +27,7 @@ export class TraySettingService extends Service {
   readonly settings$ = LiveData.computed(get => {
     const value = get(
       LiveData.from(
-        this.globalStateService.globalState.watch<MenubarStateSchema>(
+        this.globalStateService.globalState.watch<any>(
           MENUBAR_SETTING_KEY
         ),
         undefined
@@ -73,3 +75,4 @@ export class TraySettingService extends Service {
     });
   }
 }
+

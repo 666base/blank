@@ -38,7 +38,7 @@ const SharePageButtonInner = ({
   shareSetting,
 }: SharePageModalProps & {
   shareSetting: NonNullable<
-    ReturnType<WorkspaceShareSettingService['sharePreview']>
+    WorkspaceShareSettingService['sharePreview']
   >;
 }) => {
   const t = useI18n();

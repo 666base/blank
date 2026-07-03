@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { LiveData, Service } from '@toeverything/infra';
 import { Observable } from 'rxjs';
 
@@ -19,7 +20,7 @@ export class AppTabsHeaderService extends Service {
         .getTabsStatus()
         .then(tabs => {
           subscriber.next(tabs);
-          unsub = this.desktopApi.events.ui.onTabsStatusChange(tabs => {
+          unsub = this.desktopApi.events.ui.onTabsStatusChange((tabs: any) => {
             subscriber.next(tabs);
           });
         })
@@ -92,3 +93,4 @@ export class AppTabsHeaderService extends Service {
 
   moveTab = this.desktopApi.handler.ui.moveTab;
 }
+

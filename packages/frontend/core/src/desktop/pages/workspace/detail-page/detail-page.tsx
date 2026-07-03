@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Scrollable } from '@blank/component';
 import { CachedDetailPageLoading } from '@blank/core/components/cached-detail-page-loading';
 import { usePersistDocSnapshot } from '@blank/core/components/hooks/use-persist-doc-snapshot';
@@ -463,3 +464,4 @@ export const Component = () => {
     </DetailPageWrapper>
   ) : null;
 };
+

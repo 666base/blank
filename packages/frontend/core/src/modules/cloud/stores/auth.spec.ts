@@ -42,9 +42,9 @@ function createStore() {
       config$: { value: { type: 'Selfhosted' } },
     },
   } as any);
-  framework.impl(FetchService, fetchMock as any);
-  framework.impl(GraphQLService, gqlMock as any);
-  framework.impl(NbstoreService, nbstoreMock as any);
+  framework.impl(FetchService as any, fetchMock as any);
+  framework.impl(GraphQLService as any, gqlMock as any);
+  framework.impl(NbstoreService as any, nbstoreMock as any);
   framework.impl(AuthProvider, authProviderMock);
 
   framework.store(AuthStore, [

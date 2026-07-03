@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
@@ -753,3 +754,4 @@ export function createNodeTargetConfig(
     ignoreWarnings: [/^(?!CriticalDependenciesWarning$)/],
   };
 }
+

@@ -49,7 +49,7 @@ export class DesktopWorkbenchDefaultState
 
     return (
       tabViewsMeta?.workbenches.find(
-        w => w.id === this.electronApi.appInfo.viewId
+        (w: any) => w.id === this.electronApi.appInfo.viewId
       ) || InMemoryWorkbenchDefaultState
     );
   }

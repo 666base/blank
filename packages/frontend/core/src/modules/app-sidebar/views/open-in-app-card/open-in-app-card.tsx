@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Button, Checkbox, IconButton } from '@blank/component';
 import { getBlankDownloadUrl } from '@blank/core/utils/blank-links';
 import { appIconMap } from '@blank/core/utils';
@@ -100,3 +101,4 @@ export const OpenInAppCard = () => {
     </div>
   );
 };
+

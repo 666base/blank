@@ -132,7 +132,7 @@ class BlankCloudWorkspaceFlavourProvider implements WorkspaceFlavourProvider {
 
   async createWorkspace(
     _initial: (
-      docCollection: unknown,
+      docCollection: any,
       blobStorage: BlobStorage,
       docStorage: DocStorage
     ) => Promise<void>

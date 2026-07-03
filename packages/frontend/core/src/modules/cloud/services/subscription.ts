@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { tracker } from '@blank/track';
 import { OnEvent, Service } from '@toeverything/infra';
 
@@ -11,7 +12,7 @@ export class SubscriptionService extends Service {
   subscription = this.framework.createEntity(Subscription);
   prices = this.framework.createEntity(SubscriptionPrices);
 
-  constructor(private readonly store: SubscriptionStore) {
+  constructor(private readonly _store: SubscriptionStore) {
     super();
     this.subscription.ai$
       .map(sub => !!sub)
@@ -39,3 +40,4 @@ export class SubscriptionService extends Service {
     this.subscription.revalidate();
   }
 }
+

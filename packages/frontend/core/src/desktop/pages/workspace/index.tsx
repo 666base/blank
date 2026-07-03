@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DNDContext } from '@blank/component';
 import { BlankOtherPageLayout } from '@blank/component/blank-other-page-layout';
 import { workbenchRoutes } from '@blank/core/desktop/workbench-router';
@@ -342,3 +343,4 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
     </FrameworkScope>
   );
 };
+

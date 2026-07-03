@@ -16,7 +16,7 @@ export class ElectronGlobalState implements GlobalState {
     return new Observable<T | undefined>(subscriber => {
       const unsubscribe = this.electronApi.sharedStorage.globalState.watch<T>(
         key,
-        i => {
+        (i: any) => {
           subscriber.next(i);
         }
       );
@@ -47,7 +47,7 @@ export class ElectronGlobalCache implements GlobalCache {
     return new Observable<T | undefined>(subscriber => {
       const unsubscribe = this.electronApi.sharedStorage.globalCache.watch<T>(
         key,
-        i => {
+        (i: any) => {
           subscriber.next(i);
         }
       );

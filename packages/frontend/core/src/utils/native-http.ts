@@ -22,10 +22,10 @@ function decodeNativeBody(data: unknown): BodyInit | null {
     return null;
   }
   if (data instanceof ArrayBuffer) {
-    return data;
+    return data as ArrayBuffer;
   }
   if (data instanceof Uint8Array) {
-    return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+    return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer;
   }
   if (typeof data === 'string') {
     try {

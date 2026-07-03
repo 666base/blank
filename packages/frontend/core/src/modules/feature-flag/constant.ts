@@ -364,7 +364,7 @@ function applyBlankStableFlags(
         },
       ];
     })
-  ) as typeof BASE_BLANK_FLAGS;
+  ) as unknown as typeof BASE_BLANK_FLAGS;
 }
 
 export const BLANK_FLAGS = applyBlankStableFlags(BASE_BLANK_FLAGS);

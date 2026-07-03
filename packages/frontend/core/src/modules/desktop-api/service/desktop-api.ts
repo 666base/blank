@@ -37,7 +37,7 @@ export class DesktopApiService extends Service {
     if (to) {
       const url = new URL(to.toString());
       const tabs = await this.api.handler.ui.getTabViewsMeta();
-      const tab = tabs.workbenches.find(t => t.id === tabId);
+      const tab = tabs.workbenches.find((t: any) => t.id === tabId);
       if (tab) {
         const basename = tab.basename;
         if (url.pathname.startsWith(basename)) {
@@ -90,9 +90,9 @@ export class DesktopApiService extends Service {
       };
       this.api.handler.ui
         .isActiveTab()
-        .then(active => {
+        .then((active: any) => {
           handleActiveTabChange(active);
-          this.api.events.ui.onActiveTabChanged(id => {
+          this.api.events.ui.onActiveTabChanged((id: any) => {
             handleActiveTabChange(id === tabId);
           });
         })
@@ -114,7 +114,7 @@ export class DesktopApiService extends Service {
   }
 
   private setupAuthRequestEvent() {
-    this.events.ui.onAuthenticationRequest(({ method, payload, server }) => {
+    this.events.ui.onAuthenticationRequest(({ method, payload, server }: any) => {
       (async () => {
         if (!(await this.api.handler.ui.isActiveTab())) {
           return;

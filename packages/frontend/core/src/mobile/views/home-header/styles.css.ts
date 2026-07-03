@@ -18,7 +18,8 @@ export const headerSettingRow = style({
 });
 export const wsSelectorAndSearch = style({
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
+  alignItems: 'center',
   gap: 15,
   padding: 'var(--sp-1) var(--sp-4) var(--sp-2) var(--sp-4)',
 });

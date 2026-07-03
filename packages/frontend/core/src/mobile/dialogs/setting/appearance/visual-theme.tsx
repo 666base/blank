@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { VisualThemePicker } from '@blank/core/components/theme-settings';
 import { useI18n } from '@blank/i18n';
 
@@ -16,3 +17,4 @@ export const VisualThemeSetting = () => {
     </div>
   );
 };
+

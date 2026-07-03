@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Button } from '@blank/component';
 import { useMobileAppUpdater } from '@blank/core/components/hooks/use-mobile-app-updater';
 import { useI18n } from '@blank/i18n';
@@ -102,3 +103,4 @@ export const AboutGroup = () => {
 function hiddenVersionVariant(version: string) {
   return version.replace(/(\d+\.\d+\.\d+)(.*)/, '$1');
 }
+

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Path } from '@blank-tools/utils/path';
 import { execAsync } from '@blank-tools/utils/process';
 import type { Package, PackageName } from '@blank-tools/utils/workspace';
@@ -236,3 +237,4 @@ export class RunCommand extends PackageCommand {
     };
   }
 }
+

@@ -1,9 +1,9 @@
-globalThis.__BLANK_FORCE_MOBILE__ = true;
+(globalThis as any).__BLANK_FORCE_MOBILE__ = true;
 
 import { Capacitor } from '@capacitor/core';
 
 if (Capacitor.isNativePlatform()) {
-  globalThis.__CAPACITOR_NATIVE__ = true;
+  (globalThis as any).__CAPACITOR_NATIVE__ = true;
 }
 
 import '@blank/core/bootstrap/browser';

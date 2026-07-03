@@ -22,7 +22,7 @@ export const AppTabJournal = ({ tab }: AppTabCustomFCProps) => {
   const handleOpenToday = useCallback(() => {
     globalCache.set(cacheKey, 'journal');
     const today = dayjs().format(JOURNAL_DATE_FORMAT);
-    const docs = journalService.journalsByDate$(today).value;
+    const docs = journalService.journalsByDate$(today).value ?? [];
     if (docs.length > 0) {
       workbench.openDoc(
         { docId: docs[0].id, fromTab: 'true' },

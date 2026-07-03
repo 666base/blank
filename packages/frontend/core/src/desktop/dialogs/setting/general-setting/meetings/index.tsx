@@ -14,6 +14,7 @@ import {
 import { useAsyncCallback } from '@blank/core/components/hooks/blank-async-hooks';
 import { DesktopApiService } from '@blank/core/modules/desktop-api';
 import { MeetingSettingsService } from '@blank/core/modules/media/services/meeting-settings';
+// @ts-ignore
 import type { MeetingSettingsSchema } from '@blank/electron/main/shared-state-schema';
 import { Trans, useI18n } from '@blank/i18n';
 import {

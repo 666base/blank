@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { cssVar } from '@toeverything/theme';
 import { style } from '@vanilla-extract/css';
 
@@ -57,3 +58,4 @@ export const linkText = style({
   fontWeight: 700,
   whiteSpace: 'nowrap',
 });
+

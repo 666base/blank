@@ -26,7 +26,7 @@ export class DesktopStateSynchronizer extends Service {
     const appInfo = this.electronApi.appInfo;
 
     this.disposables.push(
-      this.electronApi.events.ui.onTabAction(event => {
+      this.electronApi.events.ui.onTabAction((event: any) => {
         if (
           event.type === 'open-in-split-view' &&
           event.payload.tabId === appInfo?.viewId
@@ -83,7 +83,7 @@ export class DesktopStateSynchronizer extends Service {
     );
 
     this.disposables.push(
-      this.electronApi.events.ui.onToggleRightSidebar(tabId => {
+      this.electronApi.events.ui.onToggleRightSidebar((tabId: any) => {
         if (tabId === appInfo?.viewId) {
           workbench.setSidebarOpen(!workbench.sidebarOpen$.value);
         }
@@ -91,7 +91,7 @@ export class DesktopStateSynchronizer extends Service {
     );
 
     this.disposables.push(
-      this.electronApi.events.ui.onTabGoToRequest(opts => {
+      this.electronApi.events.ui.onTabGoToRequest((opts: any) => {
         if (opts.tabId === appInfo?.viewId) {
           this.workbenchService.workbench.open(opts.to);
         }
