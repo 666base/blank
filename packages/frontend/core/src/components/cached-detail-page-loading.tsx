@@ -3,7 +3,7 @@ import { DocsService } from '@blank/core/modules/doc';
 import { WorkspaceService } from '@blank/core/modules/workspace';
 import { readDocSnapshotSync } from '@blank/core/utils/blank-doc-snapshot';
 import { isBlankBuild } from '@blank/core/utils/blank-links';
-import { LiveData, useLiveData, useService } from '@toeverything/infra';
+import { LiveData, useLiveData, useServiceOptional } from '@toeverything/infra';
 import { useMemo } from 'react';
 import { EMPTY } from 'rxjs';
 
@@ -21,20 +21,21 @@ const DocLoadingSkeleton = () => (
 );
 
 export const CachedDetailPageLoading = ({ pageId }: { pageId: string }) => {
-  const workspaceId = useService(WorkspaceService).workspace.id;
-  const docsService = useService(DocsService);
-  const docRecord = useLiveData(docsService.list.doc$(pageId));
+  const workspaceService = useServiceOptional(WorkspaceService);
+  const workspaceId = workspaceService?.workspace.id;
+  const docsService = useServiceOptional(DocsService);
+  const docRecord = useLiveData(docsService?.list.doc$(pageId));
   const titleFromRecord = useLiveData(docRecord?.title$ ?? EMPTY_TITLE$);
-  const docSummary = useService(DocSummaryService);
+  const docSummary = useServiceOptional(DocSummaryService);
   const summaryFromIndexer = useLiveData(
     useMemo(
-      () => LiveData.from(docSummary.watchDocSummary(pageId), null),
+      () => docSummary ? LiveData.from(docSummary.watchDocSummary(pageId), null) : undefined,
       [docSummary, pageId]
     )
   );
 
   const cached = useMemo(
-    () => readDocSnapshotSync(workspaceId, pageId),
+    () => workspaceId ? readDocSnapshotSync(workspaceId, pageId) : null,
     [workspaceId, pageId]
   );
 

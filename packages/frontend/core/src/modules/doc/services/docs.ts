@@ -148,11 +148,7 @@ export class DocsService extends Service {
         : options;
     }
     const id = this.store.createDoc(options.id);
-    console.log('[DEBUG-DOC] store.createDoc returned id:', id);
-    const bsDoc = this.store.getBlocksuiteCollection().getDoc(id);
-    console.log('[DEBUG-DOC] collection.getDoc(id) returned:', !!bsDoc);
     const docStore = this.store.getBlockSuiteDoc(id);
-    console.log('[DEBUG-DOC] store.getBlockSuiteDoc(id) returned:', !!docStore);
     if (!docStore) {
       throw new Error('Failed to create doc');
     }

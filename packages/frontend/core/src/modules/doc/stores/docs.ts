@@ -49,13 +49,6 @@ export class DocsStore extends Store {
           metaMap.set('pages', docs);
         }
 
-        try {
-          this.workspaceService.workspace.docCollection.createDoc(id);
-          console.log('[DEBUG-DOC-STORE] createDoc SUCCESS!');
-        } catch (err) {
-          console.error('[DEBUG-DOC-STORE] createDoc THREW:', err);
-        }
-
         (docs as YArray<any>).push([
           new YMap([
             ['id', id],
