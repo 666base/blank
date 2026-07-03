@@ -386,10 +386,10 @@ export const AppTabsHeader = ({
   left?: ReactNode;
 }) => {
   const t = useI18n();
-  const appSidebarService = useService(AppSidebarService).sidebar;
-  const sidebarWidth = useLiveData(appSidebarService.width$);
-  const sidebarOpen = useLiveData(appSidebarService.open$);
-  const sidebarResizing = useLiveData(appSidebarService.resizing$);
+  const appSidebarService = useServiceOptional(AppSidebarService)?.sidebar;
+  const sidebarWidth = useLiveData(appSidebarService?.width$) ?? 256;
+  const sidebarOpen = useLiveData(appSidebarService?.open$) ?? false;
+  const sidebarResizing = useLiveData(appSidebarService?.resizing$) ?? false;
 
   const isMacosDesktop = isDesktopApp() && environment.isMacOs;
   const isWindowsDesktop = isDesktopApp() && environment.isWindows;
