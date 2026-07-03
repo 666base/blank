@@ -430,7 +430,6 @@ const DetailPageImpl = memo(function DetailPageImpl() {
       <Suspense fallback={null}>
         <GlobalPageHistoryModal />
       </Suspense>
-      {/* FIXME: wait for better ai, <PageAIOnboarding /> */}
     </FrameworkScope>
   );
 });

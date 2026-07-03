@@ -24,7 +24,7 @@ export const WorkspaceLayout = function WorkspaceLayout({
 }: PropsWithChildren) {
   const currentWorkspace = useService(WorkspaceService).workspace;
   useEffect(() => {
-    const run = () => preloadBlockSuiteEditor();
+    const run = () => { preloadBlockSuiteEditor().catch(console.error); };
     if (typeof requestIdleCallback === 'function') {
       const id = requestIdleCallback(run, { timeout: 1200 });
       return () => cancelIdleCallback(id);

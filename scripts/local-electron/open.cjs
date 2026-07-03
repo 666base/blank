@@ -86,4 +86,4 @@ const mainPath = path.join(__dirname, 'main.cjs');
   });
 
   child.on('exit', code => process.exit(code || 0));
-})();
+})().catch(console.error);

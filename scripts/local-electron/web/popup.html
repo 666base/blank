@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=auto">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Blank</title>
+    <meta name="theme-color" content="#121212">
+    <style>
+      
+html,body{margin:0;background:#ffffff}
+#app{min-height:100dvh;background:#ffffff}
+.blank-boot-shell{position:fixed;inset:0;z-index:99999;background:#ffffff;pointer-events:none}
+@keyframes blank-boot-shimmer{0%{opacity:.45}50%{opacity:.9}100%{opacity:.45}}
+.blank-boot-shimmer{animation:blank-boot-shimmer 1.2s ease-in-out infinite;background:#f0f1f2;border-radius:8px}
+@media (prefers-color-scheme: dark) {
+  html,body,#app,.blank-boot-shell{background:#141414}
+  .blank-boot-shimmer{background:#2a2a2a}
+}
+
+.blank-boot-desktop{height:100dvh;display:flex}
+.blank-boot-desktop-sidebar{width:248px;border-right:1px solid #f0f1f2;padding:20px;display:flex;flex-direction:column;gap:12px;background:#f8f9fa}
+.blank-boot-desktop-sidebar-top{height:32px;width:120px;border-radius:8px}
+.blank-boot-desktop-main{flex:1;display:flex;flex-direction:column}
+.blank-boot-desktop-header{height:52px;border-bottom:1px solid #f0f1f2;padding:0 20px;display:flex;align-items:center}
+.blank-boot-desktop-content{padding:40px;display:flex;flex-direction:column;gap:20px}
+@media (prefers-color-scheme: dark) {
+  .blank-boot-desktop-sidebar{background:#1e1e1e;border-color:#2a2a2a}
+  .blank-boot-desktop-header{border-color:#2a2a2a}
+}
+
+    </style>
+    <script>
+      (function(){try{var INSTANT="blank-default";var FLAVOUR="local";var SNAP="blank_doc_snapshot:";var w=localStorage.getItem("last_workspace_id");if(!w){w=INSTANT;localStorage.setItem("last_workspace_id",w);localStorage.setItem("last_workspace_flavour",FLAVOUR);}var p=localStorage.getItem("last_page_id");var view="all";var path=p?"/workspace/"+w+"/"+p:"/workspace/"+w+"/"+view;var base=(document.querySelector('meta[name="env:publicPath"]')||{}).content||"/";if(base&&base!=="/"){path=base.replace(/\/$/,"")+path;}var pn=location.pathname;if(pn==="/"||pn==="/index.html"||pn.endsWith("/index.html")){history.replaceState(null,"",path);}function hydrate(){try{if(!p)return;var raw=localStorage.getItem(SNAP+w+":"+p);if(!raw)return;var snap=JSON.parse(raw);var main=document.querySelector(".blank-boot-mobile-main")||document.querySelector(".blank-boot-main");if(!main||!snap)return;main.innerHTML="";if(snap.title){var h=document.createElement("div");h.className="blank-boot-cached-title";h.textContent=snap.title;main.appendChild(h);}if(snap.preview){var t=document.createElement("div");t.className="blank-boot-cached-preview";t.textContent=snap.preview;main.appendChild(t);}}catch(e){}}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",hydrate);}else{hydrate();}}catch(e){}})();
+    </script>
+    
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" sizes="192x192" href="/favicon-192.png">
+    <link rel="shortcut icon" href="/favicon.ico?v=3">
+    <meta name="emotion-insertion-point" content="">
+    <meta property="description" content="Blank — local notes and documents.">
+  <meta content="/" name="env:publicPath"></head>
+
+  <body>
+    <div id="app" data-version="abcdef123">
+      <div id="blank-boot-shell" class="blank-boot-shell" aria-hidden="true">
+  <div class="blank-boot-desktop">
+    <div class="blank-boot-desktop-sidebar">
+      <div class="blank-boot-shimmer blank-boot-desktop-sidebar-top"></div>
+      <div class="blank-boot-shimmer blank-boot-line" style="margin-top:24px"></div>
+      <div class="blank-boot-shimmer blank-boot-line"></div>
+      <div class="blank-boot-shimmer blank-boot-line"></div>
+    </div>
+    <div class="blank-boot-desktop-main">
+      <div class="blank-boot-desktop-header">
+        <div class="blank-boot-shimmer blank-boot-tab"></div>
+      </div>
+      <div class="blank-boot-desktop-content">
+        <div class="blank-boot-shimmer blank-boot-line blank-boot-line--lg"></div>
+        <div class="blank-boot-shimmer blank-boot-card" style="height:200px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  
+
+</body></html>

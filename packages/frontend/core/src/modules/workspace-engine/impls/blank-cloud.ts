@@ -272,7 +272,7 @@ class BlankCloudWorkspaceFlavourProvider implements WorkspaceFlavourProvider {
   }
 
   onWorkspaceInitialized(workspace: Workspace): void {
-    void this.bootstrapWorkspace(workspace);
+    this.bootstrapWorkspace(workspace).catch(console.error);
   }
 
   private async bootstrapWorkspace(workspace: Workspace) {

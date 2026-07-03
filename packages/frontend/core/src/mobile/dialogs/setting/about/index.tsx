@@ -19,10 +19,10 @@ export const AboutGroup = () => {
 
   const handleUpdateAction = useCallback(() => {
     if (status === 'available') {
-      void downloadUpdate();
+      downloadUpdate().catch(console.error);
       return;
     }
-    void checkForUpdates();
+    checkForUpdates().catch(console.error);
   }, [checkForUpdates, downloadUpdate, status]);
 
   const updateHint = (() => {

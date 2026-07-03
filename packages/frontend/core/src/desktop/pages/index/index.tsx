@@ -232,7 +232,7 @@ export const Component = ({
       } finally {
         setCreating(false);
       }
-    })();
+    })().catch(console.error);
   }, [
     jumpToPage,
     openPage,

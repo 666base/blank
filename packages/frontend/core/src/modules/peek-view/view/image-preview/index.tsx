@@ -62,7 +62,6 @@ async function copyImageToClipboard(url: string) {
   }
   try {
     await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
-    console.log('Image copied to clipboard');
     toast('Copied to clipboard.');
   } catch (error) {
     console.error('Error copying image to clipboard', error);

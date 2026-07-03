@@ -311,7 +311,7 @@ app.whenReady().then(async () => {
       createWindow();
     }
   });
-});
+}).catch(console.error);
 
 app.on('window-all-closed', () => {
   if (process.platform === 'darwin') {

@@ -70,7 +70,6 @@ export const Component = () => {
         callbackUrl: `/auth/confirm-change-email`,
       }).catch(console.error);
 
-      // FIXME: There is not notification
       if (res?.sendVerifyChangeEmail) {
         notify.success({
           title: t['com.blank.auth.sent.verify.email.hint'](),

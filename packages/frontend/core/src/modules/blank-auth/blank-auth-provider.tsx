@@ -114,7 +114,7 @@ export const BlankAuthProvider = ({ children }: PropsWithChildren) => {
         setError(err instanceof Error ? err.message : 'Auth init failed');
         setLoading(false);
       }
-    })();
+    })().catch(console.error);
 
     return () => {
       cancelled = true;

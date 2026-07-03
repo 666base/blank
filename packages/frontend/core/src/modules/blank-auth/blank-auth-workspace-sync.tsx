@@ -84,7 +84,7 @@ export function BlankAuthWorkspaceSync() {
         BLANK_CLOUD_FLAVOUR
       );
       openPage(cloudWorkspaceId, 'all');
-    })();
+    })().catch(console.error);
   }, [isSignedIn, loading, openPage, workspaceId]);
 
   return null;

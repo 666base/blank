@@ -73,9 +73,11 @@ export const BlankAccountSettings = () => {
       setSyncWorkspaceId(null);
       return;
     }
-    void fetchBlankWorkspaces().then(rows => {
-      setSyncWorkspaceId(rows[0]?.id ?? null);
-    });
+    fetchBlankWorkspaces()
+      .then(rows => {
+        setSyncWorkspaceId(rows[0]?.id ?? null);
+      })
+      .catch(console.error);
   }, [isSignedIn]);
 
   const onOpenSyncWorkspace = useCallback(() => {
@@ -118,7 +120,7 @@ export const BlankAccountSettings = () => {
               </SettingRow>
             ) : null}
             <SettingRow name="" desc="">
-              <Button variant="error" onClick={onSignOut} disabled={submitting}>
+              <Button variant="error" onClick={() => { onSignOut().catch(console.error); }} disabled={submitting}>
                 {t['com.blank.auth.signOut']()}
               </Button>
             </SettingRow>
@@ -151,19 +153,19 @@ export const BlankAccountSettings = () => {
             ) : null}
             <SettingRow name="" desc="">
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                <Button onClick={onSignIn} disabled={submitting}>
+                <Button onClick={() => { onSignIn().catch(console.error); }} disabled={submitting}>
                   {t['com.blank.auth.signIn']()}
                 </Button>
                 <Button
                   variant="secondary"
-                  onClick={() => onOAuth('google')}
+                  onClick={() => { onOAuth('google').catch(console.error); }}
                   disabled={submitting}
                 >
                   Google
                 </Button>
                 <Button
                   variant="secondary"
-                  onClick={() => onOAuth('github')}
+                  onClick={() => { onOAuth('github').catch(console.error); }}
                   disabled={submitting}
                 >
                   GitHub

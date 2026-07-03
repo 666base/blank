@@ -52,9 +52,11 @@ export const BlankAccountGroup = () => {
       setSyncWorkspaceId(null);
       return;
     }
-    void fetchBlankWorkspaces().then(rows => {
-      setSyncWorkspaceId(rows[0]?.id ?? null);
-    });
+    fetchBlankWorkspaces()
+      .then(rows => {
+        setSyncWorkspaceId(rows[0]?.id ?? null);
+      })
+      .catch(console.error);
   }, [isSignedIn]);
 
   const onOpenSyncWorkspace = useCallback(() => {
@@ -89,7 +91,7 @@ export const BlankAccountGroup = () => {
             </RowLayout>
           ) : null}
           <RowLayout label="">
-            <Button variant="error" onClick={onSignOut} disabled={submitting}>
+            <Button variant="error" onClick={() => { onSignOut().catch(console.error); }} disabled={submitting}>
               {t['com.blank.auth.signOut']()}
             </Button>
           </RowLayout>
@@ -115,7 +117,7 @@ export const BlankAccountGroup = () => {
           </RowLayout>
           {error ? <RowLayout label={error}>{null}</RowLayout> : null}
           <RowLayout label="">
-            <Button onClick={onSignIn} disabled={submitting}>
+            <Button onClick={() => { onSignIn().catch(console.error); }} disabled={submitting}>
               {t['com.blank.auth.signIn']()}
             </Button>
           </RowLayout>

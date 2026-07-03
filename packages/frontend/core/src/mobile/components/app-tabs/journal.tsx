@@ -15,8 +15,8 @@ export const AppTabJournal = ({ tab }: AppTabCustomFCProps) => {
   const globalCache = useService(GlobalCacheService).globalCache;
 
   useEffect(() => {
-    void import('../../pages/workspace/journals');
-    void import('../../pages/workspace/detail/mobile-detail-page');
+    import('../../pages/workspace/journals').catch(console.error);
+    import('../../pages/workspace/detail/mobile-detail-page').catch(console.error);
   }, []);
 
   const handleOpenToday = useCallback(() => {

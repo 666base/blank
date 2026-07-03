@@ -589,7 +589,7 @@ export const Component = () => {
 
   useEffect(() => {
     if (pageId) {
-      preloadBlockSuiteEditor();
+      preloadBlockSuiteEditor().catch(console.error);
     }
   }, [pageId]);
 

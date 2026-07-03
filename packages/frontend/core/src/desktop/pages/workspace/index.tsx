@@ -310,21 +310,13 @@ const WorkspacePage = ({ meta }: { meta: WorkspaceMetadata }) => {
               schema,
               blob
             );
-            console.log(
-              'imported docs',
-              newDocs
-                .filter(doc => !!doc)
-                .map(doc => ({
-                  id: doc.id,
-                  title: doc.meta?.title,
-                }))
-            );
+
           }
         };
         input.click();
       };
       persistFastBootRoute(workspace.id, undefined, workspace.flavour);
-      void ensureInstantWorkspace(workspacesService, workspace);
+      ensureInstantWorkspace(workspacesService, workspace).catch(console.error);
       globalContextService.globalContext.workspaceId.set(workspace.id);
       globalContextService.globalContext.workspaceFlavour.set(
         workspace.flavour

@@ -62,7 +62,7 @@ export const WorkspaceLayout = ({
   const workspaceServer = workspace.scope.get(WorkspaceServerService)?.server;
 
   useEffect(() => {
-    void ensureInstantWorkspace(workspacesService, workspace);
+    ensureInstantWorkspace(workspacesService, workspace).catch(console.error);
   }, [workspace, workspacesService]);
 
   useEffect(() => {

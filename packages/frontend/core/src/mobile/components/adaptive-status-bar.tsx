@@ -40,13 +40,13 @@ export const AdaptiveStatusBar = () => {
       return;
     }
 
-    registerNativeStatusBarSync(syncNativeStatusBar);
+    registerNativeStatusBarSync((color: string) => { syncNativeStatusBar(color).catch(console.error); });
 
     const initial = document
       .querySelector('meta[name="theme-color"]')
       ?.getAttribute('content');
     if (initial) {
-      void syncNativeStatusBar(initial);
+      syncNativeStatusBar(initial).catch(console.error);
     }
 
     return () => registerNativeStatusBarSync(null);

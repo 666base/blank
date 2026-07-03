@@ -46,7 +46,7 @@ if (isBlankBuild()) {
       }
       await blankGetSession();
       revalidateBlankCloudWorkspaces();
-    })();
+    })().catch(console.error);
   };
   if (typeof requestIdleCallback === 'function') {
     requestIdleCallback(run, { timeout: 1000 });
