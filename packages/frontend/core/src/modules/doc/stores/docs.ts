@@ -41,14 +41,12 @@ export class DocsStore extends Store {
     transact(
       this.workspaceService.workspace.rootYDoc,
       () => {
-        const docs = this.workspaceService.workspace.rootYDoc
-          .getMap('meta')
-          .get('pages');
-
-        console.log('[DEBUG-DOC-STORE] docs exists?', !!docs, 'isYArray?', docs instanceof YArray);
+        const metaMap = this.workspaceService.workspace.rootYDoc.getMap('meta');
+        let docs = metaMap.get('pages');
 
         if (!docs || !(docs instanceof YArray)) {
-          return;
+          docs = new YArray();
+          metaMap.set('pages', docs);
         }
 
         try {
@@ -58,7 +56,7 @@ export class DocsStore extends Store {
           console.error('[DEBUG-DOC-STORE] createDoc THREW:', err);
         }
 
-        docs.push([
+        (docs as YArray<any>).push([
           new YMap([
             ['id', id],
             ['title', ''],

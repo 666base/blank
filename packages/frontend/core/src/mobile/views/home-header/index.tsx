@@ -31,7 +31,7 @@ import * as styles from './styles.css';
  */
 export const HomeHeader = () => {
   const workspaceDialogService = useService(WorkspaceDialogService);
-  const hideWorkspaceSelector = isBlankBuild();
+  const hideWorkspaceSelector = false; // Always show workspace selector on mobile
 
   const workspaceCardRef = useRef<HTMLDivElement>(null);
   const floatWorkspaceCardRef = useRef<HTMLDivElement>(null);
