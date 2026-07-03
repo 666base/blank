@@ -50,8 +50,39 @@ jobs:
             releases/android/Blank-*.apk
             releases/android/version.json
 
+  build-desktop:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build Desktop EXE
+        run: npm run desktop:build
+        env:
+          BLANK_NO_AI: '1'
+
+      - name: Upload Desktop artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-release
+          path: |
+            releases/desktop/Blank-Setup-*.exe
+            releases/desktop/latest.yml
+
   publish:
-    needs: [build-android]
+    needs: [build-android, build-desktop]
     runs-on: ubuntu-latest
     steps:
       - name: Download Android artifacts
@@ -60,10 +91,20 @@ jobs:
           name: android-release
           path: artifacts/android
 
+      - name: Download Desktop artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: desktop-release
+          path: artifacts/desktop
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/android/Blank-*.apk
+          files: |
+            artifacts/android/Blank-*.apk
+            artifacts/desktop/Blank-Setup-*.exe
+            artifacts/desktop/latest.yml
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
