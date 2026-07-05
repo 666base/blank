@@ -16,6 +16,7 @@ import { WorkspacePropertySidebar } from '@blank/core/components/properties/side
 import { TrashPageFooter } from '@blank/core/components/pure/trash-page-footer';
 import { TopTip } from '@blank/core/components/top-tip';
 import { isDocEditBlocked } from '@blank/core/modules/permissions';
+import { ServerService } from '@blank/core/modules/cloud';
 import { DocService } from '@blank/core/modules/doc';
 import { EditorService } from '@blank/core/modules/editor';
 import { FeatureFlagService } from '@blank/core/modules/feature-flag';
