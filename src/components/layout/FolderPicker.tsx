@@ -83,6 +83,17 @@ export function FolderPicker() {
 
   const handleSelectFolder = async (startPath?: string) => {
     try {
+      // On Android, directory picker dialogs are not supported and cause the app to freeze.
+      // Instead, automatically use the app's data directory as the notes folder.
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      if (isAndroid) {
+        const { appDataDir } = await import("@tauri-apps/api/path");
+        const dataDir = await appDataDir();
+        await setNotesFolder(dataDir);
+        await reloadSettings();
+        return;
+      }
+
       const selected = await open({
         directory: true,
         multiple: false,
