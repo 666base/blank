@@ -3890,6 +3890,7 @@ pub fn run() {
             uninstall_cli,
             get_cli_status,
             set_title_bar_theme,
+            get_cloud_folders,
         ])
         .build(tauri::generate_context!())
         .expect("error while building tauri application");
@@ -3966,6 +3967,170 @@ mod windows_title_bar {
                 std::mem::size_of::<u32>() as u32,
             );
         }
+    }
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct CloudFolder {
+    pub name: String,
+    pub path: String,
+    pub icon: String, // e.g. "google-drive", "dropbox", "onedrive"
+}
+
+#[tauri::command]
+fn get_cloud_folders() -> Vec<CloudFolder> {
+    let mut folders: Vec<CloudFolder> = Vec::new();
+
+    let home = match dirs_home() {
+        Some(h) => h,
+        None => return folders,
+    };
+
+    // --- Google Drive ---
+    // Google Drive for Desktop on Windows: ~/Google Drive/
+    // Also checks the registry for custom path, but folder name heuristics cover most cases.
+    let google_candidates = vec![
+        home.join("Google Drive"),
+        home.join("Google Drive (My Drive)"),
+        home.join("GoogleDrive"),
+        // macOS
+        home.join("Library").join("CloudStorage").join("GoogleDrive-My Drive"),
+        // Windows AppData rerouted mount point
+        PathBuf::from("G:\\"),
+    ];
+    for p in google_candidates {
+        if p.exists() && p.is_dir() {
+            folders.push(CloudFolder {
+                name: "Google Drive".to_string(),
+                path: p.to_string_lossy().to_string(),
+                icon: "google-drive".to_string(),
+            });
+            break;
+        }
+    }
+
+    // --- Dropbox ---
+    let dropbox_candidates = vec![
+        home.join("Dropbox"),
+        home.join("Library").join("CloudStorage").join("Dropbox"),
+    ];
+    for p in dropbox_candidates {
+        if p.exists() && p.is_dir() {
+            folders.push(CloudFolder {
+                name: "Dropbox".to_string(),
+                path: p.to_string_lossy().to_string(),
+                icon: "dropbox".to_string(),
+            });
+            break;
+        }
+    }
+
+    // --- OneDrive ---
+    let onedrive_candidates = vec![
+        home.join("OneDrive"),
+        home.join("OneDrive - Personal"),
+        // European/other locales
+        PathBuf::from(std::env::var("OneDrive").unwrap_or_default()),
+        PathBuf::from(std::env::var("OneDriveConsumer").unwrap_or_default()),
+    ];
+    let mut onedrive_added = false;
+    for p in onedrive_candidates {
+        if !p.to_string_lossy().is_empty() && p.exists() && p.is_dir() {
+            folders.push(CloudFolder {
+                name: "OneDrive".to_string(),
+                path: p.to_string_lossy().to_string(),
+                icon: "onedrive".to_string(),
+            });
+            onedrive_added = true;
+            break;
+        }
+    }
+    // Fallback: scan home for OneDrive* folders
+    if !onedrive_added {
+        if let Ok(entries) = std::fs::read_dir(&home) {
+            for entry in entries.flatten() {
+                let name = entry.file_name().to_string_lossy().to_string();
+                if name.to_lowercase().starts_with("onedrive") && entry.path().is_dir() {
+                    folders.push(CloudFolder {
+                        name: "OneDrive".to_string(),
+                        path: entry.path().to_string_lossy().to_string(),
+                        icon: "onedrive".to_string(),
+                    });
+                    break;
+                }
+            }
+        }
+    }
+
+    // --- iCloud Drive (macOS only) ---
+    #[cfg(target_os = "macos")]
+    {
+        let icloud = home.join("Library").join("Mobile Documents").join("com~apple~CloudDocs");
+        if icloud.exists() && icloud.is_dir() {
+            folders.push(CloudFolder {
+                name: "iCloud Drive".to_string(),
+                path: icloud.to_string_lossy().to_string(),
+                icon: "icloud".to_string(),
+            });
+        }
+    }
+
+    // --- Box ---
+    let box_candidates = vec![
+        home.join("Box"),
+        home.join("Box Sync"),
+        home.join("Box Drive"),
+    ];
+    for p in box_candidates {
+        if p.exists() && p.is_dir() {
+            folders.push(CloudFolder {
+                name: "Box".to_string(),
+                path: p.to_string_lossy().to_string(),
+                icon: "box".to_string(),
+            });
+            break;
+        }
+    }
+
+    // --- Nextcloud / ownCloud ---
+    let nc_candidates = vec![
+        home.join("Nextcloud"),
+        home.join("ownCloud"),
+        home.join("Nextcloud Sync"),
+    ];
+    for p in nc_candidates {
+        if p.exists() && p.is_dir() {
+            folders.push(CloudFolder {
+                name: "Nextcloud".to_string(),
+                path: p.to_string_lossy().to_string(),
+                icon: "nextcloud".to_string(),
+            });
+            break;
+        }
+    }
+
+    folders
+}
+
+fn dirs_home() -> Option<PathBuf> {
+    #[cfg(target_os = "windows")]
+    {
+        std::env::var("USERPROFILE")
+            .ok()
+            .map(PathBuf::from)
+            .or_else(|| {
+                let drive = std::env::var("HOMEDRIVE").unwrap_or_default();
+                let path = std::env::var("HOMEPATH").unwrap_or_default();
+                if drive.is_empty() || path.is_empty() {
+                    None
+                } else {
+                    Some(PathBuf::from(format!("{}{}", drive, path)))
+                }
+            })
+    }
+    #[cfg(not(target_os = "windows"))]
+    {
+        std::env::var("HOME").ok().map(PathBuf::from)
     }
 }
 
