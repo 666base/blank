@@ -4,8 +4,11 @@ import clsx from 'clsx';
 import { AppSidebarService } from '../../services/app-sidebar';
 import { navHeaderStyle } from '../index.css';
 import * as local from './sidebar-header.css';
-import { SidebarSwitch } from './sidebar-switch';
 
+/**
+ * Scratch-style Overlay drag strip: empty h-11 region only.
+ * Interactive controls live below / in the page header (no-drag).
+ */
 export const SidebarHeader = () => {
   const appSidebarService = useService(AppSidebarService).sidebar;
   const open = useLiveData(appSidebarService.open$);
@@ -13,14 +16,15 @@ export const SidebarHeader = () => {
 
   return (
     <div
-      className={clsx(navHeaderStyle, isMac && local.macTrafficLightPad)}
+      className={clsx(
+        navHeaderStyle,
+        local.dragStrip,
+        isMac && local.macTrafficLightPad
+      )}
       data-open={open}
       data-tauri-drag-region
-    >
-      <div className={clsx(local.headerControls, 'titlebar-no-drag')}>
-        <SidebarSwitch show={open} />
-      </div>
-    </div>
+      aria-hidden
+    />
   );
 };
 

@@ -1,10 +1,9 @@
 /**
- * Blank shell theme — scratch stone DNA overlaid on AFFiNE CSS variables.
- * Imported after @affine/component/theme. Does not touch settings/sync logic.
+ * Blank shell theme — scratch stone DNA over AFFiNE surfaces.
+ * Keep overrides shell-scoped; avoid breaking editor/interaction tokens.
  */
 
 :root {
-  /* Scratch stone tokens */
   --blank-bg: #ffffff;
   --blank-bg-secondary: #fafaf9;
   --blank-bg-muted: rgba(28, 25, 23, 0.06);
@@ -16,6 +15,7 @@
   --blank-accent: #1c1917;
   --blank-selection: rgba(250, 204, 21, 0.4);
   --blank-titlebar-height: 44px;
+  --blank-sidebar-width: 256px;
 
   --affine-font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
@@ -27,17 +27,16 @@
     ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Courier New',
     monospace;
 
+  /* Surfaces only — leave status/palette colors to AFFiNE */
   --affine-background-primary-color: var(--blank-bg);
   --affine-background-secondary-color: var(--blank-bg-secondary);
   --affine-background-tertiary-color: var(--blank-bg-muted);
   --affine-background-overlay-panel-color: var(--blank-bg);
   --affine-background-modal-color: rgba(28, 25, 23, 0.35);
-  --affine-background-code-block: var(--blank-bg-muted);
 
   --affine-text-primary-color: var(--blank-text);
   --affine-text-secondary-color: var(--blank-text-muted);
   --affine-text-disable-color: rgba(28, 25, 23, 0.35);
-  --affine-text-emphasis-color: var(--blank-accent);
 
   --affine-icon-color: var(--blank-text);
   --affine-icon-secondary: var(--blank-text-muted);
@@ -46,29 +45,12 @@
   --affine-hover-color: var(--blank-bg-muted);
   --affine-hover-color-filled: var(--blank-bg-emphasis);
 
+  /* Stone accent instead of purple brand */
   --affine-primary-color: var(--blank-accent);
   --affine-primary-color-04: rgba(28, 25, 23, 0.04);
   --affine-brand-color: var(--blank-accent);
-  --affine-link-color: var(--blank-accent);
+  --affine-text-emphasis-color: var(--blank-accent);
 
-  --affine-black: #1c1917;
-  --affine-black-10: rgba(28, 25, 23, 0.1);
-  --affine-black-30: rgba(28, 25, 23, 0.3);
-  --affine-black-50: rgba(28, 25, 23, 0.5);
-  --affine-black-60: rgba(28, 25, 23, 0.6);
-  --affine-black-80: rgba(28, 25, 23, 0.8);
-  --affine-black-90: rgba(28, 25, 23, 0.9);
-  --affine-white: #fafaf9;
-  --affine-white-10: rgba(250, 249, 249, 0.1);
-  --affine-white-30: rgba(250, 249, 249, 0.3);
-  --affine-white-50: rgba(250, 249, 249, 0.5);
-  --affine-white-60: rgba(250, 249, 249, 0.6);
-  --affine-white-80: rgba(250, 249, 249, 0.8);
-  --affine-white-90: rgba(250, 249, 249, 0.9);
-  --affine-pure-black: #1c1917;
-  --affine-pure-white: #ffffff;
-
-  /* v2 layer tokens used heavily by shell */
   --affine-v2-layer-background-primary: var(--blank-bg);
   --affine-v2-layer-background-secondary: var(--blank-bg-secondary);
   --affine-v2-layer-background-tertiary: var(--blank-bg-muted);
@@ -102,9 +84,45 @@ html.dark {
   --blank-accent: #fafaf9;
   --blank-selection: rgba(253, 224, 71, 0.35);
 
+  --affine-background-primary-color: var(--blank-bg);
+  --affine-background-secondary-color: var(--blank-bg-secondary);
+  --affine-background-tertiary-color: var(--blank-bg-muted);
+  --affine-background-overlay-panel-color: var(--blank-bg);
   --affine-background-modal-color: rgba(0, 0, 0, 0.55);
+
+  --affine-text-primary-color: var(--blank-text);
+  --affine-text-secondary-color: var(--blank-text-muted);
+  --affine-text-disable-color: rgba(250, 249, 249, 0.35);
+  --affine-text-emphasis-color: var(--blank-accent);
+
+  --affine-icon-color: var(--blank-text);
+  --affine-icon-secondary: var(--blank-text-muted);
+  --affine-border-color: var(--blank-border);
+  --affine-divider-color: var(--blank-border);
+  --affine-hover-color: var(--blank-bg-muted);
+  --affine-hover-color-filled: var(--blank-bg-emphasis);
+
+  --affine-primary-color: var(--blank-accent);
+  --affine-primary-color-04: rgba(250, 249, 249, 0.04);
+  --affine-brand-color: var(--blank-accent);
+
+  --affine-v2-layer-background-primary: var(--blank-bg);
+  --affine-v2-layer-background-secondary: var(--blank-bg-secondary);
+  --affine-v2-layer-background-tertiary: var(--blank-bg-muted);
+  --affine-v2-layer-background-overlayPanel: var(--blank-bg);
   --affine-v2-layer-background-modal: rgba(0, 0, 0, 0.55);
+  --affine-v2-layer-background-hoverOverlay: var(--blank-bg-muted);
+  --affine-v2-layer-insideBorder-border: var(--blank-border);
+  --affine-v2-text-primary: var(--blank-text);
+  --affine-v2-text-secondary: var(--blank-text-muted);
+  --affine-v2-text-disable: rgba(250, 249, 249, 0.35);
+  --affine-v2-text-emphasis: var(--blank-accent);
+  --affine-v2-icon-primary: var(--blank-text);
+  --affine-v2-icon-secondary: var(--blank-text-muted);
+  --affine-v2-button-primary: var(--blank-accent);
   --affine-v2-button-primaryHover: #e7e5e4;
+  --affine-v2-layer-white: var(--blank-bg);
+
   --affine-noise-opacity: 0;
 }
 
@@ -124,7 +142,7 @@ body,
   -webkit-font-smoothing: antialiased;
 }
 
-/* Tauri Overlay drag helpers (scratch titlebar) */
+/* Tauri Overlay drag helpers */
 .titlebar-drag-region,
 [data-tauri-drag-region] {
   -webkit-app-region: drag;
@@ -136,6 +154,7 @@ body,
 [data-tauri-drag-region] a,
 [data-tauri-drag-region] input,
 [data-tauri-drag-region] [role='button'],
+[data-tauri-drag-region] [data-testid],
 .titlebar-no-drag * {
   -webkit-app-region: no-drag;
   app-region: no-drag;
@@ -147,7 +166,15 @@ body,
   width: 100%;
 }
 
-/* Settings modal chrome — stone panel, quiet overlay */
+/* Quiet page chrome — hide cloud/share noise in detail header */
+[data-testid='page-header-share'],
+[data-testid='share-menu'],
+button[aria-label='Share'],
+[data-testid='header-share-button'] {
+  display: none !important;
+}
+
+/* Settings modal chrome */
 [data-testid='setting-modal'] {
   background: var(--blank-bg) !important;
   border: 1px solid var(--blank-border) !important;
@@ -163,4 +190,15 @@ html.dark [data-testid='setting-modal'] {
   box-shadow:
     0 24px 48px rgba(0, 0, 0, 0.45),
     0 0 0 1px var(--blank-border) !important;
+}
+
+/* Primary filled buttons: dark fill + light label (scratch accent = text) */
+html[data-theme='light'] button[data-variant='primary'],
+html:not([data-theme='dark']):not(.dark) button[data-variant='primary'] {
+  color: #fafaf9 !important;
+}
+
+html[data-theme='dark'] button[data-variant='primary'],
+html.dark button[data-variant='primary'] {
+  color: #0c0a09 !important;
 }

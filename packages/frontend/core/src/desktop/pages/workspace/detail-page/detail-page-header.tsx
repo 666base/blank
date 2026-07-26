@@ -19,7 +19,6 @@ import { DocService } from '@affine/core/modules/doc';
 import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
 import { EditorService } from '@affine/core/modules/editor';
 import { JournalService } from '@affine/core/modules/journal';
-import { SharePageButton } from '@affine/core/modules/share-menu';
 import { TemplateDocService } from '@affine/core/modules/template-doc';
 import { ViewIcon, ViewTitle } from '@affine/core/modules/workbench';
 import type { Workspace } from '@affine/core/modules/workspace';
@@ -81,7 +80,7 @@ interface PageHeaderProps {
   page: Store;
   workspace: Workspace;
 }
-export function JournalPageHeader({ page, workspace }: PageHeaderProps) {
+export function JournalPageHeader({ page }: PageHeaderProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -93,8 +92,7 @@ export function JournalPageHeader({ page, workspace }: PageHeaderProps) {
     });
   }, []);
 
-  const { hideShare, hideToday } =
-    useDetailPageHeaderResponsive(containerWidth);
+  const { hideToday } = useDetailPageHeaderResponsive(containerWidth);
 
   const docDisplayMetaService = useService(DocDisplayMetaService);
   const title = useLiveData(docDisplayMetaService.title$(page.id));
@@ -115,14 +113,11 @@ export function JournalPageHeader({ page, workspace }: PageHeaderProps) {
         page={page}
         containerWidth={containerWidth}
       />
-      {page && !hideShare ? (
-        <SharePageButton workspace={workspace} page={page} />
-      ) : null}
     </Header>
   );
 }
 
-export function NormalPageHeader({ page, workspace }: PageHeaderProps) {
+export function NormalPageHeader({ page }: PageHeaderProps) {
   const titleInputHandleRef = useRef<InlineEditHandle>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -135,7 +130,7 @@ export function NormalPageHeader({ page, workspace }: PageHeaderProps) {
     });
   }, []);
 
-  const { hideCollect, hideShare, hidePresent, showDivider } =
+  const { hideCollect, hidePresent, showDivider } =
     useDetailPageHeaderResponsive(containerWidth);
 
   const onRename = useCallback(() => {
@@ -175,10 +170,6 @@ export function NormalPageHeader({ page, workspace }: PageHeaderProps) {
       <div className={styles.spacer} />
 
       {!hidePresent ? <DetailPageHeaderPresentButton /> : null}
-
-      {page && !hideShare ? (
-        <SharePageButton workspace={workspace} page={page} />
-      ) : null}
 
       {showDivider ? (
         <Divider orientation="vertical" style={{ height: 20, marginLeft: 4 }} />

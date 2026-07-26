@@ -20,7 +20,7 @@ export const header = style({
   background: 'var(--blank-bg, #ffffff)',
   padding: '0 12px',
   contain: 'strict',
-  borderBottom: '1px solid var(--blank-border, rgba(28,25,23,0.08))',
+  borderBottom: 'none',
   '@media': {
     print: {
       display: 'none',
@@ -34,7 +34,7 @@ export const header = style({
 });
 
 export const headerMacPad = style({
-  paddingLeft: 72,
+  paddingLeft: 88,
 });
 
 export const viewBodyContainer = style({
@@ -49,6 +49,7 @@ export const leftSidebarButton = style({
 });
 
 export const rightSidebarButton = style({
+  display: 'none',
   transition: 'all 0.2s ease-in-out',
   selectors: {
     '&[data-show=true]': {

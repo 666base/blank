@@ -1,4 +1,3 @@
-// Import is already correct, no changes needed
 import {
   AddPageButton,
   AppSidebar,
@@ -8,46 +7,30 @@ import {
   SidebarContainer,
   SidebarScrollableContainer,
 } from '@affine/core/modules/app-sidebar/views';
-import { ExternalMenuLinkItem } from '@affine/core/modules/app-sidebar/views/menu-item/external-menu-link-item';
 import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { CMDKQuickSearchService } from '@affine/core/modules/quicksearch/services/cmdk';
 import type { Workspace } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
 import { track } from '@affine/track';
 import type { Store } from '@blocksuite/affine/store';
-import {
-  AllDocsIcon,
-  ImportIcon,
-  JournalIcon,
-  SettingsIcon,
-} from '@blocksuite/icons/rc';
+import { AllDocsIcon, ImportIcon, SettingsIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService, useServices } from '@toeverything/infra';
 import type { ReactElement } from 'react';
 import { memo, useCallback } from 'react';
 
-import {
-  CollapsibleSection,
-  NavigationPanelCollections,
-  NavigationPanelFavorites,
-  NavigationPanelMigrationFavorites,
-  NavigationPanelOrganize,
-  NavigationPanelTags,
-} from '../../desktop/components/navigation-panel';
+import { NavigationPanelFavorites } from '../../desktop/components/navigation-panel';
 import { WorkbenchService } from '../../modules/workbench';
 import { WorkspaceNavigator } from '../workspace-selector';
 import {
   bottomContainer,
+  notesHeader,
+  notesHeaderTitle,
   quickSearch,
   quickSearchAndNewPage,
-  workspaceAndUserWrapper,
   workspaceWrapper,
 } from './index.css';
 import { AppSidebarJournalButton } from './journal-button';
-import { SidebarAudioPlayer } from './sidebar-audio-player';
-import { TemplateDocEntrance } from './template-doc-entrance';
 import { TrashButton } from './trash-button';
-import { UpdaterButton } from './updater-button';
-import UserInfo from './user-info';
 
 export type RootAppSidebarProps = {
   isPublicWorkspace: boolean;
@@ -83,7 +66,7 @@ const AllDocsButton = () => {
 };
 
 /**
- * This is for the whole Blank app sidebar.
+ * Quiet scratch-like rail: Notes header, search/new, essentials, favorites.
  */
 export const RootAppSidebar = memo((): ReactElement => {
   const { workbenchService, cMDKQuickSearchService } = useServices({
@@ -120,17 +103,14 @@ export const RootAppSidebar = memo((): ReactElement => {
       isWorkspaceFile?: boolean;
     }) => {
       const { docIds, entryId, isWorkspaceFile } = result;
-      // If the imported file is a workspace file, open the entry page.
       if (isWorkspaceFile && entryId) {
         workbench.openDoc(entryId);
       } else if (!docIds.length) {
         return;
       }
-      // Open all the docs when there are multiple docs imported.
       if (docIds.length > 1) {
         workbench.openAll();
       } else {
-        // Otherwise, open the only doc.
         workbench.openDoc(docIds[0]);
       }
     },
@@ -150,16 +130,16 @@ export const RootAppSidebar = memo((): ReactElement => {
   return (
     <AppSidebar>
       <SidebarContainer>
-        <div className={workspaceAndUserWrapper}>
+        <div className={notesHeader}>
+          <div className={notesHeaderTitle}>Notes</div>
           <div className={workspaceWrapper}>
             <WorkspaceNavigator
-              showSyncStatus
+              showSyncStatus={false}
               open={workspaceSelectorOpen}
               onOpenChange={onWorkspaceSelectorOpenChange}
               dense
             />
           </div>
-          <UserInfo />
         </div>
         <div className={quickSearchAndNewPage}>
           <QuickSearchInput
@@ -184,34 +164,16 @@ export const RootAppSidebar = memo((): ReactElement => {
       </SidebarContainer>
       <SidebarScrollableContainer>
         <NavigationPanelFavorites />
-        <NavigationPanelOrganize />
-        <NavigationPanelMigrationFavorites />
-        <NavigationPanelTags />
-        <NavigationPanelCollections />
-        <CollapsibleSection
-          path={['others']}
-          title={t['com.affine.rootAppSidebar.others']()}
-          contentStyle={{ padding: '6px 8px 0 8px' }}
-        >
-          <TrashButton />
-          <MenuItem
-            data-testid="slider-bar-import-button"
-            icon={<ImportIcon />}
-            onClick={onOpenImportModal}
-          >
-            <span data-testid="import-modal-trigger">{t['Import']()}</span>
-          </MenuItem>
-          <TemplateDocEntrance />
-          <ExternalMenuLinkItem
-            href="https://github.com/666base/blank"
-            icon={<JournalIcon />}
-            label={t['com.affine.app-sidebar.learn-more']()}
-          />
-        </CollapsibleSection>
       </SidebarScrollableContainer>
       <SidebarContainer className={bottomContainer}>
-        <SidebarAudioPlayer />
-        {BUILD_CONFIG.isElectron ? <UpdaterButton /> : null}
+        <TrashButton />
+        <MenuItem
+          data-testid="slider-bar-import-button"
+          icon={<ImportIcon />}
+          onClick={onOpenImportModal}
+        >
+          <span data-testid="import-modal-trigger">{t['Import']()}</span>
+        </MenuItem>
       </SidebarContainer>
     </AppSidebar>
   );

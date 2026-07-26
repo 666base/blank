@@ -1,11 +1,12 @@
 import { style } from '@vanilla-extract/css';
 
-export const headerControls = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 4,
+/** Empty strip matching scratch `h-11` Overlay drag region. */
+export const dragStrip = style({
+  justifyContent: 'flex-start',
+  pointerEvents: 'auto',
 });
 
 export const macTrafficLightPad = style({
-  paddingLeft: 72,
+  // Keep macOS traffic lights clear of the strip content area
+  minHeight: 'var(--blank-titlebar-height, 44px)',
 });
