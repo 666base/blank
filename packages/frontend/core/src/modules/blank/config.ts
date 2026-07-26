@@ -7,7 +7,12 @@ declare const process: {
   env: Record<string, string | undefined>;
 };
 
+/** Explicit globals — more reliable than process.env.* under some bundlers. */
+declare const __BLANK_SUPABASE_URL__: string | undefined;
+declare const __BLANK_SUPABASE_ANON_KEY__: string | undefined;
+
 const SESSION_KEY = 'blank.supabase.session';
+const STORAGE_MODE_KEY = 'blank.storage.mode';
 
 /**
  * Stable Supabase workspace id for all devices of one Blank account.
@@ -16,6 +21,8 @@ const SESSION_KEY = 'blank.supabase.session';
  */
 export const BLANK_SYNC_WORKSPACE_ID = 'blank-default';
 
+export type BlankStorageMode = 'local' | 'folder' | 'account';
+
 export type BlankSupabaseSession = {
   access_token: string;
   refresh_token: string;
@@ -23,21 +30,64 @@ export type BlankSupabaseSession = {
   user_id?: string;
 };
 
+function readDefine(
+  globalName: 'url' | 'anon',
+  ...envKeys: string[]
+): string | undefined {
+  try {
+    if (globalName === 'url' && typeof __BLANK_SUPABASE_URL__ === 'string') {
+      const v = __BLANK_SUPABASE_URL__.trim();
+      if (v) return v;
+    }
+    if (
+      globalName === 'anon' &&
+      typeof __BLANK_SUPABASE_ANON_KEY__ === 'string'
+    ) {
+      const v = __BLANK_SUPABASE_ANON_KEY__.trim();
+      if (v) return v;
+    }
+  } catch {
+    // globals may be undeclared outside the web bundle
+  }
+  for (const key of envKeys) {
+    const v = process.env[key];
+    if (typeof v === 'string' && v.trim()) return v.trim();
+  }
+  return undefined;
+}
+
 export function getBlankSupabaseUrl(): string | undefined {
-  return process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || undefined;
+  return readDefine('url', 'VITE_SUPABASE_URL', 'SUPABASE_URL');
 }
 
 export function getBlankSupabaseAnonKey(): string | undefined {
-  return (
-    process.env.VITE_SUPABASE_ANON_KEY ||
-    process.env.VITE_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-    process.env.SUPABASE_ANON_KEY ||
-    undefined
+  return readDefine(
+    'anon',
+    'VITE_SUPABASE_ANON_KEY',
+    'VITE_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+    'SUPABASE_ANON_KEY'
   );
 }
 
 export function isBlankSupabaseConfigured(): boolean {
   return Boolean(getBlankSupabaseUrl() && getBlankSupabaseAnonKey());
+}
+
+export function getBlankStorageMode(): BlankStorageMode {
+  if (typeof localStorage === 'undefined') return 'local';
+  const raw = localStorage.getItem(STORAGE_MODE_KEY);
+  if (raw === 'folder' || raw === 'account' || raw === 'local') return raw;
+  // Legacy: signed-in session implies account mode
+  if (loadBlankSupabaseSession()?.access_token) return 'account';
+  return 'local';
+}
+
+export function setBlankStorageMode(mode: BlankStorageMode): void {
+  if (typeof localStorage === 'undefined') return;
+  localStorage.setItem(STORAGE_MODE_KEY, mode);
+  if (mode !== 'account') {
+    saveBlankSupabaseSession(null);
+  }
 }
 
 /** Product flags: no AFFiNE Cloud UX, no AI. */
@@ -85,6 +135,9 @@ export function getBlankSupabaseRemoteOpts(_localWorkspaceId: string):
       clientId: string;
     }
   | undefined {
+  if (getBlankStorageMode() !== 'account') {
+    return undefined;
+  }
   const url = getBlankSupabaseUrl();
   const anon = getBlankSupabaseAnonKey();
   const session = loadBlankSupabaseSession();

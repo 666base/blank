@@ -67,6 +67,15 @@ function blankSupabaseDefine(): Record<string, string> {
       def[`process.env.${key}`] = JSON.stringify(v);
     }
   }
+  // Explicit globals — avoids process.env.* rewrite misses under SWC.
+  const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || '';
+  const anon =
+    process.env.VITE_SUPABASE_ANON_KEY ||
+    process.env.VITE_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    process.env.SUPABASE_ANON_KEY ||
+    '';
+  def['__BLANK_SUPABASE_URL__'] = JSON.stringify(url);
+  def['__BLANK_SUPABASE_ANON_KEY__'] = JSON.stringify(anon);
   // Explicitly never inject service role
   def['process.env.VITE_SUPABASE_SERVICE_KEY'] = JSON.stringify('');
   return def;

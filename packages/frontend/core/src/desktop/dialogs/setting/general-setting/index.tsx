@@ -67,7 +67,7 @@ export const useGeneralSettingList = (): GeneralSettingList => {
     const settings: GeneralSettingList = [
       {
         key: 'blank-sync',
-        title: 'Blank Sync',
+        title: 'Data & sync',
         icon: <FolderIcon />,
         testId: 'blank-sync-panel-trigger',
       },

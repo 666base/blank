@@ -7,6 +7,9 @@ export {
 export {
   BLANK_PRODUCT,
   BLANK_SYNC_WORKSPACE_ID,
+  type BlankStorageMode,
+  type BlankSupabaseSession,
+  getBlankStorageMode,
   getBlankSupabaseAnonKey,
   getBlankSupabaseRemoteOpts,
   getBlankSupabaseUrl,
@@ -14,4 +17,12 @@ export {
   isBlankSupabaseConfigured,
   loadBlankSupabaseSession,
   saveBlankSupabaseSession,
+  setBlankStorageMode,
 } from './config';
+export {
+  blankExportWorkspaceBackup,
+  blankImportWorkspaceBackup,
+  blankPickBackupFolderHint,
+  getBlankBackupFolderHint,
+  setBlankBackupFolderHint,
+} from './folder-backup';
