@@ -1,10 +1,10 @@
 # Blank (AFFiNE fork) → Supabase + Tauri migration notes
 
-**Status:** Phases 1–8 ready for review. User-facing brand is **Blank**. Nest out of client path; Tauri Option A desktop + Android scaffolded; sync verification fixes applied. Open PR — do **not** replace `main` until explicit OK.  
+**Status:** Phases 1–8. Product scripts: `npm run dev` = Blank Desktop, `npm run phone` = Blank Phone. Legacy Electron/Capacitor/admin not offered in CLI. PR: https://github.com/666base/blank/pull/1  
 **Date:** 2026-07-27  
 **Product name:** **Blank** (not AFFiNE / not AFFiNE Cloud)  
 **Local tree:** AFFiNE-derived monorepo → Blank  
-**GitHub:** branch [`supabase-tauri-migration`](https://github.com/666base/blank/tree/supabase-tauri-migration) (orphan Blank tree). `main` still has the old notes app.  
+**GitHub:** branch [`supabase-tauri-migration`](https://github.com/666base/blank/tree/supabase-tauri-migration) (orphan Blank tree). Cutover PR [`#1`](https://github.com/666base/blank/pull/1). `main` still old notes until merge.  
 **Supabase:** project **`blank`** (`jzkswvswfvmsfoqfvszo`) — `.env` already pointed here. MCP shop project is unrelated.
 
 ### Decisions (locked)

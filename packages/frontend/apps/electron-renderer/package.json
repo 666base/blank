@@ -2,6 +2,7 @@
   "name": "@affine/electron-renderer",
   "private": true,
   "version": "0.27.0",
+  "description": "LEGACY Electron renderer — not Blank. Use: npm run dev",
   "type": "module",
   "scripts": {
     "build": "affine bundle",

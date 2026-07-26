@@ -1,54 +1,33 @@
-# Blank — Tauri shell (Option A)
+# Blank — Tauri shell (desktop + phone)
 
-Single-window Tauri 2 host that loads the same `@affine/web` build (Blank UI + Supabase sync). Targets **desktop** and **Android**.
+**Blank Desktop** and **Blank Phone** share this package. Electron / Capacitor apps in this monorepo are legacy and not used by `npm run dev`.
 
-## Prerequisites
+## Quick start (from repo root)
 
-- Rust + `yarn` (monorepo root)
-- **Android only:** JDK 17+, Android SDK + NDK, and:
+```bash
+yarn          # or: npm install (scripts still call yarn)
+npm run dev   # Blank Desktop — Tauri window + web UI on :8080
+npm run phone # Blank Phone  — Tauri Android (needs ANDROID_HOME + SDK/NDK)
+```
+
+PowerShell for Android SDK:
 
 ```powershell
 $env:ANDROID_HOME = "$env:LOCALAPPDATA\Android\Sdk"
 $env:ANDROID_SDK_ROOT = $env:ANDROID_HOME
+npm run phone
 ```
 
-Rust Android targets are installed by `tauri android init` (`aarch64-linux-android`, etc.).
+## Scripts
 
-## Dev (desktop)
+| Script                        | What                           |
+| ----------------------------- | ------------------------------ |
+| `npm run dev` / `dev:desktop` | Tauri desktop                  |
+| `npm run phone` / `dev:phone` | Tauri Android                  |
+| `npm run build`               | Desktop installer              |
+| `npm run build:phone`         | Android APK/AAB                |
+| `npm run dev:web`             | Browser only (no Tauri window) |
 
-```bash
-# from repo root
-yarn
-yarn workspace @affine/tauri tauri icon src-tauri/icons/icon.png   # once, generates icon set
-yarn workspace @affine/tauri dev
-```
+Interactive: `yarn blank dev` → choose **Blank Desktop** or **Blank Phone**.
 
-Starts `@affine/web` on `:8080` and opens the Tauri window.
-
-## Dev (Android)
-
-```bash
-# ANDROID_HOME set (see above); emulator or device attached
-yarn workspace @affine/tauri android:dev
-```
-
-## Release
-
-```bash
-# Windows desktop (NSIS/MSI)
-yarn workspace @affine/tauri build
-
-# Android APK / AAB
-yarn workspace @affine/tauri android:build
-```
-
-Desktop artifacts: `src-tauri/target/release/bundle/`  
-Android project: `src-tauri/gen/android/` (Gradle)
-
-Supabase URL/anon key are injected into the web bundle via root `.env` + rspack (never service_role).
-
-## Notes
-
-- Package id: `app.blank.desktop` (same for Android applicationId for now)
-- Capacitor `packages/frontend/apps/android` stays in tree until Tauri Android is proven end-to-end
-- Native SQLite / secure session storage are later phases — Phase 6 is shell scaffold only
+Supabase URL/anon key come from root `.env` via rspack (never service_role).
