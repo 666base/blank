@@ -1,42 +1,51 @@
 # Blank (AFFiNE fork) → Supabase + Tauri migration notes
 
-**Status:** Partially unblocked on product intent; still need push style + Supabase target before writing/applying SQL.  
+**Status:** Phase 1 **done** on Supabase project `blank`. Phase 2 provider **scaffolded**. Branch pushed (remote `main` untouched). Next: wire provider + strip AFFiNE Cloud UI (Phase 3).  
 **Date:** 2026-07-27  
 **Product name:** **Blank** (not AFFiNE / not AFFiNE Cloud)  
-**Local tree:** AFFiNE-derived monorepo `@affine/monorepo` **0.27.0** — codebase to become Blank  
-**GitHub `666base/blank`:** currently old notes app (`tauri-app` v0.11.0) — intended home for Blank once push strategy is confirmed  
-**Linked Supabase (MCP):** shop/Payload DB — confirm isolated schema vs new project before migrations
+**Local tree:** AFFiNE-derived monorepo → Blank  
+**GitHub:** branch [`supabase-tauri-migration`](https://github.com/666base/blank/tree/supabase-tauri-migration) (orphan Blank tree). `main` still has the old notes app.  
+**Supabase:** project **`blank`** (`jzkswvswfvmsfoqfvszo`) — `.env` already pointed here. MCP shop project is unrelated.
 
-### Decisions from owner (2026-07-27)
+### Decisions (locked)
 
-| Question | Decision |
-|----------|----------|
-| Product name | **Blank** — user-facing brand replaces “AFFiNE”. |
-| AFFiNE Cloud | **Remove / bypass** — no official Cloud server, sign-in, billing, invites, or Enable Cloud. Sync = **Supabase**. |
-| Git remote | **`666base/blank`** is the Blank project home (path **2**: this tree replaces the old notes app on that remote). |
-| Tauri (Phase 5) | **Option A** — one window; open docs like the web app. |
-| AI / Copilot | **Hide fully / remove**. |
+| Item | Choice |
+|------|--------|
+| Product | **Blank** |
+| Cloud | Remove AFFiNE Cloud; sync = Supabase |
+| Git | **2a** — branch only; do not force `main` |
+| Supabase | Dedicated **blank** project (not the shop DB) |
+| Tauri | Option A (one window) |
+| AI | Remove / hide |
 
-### Branding policy (Blank, not AFFiNE)
+### Phase 1 — applied
 
-| Change as we touch each phase | Do **not** do early (mega-refactor / frozen packages) |
-|-------------------------------|------------------------------------------------------|
-| User-visible “AFFiNE” / “AFFiNE Cloud” → **Blank** / omit Cloud | Mass-rename npm scopes `@affine/*` → `@blank/*` |
-| Tauri/Android app name & ids → `blank` | Rewrites inside `blocksuite/*` or `packages/frontend/component` themes |
-| Hide Cloud auth, billing, members, Enable Cloud, Copilot (Phase 3) | Delete Electron/Capacitor trees preemptively |
+Migration: `supabase/migrations/20260727000100_blank_crdt_sync.sql`
 
-Internal package folders can keep `@affine` names until a dedicated rename pass; the **product** is Blank.
+| Object | Status |
+|--------|--------|
+| `doc_snapshots`, `doc_updates`, `workspaces` | Created + RLS `owner_id = auth.uid()` |
+| Storage bucket `blobs` (private, 50MB) | Created + path RLS `{uid}/...` |
+| Realtime publication | `doc_updates`, `doc_snapshots` |
+| `compact_doc_updates()` | Compaction prune RPC |
 
-### Still need before Phase 1 SQL
+### Phase 2 — scaffolded (not fully wired into app yet)
 
-Git is on branch `supabase-tauri-migration` with notes-app history + Blank working tree. **No push yet.**
+| Piece | Path |
+|-------|------|
+| `SupabaseDocStorage` | `packages/common/nbstore/src/impls/supabase/doc.ts` |
+| `SupabaseBlobStorage` | `.../blob.ts` |
+| `SupabaseAwarenessStorage` | `.../awareness.ts` |
+| Export `@affine/nbstore/supabase` | `package.json` exports |
+| Converge script | `packages/common/nbstore/scripts/supabase-yjs-converge.ts` |
 
-Reply with:
+**Still needed for “works end-to-end”:** `yarn` install (`@supabase/supabase-js`), register `supabaseStorages` in app workers, swap `getEngineWorkerInitOptions` remotes, hide Cloud/AI UI, Supabase Auth sign-in once per device (Tauri secure storage later).
 
-- **Push:** `2a` — push only branch `supabase-tauri-migration` (leave old `main` until you merge), or `2b` — replace `main` now (destructive to notes app).
-- **Supabase:** `4a` — same project, schema `blank` (isolated from shop tables), or `4b` — new empty Supabase project.
+### Checkpoint
 
-Also: never ship `VITE_SUPABASE_SERVICE_KEY` in the client — URL + anon/publishable only.
+Remote `main` **not** modified. PR link: https://github.com/666base/blank/pull/new/supabase-tauri-migration
+
+Say **continue Phase 3** to wire remotes + strip Cloud/AI, or open the PR first.
 
 ---
 
