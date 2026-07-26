@@ -13,7 +13,7 @@ export const ShareFooter = () => {
         </div>
         <a
           className={styles.getStartLink}
-          href="https://affine.pro/"
+          href="https://github.com/666base/blank"
           target="_blank"
           rel="noreferrer"
         >

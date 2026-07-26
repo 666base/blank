@@ -18,7 +18,7 @@ import { setTelemetryTransport } from '@affine/track';
 import { CacheProvider } from '@emotion/react';
 import { Framework, FrameworkRoot, getCurrentStore } from '@toeverything/infra';
 import { OpClient } from '@toeverything/infra/op';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
 const cache = createEmotionCache();
@@ -32,7 +32,7 @@ if (
   localStorage.getItem('disableSharedWorker') !== 'true'
 ) {
   const worker = new SharedWorker(workerUrl, {
-    name: 'affine-shared-worker',
+    name: 'blank-shared-worker',
   });
   storeManagerClient = new StoreManagerClient(new OpClient(worker.port));
 } else {
@@ -96,6 +96,10 @@ window.addEventListener('focus', () => {
 frameworkProvider.get(LifecycleService).applicationStart();
 
 export function App() {
+  useEffect(() => {
+    document.title = 'Blank';
+  }, []);
+
   return (
     <Suspense>
       <FrameworkRoot framework={frameworkProvider}>

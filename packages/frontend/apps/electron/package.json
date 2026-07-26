@@ -2,7 +2,7 @@
   "name": "@affine/electron",
   "private": true,
   "version": "0.27.0",
-  "description": "AFFiNE Desktop App",
+  "description": "LEGACY Electron — use npm run dev",
   "main": "./dist/main.js",
   "author": "toeverything",
   "repository": {

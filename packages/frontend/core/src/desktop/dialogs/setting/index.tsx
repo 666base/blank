@@ -15,7 +15,7 @@ import type {
 import { GlobalContextService } from '@affine/core/modules/global-context';
 import { createIsland, type Island } from '@affine/core/utils/island';
 import { ServerDeploymentType } from '@affine/graphql';
-import { Trans, useTranslation } from '@affine/i18n';
+import { useTranslation } from '@affine/i18n';
 import { ContactWithUsIcon } from '@blocksuite/icons/rc';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
 import { debounce } from 'lodash-es';
@@ -34,7 +34,6 @@ import { AccountSetting } from './account-setting';
 import { GeneralSetting } from './general-setting';
 import { IssueFeedbackModal } from './issue-feedback-modal';
 import { SettingSidebar } from './setting-sidebar';
-import { StarAFFiNEModal } from './star-affine-modal';
 import * as style from './style.css';
 import {
   SubPageContext,
@@ -143,15 +142,6 @@ const SettingModalInner = ({
     [setSettingState]
   );
   const [openIssueFeedbackModal, setOpenIssueFeedbackModal] = useState(false);
-  const [openStarAFFiNEModal, setOpenStarAFFiNEModal] = useState(false);
-
-  const handleOpenIssueFeedbackModal = useCallback(() => {
-    setOpenIssueFeedbackModal(true);
-  }, [setOpenIssueFeedbackModal]);
-
-  const handleOpenStarAFFiNEModal = useCallback(() => {
-    setOpenStarAFFiNEModal(true);
-  }, [setOpenStarAFFiNEModal]);
 
   const addSubPageIsland = useCallback(() => {
     const island = createIsland();
@@ -235,28 +225,10 @@ const SettingModalInner = ({
               </div>
               <div className={style.footer}>
                 <ContactWithUsIcon fontSize={16} />
-                <Trans
-                  i18nKey={'com.affine.settings.suggestion-2'}
-                  components={{
-                    1: (
-                      <span
-                        className={style.link}
-                        onClick={handleOpenStarAFFiNEModal}
-                      />
-                    ),
-                    2: (
-                      <span
-                        className={style.link}
-                        onClick={handleOpenIssueFeedbackModal}
-                      />
-                    ),
-                  }}
-                />
+                <span>
+                  Blank — use Settings → Blank Sync to sign in and sync
+                </span>
               </div>
-              <StarAFFiNEModal
-                open={openStarAFFiNEModal}
-                setOpen={setOpenStarAFFiNEModal}
-              />
               <IssueFeedbackModal
                 open={openIssueFeedbackModal}
                 setOpen={setOpenIssueFeedbackModal}

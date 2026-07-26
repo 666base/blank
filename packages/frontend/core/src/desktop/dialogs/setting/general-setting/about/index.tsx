@@ -17,6 +17,8 @@ import { relatedLinks } from './config';
 import * as styles from './style.css';
 import { UpdateCheckSection } from './update-check-section';
 
+const BLANK_HOME = 'https://github.com/666base/blank';
+
 export const AboutAffine = () => {
   const t = useI18n();
   const { appSettings, updateSettings } = useAppSettingHelper();
@@ -45,8 +47,8 @@ export const AboutAffine = () => {
   );
 
   const onSwitchTelemetry = useCallback(
-    (checked: boolean) => {
-      updateSettings('enableTelemetry', checked);
+    (_checked: boolean) => {
+      updateSettings('enableTelemetry', false);
     },
     [updateSettings]
   );
@@ -54,8 +56,8 @@ export const AboutAffine = () => {
   return (
     <>
       <SettingHeader
-        title={t['com.affine.aboutAFFiNE.title']()}
-        subtitle={t['com.affine.aboutAFFiNE.subtitle']()}
+        title="About Blank"
+        subtitle="Information about Blank"
         data-testid="about-title"
       />
       <SettingWrapper title={t['com.affine.aboutAFFiNE.version.title']()}>
@@ -107,72 +109,42 @@ export const AboutAffine = () => {
         ) : null}
         <SettingRow
           name={t['com.affine.telemetry.enable']()}
-          desc={t['com.affine.telemetry.enable.desc']()}
+          desc="Blank does not send product telemetry."
         >
-          <Switch
-            checked={appSettings.enableTelemetry !== false}
-            onChange={onSwitchTelemetry}
-          />
+          <Switch checked={false} onChange={onSwitchTelemetry} />
         </SettingRow>
       </SettingWrapper>
       <SettingWrapper title={t['com.affine.aboutAFFiNE.contact.title']()}>
         <a
           className={styles.link}
           rel="noreferrer"
-          href="https://affine.pro"
+          href={BLANK_HOME}
           target="_blank"
         >
-          {t['com.affine.aboutAFFiNE.contact.website']()}
-          <OpenInNewIcon className="icon" />
-        </a>
-        <a
-          className={styles.link}
-          rel="noreferrer"
-          href="https://affine.pro/redirect/discord"
-          target="_blank"
-        >
-          {t['com.affine.aboutAFFiNE.contact.community']()}
+          GitHub
           <OpenInNewIcon className="icon" />
         </a>
       </SettingWrapper>
-      <SettingWrapper title={t['com.affine.aboutAFFiNE.community.title']()}>
-        <div className={styles.communityWrapper}>
-          {relatedLinks.map(({ icon, title, link }) => {
-            return (
-              <div
-                className={styles.communityItem}
-                onClick={() => {
-                  urlService.openPopupWindow(link);
-                }}
-                key={title}
-              >
-                {icon}
-                <p>{title}</p>
-              </div>
-            );
-          })}
-        </div>
-      </SettingWrapper>
-      <SettingWrapper title={t['com.affine.aboutAFFiNE.legal.title']()}>
-        <a
-          className={styles.link}
-          rel="noreferrer"
-          href="https://affine.pro/privacy"
-          target="_blank"
-        >
-          {t['com.affine.aboutAFFiNE.legal.privacy']()}
-          <OpenInNewIcon className="icon" />
-        </a>
-        <a
-          className={styles.link}
-          rel="noreferrer"
-          href="https://affine.pro/terms"
-          target="_blank"
-        >
-          {t['com.affine.aboutAFFiNE.legal.tos']()}
-          <OpenInNewIcon className="icon" />
-        </a>
-      </SettingWrapper>
+      {relatedLinks.length > 0 ? (
+        <SettingWrapper title={t['com.affine.aboutAFFiNE.community.title']()}>
+          <div className={styles.communityWrapper}>
+            {relatedLinks.map(({ icon, title, link }) => {
+              return (
+                <div
+                  className={styles.communityItem}
+                  onClick={() => {
+                    urlService.openPopupWindow(link);
+                  }}
+                  key={title}
+                >
+                  {icon}
+                  <p>{title}</p>
+                </div>
+              );
+            })}
+          </div>
+        </SettingWrapper>
+      ) : null}
     </>
   );
 };
