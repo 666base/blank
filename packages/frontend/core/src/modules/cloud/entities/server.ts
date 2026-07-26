@@ -71,6 +71,20 @@ export class Server extends Entity<{
 
   readonly revalidateConfig = effect(
     exhaustMap(() => {
+      // Blank: stub AFFiNE Cloud baseUrl never talks to Nest
+      if (
+        this.baseUrl.includes('127.0.0.1:9') ||
+        this.baseUrl.includes('localhost:9')
+      ) {
+        return fromPromise(async () => undefined).pipe(
+          onStart(() => {
+            this.isConfigRevalidating$.next(true);
+          }),
+          onComplete(() => {
+            this.isConfigRevalidating$.next(false);
+          })
+        );
+      }
       return fromPromise(signal =>
         this.serverConfigStore.fetchServerConfig(this.baseUrl, signal)
       ).pipe(

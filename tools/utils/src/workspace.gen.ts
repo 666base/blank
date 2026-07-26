@@ -1269,6 +1269,11 @@ export const PackageList = [
     workspaceDependencies: ['packages/frontend/core'],
   },
   {
+    location: 'packages/frontend/apps/tauri',
+    name: '@affine/tauri',
+    workspaceDependencies: [],
+  },
+  {
     location: 'packages/frontend/apps/web',
     name: '@affine/web',
     workspaceDependencies: [
@@ -1546,6 +1551,7 @@ export type PackageName =
   | '@affine/ios'
   | '@affine/mobile'
   | '@affine/mobile-shared'
+  | '@affine/tauri'
   | '@affine/web'
   | '@affine/component'
   | '@affine/core'

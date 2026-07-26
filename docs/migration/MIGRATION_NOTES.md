@@ -1,6 +1,6 @@
 # Blank (AFFiNE fork) → Supabase + Tauri migration notes
 
-**Status:** Phase 1 applied. Phase 2+3 wired on branch (Supabase remotes on local workspaces, Cloud/AI stripped, Blank Sync settings). Tauri shells still pending.  
+**Status:** Phases 1–5 in progress on branch. Nest proxy removed; Tauri Option A scaffolded under `packages/frontend/apps/tauri`. Android Tauri target still pending.  
 **Date:** 2026-07-27  
 **Product name:** **Blank** (not AFFiNE / not AFFiNE Cloud)  
 **Local tree:** AFFiNE-derived monorepo → Blank  

@@ -1,4 +1,5 @@
 [workspace]
+exclude = ["./packages/frontend/apps/tauri/src-tauri"]
 members = [
   "./packages/backend/native",
   "./packages/common/native",

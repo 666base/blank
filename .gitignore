@@ -73,6 +73,7 @@ Thumbs.db
 **/google-services.json
 TAURI_SIGNING_PRIVATE_KEY
 *.tauri-private-key
+packages/frontend/apps/tauri/src-tauri/target
 
 # migration working notes at repo root (tracked under docs/ instead)
 # (/*.md below still ignores root markdown; Phase 0 notes live in docs/)

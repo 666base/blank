@@ -3,10 +3,6 @@ import './setup-worker';
 import { MessagePortAuthProvider } from '@affine/mobile-shared/auth/channel';
 import { installAuthRequestProxy } from '@affine/mobile-shared/auth/request';
 import { broadcastChannelStorages } from '@affine/nbstore/broadcast-channel';
-import {
-  cloudStorages,
-  configureSocketAuthMethod,
-} from '@affine/nbstore/cloud';
 import { idbStoragesIndexerOnly } from '@affine/nbstore/idb';
 import {
   bindNativeDBApis,
@@ -23,13 +19,6 @@ import { AsyncCall } from 'async-call-rpc';
 
 const authProvider = new MessagePortAuthProvider();
 installAuthRequestProxy(authProvider);
-
-configureSocketAuthMethod((endpoint, cb) => {
-  authProvider
-    .getValidAccessToken(endpoint)
-    .then(token => cb(token ? { token, tokenType: 'jwt' } : {}))
-    .catch(() => cb({ error: 'AUTH_SESSION_TEMPORARILY_UNAVAILABLE' }));
-});
 
 globalThis.addEventListener('message', e => {
   if (e.data.type === 'auth-access-token-channel') {
@@ -71,7 +60,6 @@ const storeManager = new StoreManagerConsumer([
   ...idbStoragesIndexerOnly,
   ...sqliteStorages,
   ...broadcastChannelStorages,
-  ...cloudStorages,
   ...supabaseStorages,
 ]);
 
