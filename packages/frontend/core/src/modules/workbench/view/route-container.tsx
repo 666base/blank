@@ -2,6 +2,7 @@ import { IconButton } from '@affine/component';
 import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
 import { RightSidebarIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
+import clsx from 'clsx';
 import { Suspense, useCallback } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -54,29 +55,40 @@ export const RouteContainer = () => {
   }, [workbench]);
 
   const showSwitch = !BUILD_CONFIG.isElectron && viewPosition.isFirst;
+  const isMac = environment.isMacOs;
+  const headerNeedsMacPad =
+    isMac && !BUILD_CONFIG.isElectron && showSwitch && !leftSidebarOpen;
 
   return (
     <div className={styles.root}>
       <div
-        className={styles.header}
+        className={clsx(
+          styles.header,
+          headerNeedsMacPad && styles.headerMacPad
+        )}
         data-show-switch={showSwitch && !leftSidebarOpen}
+        data-tauri-drag-region
       >
         {showSwitch && (
-          <SidebarSwitch
-            show={!leftSidebarOpen}
-            className={styles.leftSidebarButton}
-          />
+          <div className="titlebar-no-drag">
+            <SidebarSwitch
+              show={!leftSidebarOpen}
+              className={styles.leftSidebarButton}
+            />
+          </div>
         )}
         <ViewHeaderTarget
           viewId={view.id}
-          className={styles.viewHeaderContainer}
+          className={clsx(styles.viewHeaderContainer, 'titlebar-no-drag')}
         />
         {!BUILD_CONFIG.isElectron && viewPosition.isLast && (
-          <ToggleButton
-            show={!sidebarOpen}
-            className={styles.rightSidebarButton}
-            onToggle={handleToggleSidebar}
-          />
+          <div className="titlebar-no-drag">
+            <ToggleButton
+              show={!sidebarOpen}
+              className={styles.rightSidebarButton}
+              onToggle={handleToggleSidebar}
+            />
+          </div>
         )}
       </div>
 

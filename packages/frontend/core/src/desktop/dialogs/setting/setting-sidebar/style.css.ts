@@ -4,13 +4,15 @@ import { globalStyle, style } from '@vanilla-extract/css';
 export const settingSlideBar = style({
   width: '25%',
   maxWidth: '242px',
-  background: cssVar('backgroundSecondaryColor'),
+  background:
+    'var(--blank-bg-secondary, var(--affine-background-secondary-color))',
+  borderRight: '1px solid var(--blank-border, var(--affine-border-color))',
   padding: '20px 0px 0px 12px',
   height: '100%',
   flexShrink: 0,
   display: 'flex',
   flexDirection: 'column',
-  gap: '16px',
+  gap: '12px',
   overflowY: 'auto',
 });
 export const sidebarTitle = style({
@@ -18,11 +20,12 @@ export const sidebarTitle = style({
   fontWeight: '600',
   lineHeight: cssVar('lineHeight'),
   padding: '0 8px',
+  color: 'var(--blank-text, var(--affine-text-primary-color))',
 });
 export const sidebarSubtitle = style({
   fontSize: cssVar('fontSm'),
   lineHeight: cssVar('lineHeight'),
-  color: cssVar('textSecondaryColor'),
+  color: 'var(--blank-text-muted, var(--affine-text-secondary-color))',
   padding: '4px 8px',
   display: 'flex',
   justifyContent: 'space-between',
@@ -31,7 +34,7 @@ export const sidebarSubtitle = style({
 export const sidebarItemsWrapper = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
+  gap: 2,
 });
 export const sidebarSelectItem = style({
   display: 'flex',
@@ -40,15 +43,16 @@ export const sidebarSelectItem = style({
   height: '30px',
   flexShrink: 0,
   fontSize: cssVar('fontSm'),
-  borderRadius: '8px',
+  borderRadius: '6px',
   cursor: 'pointer',
   userSelect: 'none',
+  color: 'var(--blank-text, var(--affine-text-primary-color))',
   ':hover': {
-    background: cssVar('hoverColor'),
+    background: 'var(--blank-bg-muted, var(--affine-hover-color))',
   },
   selectors: {
     '&.active': {
-      background: cssVar('hoverColor'),
+      background: 'var(--blank-bg-emphasis, var(--affine-hover-color))',
     },
   },
 });

@@ -1,4 +1,3 @@
-import { useAppSettingHelper } from '@affine/core/components/hooks/affine/use-app-setting-helper';
 import { RootAppSidebar } from '@affine/core/components/root-app-sidebar';
 import { AppSidebarService } from '@affine/core/modules/app-sidebar';
 import {
@@ -33,23 +32,12 @@ export const AppContainer = ({
   className?: string;
   fallback?: boolean;
 }>) => {
-  const { appSettings } = useAppSettingHelper();
-
-  const noisyBackground =
-    BUILD_CONFIG.isElectron && appSettings.enableNoisyBackground;
-  const blurBackground =
-    BUILD_CONFIG.isElectron &&
-    environment.isMacOs &&
-    appSettings.enableBlurBackground;
   return (
     <div
       {...rest}
-      className={clsx(styles.appStyle, className, {
-        'noisy-background': noisyBackground,
-        'blur-background': blurBackground,
-      })}
-      data-noise-background={noisyBackground}
-      data-translucent={blurBackground}
+      className={clsx(styles.appStyle, className)}
+      data-noise-background={false}
+      data-translucent={false}
     >
       <LayoutComponent fallback={fallback}>{children}</LayoutComponent>
     </div>
@@ -64,15 +52,17 @@ const DesktopLayout = ({
   const isInWorkspace = !!workspaceService;
   return (
     <div className={styles.desktopAppViewContainer}>
-      <div className={styles.desktopTabsHeader}>
-        <AppTabsHeader
-          left={
-            <>
-              {isInWorkspace && <SidebarSwitch show />}
-              {isInWorkspace && <NavigationButtons />}
-            </>
-          }
-        />
+      <div className={styles.desktopTabsHeader} data-tauri-drag-region>
+        <div className={styles.titlebarNoDrag}>
+          <AppTabsHeader
+            left={
+              <>
+                {isInWorkspace && <SidebarSwitch show />}
+                {isInWorkspace && <NavigationButtons />}
+              </>
+            }
+          />
+        </div>
       </div>
       <div className={styles.desktopAppViewMain}>
         {fallback ? (
@@ -86,7 +76,8 @@ const DesktopLayout = ({
   );
 };
 
-const BrowserLayout = ({
+/** Blank / Tauri: quiet 2-pane shell (scratch DNA). Drag regions live in sidebar + page headers. */
+const BlankShellLayout = ({
   children,
   fallback = false,
 }: PropsWithChildren<{ fallback?: boolean }>) => {
@@ -94,12 +85,19 @@ const BrowserLayout = ({
   const isInWorkspace = !!workspaceService;
 
   return (
-    <div className={styles.browserAppViewContainer}>
+    <div className={styles.blankShellRoot}>
       <OpenInAppCard />
       {fallback ? <AppSidebarFallback /> : isInWorkspace && <RootAppSidebar />}
-      <MainContainer>{children}</MainContainer>
+      <MainContainer data-blank-shell>{children}</MainContainer>
     </div>
   );
+};
+
+const BrowserLayout = ({
+  children,
+  fallback = false,
+}: PropsWithChildren<{ fallback?: boolean }>) => {
+  return <BlankShellLayout fallback={fallback}>{children}</BlankShellLayout>;
 };
 
 const LayoutComponent = BUILD_CONFIG.isElectron ? DesktopLayout : BrowserLayout;
@@ -110,7 +108,6 @@ const MainContainer = forwardRef<
 >(function MainContainer({ className, children, ...props }, ref): ReactElement {
   const workspaceService = useServiceOptional(WorkspaceService);
   const isInWorkspace = !!workspaceService;
-  const { appSettings } = useAppSettingHelper();
   const appSidebarService = useService(AppSidebarService).sidebar;
   const open = useLiveData(appSidebarService.open$);
 
@@ -120,7 +117,7 @@ const MainContainer = forwardRef<
       className={clsx(styles.mainContainerStyle, className)}
       data-is-desktop={BUILD_CONFIG.isElectron}
       data-transparent={false}
-      data-client-border={appSettings.clientBorder}
+      data-client-border={false}
       data-side-bar-open={open && isInWorkspace}
       data-testid="main-container"
       ref={ref}

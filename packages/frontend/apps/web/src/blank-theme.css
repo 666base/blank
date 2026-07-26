@@ -1,0 +1,166 @@
+/**
+ * Blank shell theme — scratch stone DNA overlaid on AFFiNE CSS variables.
+ * Imported after @affine/component/theme. Does not touch settings/sync logic.
+ */
+
+:root {
+  /* Scratch stone tokens */
+  --blank-bg: #ffffff;
+  --blank-bg-secondary: #fafaf9;
+  --blank-bg-muted: rgba(28, 25, 23, 0.06);
+  --blank-bg-emphasis: rgba(28, 25, 23, 0.09);
+  --blank-text: #1c1917;
+  --blank-text-muted: #78716c;
+  --blank-text-inverse: #fafaf9;
+  --blank-border: rgba(28, 25, 23, 0.08);
+  --blank-accent: #1c1917;
+  --blank-selection: rgba(250, 204, 21, 0.4);
+  --blank-titlebar-height: 44px;
+
+  --affine-font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --affine-font-sans-family: var(--affine-font-family);
+  --affine-font-serif-family:
+    ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --affine-font-mono-family:
+    ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Courier New',
+    monospace;
+
+  --affine-background-primary-color: var(--blank-bg);
+  --affine-background-secondary-color: var(--blank-bg-secondary);
+  --affine-background-tertiary-color: var(--blank-bg-muted);
+  --affine-background-overlay-panel-color: var(--blank-bg);
+  --affine-background-modal-color: rgba(28, 25, 23, 0.35);
+  --affine-background-code-block: var(--blank-bg-muted);
+
+  --affine-text-primary-color: var(--blank-text);
+  --affine-text-secondary-color: var(--blank-text-muted);
+  --affine-text-disable-color: rgba(28, 25, 23, 0.35);
+  --affine-text-emphasis-color: var(--blank-accent);
+
+  --affine-icon-color: var(--blank-text);
+  --affine-icon-secondary: var(--blank-text-muted);
+  --affine-border-color: var(--blank-border);
+  --affine-divider-color: var(--blank-border);
+  --affine-hover-color: var(--blank-bg-muted);
+  --affine-hover-color-filled: var(--blank-bg-emphasis);
+
+  --affine-primary-color: var(--blank-accent);
+  --affine-primary-color-04: rgba(28, 25, 23, 0.04);
+  --affine-brand-color: var(--blank-accent);
+  --affine-link-color: var(--blank-accent);
+
+  --affine-black: #1c1917;
+  --affine-black-10: rgba(28, 25, 23, 0.1);
+  --affine-black-30: rgba(28, 25, 23, 0.3);
+  --affine-black-50: rgba(28, 25, 23, 0.5);
+  --affine-black-60: rgba(28, 25, 23, 0.6);
+  --affine-black-80: rgba(28, 25, 23, 0.8);
+  --affine-black-90: rgba(28, 25, 23, 0.9);
+  --affine-white: #fafaf9;
+  --affine-white-10: rgba(250, 249, 249, 0.1);
+  --affine-white-30: rgba(250, 249, 249, 0.3);
+  --affine-white-50: rgba(250, 249, 249, 0.5);
+  --affine-white-60: rgba(250, 249, 249, 0.6);
+  --affine-white-80: rgba(250, 249, 249, 0.8);
+  --affine-white-90: rgba(250, 249, 249, 0.9);
+  --affine-pure-black: #1c1917;
+  --affine-pure-white: #ffffff;
+
+  /* v2 layer tokens used heavily by shell */
+  --affine-v2-layer-background-primary: var(--blank-bg);
+  --affine-v2-layer-background-secondary: var(--blank-bg-secondary);
+  --affine-v2-layer-background-tertiary: var(--blank-bg-muted);
+  --affine-v2-layer-background-overlayPanel: var(--blank-bg);
+  --affine-v2-layer-background-modal: rgba(28, 25, 23, 0.35);
+  --affine-v2-layer-background-hoverOverlay: var(--blank-bg-muted);
+  --affine-v2-layer-insideBorder-border: var(--blank-border);
+  --affine-v2-text-primary: var(--blank-text);
+  --affine-v2-text-secondary: var(--blank-text-muted);
+  --affine-v2-text-disable: rgba(28, 25, 23, 0.35);
+  --affine-v2-text-emphasis: var(--blank-accent);
+  --affine-v2-icon-primary: var(--blank-text);
+  --affine-v2-icon-secondary: var(--blank-text-muted);
+  --affine-v2-button-primary: var(--blank-accent);
+  --affine-v2-button-primaryHover: #292524;
+  --affine-v2-layer-white: var(--blank-bg);
+
+  --affine-noise-opacity: 0;
+}
+
+html[data-theme='dark'],
+html.dark {
+  --blank-bg: rgb(22, 20, 19);
+  --blank-bg-secondary: rgb(14, 12, 11);
+  --blank-bg-muted: rgba(250, 249, 249, 0.05);
+  --blank-bg-emphasis: rgba(250, 249, 249, 0.08);
+  --blank-text: #fafaf9;
+  --blank-text-muted: #a8a29e;
+  --blank-text-inverse: #0c0a09;
+  --blank-border: rgba(250, 249, 249, 0.07);
+  --blank-accent: #fafaf9;
+  --blank-selection: rgba(253, 224, 71, 0.35);
+
+  --affine-background-modal-color: rgba(0, 0, 0, 0.55);
+  --affine-v2-layer-background-modal: rgba(0, 0, 0, 0.55);
+  --affine-v2-button-primaryHover: #e7e5e4;
+  --affine-noise-opacity: 0;
+}
+
+::selection {
+  background: var(--blank-selection);
+}
+
+html,
+body,
+#root,
+#app {
+  height: 100%;
+  overflow: hidden;
+  background: var(--blank-bg);
+  color: var(--blank-text);
+  font-family: var(--affine-font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tauri Overlay drag helpers (scratch titlebar) */
+.titlebar-drag-region,
+[data-tauri-drag-region] {
+  -webkit-app-region: drag;
+  app-region: drag;
+}
+
+.titlebar-no-drag,
+[data-tauri-drag-region] button,
+[data-tauri-drag-region] a,
+[data-tauri-drag-region] input,
+[data-tauri-drag-region] [role='button'],
+.titlebar-no-drag * {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+
+.blank-titlebar-strip {
+  height: var(--blank-titlebar-height);
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* Settings modal chrome — stone panel, quiet overlay */
+[data-testid='setting-modal'] {
+  background: var(--blank-bg) !important;
+  border: 1px solid var(--blank-border) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 24px 48px rgba(28, 25, 23, 0.12),
+    0 0 0 1px var(--blank-border) !important;
+  overflow: hidden;
+}
+
+html[data-theme='dark'] [data-testid='setting-modal'],
+html.dark [data-testid='setting-modal'] {
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.45),
+    0 0 0 1px var(--blank-border) !important;
+}

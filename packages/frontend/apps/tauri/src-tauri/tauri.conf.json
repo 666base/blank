@@ -15,8 +15,14 @@
         "title": "Blank",
         "width": 1280,
         "height": 800,
+        "minWidth": 600,
+        "minHeight": 400,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "decorations": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
+        "trafficLightPosition": { "x": 16, "y": 24 }
       }
     ],
     "security": {

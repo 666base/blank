@@ -2,8 +2,9 @@ import { cssVar } from '@toeverything/theme';
 import { style } from '@vanilla-extract/css';
 export const wrapper = style({
   height: '100%',
-  padding: '40px 15px 20px 15px',
+  padding: '36px 20px 20px 20px',
   display: 'flex',
+  background: 'var(--blank-bg, #ffffff)',
 });
 export const centerContainer = style({
   width: '100%',

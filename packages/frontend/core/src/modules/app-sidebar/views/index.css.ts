@@ -9,53 +9,47 @@ export const navWrapperStyle = style({
     },
   },
   paddingBottom: 8,
+  backgroundColor: 'var(--blank-bg-secondary, #fafaf9)',
   selectors: {
     '&[data-has-border=true]': {
-      borderRight: `0.5px solid ${cssVarV2('layer/insideBorder/border')}`,
+      borderRight: `1px solid var(--blank-border, ${cssVarV2('layer/insideBorder/border')})`,
     },
     '&[data-is-floating="true"], &[data-is-electron="false"]': {
-      backgroundColor: cssVarV2('layer/background/primary'),
+      backgroundColor: 'var(--blank-bg-secondary, #fafaf9)',
     },
   },
 });
 export const hoverNavWrapperStyle = style({
   selectors: {
     '&[data-is-floating="true"]': {
-      backgroundColor: cssVarV2('layer/background/primary'),
+      backgroundColor: 'var(--blank-bg-secondary, #fafaf9)',
       height: 'calc(100% - 60px)',
       marginTop: '52px',
       marginLeft: '4px',
       boxShadow: cssVar('--affine-popover-shadow'),
-      borderRadius: '6px',
+      borderRadius: '8px',
     },
     '&[data-is-floating="true"][data-is-electron="true"]': {
       height: '100%',
       marginTop: '-4px',
     },
     '&[data-is-floating="true"][data-client-border="true"]': {
-      backgroundColor: cssVarV2('layer/background/overlayPanel'),
+      backgroundColor: 'var(--blank-bg-secondary, #fafaf9)',
     },
     '&[data-is-floating="true"][data-client-border="true"]::before': {
-      content: '""',
-      position: 'absolute',
-      inset: 0,
-      opacity: `var(--affine-noise-opacity, 0)`,
-      backgroundRepeat: 'repeat',
-      backgroundSize: '50px',
-      // TODO(@Peng): figure out how to use vanilla-extract webpack plugin to inject img url
-      backgroundImage: `var(--noise-background)`,
+      display: 'none',
     },
   },
 });
 export const navHeaderButton = style({
-  width: '32px',
-  height: '32px',
+  width: '28px',
+  height: '28px',
   flexShrink: 0,
 });
 export const navHeaderNavigationButtons = style({
   display: 'flex',
   alignItems: 'center',
-  columnGap: '32px',
+  columnGap: '16px',
 });
 export const navStyle = style({
   position: 'relative',
@@ -63,19 +57,20 @@ export const navStyle = style({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
+  backgroundColor: 'var(--blank-bg-secondary, #fafaf9)',
 });
 export const navHeaderStyle = style({
   flex: '0 0 auto',
-  height: '52px',
-  padding: '0px 8px',
+  height: 'var(--blank-titlebar-height, 44px)',
+  padding: '0px 10px',
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'flex-end',
   alignItems: 'center',
 });
 
 export const navBodyStyle = style({
   flex: '1 1 auto',
-  height: 'calc(100% - 52px)',
+  height: 'calc(100% - var(--blank-titlebar-height, 44px))',
   display: 'flex',
   flexDirection: 'column',
   rowGap: '4px',

@@ -1,4 +1,3 @@
-import { cssVar } from '@toeverything/theme';
 import { style } from '@vanilla-extract/css';
 
 export const root = style({
@@ -9,18 +8,19 @@ export const root = style({
   position: 'relative',
   flexDirection: 'column',
   minWidth: 0,
-  background: cssVar('backgroundPrimaryColor'),
+  background: 'var(--blank-bg, #ffffff)',
 });
 
 export const header = style({
   display: 'flex',
-  height: '52px',
+  height: 'var(--blank-titlebar-height, 44px)',
   width: '100%',
   alignItems: 'center',
   flexShrink: 0,
-  background: cssVar('backgroundPrimaryColor'),
-  padding: '0 16px',
+  background: 'var(--blank-bg, #ffffff)',
+  padding: '0 12px',
   contain: 'strict',
+  borderBottom: '1px solid var(--blank-border, rgba(28,25,23,0.08))',
   '@media': {
     print: {
       display: 'none',
@@ -33,6 +33,10 @@ export const header = style({
   },
 });
 
+export const headerMacPad = style({
+  paddingLeft: 72,
+});
+
 export const viewBodyContainer = style({
   display: 'flex',
   flex: 1,
@@ -41,7 +45,7 @@ export const viewBodyContainer = style({
 });
 
 export const leftSidebarButton = style({
-  margin: '0 16px 0 0',
+  margin: '0 12px 0 0',
 });
 
 export const rightSidebarButton = style({
@@ -49,15 +53,14 @@ export const rightSidebarButton = style({
   selectors: {
     '&[data-show=true]': {
       opacity: 1,
-      width: 32,
-      maxWidth: 32,
-      marginLeft: 16,
+      width: 28,
+      maxWidth: 28,
+      marginLeft: 12,
     },
     '&[data-show=false]': {
       opacity: 0,
       maxWidth: 0,
       marginLeft: 0,
-      // prevent click event from being triggered
       pointerEvents: 'none',
     },
   },

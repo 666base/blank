@@ -1,4 +1,4 @@
-import { cssVar, lightCssVariables } from '@toeverything/theme';
+import { lightCssVariables } from '@toeverything/theme';
 import { globalStyle, style } from '@vanilla-extract/css';
 
 export const appStyle = style({
@@ -7,31 +7,24 @@ export const appStyle = style({
   height: '100dvh',
   flexGrow: '1',
   display: 'flex',
-  backgroundColor: cssVar('backgroundPrimaryColor'),
+  backgroundColor: 'var(--blank-bg, var(--affine-background-primary-color))',
   selectors: {
     '&.blur-background': {
       backgroundColor: 'transparent',
     },
     '&.noisy-background::before': {
-      content: '""',
-      position: 'absolute',
-      inset: 0,
-      opacity: `var(--affine-noise-opacity, 0)`,
-      backgroundRepeat: 'repeat',
-      backgroundSize: '50px',
-      // TODO(@Peng): figure out how to use vanilla-extract webpack plugin to inject img url
-      backgroundImage: `var(--noise-background)`,
+      display: 'none',
     },
   },
 });
 globalStyle(`html[data-theme="light"] ${appStyle}`, {
   vars: {
-    '--affine-noise-opacity': '0.2',
+    '--affine-noise-opacity': '0',
   },
 });
 globalStyle(`html[data-theme="dark"] ${appStyle}`, {
   vars: {
-    '--affine-noise-opacity': '1',
+    '--affine-noise-opacity': '0',
   },
   '@media': {
     print: {
@@ -46,6 +39,23 @@ export const browserAppViewContainer = style({
   height: '100%',
   width: '100%',
   position: 'relative',
+});
+
+/** Scratch-like 2-pane shell for Tauri/web. */
+export const blankShellRoot = style({
+  display: 'flex',
+  flexFlow: 'row',
+  height: '100%',
+  width: '100%',
+  position: 'relative',
+  backgroundColor: 'var(--blank-bg-secondary, #fafaf9)',
+  overflow: 'hidden',
+});
+
+export const titlebarNoDrag = style({
+  height: '100%',
+  width: '100%',
+  display: 'flex',
 });
 
 export const desktopAppViewContainer = style({
@@ -79,11 +89,14 @@ export const mainContainerStyle = style({
   display: 'flex',
   flex: 1,
   maxWidth: '100%',
+  minWidth: 0,
+  backgroundColor: 'var(--blank-bg, #ffffff)',
+  overflow: 'hidden',
 
   selectors: {
     '&[data-client-border="true"]': {
-      borderRadius: 6,
-      padding: '8px',
+      borderRadius: 0,
+      padding: 0,
       '@media': {
         print: {
           overflow: 'visible',
@@ -100,14 +113,17 @@ export const mainContainerStyle = style({
     },
     '&[data-client-border="false"][data-is-desktop="true"][data-side-bar-open="true"]':
       {
-        borderTopLeftRadius: 6,
+        borderTopLeftRadius: 0,
       },
     '&[data-client-border="false"][data-is-desktop="true"]': {
-      borderTop: `0.5px solid ${cssVar('borderColor')}`,
-      borderLeft: `0.5px solid ${cssVar('borderColor')}`,
+      borderTop: 'none',
+      borderLeft: 'none',
     },
     '&[data-transparent=true]': {
       backgroundColor: 'transparent',
+    },
+    '&[data-blank-shell]': {
+      backgroundColor: 'var(--blank-bg, #ffffff)',
     },
   },
 });
