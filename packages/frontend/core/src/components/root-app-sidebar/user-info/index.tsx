@@ -79,6 +79,10 @@ const OperationMenu = () => {
   const serverService = useService(ServerService);
   const serverFeatures = useLiveData(serverService.server.features$);
 
+  if (BLANK_PRODUCT.disableAffineCloud) {
+    return <AccountMenu />;
+  }
+
   return (
     <>
       <Account />

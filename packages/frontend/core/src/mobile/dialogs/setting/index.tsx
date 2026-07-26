@@ -1,38 +1,32 @@
-import { AuthService } from '@affine/core/modules/cloud';
 import type {
   DialogComponentProps,
   WORKSPACE_DIALOG_SCHEMA,
 } from '@affine/core/modules/dialogs';
 import { useI18n } from '@affine/i18n';
-import { useLiveData, useService } from '@toeverything/infra';
-import { useEffect } from 'react';
 
 import { AboutGroup } from './about';
 import { AppearanceGroup } from './appearance';
-import { DevicesGroup } from './devices';
-import { ExperimentalFeatureSetting } from './experimental';
-import { OthersGroup } from './others';
+import { SettingGroup } from './group';
+import { RowLayout } from './row.layout';
 import * as styles from './style.css';
-import { UserSubscription } from './subscription';
 import { SwipeDialog } from './swipe-dialog';
-import { UserProfile } from './user-profile';
-import { UserUsage } from './user-usage';
 
 const MobileSetting = () => {
-  const session = useService(AuthService).session;
-  const status = useLiveData(session.status$);
-  useEffect(() => session.revalidate(), [session]);
+  const t = useI18n();
 
   return (
     <div className={styles.root}>
-      <UserProfile />
-      <UserSubscription />
-      <UserUsage />
-      {status === 'authenticated' ? <DevicesGroup /> : null}
       <AppearanceGroup />
+      <SettingGroup title="Data & sync">
+        <RowLayout label="Notes stay on this device. Use desktop Settings → Data & sync for folder backup or account sync." />
+      </SettingGroup>
       <AboutGroup />
-      <ExperimentalFeatureSetting />
-      <OthersGroup />
+      <SettingGroup title={t['com.affine.mobile.setting.others.title']()}>
+        <RowLayout
+          label={t['com.affine.mobile.setting.others.github']()}
+          href="https://github.com/666base/blank"
+        />
+      </SettingGroup>
     </div>
   );
 };
@@ -51,15 +45,4 @@ export const SettingDialog = ({
       <MobileSetting />
     </SwipeDialog>
   );
-
-  // return (
-  //   <ConfigModal
-  //     title={t['com.affine.mobile.setting.header-title']()}
-  //     open
-  //     onOpenChange={() => close()}
-  //     onBack={close}
-  //   >
-  //     <MobileSetting />
-  //   </ConfigModal>
-  // );
 };

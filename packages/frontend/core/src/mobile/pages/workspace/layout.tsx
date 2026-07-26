@@ -1,6 +1,5 @@
 import { uniReactRoot } from '@affine/component';
 import { AffineErrorBoundary } from '@affine/core/components/affine/affine-error-boundary';
-import { AiLoginRequiredModal } from '@affine/core/components/affine/auth/ai-login-required';
 import { SWRConfigProvider } from '@affine/core/components/providers/swr-config-provider';
 import { WorkspaceSideEffects } from '@affine/core/components/providers/workspace-side-effects';
 import {
@@ -145,7 +144,6 @@ export const WorkspaceLayout = ({
 
               {/* ---- some side-effect components ---- */}
               <PeekViewManagerModal />
-              <AiLoginRequiredModal />
               <uniReactRoot.Root />
               <WorkspaceSideEffects />
               {children}

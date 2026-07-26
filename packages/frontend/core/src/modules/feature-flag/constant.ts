@@ -201,8 +201,8 @@ export const AFFINE_FLAGS = {
     category: 'affine',
     displayName: 'Enable AI Button',
     description: 'Enable AI Button on mobile',
-    configurable: isMobile && isIOS,
-    defaultState: isMobile && isIOS,
+    configurable: false,
+    defaultState: false,
   },
   enable_mermaid_wasm_native_renderer: {
     category: 'affine',

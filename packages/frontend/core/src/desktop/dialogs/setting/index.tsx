@@ -3,7 +3,6 @@ import { WorkspaceDetailSkeleton } from '@affine/component/setting-components';
 import type { ModalProps } from '@affine/component/ui/modal';
 import { Modal } from '@affine/component/ui/modal';
 import {
-  AuthService,
   DefaultServerService,
   ServersService,
 } from '@affine/core/modules/cloud';
@@ -14,7 +13,6 @@ import type {
 } from '@affine/core/modules/dialogs/constant';
 import { GlobalContextService } from '@affine/core/modules/global-context';
 import { createIsland, type Island } from '@affine/core/utils/island';
-import { ServerDeploymentType } from '@affine/graphql';
 import { useTranslation } from '@affine/i18n';
 import { ContactWithUsIcon } from '@blocksuite/icons/rc';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
@@ -30,7 +28,6 @@ import {
 } from 'react';
 import { flushSync } from 'react-dom';
 
-import { AccountSetting } from './account-setting';
 import { GeneralSetting } from './general-setting';
 import { IssueFeedbackModal } from './issue-feedback-modal';
 import { SettingSidebar } from './setting-sidebar';
@@ -83,14 +80,6 @@ const SettingModalInner = ({
     useLiveData(
       currentServerId ? serversService.server$(currentServerId) : null
     ) ?? defaultServerService.server;
-  const loginStatus = useLiveData(
-    currentServer.scope.get(AuthService).session.status$
-  );
-  const isSelfhosted = useLiveData(
-    currentServer.config$.selector(
-      c => c.type === ServerDeploymentType.Selfhosted
-    )
-  );
 
   const modalContentRef = useRef<HTMLDivElement>(null);
   const modalContentWrapperRef = useRef<HTMLDivElement>(null);
@@ -162,14 +151,26 @@ const SettingModalInner = ({
   );
 
   useEffect(() => {
-    if (
-      isSelfhosted &&
-      (settingState.activeTab === 'plans' ||
-        settingState.activeTab === 'workspace:billing')
-    ) {
-      setSettingState({ activeTab: 'workspace:license' });
+    // Redirect removed cloud-only tabs to Data & sync
+    const dead: SettingTab[] = [
+      'account',
+      'plans',
+      'billing',
+      'notifications',
+      'meetings',
+      'experimental-features',
+      'backup',
+      'workspace:members',
+      'workspace:integrations',
+      'workspace:storage',
+      'workspace:embedding',
+      'workspace:billing',
+      'workspace:license',
+    ];
+    if (dead.includes(settingState.activeTab)) {
+      setSettingState({ activeTab: 'blank-sync' });
     }
-  }, [isSelfhosted, settingState.activeTab]);
+  }, [settingState.activeTab]);
 
   useEffect(() => {
     if (settingState.scrollAnchor) {
@@ -205,9 +206,11 @@ const SettingModalInner = ({
             <div className={style.centerContainer}>
               <div ref={modalContentRef} className={style.content}>
                 <Suspense fallback={<WorkspaceDetailSkeleton />}>
-                  {settingState.activeTab === 'account' &&
-                  loginStatus === 'authenticated' ? (
-                    <AccountSetting onChangeSettingState={setSettingState} />
+                  {settingState.activeTab === 'account' ? (
+                    <GeneralSetting
+                      activeTab="blank-sync"
+                      onChangeSettingState={setSettingState}
+                    />
                   ) : isWorkspaceSetting(settingState.activeTab) ? (
                     <WorkspaceSetting
                       activeTab={settingState.activeTab}
@@ -215,18 +218,18 @@ const SettingModalInner = ({
                       onCloseSetting={onCloseSetting}
                       onChangeSettingState={setSettingState}
                     />
-                  ) : !isWorkspaceSetting(settingState.activeTab) ? (
+                  ) : (
                     <GeneralSetting
                       activeTab={settingState.activeTab}
                       onChangeSettingState={setSettingState}
                     />
-                  ) : null}
+                  )}
                 </Suspense>
               </div>
               <div className={style.footer}>
                 <ContactWithUsIcon fontSize={16} />
                 <span>
-                  Blank — use Settings → Blank Sync to sign in and sync
+                  Blank — Settings → Data & sync for local, folder, or account
                 </span>
               </div>
               <IssueFeedbackModal

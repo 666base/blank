@@ -18,6 +18,7 @@ import {
   SettingWrapper,
 } from '@affine/component/setting-components';
 import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
+import { BLANK_PRODUCT } from '@affine/core/modules/blank';
 import { ServerService } from '@affine/core/modules/cloud';
 import { DesktopApiService } from '@affine/core/modules/desktop-api';
 import {
@@ -583,7 +584,7 @@ const AISettings = () => {
     [openConfirmModal, t, onAIChange]
   );
 
-  if (!serverFeatures?.copilot) {
+  if (BLANK_PRODUCT.disableAi || !serverFeatures?.copilot) {
     return null;
   }
 
