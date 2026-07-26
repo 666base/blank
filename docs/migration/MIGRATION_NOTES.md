@@ -1,10 +1,10 @@
 # Blank (AFFiNE fork) → Supabase + Tauri migration notes
 
-**Status:** Phases 1–8. Product scripts: `npm run dev` = Blank Desktop, `npm run phone` = Blank Phone. Legacy Electron/Capacitor/admin not offered in CLI. PR: https://github.com/666base/blank/pull/1  
+**Status:** **DONE.** `main` is Blank (PR [#1](https://github.com/666base/blank/pull/1) merged). Use `npm run dev` (Desktop) / `npm run phone` (Android).  
 **Date:** 2026-07-27  
 **Product name:** **Blank** (not AFFiNE / not AFFiNE Cloud)  
 **Local tree:** AFFiNE-derived monorepo → Blank  
-**GitHub:** branch [`supabase-tauri-migration`](https://github.com/666base/blank/tree/supabase-tauri-migration) (orphan Blank tree). Cutover PR [`#1`](https://github.com/666base/blank/pull/1). `main` still old notes until merge.  
+**GitHub:** [`main`](https://github.com/666base/blank) = Blank. Legacy notes app replaced.  
 **Supabase:** project **`blank`** (`jzkswvswfvmsfoqfvszo`) — `.env` already pointed here. MCP shop project is unrelated.
 
 ### Decisions (locked)
@@ -73,9 +73,10 @@ Migration: `supabase/migrations/20260727000100_blank_crdt_sync.sql`
 
 ### Checkpoint
 
-Remote `main` **not** merged yet. PR open: https://github.com/666base/blank/pull/1 (`blank-cutover` → `main`).
+**Merged:** https://github.com/666base/blank/pull/1 → `main` is Blank.
 
-Say **merge main** only if you explicitly want to replace the old notes app on `main`.
+Local: `git fetch origin && git checkout main && git pull`  
+Run: `yarn` then `npm run dev` (Desktop) or `npm run phone` (Android).
 
 ---
 
