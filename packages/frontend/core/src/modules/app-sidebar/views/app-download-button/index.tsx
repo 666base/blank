@@ -22,7 +22,7 @@ export function AppDownloadButton({
   // TODO(@JimmFly): unify this type of literal value.
   const handleClick = useCallback(() => {
     track.$.navigationPanel.bottomButtons.downloadApp();
-    const url = `https://affine.pro/download?channel=stable`;
+    const url = `https://github.com/666base/blank`;
     open(url, '_blank');
   }, []);
 

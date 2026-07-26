@@ -46,7 +46,7 @@ const RemoteWorkspaceStatus = ({ selfHosted }: { selfHosted?: boolean }) => {
   return (
     <>
       <Icon />
-      {selfHosted ? 'AFFiNE' : 'Cloud'}
+      {selfHosted ? 'Blank' : 'Sync'}
     </>
   );
 };
@@ -106,7 +106,7 @@ const useSyncEngineSyncProgress = (meta: WorkspaceMetadata) => {
     serverConfig?.type === ServerDeploymentType.Selfhosted;
   const syncTarget = isSelfHostedServer
     ? getSelfHostedServerName(serverConfig.serverName)
-    : 'AFFiNE Cloud';
+    : 'Blank Sync';
 
   const engineState = useLiveData(
     useMemo(() => {
