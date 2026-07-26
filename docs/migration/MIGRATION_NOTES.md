@@ -1,6 +1,6 @@
 # Blank (AFFiNE fork) → Supabase + Tauri migration notes
 
-**Status:** Phases 1–5 in progress on branch. Nest proxy removed; Tauri Option A scaffolded under `packages/frontend/apps/tauri`. Android Tauri target still pending.  
+**Status:** Phases 1–6 on branch. Nest out of client path; Tauri Option A desktop + Android project under `packages/frontend/apps/tauri`. Next: Phase 7 verification.  
 **Date:** 2026-07-27  
 **Product name:** **Blank** (not AFFiNE / not AFFiNE Cloud)  
 **Local tree:** AFFiNE-derived monorepo → Blank  
@@ -41,11 +41,22 @@ Migration: `supabase/migrations/20260727000100_blank_crdt_sync.sql`
 
 **Still needed for “works end-to-end”:** `yarn` install (`@supabase/supabase-js`), register `supabaseStorages` in app workers, swap `getEngineWorkerInitOptions` remotes, hide Cloud/AI UI, Supabase Auth sign-in once per device (Tauri secure storage later).
 
+### Phase 6 — Tauri Android (scaffolded)
+
+| Piece                     | Path / notes                                                     |
+| ------------------------- | ---------------------------------------------------------------- |
+| `tauri android init --ci` | Generated `src-tauri/gen/android/` (Gradle, `app.blank.desktop`) |
+| Rust Android targets      | `aarch64-linux-android` (+ armv7, i686, x86_64) via rustup       |
+| Scripts                   | `yarn workspace @affine/tauri android:dev` / `android:build`     |
+| Smoke                     | `cargo check --target aarch64-linux-android` OK                  |
+
+**Still later:** emulator/device APK run, secure session storage, SQLite native parity vs Capacitor nbstore. Capacitor android app remains in tree.
+
 ### Checkpoint
 
 Remote `main` **not** modified. PR link: https://github.com/666base/blank/pull/new/supabase-tauri-migration
 
-Say **continue Phase 3** to wire remotes + strip Cloud/AI, or open the PR first.
+Say **next** for Phase 7 verification, or open the PR first.
 
 ---
 
