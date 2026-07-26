@@ -5,6 +5,7 @@
   "private": true,
   "bin": {
     "affine": "./bin/cli.js",
+    "blank": "./bin/cli.js",
     "r": "./bin/runner.js"
   },
   "exports": {

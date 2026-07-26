@@ -1,7 +1,7 @@
 {
   "name": "@affine/web",
   "version": "0.27.0",
-  "description": "Blank Desktop Web application",
+  "description": "Blank web UI (loaded by Tauri Desktop / Phone)",
   "private": true,
   "browser": "src/index.tsx",
   "scripts": {
@@ -21,6 +21,7 @@
     "react-router-dom": "^6.30.4"
   },
   "devDependencies": {
+    "@affine-tools/cli": "workspace:*",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
     "typescript": "^5.9.3"

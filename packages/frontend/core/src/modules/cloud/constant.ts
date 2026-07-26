@@ -25,3 +25,10 @@ export const BUILD_IN_SERVERS: (ServerMetadata & { config: ServerConfig })[] = [
     },
   },
 ];
+
+/** Blank: no official AFFiNE telemetry collector. */
+export function getOfficialTelemetryEndpoint(
+  _channel?: string
+): string | undefined {
+  return undefined;
+}

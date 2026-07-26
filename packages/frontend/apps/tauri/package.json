@@ -2,15 +2,18 @@
   "name": "@affine/tauri",
   "version": "0.27.0",
   "private": true,
-  "description": "Blank desktop + Android shell (Tauri 2, Option A — single window)",
+  "description": "Blank desktop + Android shell (Tauri 2)",
   "scripts": {
     "dev": "tauri dev",
     "build": "tauri build",
     "android:dev": "tauri android dev",
     "android:build": "tauri android build",
+    "web:dev": "affine @affine/web dev",
+    "web:build": "affine @affine/web build",
     "tauri": "tauri"
   },
   "devDependencies": {
+    "@affine-tools/cli": "workspace:*",
     "@tauri-apps/cli": "^2.11.4"
   },
   "dependencies": {

@@ -36,19 +36,19 @@ export class RunCommand extends PackageCommand {
   static override paths = [[], ['run'], ['r']];
 
   static override usage = PackageCommand.Usage({
-    description: 'AFFiNE Monorepo scripts',
+    description: 'Blank Monorepo scripts',
     details: `
-      \`affine web <script>\`    Run any script defined in package's package.json
+      \`blank web <script>\`    Run any script defined in package's package.json
 
-      \`affine init\`            Generate the required files if there are any package added or removed
+      \`blank init\`            Generate the required files if there are any package added or removed
 
-      \`affine clean\`           Clean the output files of ts, cargo, bundler outputs, etc.
+      \`blank clean\`           Clean the output files of ts, cargo, bundler outputs, etc.
 
-      \`affine bundle\`          Bundle the packages
+      \`blank bundle\`          Bundle the packages
 
-      \`affine build\`           A proxy for <-p package>'s \`build\` script
+      \`blank build\`           A proxy for <-p package>'s \`build\` script
 
-      \`affine dev\`             A proxy for <-p package>'s \`dev\` script
+      \`blank dev\`             Blank Desktop or Blank Phone (Tauri)
     `,
     examples: [
       [`See detail of each command`, '$0 -h'],
@@ -60,7 +60,8 @@ export class RunCommand extends PackageCommand {
       [`Clean dist of each package`, '$0 clean --dist'],
       [`Clean node_modules under each package`, '$0 clean --node-modules'],
       [`Clean everything`, '$0 clean --all'],
-      [`Run 'build' script for @affine/web`, '$0 build -p web'],
+      [`Run Blank Desktop`, '$0 dev -p desktop'],
+      [`Run Blank Phone (Android)`, '$0 dev -p phone'],
       [
         `Run 'build' script for @affine/web with all deps prebuild before`,
         '$0 build -p web --deps',

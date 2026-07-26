@@ -4,9 +4,9 @@
   "version": "0.27.0",
   "identifier": "app.blank.desktop",
   "build": {
-    "beforeDevCommand": "yarn affine @affine/web dev",
+    "beforeDevCommand": "yarn web:dev",
     "devUrl": "http://localhost:8080",
-    "beforeBuildCommand": "yarn affine @affine/web build",
+    "beforeBuildCommand": "yarn web:build",
     "frontendDist": "../../web/dist"
   },
   "app": {
