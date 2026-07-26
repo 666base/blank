@@ -1,4 +1,5 @@
 import { useWorkspaceInfo } from '@affine/core/components/hooks/use-workspace-info';
+import { BLANK_PRODUCT } from '@affine/core/modules/blank';
 import { ServerService } from '@affine/core/modules/cloud';
 import type { SettingTab } from '@affine/core/modules/dialogs/constant';
 import { WorkspaceService } from '@affine/core/modules/workspace';
@@ -77,9 +78,13 @@ export const useWorkspaceSettingList = (): SettingSidebarItem[] => {
 
   const t = useI18n();
 
+  const showCloudExtras = !BLANK_PRODUCT.disableAffineCloud;
   const showBilling =
-    !isSelfhosted && information?.isTeam && information?.isOwner;
-  const showLicense = information?.isOwner && isSelfhosted;
+    showCloudExtras &&
+    !isSelfhosted &&
+    information?.isTeam &&
+    information?.isOwner;
+  const showLicense = showCloudExtras && information?.isOwner && isSelfhosted;
   const items = useMemo<SettingSidebarItem[]>(() => {
     return [
       {
@@ -94,13 +99,13 @@ export const useWorkspaceSettingList = (): SettingSidebarItem[] => {
         icon: <PropertyIcon />,
         testId: 'workspace-setting:properties',
       },
-      {
+      showCloudExtras && {
         key: 'workspace:members',
         title: t['Members'](),
         icon: <CollaborationIcon />,
         testId: 'workspace-setting:members',
       },
-      {
+      showCloudExtras && {
         key: 'workspace:integrations',
         title: t['com.affine.integration.integrations'](),
         icon: <IntegrationsIcon />,
@@ -112,7 +117,7 @@ export const useWorkspaceSettingList = (): SettingSidebarItem[] => {
         icon: <SaveIcon />,
         testId: 'workspace-setting:storage',
       },
-      {
+      showCloudExtras && {
         key: 'workspace:embedding',
         title:
           t[
@@ -134,7 +139,7 @@ export const useWorkspaceSettingList = (): SettingSidebarItem[] => {
         testId: 'workspace-setting:license',
       },
     ].filter((item): item is SettingSidebarItem => !!item);
-  }, [showBilling, showLicense, t]);
+  }, [showBilling, showCloudExtras, showLicense, t]);
 
   return items;
 };

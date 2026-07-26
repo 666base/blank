@@ -99,6 +99,15 @@ export class AuthStore extends Store {
   }
 
   async fetchSession() {
+    // Blank: stub Cloud never talks to Nest — stay unauthenticated here.
+    // Real account is Blank Sync (Supabase) on local workspaces.
+    if (
+      this.serverService.server.baseUrl.includes('127.0.0.1:9') ||
+      this.serverService.server.baseUrl.includes('localhost:9')
+    ) {
+      return { user: null };
+    }
+
     const session = await this.fetchAuthSession();
     if (!session.user) return { user: null };
 

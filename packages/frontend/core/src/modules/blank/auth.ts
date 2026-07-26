@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 import {
+  BLANK_SYNC_WORKSPACE_ID,
   type BlankSupabaseSession,
   getBlankSupabaseAnonKey,
   getBlankSupabaseUrl,
@@ -15,6 +16,17 @@ function requireConfig() {
     throw new Error('Blank Supabase URL/anon key not configured');
   }
   return { url, anon };
+}
+
+async function ensureBlankWorkspaceRow(
+  client: ReturnType<typeof createClient>,
+  ownerId: string
+) {
+  await client.from('workspaces').upsert({
+    id: BLANK_SYNC_WORKSPACE_ID,
+    owner_id: ownerId,
+    name: 'Blank',
+  });
 }
 
 export async function blankSignInWithPassword(
@@ -40,13 +52,8 @@ export async function blankSignInWithPassword(
   };
   saveBlankSupabaseSession(session);
 
-  // Ensure workspace registry row exists for sync metadata
   if (data.user) {
-    await client.from('workspaces').upsert({
-      id: 'blank-default',
-      owner_id: data.user.id,
-      name: 'Blank',
-    });
+    await ensureBlankWorkspaceRow(client, data.user.id);
   }
 
   return session;
@@ -72,6 +79,9 @@ export async function blankSignUpWithPassword(
       user_id: data.user?.id,
     };
     saveBlankSupabaseSession(session);
+    if (data.user) {
+      await ensureBlankWorkspaceRow(client, data.user.id);
+    }
     return session;
   }
   // Email confirmation may be required

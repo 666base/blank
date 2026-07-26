@@ -82,7 +82,10 @@ export function BlankSyncSettings() {
         }}
       >
         <h3>Blank Sync</h3>
-        <p>Signed in. Documents sync via Supabase when online.</p>
+        <p>
+          Signed in. Documents sync via Supabase when online (shared space{' '}
+          <code>blank-default</code> on every device).
+        </p>
         <p style={{ opacity: 0.7, fontSize: 12 }}>
           User: {session.user_id ?? 'session'}
         </p>
@@ -96,7 +99,10 @@ export function BlankSyncSettings() {
       style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 12 }}
     >
       <h3>Blank Sync</h3>
-      <p>Sign in once per device to sync this workspace through Supabase.</p>
+      <p>
+        Sign in once per device. All local workspaces sync into the same Blank
+        space so PC and phone converge.
+      </p>
       <Input
         type="email"
         placeholder="Email"

@@ -1,6 +1,6 @@
 # Blank (AFFiNE fork) → Supabase + Tauri migration notes
 
-**Status:** Phases 1–6 on branch. Nest out of client path; Tauri Option A desktop + Android project under `packages/frontend/apps/tauri`. Next: Phase 7 verification.  
+**Status:** Phases 1–7 on branch. Nest out of client path; Tauri Option A desktop + Android scaffolded; Phase 7 sync/UI verification fixes applied. Next: Phase 8 PR / main cutover (explicit OK only).  
 **Date:** 2026-07-27  
 **Product name:** **Blank** (not AFFiNE / not AFFiNE Cloud)  
 **Local tree:** AFFiNE-derived monorepo → Blank  
@@ -52,11 +52,30 @@ Migration: `supabase/migrations/20260727000100_blank_crdt_sync.sql`
 
 **Still later:** emulator/device APK run, secure session storage, SQLite native parity vs Capacitor nbstore. Capacitor android app remains in tree.
 
+### Phase 7 — Verification fixes
+
+| Gate                               | Result                                                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Stable remote workspace            | Remotes always use `BLANK_SYNC_WORKSPACE_ID` (`blank-default`) so PC ↔ phone share one CRDT namespace   |
+| Nest auth spam                     | Stub `127.0.0.1:9` → `AuthStore.fetchSession` returns null (no `/api/auth/session` loop)                |
+| Enable AFFiNE Cloud UI             | Hidden via `BLANK_PRODUCT.disableAffineCloud` (settings panel, share menu → Blank Sync, sidebar avatar) |
+| Members / Embedding / billing tabs | Hidden when Cloud disabled                                                                              |
+| Schema / RLS (linked `blank`)      | Own-row policies; grants to `authenticated` only (no `anon`); `blobs` bucket; realtime on doc tables    |
+| Yjs converge script                | Needs `SUPABASE_EMAIL` + `SUPABASE_PASSWORD` in env — run manually when set                             |
+
+**Manual smoke (you):**
+
+1. `yarn affine @affine/web dev` (or `yarn workspace @affine/tauri dev`)
+2. Settings → **Blank Sync** → create account / sign in → reload
+3. Edit a doc; confirm rows under `workspace_id = blank-default` in Supabase
+4. Second browser/profile or phone: same account → same docs after sync
+5. DevTools Network: Supabase host only — no Nest / `app.affine.pro`
+
 ### Checkpoint
 
 Remote `main` **not** modified. PR link: https://github.com/666base/blank/pull/new/supabase-tauri-migration
 
-Say **next** for Phase 7 verification, or open the PR first.
+Say **next** for Phase 8 (PR / cutover), or open the PR first.
 
 ---
 

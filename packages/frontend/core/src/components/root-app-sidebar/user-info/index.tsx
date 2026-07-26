@@ -5,6 +5,7 @@ import {
   Menu,
   type MenuProps,
 } from '@affine/component';
+import { BLANK_PRODUCT } from '@affine/core/modules/blank';
 import {
   type AuthAccountInfo,
   AuthService,
@@ -55,6 +56,10 @@ const UnauthorizedUserInfo = () => {
   const globalDialogService = useService(GlobalDialogService);
 
   const openSignInModal = useCallback(() => {
+    if (BLANK_PRODUCT.disableAffineCloud) {
+      globalDialogService.open('setting', { activeTab: 'blank-sync' });
+      return;
+    }
     globalDialogService.open('sign-in', {});
   }, [globalDialogService]);
 

@@ -9,6 +9,13 @@ declare const process: {
 
 const SESSION_KEY = 'blank.supabase.session';
 
+/**
+ * Stable Supabase workspace id for all devices of one Blank account.
+ * Local IndexedDB may use per-device nanoids; remotes always use this so
+ * PC ↔ phone CRDT updates land in the same Postgres namespace.
+ */
+export const BLANK_SYNC_WORKSPACE_ID = 'blank-default';
+
 export type BlankSupabaseSession = {
   access_token: string;
   refresh_token: string;
@@ -68,7 +75,7 @@ export function saveBlankSupabaseSession(
   localStorage.setItem(SESSION_KEY, JSON.stringify(session));
 }
 
-export function getBlankSupabaseRemoteOpts(workspaceId: string):
+export function getBlankSupabaseRemoteOpts(_localWorkspaceId: string):
   | {
       id: string;
       supabaseUrl: string;
@@ -85,7 +92,8 @@ export function getBlankSupabaseRemoteOpts(workspaceId: string):
     return undefined;
   }
   return {
-    id: workspaceId,
+    // Always the shared Blank space — not the local nanoid.
+    id: BLANK_SYNC_WORKSPACE_ID,
     supabaseUrl: url,
     supabaseAnonKey: anon,
     accessToken: session.access_token,
@@ -95,4 +103,13 @@ export function getBlankSupabaseRemoteOpts(workspaceId: string):
         ? crypto.randomUUID()
         : `blank-${Date.now()}`,
   };
+}
+
+/** True when the AFFiNE Cloud stub baseUrl is in use (no Nest). */
+export function isBlankStubCloudBaseUrl(baseUrl: string): boolean {
+  return (
+    baseUrl.includes('127.0.0.1:9') ||
+    baseUrl.includes('localhost:9') ||
+    BLANK_PRODUCT.disableAffineCloud
+  );
 }

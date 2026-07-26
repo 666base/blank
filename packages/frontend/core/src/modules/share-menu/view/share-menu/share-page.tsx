@@ -1,12 +1,14 @@
 import { Divider, Skeleton } from '@affine/component';
 import { Button } from '@affine/component/ui/button';
 import { useGuard } from '@affine/core/components/guard';
+import { BLANK_PRODUCT } from '@affine/core/modules/blank';
 import { ServerService } from '@affine/core/modules/cloud';
+import { GlobalDialogService } from '@affine/core/modules/dialogs';
 import { DocService } from '@affine/core/modules/doc';
 import { ShareInfoService } from '@affine/core/modules/share-doc';
 import { useI18n } from '@affine/i18n';
 import { useLiveData, useService } from '@toeverything/infra';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useCallback, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { CloudSvg } from '../cloud-svg';
@@ -19,9 +21,43 @@ import type { ShareMenuProps } from './share-menu';
 
 export const LocalSharePage = (props: ShareMenuProps) => {
   const t = useI18n();
+  const globalDialogService = useService(GlobalDialogService);
   const {
     workspaceMetadata: { id: workspaceId },
   } = props;
+
+  const openBlankSync = useCallback(() => {
+    globalDialogService.open('setting', { activeTab: 'blank-sync' });
+  }, [globalDialogService]);
+
+  if (BLANK_PRODUCT.disableAffineCloud) {
+    return (
+      <>
+        <div className={styles.localSharePage}>
+          <div className={styles.columnContainerStyle} style={{ gap: '12px' }}>
+            <div
+              className={styles.descriptionStyle}
+              style={{ maxWidth: '230px' }}
+            >
+              Sync across your devices with Blank Sync (Supabase). Public
+              sharing is not available.
+            </div>
+            <div>
+              <Button
+                onClick={openBlankSync}
+                variant="primary"
+                data-testid="share-menu-blank-sync-button"
+              >
+                Open Blank Sync
+              </Button>
+            </div>
+          </div>
+        </div>
+        <CopyLinkButton workspaceId={workspaceId} secondary />
+      </>
+    );
+  }
+
   return (
     <>
       <div className={styles.localSharePage}>

@@ -1,6 +1,7 @@
 import { SettingRow } from '@affine/component/setting-components';
 import { Button } from '@affine/component/ui/button';
 import { useEnableCloud } from '@affine/core/components/hooks/affine/use-enable-cloud';
+import { BLANK_PRODUCT } from '@affine/core/modules/blank';
 import {
   type Workspace,
   WorkspaceService,
@@ -35,7 +36,7 @@ export const EnableCloudPanel = ({
     });
   }, [confirmEnableCloud, onCloseSetting, workspace]);
 
-  if (flavour !== 'local') {
+  if (BLANK_PRODUCT.disableAffineCloud || flavour !== 'local') {
     return null;
   }
 
