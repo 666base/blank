@@ -1,3 +1,4 @@
+import { existsSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
@@ -20,6 +21,56 @@ import {
 } from '../rspack-shared/html-plugin.js';
 
 const require = createRequire(import.meta.url);
+
+/** Load root `.env` into process.env (Blank Supabase keys). Never embeds service_role. */
+function loadRootEnvFile() {
+  try {
+    const envPath = ProjectRoot.join('.env').value;
+    if (!existsSync(envPath)) return;
+    const text = readFileSync(envPath, 'utf8');
+    for (const line of text.split(/\r?\n/)) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const eq = trimmed.indexOf('=');
+      if (eq <= 0) continue;
+      const key = trimmed.slice(0, eq).trim();
+      let value = trimmed.slice(eq + 1).trim();
+      if (
+        (value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))
+      ) {
+        value = value.slice(1, -1);
+      }
+      if (process.env[key] === undefined) {
+        process.env[key] = value;
+      }
+    }
+  } catch {
+    // ignore
+  }
+}
+
+loadRootEnvFile();
+
+function blankSupabaseDefine(): Record<string, string> {
+  const allow = [
+    'VITE_SUPABASE_URL',
+    'VITE_SUPABASE_ANON_KEY',
+    'VITE_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+    'SUPABASE_URL',
+    'SUPABASE_ANON_KEY',
+  ] as const;
+  const def: Record<string, string> = {};
+  for (const key of allow) {
+    const v = process.env[key];
+    if (v) {
+      def[`process.env.${key}`] = JSON.stringify(v);
+    }
+  }
+  // Explicitly never inject service role
+  def['process.env.VITE_SUPABASE_SERVICE_KEY'] = JSON.stringify('');
+  return def;
+}
 
 const IN_CI = !!process.env.CI;
 const hasSentryBuildEnvs = () =>
@@ -305,6 +356,7 @@ export function createHTMLTargetConfig(
       ...createHTMLPlugins(buildConfig, htmlConfig),
       new rspack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        ...blankSupabaseDefine(),
         ...Object.entries(buildConfig).reduce(
           (def, [k, v]) => {
             def[`BUILD_CONFIG.${k}`] = JSON.stringify(v);
@@ -500,15 +552,16 @@ export function createWorkerTargetConfig(
       ],
     },
     plugins: compact([
-      new rspack.DefinePlugin(
-        Object.entries(buildConfig).reduce(
+      new rspack.DefinePlugin({
+        ...blankSupabaseDefine(),
+        ...Object.entries(buildConfig).reduce(
           (def, [k, v]) => {
             def[`BUILD_CONFIG.${k}`] = JSON.stringify(v);
             return def;
           },
           {} as Record<string, string>
-        )
-      ),
+        ),
+      }),
       new rspack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
       createSentryPlugin(),
     ]),

@@ -4,6 +4,7 @@ import { broadcastChannelStorages } from '@affine/nbstore/broadcast-channel';
 import { cloudStorages } from '@affine/nbstore/cloud';
 import { idbStorages } from '@affine/nbstore/idb';
 import { idbV1Storages } from '@affine/nbstore/idb/v1';
+import { supabaseStorages } from '@affine/nbstore/supabase';
 import {
   StoreManagerConsumer,
   type WorkerManagerOps,
@@ -15,6 +16,7 @@ const consumer = new StoreManagerConsumer([
   ...idbV1Storages,
   ...broadcastChannelStorages,
   ...cloudStorages,
+  ...supabaseStorages,
 ]);
 
 if ('onconnect' in globalThis) {

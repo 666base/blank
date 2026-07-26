@@ -1,9 +1,7 @@
-import { type Framework } from '@toeverything/infra';
+import { type Framework, LiveData, Service } from '@toeverything/infra';
 
-import { ServersService } from '../cloud/services/servers';
-import { GlobalState } from '../storage';
 import { WorkspaceFlavoursProvider } from '../workspace';
-import { CloudWorkspaceFlavoursProvider } from './impls/cloud';
+import type { WorkspaceFlavoursProvider as IWorkspaceFlavoursProvider } from '../workspace/providers/flavour';
 import {
   LocalWorkspaceFlavoursProvider,
   setLocalWorkspaceIds,
@@ -11,13 +9,21 @@ import {
 
 export { base64ToUint8Array, uint8ArrayToBase64 } from './utils/base64';
 
+/** Blank: no AFFiNE Cloud flavour providers. */
+class EmptyCloudWorkspaceFlavoursProvider
+  extends Service
+  implements IWorkspaceFlavoursProvider
+{
+  workspaceFlavours$ = new LiveData([]);
+}
+
 export function configureBrowserWorkspaceFlavours(framework: Framework) {
   framework
     .impl(WorkspaceFlavoursProvider('LOCAL'), LocalWorkspaceFlavoursProvider)
-    .impl(WorkspaceFlavoursProvider('CLOUD'), CloudWorkspaceFlavoursProvider, [
-      GlobalState,
-      ServersService,
-    ]);
+    .impl(
+      WorkspaceFlavoursProvider('CLOUD'),
+      EmptyCloudWorkspaceFlavoursProvider
+    );
 }
 
 /**

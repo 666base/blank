@@ -1,6 +1,6 @@
 # Blank (AFFiNE fork) → Supabase + Tauri migration notes
 
-**Status:** Phase 1 **done** on Supabase project `blank`. Phase 2 provider **scaffolded**. Branch pushed (remote `main` untouched). Next: wire provider + strip AFFiNE Cloud UI (Phase 3).  
+**Status:** Phase 1 applied. Phase 2+3 wired on branch (Supabase remotes on local workspaces, Cloud/AI stripped, Blank Sync settings). Tauri shells still pending.  
 **Date:** 2026-07-27  
 **Product name:** **Blank** (not AFFiNE / not AFFiNE Cloud)  
 **Local tree:** AFFiNE-derived monorepo → Blank  
@@ -9,35 +9,35 @@
 
 ### Decisions (locked)
 
-| Item | Choice |
-|------|--------|
-| Product | **Blank** |
-| Cloud | Remove AFFiNE Cloud; sync = Supabase |
-| Git | **2a** — branch only; do not force `main` |
+| Item     | Choice                                        |
+| -------- | --------------------------------------------- |
+| Product  | **Blank**                                     |
+| Cloud    | Remove AFFiNE Cloud; sync = Supabase          |
+| Git      | **2a** — branch only; do not force `main`     |
 | Supabase | Dedicated **blank** project (not the shop DB) |
-| Tauri | Option A (one window) |
-| AI | Remove / hide |
+| Tauri    | Option A (one window)                         |
+| AI       | Remove / hide                                 |
 
 ### Phase 1 — applied
 
 Migration: `supabase/migrations/20260727000100_blank_crdt_sync.sql`
 
-| Object | Status |
-|--------|--------|
+| Object                                       | Status                                |
+| -------------------------------------------- | ------------------------------------- |
 | `doc_snapshots`, `doc_updates`, `workspaces` | Created + RLS `owner_id = auth.uid()` |
-| Storage bucket `blobs` (private, 50MB) | Created + path RLS `{uid}/...` |
-| Realtime publication | `doc_updates`, `doc_snapshots` |
-| `compact_doc_updates()` | Compaction prune RPC |
+| Storage bucket `blobs` (private, 50MB)       | Created + path RLS `{uid}/...`        |
+| Realtime publication                         | `doc_updates`, `doc_snapshots`        |
+| `compact_doc_updates()`                      | Compaction prune RPC                  |
 
 ### Phase 2 — scaffolded (not fully wired into app yet)
 
-| Piece | Path |
-|-------|------|
-| `SupabaseDocStorage` | `packages/common/nbstore/src/impls/supabase/doc.ts` |
-| `SupabaseBlobStorage` | `.../blob.ts` |
-| `SupabaseAwarenessStorage` | `.../awareness.ts` |
-| Export `@affine/nbstore/supabase` | `package.json` exports |
-| Converge script | `packages/common/nbstore/scripts/supabase-yjs-converge.ts` |
+| Piece                             | Path                                                       |
+| --------------------------------- | ---------------------------------------------------------- |
+| `SupabaseDocStorage`              | `packages/common/nbstore/src/impls/supabase/doc.ts`        |
+| `SupabaseBlobStorage`             | `.../blob.ts`                                              |
+| `SupabaseAwarenessStorage`        | `.../awareness.ts`                                         |
+| Export `@affine/nbstore/supabase` | `package.json` exports                                     |
+| Converge script                   | `packages/common/nbstore/scripts/supabase-yjs-converge.ts` |
 
 **Still needed for “works end-to-end”:** `yarn` install (`@supabase/supabase-js`), register `supabaseStorages` in app workers, swap `getEngineWorkerInitOptions` remotes, hide Cloud/AI UI, Supabase Auth sign-in once per device (Tauri secure storage later).
 
@@ -51,15 +51,15 @@ Say **continue Phase 3** to wire remotes + strip Cloud/AI, or open the PR first.
 
 ## Critical discrepancies vs. this spec (read before Phase 1)
 
-| Spec assumption | Actual repo state | Proposed adjustment |
-|-----------------|-------------------|---------------------|
-| Work on branch `supabase-tauri-migration` on AFFiNE code | Branch exists; working tree is Blank/AFFiNE-derived; remote `main` is still notes app. | Confirm **2a/2b** before commit/push. |
-| Confirm `.env` is in `.gitignore` | **Fixed locally:** `.env` is ignored. | Keep; never commit `.env` or Tauri signing private keys. |
-| Root markdown notes are fine | `.gitignore` has `/*.md`. | Move notes under `docs/migration/` when committing. |
-| Sync in core / infra | Live sync is **`@affine/nbstore`**. | Supabase implements nbstore storage interfaces. |
-| Electron → Tauri | Multi-tab Electron is hard. | **Option A** confirmed. |
-| Product still called AFFiNE / uses AFFiNE Cloud | Owner: product is **Blank**; Cloud removed; Supabase sync. | Phases 1–3 + branding policy above. |
-| Empty Supabase for sync | Linked project is e-commerce. | Confirm **4a** or **4b**. |
+| Spec assumption                                          | Actual repo state                                                                      | Proposed adjustment                                      |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Work on branch `supabase-tauri-migration` on AFFiNE code | Branch exists; working tree is Blank/AFFiNE-derived; remote `main` is still notes app. | Confirm **2a/2b** before commit/push.                    |
+| Confirm `.env` is in `.gitignore`                        | **Fixed locally:** `.env` is ignored.                                                  | Keep; never commit `.env` or Tauri signing private keys. |
+| Root markdown notes are fine                             | `.gitignore` has `/*.md`.                                                              | Move notes under `docs/migration/` when committing.      |
+| Sync in core / infra                                     | Live sync is **`@affine/nbstore`**.                                                    | Supabase implements nbstore storage interfaces.          |
+| Electron → Tauri                                         | Multi-tab Electron is hard.                                                            | **Option A** confirmed.                                  |
+| Product still called AFFiNE / uses AFFiNE Cloud          | Owner: product is **Blank**; Cloud removed; Supabase sync.                             | Phases 1–3 + branding policy above.                      |
+| Empty Supabase for sync                                  | Linked project is e-commerce.                                                          | Confirm **4a** or **4b**.                                |
 
 ---
 
@@ -69,37 +69,37 @@ NestJS + Apollo GraphQL + Socket.IO (`@affine/server`). Flavored via `SERVER_FLA
 
 ### 1.1 Auth / session
 
-| Item | Path / notes |
-|------|----------------|
-| Module | `packages/backend/server/src/core/auth/` |
-| HTTP | `/api/auth/*` (`controller.ts`) — preflight, sign-in/out, magic-link, session exchange/refresh/revoke |
-| Guard | Global `AuthGuard` — Bearer JWT **or** cookie session |
-| Cookies | `affine_session`, `affine_user_id`, `affine_csrf_token` |
-| Native/Electron | `AuthSession` + refresh tokens (JWT rotation) for desktop/mobile |
-| OAuth plugin | `packages/backend/server/src/plugins/oauth/` (Google, GitHub, Apple, OIDC) |
-| Selfhost first admin | `POST /api/setup/create-admin-user` |
+| Item                 | Path / notes                                                                                          |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| Module               | `packages/backend/server/src/core/auth/`                                                              |
+| HTTP                 | `/api/auth/*` (`controller.ts`) — preflight, sign-in/out, magic-link, session exchange/refresh/revoke |
+| Guard                | Global `AuthGuard` — Bearer JWT **or** cookie session                                                 |
+| Cookies              | `affine_session`, `affine_user_id`, `affine_csrf_token`                                               |
+| Native/Electron      | `AuthSession` + refresh tokens (JWT rotation) for desktop/mobile                                      |
+| OAuth plugin         | `packages/backend/server/src/plugins/oauth/` (Google, GitHub, Apple, OIDC)                            |
+| Selfhost first admin | `POST /api/setup/create-admin-user`                                                                   |
 
 **Single-user verdict:** Identity is required for cloud sync today. Will be **replaced by Supabase Auth** (email/password or magic link), not reused as Nest sessions.
 
 ### 1.2 GraphQL API surface (`/graphql`)
 
-| Area | Location | Single-user need? |
-|------|----------|-------------------|
-| Workspaces CRUD / quotas | `core/workspaces/resolvers/workspace.ts` | Replace with local + Supabase metadata (or drop) |
-| Docs meta / publish / grants | `resolvers/doc.ts` | Mostly optional if sync is CRDT-only |
-| Blobs (upload/multipart) | `resolvers/blob.ts` | Replace with Supabase Storage |
-| Members / invites | `resolvers/member.ts` | **Dead weight** — hide UI |
-| Users / currentUser | `core/user`, `core/auth/resolver` | Replace with Supabase user |
-| Payment / Stripe | `plugins/payment` | **Dead weight** — bypass/hide |
-| Copilot AI | `plugins/copilot` | **Optional** — hide panel if no server |
-| Calendar, captcha, license, GCloud, admin | plugins / admin resolvers | **Dead weight** for this product |
+| Area                                      | Location                                 | Single-user need?                                |
+| ----------------------------------------- | ---------------------------------------- | ------------------------------------------------ |
+| Workspaces CRUD / quotas                  | `core/workspaces/resolvers/workspace.ts` | Replace with local + Supabase metadata (or drop) |
+| Docs meta / publish / grants              | `resolvers/doc.ts`                       | Mostly optional if sync is CRDT-only             |
+| Blobs (upload/multipart)                  | `resolvers/blob.ts`                      | Replace with Supabase Storage                    |
+| Members / invites                         | `resolvers/member.ts`                    | **Dead weight** — hide UI                        |
+| Users / currentUser                       | `core/user`, `core/auth/resolver`        | Replace with Supabase user                       |
+| Payment / Stripe                          | `plugins/payment`                        | **Dead weight** — bypass/hide                    |
+| Copilot AI                                | `plugins/copilot`                        | **Optional** — hide panel if no server           |
+| Calendar, captcha, license, GCloud, admin | plugins / admin resolvers                | **Dead weight** for this product                 |
 
 ### 1.3 Sync / socket transport
 
-| Gateway | Path | Events |
-|---------|------|--------|
-| Doc CRDT | `src/core/sync/gateway.ts` (`SpaceSyncGateway`) | `space:join/leave`, `space:load-doc`, `space:push-doc-update`, `space:delete-doc`, `space:load-doc-timestamps`, awareness join/update/load |
-| Realtime bus | `src/core/realtime/gateway.ts` | comments / copilot / workspace topics |
+| Gateway      | Path                                            | Events                                                                                                                                     |
+| ------------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Doc CRDT     | `src/core/sync/gateway.ts` (`SpaceSyncGateway`) | `space:join/leave`, `space:load-doc`, `space:push-doc-update`, `space:delete-doc`, `space:load-doc-timestamps`, awareness join/update/load |
+| Realtime bus | `src/core/realtime/gateway.ts`                  | comments / copilot / workspace topics                                                                                                      |
 
 **CRDT flow today:**
 
@@ -113,25 +113,25 @@ NestJS + Apollo GraphQL + Socket.IO (`@affine/server`). Flavored via `SERVER_FLA
 
 ### 1.4 Blob storage (S3-compatible)
 
-| Item | Path / notes |
-|------|----------------|
-| Config | `core/storage/config.ts` — `storages.avatar` / `storages.blob` |
-| Providers | `fs` \| `aws-s3` \| `cloudflare-r2` \| `assetpack` |
-| Default local | `~/.affine/storage` |
-| Upload | GraphQL `setBlob` / `createBlobUpload`; `PUT /api/storage/upload` |
-| Download | `GET /api/workspaces/:id/blobs/:name` |
-| Metadata | Prisma `Blob` model |
+| Item          | Path / notes                                                      |
+| ------------- | ----------------------------------------------------------------- |
+| Config        | `core/storage/config.ts` — `storages.avatar` / `storages.blob`    |
+| Providers     | `fs` \| `aws-s3` \| `cloudflare-r2` \| `assetpack`                |
+| Default local | `~/.affine/storage`                                               |
+| Upload        | GraphQL `setBlob` / `createBlobUpload`; `PUT /api/storage/upload` |
+| Download      | `GET /api/workspaces/:id/blobs/:name`                             |
+| Metadata      | Prisma `Blob` model                                               |
 
 Client: `CloudBlobStorage` in nbstore. **Replace with Supabase Storage bucket.**
 
 ### 1.5 AI Copilot backend
 
-| Item | Notes |
-|------|--------|
-| Module | `plugins/copilot/` |
+| Item     | Notes                                                  |
+| -------- | ------------------------------------------------------ |
+| Module   | `plugins/copilot/`                                     |
 | HTTP SSE | `/api/copilot/chat/:sessionId/stream`, actions, images |
-| GraphQL | sessions, context, BYOK, transcript, MCP |
-| Default | `copilot.enabled` often **false** unless configured |
+| GraphQL  | sessions, context, BYOK, transcript, MCP               |
+| Default  | `copilot.enabled` often **false** unless configured    |
 
 **Single-user verdict:** Optional. Spec says hide server-dependent Copilot UI; do not rebuild against Nest.
 
@@ -206,11 +206,7 @@ interface BlobStorage extends Storage {
 ```typescript
 interface AwarenessStorage extends Storage {
   update(record: AwarenessRecord, origin?: string): Promise<void>;
-  subscribeUpdate(
-    id: string,
-    onUpdate: (update: AwarenessRecord, origin?: string) => void,
-    onCollect: () => Promise<AwarenessRecord | null>
-  ): () => void;
+  subscribeUpdate(id: string, onUpdate: (update: AwarenessRecord, origin?: string) => void, onCollect: () => Promise<AwarenessRecord | null>): () => void;
 }
 ```
 
@@ -222,35 +218,35 @@ Optional later: `IndexerStorage` / `CloudIndexerStorage` parity.
 
 Under `packages/common/nbstore/src/impls/cloud/`, exported as `cloudStorages`:
 
-| Class | Identifier | Transport |
-|-------|------------|-----------|
-| `CloudDocStorage` | `'CloudDocStorage'` | Socket.IO |
-| `StaticCloudDocStorage` | `'StaticCloudDocStorage'` | HTTP readonly |
-| `CloudBlobStorage` | `'CloudBlobStorage'` | HTTP + GraphQL |
+| Class                   | Identifier                | Transport           |
+| ----------------------- | ------------------------- | ------------------- |
+| `CloudDocStorage`       | `'CloudDocStorage'`       | Socket.IO           |
+| `StaticCloudDocStorage` | `'StaticCloudDocStorage'` | HTTP readonly       |
+| `CloudBlobStorage`      | `'CloudBlobStorage'`      | HTTP + GraphQL      |
 | `CloudAwarenessStorage` | `'CloudAwarenessStorage'` | Socket.IO awareness |
-| `CloudIndexerStorage` | `'CloudIndexerStorage'` | Cloud indexer |
+| `CloudIndexerStorage`   | `'CloudIndexerStorage'`   | Cloud indexer       |
 
 ### 2.4 Exact registration / injection points
 
-| Step | Path |
-|------|------|
-| Flavour remotes (primary swap) | `packages/frontend/core/src/modules/workspace-engine/impls/cloud.ts` → `getEngineWorkerInitOptions()` — remotes key `` `cloud:${this.flavour}` `` uses `CloudDocStorage` / `CloudBlobStorage` / `CloudAwarenessStorage` |
-| Local flavour (no cloud remotes) | `.../impls/local.ts` |
-| Flavour DI registration | `packages/frontend/core/src/modules/workspace-engine/index.ts` → `configureBrowserWorkspaceFlavours()` |
-| Nbstore provider DI | `packages/frontend/core/src/modules/storage/providers/nbstore.ts` + app `framework.impl(NbstoreProvider, …)` |
-| Worker constructor registry | e.g. `packages/frontend/apps/web/src/nbstore.worker.ts` — `new StoreManagerConsumer([...idbStorages, ...cloudStorages])` |
-| Electron worker | `packages/frontend/apps/electron-renderer/src/background-worker/index.ts` — sqlite + cloud |
-| Android worker | `packages/frontend/apps/android/src/nbstore.worker.ts` — sqlite + idb indexer + cloud |
-| Official server id | `packages/frontend/core/src/modules/cloud/constant.ts` — `affine-cloud` / `BUILD_IN_SERVERS` |
+| Step                             | Path                                                                                                                                                                                                                    |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Flavour remotes (primary swap)   | `packages/frontend/core/src/modules/workspace-engine/impls/cloud.ts` → `getEngineWorkerInitOptions()` — remotes key `` `cloud:${this.flavour}` `` uses `CloudDocStorage` / `CloudBlobStorage` / `CloudAwarenessStorage` |
+| Local flavour (no cloud remotes) | `.../impls/local.ts`                                                                                                                                                                                                    |
+| Flavour DI registration          | `packages/frontend/core/src/modules/workspace-engine/index.ts` → `configureBrowserWorkspaceFlavours()`                                                                                                                  |
+| Nbstore provider DI              | `packages/frontend/core/src/modules/storage/providers/nbstore.ts` + app `framework.impl(NbstoreProvider, …)`                                                                                                            |
+| Worker constructor registry      | e.g. `packages/frontend/apps/web/src/nbstore.worker.ts` — `new StoreManagerConsumer([...idbStorages, ...cloudStorages])`                                                                                                |
+| Electron worker                  | `packages/frontend/apps/electron-renderer/src/background-worker/index.ts` — sqlite + cloud                                                                                                                              |
+| Android worker                   | `packages/frontend/apps/android/src/nbstore.worker.ts` — sqlite + idb indexer + cloud                                                                                                                                   |
+| Official server id               | `packages/frontend/core/src/modules/cloud/constant.ts` — `affine-cloud` / `BUILD_IN_SERVERS`                                                                                                                            |
 
 ### 2.5 Local storage (keep offline-first)
 
-| Backend | When |
-|---------|------|
-| IndexedDB (`IndexedDBDocStorage`, …) | Browser / web |
+| Backend                                                             | When                   |
+| ------------------------------------------------------------------- | ---------------------- |
+| IndexedDB (`IndexedDBDocStorage`, …)                                | Browser / web          |
 | SQLite (`SqliteDocStorage`, …) via `@affine/native` / mobile-native | Electron, Android, iOS |
-| BroadcastChannel awareness | Local multi-tab |
-| v1 IndexedDB/SQLite | Migration remotes only |
+| BroadcastChannel awareness                                          | Local multi-tab        |
+| v1 IndexedDB/SQLite                                                 | Migration remotes only |
 
 **Supabase remotes must sit beside these locals** — Sync engine already reconciles local ↔ remotes. Do not remove local storages.
 
@@ -348,26 +344,26 @@ Native work splits: **main** / **UtilityProcess helper** (SQLite) / **preload** 
 
 ### 4.1 Required for a basic local desktop app
 
-| Capability | Key paths | Tauri note |
-|------------|-----------|------------|
-| App data FS layout (`sessionData` workspaces, config JSON) | `main/index.ts`, `shared-storage`, `helper/workspace` | `app_data_dir` / path plugin |
-| SQLite doc/blob/FTS via `@affine/native` `DocStoragePool` | `helper/nbstore/handlers.ts`, `packages/frontend/native` | **Hard** — Rust plugin or sidecar; Android already has UniFFI analogue |
-| Custom window chrome (min/max/close, maximize events, theme) | `windows-manager/main-window.ts`, `ui/handlers.ts` | Tauri window API |
-| Asset serving (`assets://` → web-static SPA) | `main/protocol.ts` | Tauri asset protocol / custom scheme |
-| Open/save dialogs, reveal in folder | `helper/dialog`, `shell.showItemInFolder` | dialog + opener plugins |
-| Shared JSON global state/cache IPC | `shared-storage` | store plugin / custom commands |
-| Single-instance lock | `main/index.ts` | Tauri single-instance plugin |
-| IPC bridge matching `@affine/electron-api` | `preload`, `electron-api` | invoke + events layer |
-| Background worker MessagePorts | `main/worker/pool.ts`, electron-renderer background-worker | Web Workers may suffice; verify nbstore worker |
+| Capability                                                   | Key paths                                                  | Tauri note                                                             |
+| ------------------------------------------------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------------- |
+| App data FS layout (`sessionData` workspaces, config JSON)   | `main/index.ts`, `shared-storage`, `helper/workspace`      | `app_data_dir` / path plugin                                           |
+| SQLite doc/blob/FTS via `@affine/native` `DocStoragePool`    | `helper/nbstore/handlers.ts`, `packages/frontend/native`   | **Hard** — Rust plugin or sidecar; Android already has UniFFI analogue |
+| Custom window chrome (min/max/close, maximize events, theme) | `windows-manager/main-window.ts`, `ui/handlers.ts`         | Tauri window API                                                       |
+| Asset serving (`assets://` → web-static SPA)                 | `main/protocol.ts`                                         | Tauri asset protocol / custom scheme                                   |
+| Open/save dialogs, reveal in folder                          | `helper/dialog`, `shell.showItemInFolder`                  | dialog + opener plugins                                                |
+| Shared JSON global state/cache IPC                           | `shared-storage`                                           | store plugin / custom commands                                         |
+| Single-instance lock                                         | `main/index.ts`                                            | Tauri single-instance plugin                                           |
+| IPC bridge matching `@affine/electron-api`                   | `preload`, `electron-api`                                  | invoke + events layer                                                  |
+| Background worker MessagePorts                               | `main/worker/pool.ts`, electron-renderer background-worker | Web Workers may suffice; verify nbstore worker                         |
 
 ### 4.2 Required for cloud/auth parity (Supabase era)
 
-| Capability | Key paths | Tauri note |
-|------------|-----------|------------|
-| Deep links (`affine://…` auth) | `main/deep-link.ts` | deep-link plugin |
-| Secure session storage (`safeStorage`) | `main/auth/auth-session.ts` | **OS keychain** (spec requirement) — e.g. stronghold / keyring plugin |
-| Open external + navigation lockdown | `security-restrictions.ts` | opener + navigation allowlist |
-| (Old) HTTP `/api`+`/graphql` proxy with Bearer | `protocol.ts` | **Likely drop** if client talks to Supabase directly |
+| Capability                                     | Key paths                   | Tauri note                                                            |
+| ---------------------------------------------- | --------------------------- | --------------------------------------------------------------------- |
+| Deep links (`affine://…` auth)                 | `main/deep-link.ts`         | deep-link plugin                                                      |
+| Secure session storage (`safeStorage`)         | `main/auth/auth-session.ts` | **OS keychain** (spec requirement) — e.g. stronghold / keyring plugin |
+| Open external + navigation lockdown            | `security-restrictions.ts`  | opener + navigation allowlist                                         |
+| (Old) HTTP `/api`+`/graphql` proxy with Bearer | `protocol.ts`               | **Likely drop** if client talks to Supabase directly                  |
 
 ### 4.3 Nice-to-have / defer
 
@@ -381,10 +377,10 @@ Today’s **Electron** desktop app is not just “a browser window with AFFiNE i
 
 So the only real choice is:
 
-| Option | What you get | Cost |
-|--------|----------------|------|
-| **A — Simple (recommended)** | One desktop window. Opening docs works like the **web app** (in-app navigation / in-app tabs if the web UI already has them). Sync, editor, offline still work. | Normal Phase 5 effort |
-| **B — Native multi-tab like Electron** | Same “real OS tabs” feel as current desktop | Much longer; easy to stall the whole migration |
+| Option                                 | What you get                                                                                                                                                    | Cost                                           |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **A — Simple (recommended)**           | One desktop window. Opening docs works like the **web app** (in-app navigation / in-app tabs if the web UI already has them). Sync, editor, offline still work. | Normal Phase 5 effort                          |
+| **B — Native multi-tab like Electron** | Same “real OS tabs” feel as current desktop                                                                                                                     | Much longer; easy to stall the whole migration |
 
 **Default for this project: Option A.** Does not affect Android, Supabase sync, or removing AI. We only need a different answer if you specifically want Electron-style native tabs on day one.
 
@@ -398,25 +394,25 @@ Package: `packages/frontend/apps/android` (+ `mobile-shared`). Capacitor 8 WebVi
 
 ### 5.1 Required for single-user local + editor
 
-| Capability | Paths / notes |
-|------------|----------------|
-| Packaged web build + workers | `capacitor.config.ts`, `src/index.tsx`, `src/nbstore.worker.ts` |
+| Capability                                     | Paths / notes                                                                           |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Packaged web build + workers                   | `capacitor.config.ts`, `src/index.tsx`, `src/nbstore.worker.ts`                         |
 | **NbStore SQLite** custom plugin → Rust UniFFI | `src/plugins/nbstore/*`, `App/.../NbStorePlugin.kt`, `packages/frontend/mobile-native/` |
-| Large blob file cache + `convertFileSrc` | `mobile-native` blobs + `mobile-shared/src/nbstore/payload.ts` |
-| Keyboard insets | `@capacitor/keyboard` + `AffineTheme` nav height |
-| Status bar theme + splash + edge-to-edge | `@capacitor/status-bar`, `MainActivity` splash |
-| Predictive / system back | `MobileBack` plugin → `MobileBackCoordinator` |
-| `localStorage` + IndexedDB | WebView defaults |
+| Large blob file cache + `convertFileSrc`       | `mobile-native` blobs + `mobile-shared/src/nbstore/payload.ts`                          |
+| Keyboard insets                                | `@capacitor/keyboard` + `AffineTheme` nav height                                        |
+| Status bar theme + splash + edge-to-edge       | `@capacitor/status-bar`, `MainActivity` splash                                          |
+| Predictive / system back                       | `MobileBack` plugin → `MobileBackCoordinator`                                           |
+| `localStorage` + IndexedDB                     | WebView defaults                                                                        |
 
 ### 5.2 Optional for local-only; needed if using account sync UX
 
-| Capability | Notes |
-|------------|--------|
+| Capability                                     | Notes                                                            |
+| ---------------------------------------------- | ---------------------------------------------------------------- |
 | Auth plugin + AndroidKeyStore-encrypted tokens | `AuthPlugin.kt` — map to Tauri secure storage + Supabase session |
-| Deep link `affine://authentication` | Manifest + `@capacitor/app` `appUrlOpen` |
-| Capgo InAppBrowser | OAuth / external URLs |
-| HashCash mint | Captcha for password sign-in (may drop with Supabase Auth) |
-| `cloudStorages` in worker | Replaced by Supabase storages in Phase 2–3 |
+| Deep link `affine://authentication`            | Manifest + `@capacitor/app` `appUrlOpen`                         |
+| Capgo InAppBrowser                             | OAuth / external URLs                                            |
+| HashCash mint                                  | Captcha for password sign-in (may drop with Supabase Auth)       |
+| `cloudStorages` in worker                      | Replaced by Supabase storages in Phase 2–3                       |
 
 ### 5.3 Not present / skip
 

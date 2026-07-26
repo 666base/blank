@@ -13,6 +13,7 @@ import {
   type NativeDBApis,
   sqliteStorages,
 } from '@affine/nbstore/sqlite';
+import { supabaseStorages } from '@affine/nbstore/supabase';
 import {
   StoreManagerConsumer,
   type WorkerManagerOps,
@@ -71,6 +72,7 @@ const storeManager = new StoreManagerConsumer([
   ...sqliteStorages,
   ...broadcastChannelStorages,
   ...cloudStorages,
+  ...supabaseStorages,
 ]);
 
 storeManager.bindConsumer(consumer);

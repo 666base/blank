@@ -21,11 +21,11 @@
   "dependencies": {
     "@affine/reader": "workspace:*",
     "@affine/realtime": "workspace:*",
+    "@supabase/supabase-js": "^2.50.0",
     "@toeverything/infra": "workspace:*",
     "eventemitter2": "^6.4.9",
     "graphemer": "^1.4.0",
     "lodash-es": "^4.17.23",
-    "@supabase/supabase-js": "^2.50.0",
     "nanoid": "^5.1.6",
     "rxjs": "^7.8.2",
     "uuid": "^14.0.0",

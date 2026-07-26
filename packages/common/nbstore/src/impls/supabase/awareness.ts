@@ -3,13 +3,11 @@ import { AwarenessStorageBase } from '../../storage';
 import {
   base64ToBytes,
   BlankSupabaseConnection,
-  type BlankSupabaseConnectionOptions,
+  type BlankSupabaseStorageOpts,
   bytesToBase64,
 } from './connection';
 
-export type SupabaseAwarenessStorageOptions = BlankSupabaseConnectionOptions & {
-  clientId?: string;
-};
+export type SupabaseAwarenessStorageOptions = BlankSupabaseStorageOpts;
 
 /**
  * Ephemeral awareness via Supabase Realtime Broadcast (not persisted).
@@ -19,7 +17,7 @@ export class SupabaseAwarenessStorage extends AwarenessStorageBase {
 
   readonly connection = new BlankSupabaseConnection(this.options);
 
-  private channels = new Map<
+  private readonly channels = new Map<
     string,
     ReturnType<BlankSupabaseConnection['inner']['client']['channel']>
   >();
@@ -43,7 +41,12 @@ export class SupabaseAwarenessStorage extends AwarenessStorageBase {
       channel = client.channel(channelName);
       this.channels.set(channelName, channel);
       await new Promise<void>((resolve, reject) => {
-        channel!.subscribe(status => {
+        const ch = channel;
+        if (!ch) {
+          reject(new Error('channel missing'));
+          return;
+        }
+        ch.subscribe(status => {
           if (status === 'SUBSCRIBED') resolve();
           if (status === 'CHANNEL_ERROR') reject(new Error(status));
         });
@@ -88,7 +91,9 @@ export class SupabaseAwarenessStorage extends AwarenessStorageBase {
     channel.subscribe();
 
     return () => {
-      void client.removeChannel(channel);
+      client.removeChannel(channel).catch(() => {
+        // ignore
+      });
       this.channels.delete(channelName);
     };
   }

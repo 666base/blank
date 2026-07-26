@@ -22,6 +22,7 @@ import { AboutAffine } from './about';
 import { AppearanceSettings } from './appearance';
 import { BackupSettingPanel } from './backup';
 import { BillingSettings } from './billing';
+import { BlankSyncSettings } from './blank-sync';
 import { EditorSettings } from './editor';
 import { ExperimentalFeatures } from './experimental-features';
 import { PaymentIcon, UpgradeIcon } from './icons';
@@ -64,6 +65,12 @@ export const useGeneralSettingList = (): GeneralSettingList => {
 
   return useMemo(() => {
     const settings: GeneralSettingList = [
+      {
+        key: 'blank-sync',
+        title: 'Blank Sync',
+        icon: <FolderIcon />,
+        testId: 'blank-sync-panel-trigger',
+      },
       {
         key: 'appearance',
         title: t['com.affine.settings.appearance'](),
@@ -168,6 +175,8 @@ export const GeneralSetting = ({
   onChangeSettingState,
 }: GeneralSettingProps) => {
   switch (activeTab) {
+    case 'blank-sync':
+      return <BlankSyncSettings />;
     case 'shortcuts':
       return <Shortcuts />;
     case 'notifications':

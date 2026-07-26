@@ -11,6 +11,7 @@ import {
   bindNativeDBV1Apis,
   sqliteV1Storages,
 } from '@affine/nbstore/sqlite/v1';
+import { supabaseStorages } from '@affine/nbstore/supabase';
 import {
   StoreManagerConsumer,
   type WorkerManagerOps,
@@ -36,6 +37,7 @@ const storeManager = new StoreManagerConsumer([
   ...sqliteV1Storages,
   ...broadcastChannelStorages,
   ...cloudStorages,
+  ...supabaseStorages,
 ]);
 
 window.addEventListener('message', ev => {

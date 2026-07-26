@@ -1,23 +1,22 @@
-import type {
-  DocClock,
-  DocClocks,
-  DocRecord,
-  DocUpdate,
+import {
+  type DocClock,
+  type DocClocks,
+  type DocRecord,
+  DocStorageBase,
+  type DocStorageOptions,
+  type DocUpdate,
 } from '../../storage';
-import { DocStorageBase, type DocStorageOptions } from '../../storage';
 import {
   base64ToBytes,
   BlankSupabaseConnection,
-  type BlankSupabaseConnectionOptions,
+  type BlankSupabaseStorageOpts,
   byteaHexToBytes,
   bytesToBase64,
   bytesToByteaHex,
 } from './connection';
 
 export type SupabaseDocStorageOptions = DocStorageOptions &
-  BlankSupabaseConnectionOptions & {
-    clientId?: string;
-  };
+  BlankSupabaseStorageOpts;
 
 type DocUpdateRow = {
   id: number;
@@ -47,6 +46,8 @@ export class SupabaseDocStorage extends DocStorageBase<SupabaseDocStorageOptions
     BlankSupabaseConnection['inner']['client']['channel']
   > | null = null;
 
+  private realtimeStarted = false;
+
   private get clientId() {
     return this.options.clientId ?? 'blank-client';
   }
@@ -55,6 +56,7 @@ export class SupabaseDocStorage extends DocStorageBase<SupabaseDocStorageOptions
     update: DocUpdate,
     origin?: string
   ): Promise<DocClock> {
+    this.ensureRealtime();
     const { client, ownerId, workspaceId } = this.connection.inner;
     const createdAt = new Date();
 
@@ -80,7 +82,6 @@ export class SupabaseDocStorage extends DocStorageBase<SupabaseDocStorageOptions
 
     this.emit('update', record, origin);
 
-    // Best-effort broadcast for low-latency peers (RLS still gates DB).
     try {
       await client.channel(`doc:${workspaceId}:${update.docId}`).send({
         type: 'broadcast',
@@ -94,7 +95,7 @@ export class SupabaseDocStorage extends DocStorageBase<SupabaseDocStorageOptions
         },
       });
     } catch {
-      // Postgres Realtime subscription remains the catch-up path.
+      // Postgres changes remain the catch-up path.
     }
 
     return { docId: update.docId, timestamp: createdAt };
@@ -182,6 +183,7 @@ export class SupabaseDocStorage extends DocStorageBase<SupabaseDocStorageOptions
   protected override async getDocSnapshot(
     docId: string
   ): Promise<DocRecord | null> {
+    this.ensureRealtime();
     const { client, workspaceId } = this.connection.inner;
     const { data, error } = await client
       .from('doc_snapshots')
@@ -226,7 +228,6 @@ export class SupabaseDocStorage extends DocStorageBase<SupabaseDocStorageOptions
       throw new Error(`SupabaseDocStorage.setDocSnapshot: ${error.message}`);
     }
 
-    // Prune updates at-or-before snapshot time (compaction).
     await client.rpc('compact_doc_updates', {
       p_doc_id: snapshot.docId,
       p_before: snapshot.timestamp.toISOString(),
@@ -257,18 +258,17 @@ export class SupabaseDocStorage extends DocStorageBase<SupabaseDocStorageOptions
 
   protected override async markUpdatesMerged(
     _docId: string,
-    _updates: DocRecord[]
+    updates: DocRecord[]
   ): Promise<number> {
-    // Compaction happens in setDocSnapshot via compact_doc_updates RPC.
-    return _updates.length;
+    return updates.length;
   }
 
-  /** Subscribe after connect for Realtime + broadcast. */
-  startRealtime() {
-    const { client, workspaceId } = this.connection.inner;
-    if (this.channel) {
+  private ensureRealtime() {
+    if (this.realtimeStarted) {
       return;
     }
+    this.realtimeStarted = true;
+    const { client, workspaceId } = this.connection.inner;
 
     this.channel = client
       .channel(`blank-docs:${workspaceId}`)
@@ -309,13 +309,5 @@ export class SupabaseDocStorage extends DocStorageBase<SupabaseDocStorageOptions
         });
       })
       .subscribe();
-  }
-
-  stopRealtime() {
-    const { client } = this.connection.inner;
-    if (this.channel) {
-      void client.removeChannel(this.channel);
-      this.channel = null;
-    }
   }
 }

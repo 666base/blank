@@ -1,4 +1,4 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 import { AutoReconnectConnection } from '../../connection';
 
@@ -8,44 +8,76 @@ export type BlankSupabaseConnectionInner = {
   ownerId: string;
 };
 
-export type BlankSupabaseConnectionOptions = {
-  /** Factory so auth session refresh can recreate the client. */
-  createClient: () => Promise<{
-    client: SupabaseClient;
-    ownerId: string;
-  }>;
-  workspaceId: string;
+/** Serializable opts for worker StoreInitOptions (no functions). */
+export type BlankSupabaseStorageOpts = {
+  /** Workspace / space id (also DocStorageOptions.id). */
+  id: string;
+  supabaseUrl: string;
+  supabaseAnonKey: string;
+  accessToken: string;
+  refreshToken?: string;
+  clientId?: string;
 };
 
 /**
  * Shared connection for Blank Supabase doc/blob/awareness storages.
- * Client must be authenticated (RLS keys off auth.uid()).
+ * Auth session is passed via accessToken (RLS keys off auth.uid()).
  */
 export class BlankSupabaseConnection extends AutoReconnectConnection<BlankSupabaseConnectionInner> {
-  constructor(private readonly options: BlankSupabaseConnectionOptions) {
+  constructor(private readonly options: BlankSupabaseStorageOpts) {
     super();
   }
 
   override get shareId() {
-    return `blank-supabase:${this.options.workspaceId}`;
+    return `blank-supabase:${this.options.id}`;
   }
 
   protected override async doConnect(
     _signal?: AbortSignal
   ): Promise<BlankSupabaseConnectionInner> {
-    const { client, ownerId } = await this.options.createClient();
-    if (!ownerId) {
-      throw new Error('Blank Supabase: not authenticated');
+    const client = createClient(
+      this.options.supabaseUrl,
+      this.options.supabaseAnonKey,
+      {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false,
+        },
+        global: {
+          headers: {
+            Authorization: `Bearer ${this.options.accessToken}`,
+          },
+        },
+      }
+    );
+
+    if (this.options.refreshToken) {
+      const { error } = await client.auth.setSession({
+        access_token: this.options.accessToken,
+        refresh_token: this.options.refreshToken,
+      });
+      if (error) {
+        throw new Error(`Blank Supabase session: ${error.message}`);
+      }
     }
+
+    const { data, error } = await client.auth.getUser(this.options.accessToken);
+    if (error || !data.user) {
+      throw new Error(
+        `Blank Supabase: not authenticated (${error?.message ?? 'no user'})`
+      );
+    }
+
     return {
       client,
-      ownerId,
-      workspaceId: this.options.workspaceId,
+      ownerId: data.user.id,
+      workspaceId: this.options.id,
     };
   }
 
   protected override doDisconnect(_conn: BlankSupabaseConnectionInner): void {
-    // Caller owns client lifecycle (shared auth session).
+    // Session owned by main-thread Blank auth; do not sign out here.
   }
 }
 
@@ -70,8 +102,8 @@ export function base64ToBytes(base64: string): Uint8Array {
 /** Encode bytea for PostgREST: \\x hex */
 export function bytesToByteaHex(bytes: Uint8Array): string {
   let hex = '';
-  for (let i = 0; i < bytes.length; i++) {
-    hex += bytes[i].toString(16).padStart(2, '0');
+  for (const b of bytes) {
+    hex += b.toString(16).padStart(2, '0');
   }
   return `\\x${hex}`;
 }

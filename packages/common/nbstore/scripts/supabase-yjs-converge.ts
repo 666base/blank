@@ -31,7 +31,9 @@ const docId = `doc-${Date.now()}`;
 
 function encodeUpdate(u: Uint8Array) {
   let hex = '';
-  for (let i = 0; i < u.length; i++) hex += u[i].toString(16).padStart(2, '0');
+  for (const b of u) {
+    hex += b.toString(16).padStart(2, '0');
+  }
   return `\\x${hex}`;
 }
 
@@ -46,23 +48,30 @@ function decodeBytea(value: string | Uint8Array) {
 }
 
 async function main() {
-  const a = createClient(url!, anon!);
-  const b = createClient(url!, anon!);
+  const supabaseUrl = url;
+  const supabaseAnon = anon;
+  const supabaseEmail = email;
+  const supabasePassword = password;
+  if (!supabaseUrl || !supabaseAnon || !supabaseEmail || !supabasePassword) {
+    throw new Error('missing env');
+  }
+
+  const a = createClient(supabaseUrl, supabaseAnon);
+  const b = createClient(supabaseUrl, supabaseAnon);
 
   const { data: authA, error: authErr } = await a.auth.signInWithPassword({
-    email: email!,
-    password: password!,
+    email: supabaseEmail,
+    password: supabasePassword,
   });
-  if (authErr || !authA.user) {
+  if (authErr || !authA.user || !authA.session) {
     throw new Error(`auth failed: ${authErr?.message}`);
   }
   const ownerId = authA.user.id;
   await b.auth.setSession({
-    access_token: authA.session!.access_token,
-    refresh_token: authA.session!.refresh_token,
+    access_token: authA.session.access_token,
+    refresh_token: authA.session.refresh_token,
   });
 
-  // Ensure workspace row
   await a.from('workspaces').upsert({
     id: workspaceId,
     owner_id: ownerId,
@@ -110,7 +119,6 @@ async function main() {
   console.log('merged text:', JSON.stringify(text));
   console.log('update rows:', rows?.length ?? 0);
 
-  // Compaction: write snapshot + prune
   const state = Y.encodeStateAsUpdate(merged);
   await a.from('doc_snapshots').upsert({
     doc_id: docId,
@@ -125,8 +133,7 @@ async function main() {
   });
   console.log('pruned updates:', pruned);
 
-  // anon without session must fail
-  const anonClient = createClient(url!, anon!);
+  const anonClient = createClient(supabaseUrl, supabaseAnon);
   const { data: leaked, error: leakErr } = await anonClient
     .from('doc_updates')
     .select('id')
@@ -136,10 +143,7 @@ async function main() {
     !leaked?.length && (leakErr != null || leaked?.length === 0)
   );
 
-  await a
-    .from('doc_snapshots')
-    .delete()
-    .eq('doc_id', docId);
+  await a.from('doc_snapshots').delete().eq('doc_id', docId);
   await a.from('doc_updates').delete().eq('doc_id', docId);
 
   console.log('OK — two peers converge via Supabase');

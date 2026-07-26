@@ -38,6 +38,7 @@ import { nanoid } from 'nanoid';
 import { Observable } from 'rxjs';
 import { Doc as YDoc, encodeStateAsUpdate } from 'yjs';
 
+import { getBlankSupabaseRemoteOpts } from '../../blank';
 import { DesktopApiService } from '../../desktop-api';
 import type {
   WorkspaceFlavourProvider,
@@ -430,6 +431,7 @@ class LocalWorkspaceFlavourProvider implements WorkspaceFlavourProvider {
   }
 
   getEngineWorkerInitOptions(workspaceId: string): WorkerInitOptions {
+    const blankOpts = getBlankSupabaseRemoteOpts(workspaceId);
     return {
       local: {
         doc: {
@@ -488,6 +490,24 @@ class LocalWorkspaceFlavourProvider implements WorkspaceFlavourProvider {
         },
       },
       remotes: {
+        ...(blankOpts
+          ? {
+              'blank-supabase': {
+                doc: {
+                  name: 'SupabaseDocStorage',
+                  opts: blankOpts,
+                },
+                blob: {
+                  name: 'SupabaseBlobStorage',
+                  opts: blankOpts,
+                },
+                awareness: {
+                  name: 'SupabaseAwarenessStorage',
+                  opts: blankOpts,
+                },
+              },
+            }
+          : {}),
         v1: {
           doc: this.DocStorageV1Type
             ? {

@@ -5,10 +5,10 @@ import {
 } from '../../storage';
 import {
   BlankSupabaseConnection,
-  type BlankSupabaseConnectionOptions,
+  type BlankSupabaseStorageOpts,
 } from './connection';
 
-export type SupabaseBlobStorageOptions = BlankSupabaseConnectionOptions;
+export type SupabaseBlobStorageOptions = BlankSupabaseStorageOpts;
 
 /**
  * Blob storage on Supabase Storage bucket `blobs`.
@@ -53,11 +53,13 @@ export class SupabaseBlobStorage extends BlobStorageBase {
   override async set(blob: BlobRecord, signal?: AbortSignal): Promise<void> {
     const { client, ownerId, workspaceId } = this.connection.inner;
     const path = this.pathFor(blob.key, ownerId, workspaceId);
-    const { error } = await client.storage.from('blobs').upload(path, blob.data, {
-      contentType: blob.mime,
-      upsert: true,
-      abortSignal: signal as AbortSignal | undefined,
-    });
+    const { error } = await client.storage
+      .from('blobs')
+      .upload(path, blob.data, {
+        contentType: blob.mime,
+        upsert: true,
+        abortSignal: signal as AbortSignal | undefined,
+      });
     if (error) {
       throw new Error(`SupabaseBlobStorage.set: ${error.message}`);
     }
