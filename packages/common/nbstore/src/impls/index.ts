@@ -5,6 +5,7 @@ import type { idbStorages } from './idb';
 import type { idbV1Storages } from './idb/v1';
 import type { sqliteStorages } from './sqlite';
 import type { sqliteV1Storages } from './sqlite/v1';
+import type { supabaseStorages } from './supabase';
 
 export type StorageConstructor = {
   new (...args: any[]): Storage;
@@ -13,6 +14,7 @@ export type StorageConstructor = {
 
 type Storages =
   | typeof cloudStorages
+  | typeof supabaseStorages
   | typeof idbV1Storages
   | typeof idbStorages
   | typeof sqliteStorages
