@@ -1,7 +1,6 @@
 // Import is already correct, no changes needed
 import {
   AddPageButton,
-  AppDownloadButton,
   AppSidebar,
   MenuItem,
   MenuLinkItem,
@@ -246,7 +245,7 @@ export const RootAppSidebar = memo((): ReactElement => {
           <InviteMembersButton />
           <TemplateDocEntrance />
           <ExternalMenuLinkItem
-            href="https://affine.pro/blog?tag=Release+Note"
+            href="https://github.com/666base/blank"
             icon={<JournalIcon />}
             label={t['com.affine.app-sidebar.learn-more']()}
           />
@@ -254,7 +253,7 @@ export const RootAppSidebar = memo((): ReactElement => {
       </SidebarScrollableContainer>
       <SidebarContainer className={bottomContainer}>
         <SidebarAudioPlayer />
-        {BUILD_CONFIG.isElectron ? <UpdaterButton /> : <AppDownloadButton />}
+        {BUILD_CONFIG.isElectron ? <UpdaterButton /> : null}
       </SidebarContainer>
     </AppSidebar>
   );

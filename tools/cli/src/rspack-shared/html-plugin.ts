@@ -61,7 +61,7 @@ export const getPublicPath = (BUILD_CONFIG: BUILD_CONFIG_TYPE) => {
   }
 };
 
-const DESCRIPTION = `There can be more than Notion and Miro. AFFiNE is a next-gen knowledge base that brings planning, sorting and creating all together.`;
+const DESCRIPTION = `Blank is a private knowledge base for one person and two devices — local-first notes synced through Supabase.`;
 
 const gitShortHash = once(() => {
   const { GITHUB_SHA } = process.env;

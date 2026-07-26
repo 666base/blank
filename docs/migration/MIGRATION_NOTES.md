@@ -1,6 +1,6 @@
 # Blank (AFFiNE fork) → Supabase + Tauri migration notes
 
-**Status:** Phases 1–7 on branch. Nest out of client path; Tauri Option A desktop + Android scaffolded; Phase 7 sync/UI verification fixes applied. Next: Phase 8 PR / main cutover (explicit OK only).  
+**Status:** Phases 1–8 ready for review. User-facing brand is **Blank**. Nest out of client path; Tauri Option A desktop + Android scaffolded; sync verification fixes applied. Open PR — do **not** replace `main` until explicit OK.  
 **Date:** 2026-07-27  
 **Product name:** **Blank** (not AFFiNE / not AFFiNE Cloud)  
 **Local tree:** AFFiNE-derived monorepo → Blank  
@@ -73,9 +73,9 @@ Migration: `supabase/migrations/20260727000100_blank_crdt_sync.sql`
 
 ### Checkpoint
 
-Remote `main` **not** modified. PR link: https://github.com/666base/blank/pull/new/supabase-tauri-migration
+Remote `main` **not** modified. PR: open from this branch when ready.
 
-Say **next** for Phase 8 (PR / cutover), or open the PR first.
+Say **merge main** only if you explicitly want to replace the old notes app on `main`.
 
 ---
 
