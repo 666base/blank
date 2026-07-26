@@ -73,7 +73,7 @@ Migration: `supabase/migrations/20260727000100_blank_crdt_sync.sql`
 
 ### Checkpoint
 
-Remote `main` **not** modified. PR: open from this branch when ready.
+Remote `main` **not** merged yet. PR open: https://github.com/666base/blank/pull/1 (`blank-cutover` → `main`).
 
 Say **merge main** only if you explicitly want to replace the old notes app on `main`.
 
