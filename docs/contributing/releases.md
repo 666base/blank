@@ -7,7 +7,7 @@
 The AFFiNE core team grants release authorization and enforces the following requirements:
 
 - Commit access to the AFFiNE repository.
-- Access to GitHub Actions.
+- Access to the local signing and packaging environment.
 
 ## How to Make a Release
 
@@ -28,17 +28,18 @@ git commit -m "v0.5.4-canary.5"
 git push origin canary
 ```
 
-### 3. Create a Release Action
+### 3. Build the release locally
 
-Trigger a release action in the [Release Desktop App](https://github.com/toeverything/AFFiNE/actions/workflows/release-desktop-app.yml).
+This repository does not use GitHub Actions. Build the desktop release on the
+release machine:
 
-![img.png](assets/release-action.png)
-
-Select the appropriate branch, complete the form, and click `Run workflow`.
+```shell
+yarn build:desktop
+```
 
 ### 4. Publish the Release
 
-Once the release action is complete, a draft release will appear on the [Releases page](https://github.com/toeverything/AFFiNE/releases).
+Upload the locally produced artifacts to the release destination.
 
 Edit the release notes if necessary, then publish the release.
 

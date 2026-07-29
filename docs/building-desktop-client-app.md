@@ -10,7 +10,6 @@
 - [Prerequisites](#prerequisites)
 - [Development](#development)
 - [Build](#build)
-- [CI](#ci)
 
 ## Things you may need to know before getting started
 
@@ -20,7 +19,7 @@ Building the desktop client app for the moment is a bit more complicated than bu
 2. `packages/frontend/native`: the native modules written in Rust (mostly the sqlite bindings)
 3. `packages/frontend/apps/electron`: the Electron app (containing main & helper process, and the electron entry point in `packages/frontend/apps/electron-renderer`)
 
-#3 is dependent on #1 and #2, and relies on electron-forge to make the final app & installer. To get a deep understanding of how the desktop client app is built, you may want to read the workflow file in [release-desktop.yml](/.github/workflows/release-desktop.yml).
+#3 is dependent on #1 and #2, and relies on electron-forge to make the final app & installer.
 
 Due to [some limitations of Electron builder](https://github.com/yarnpkg/berry/issues/4804), you may need to have two separate yarn config for building the core and the desktop client app:
 
@@ -36,8 +35,6 @@ Before you start building AFFiNE Desktop Client Application, please following th
 On Windows, you must enable symbolic links this code repo. See [#### Windows](./BUILDING.md#Windows).
 
 ## Build, package & make the desktop client app
-
-> repos/AFFiNE/.github/workflows/release-desktop.yml contains real order to build the desktop client app, but here we will explain the steps in a more detailed way. Up-to date.
 
 ### 0. Build the native modules
 
@@ -117,9 +114,7 @@ Finished 2 bundles at:
   › Artifacts available at: <affine-repo>/packages/frontend/apps/electron/out/canary/make
 ```
 
-## CI
+## Local builds only
 
-Please refer to `.github/workflows/release-desktop-app.yml` for the CI workflow. It will:
-
-- build the app for all supported platforms
-- upload the artifacts to GitHub Actions
+This repository does not use GitHub Actions. Build and package the desktop
+application locally.
